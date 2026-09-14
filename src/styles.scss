@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@use './styles/tokens';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap');
+
+/* Styles globaux */
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Baloo 2', sans-serif;
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+
+  column-gap: var(--grid-gutter);
+  padding-inline: var(--grid-margin);
+}

@@ -1,0 +1,51 @@
+<button
+  type="button"
+  [class]="'button button--' + variant()"
+  [class.button--with-icon]="icon() || navigationIcon()"
+  [disabled]="disabled()"
+>
+  @if (navigationIcon() === 'chevron-left') {
+    <span class="button__navigation-icon button__navigation-icon--chevron">
+      <i
+        class="fa-solid fa-chevron-left"
+        aria-hidden="true"
+      ></i>
+    </span>
+  }
+
+  @if (icon() && iconPosition() === 'left') {
+    <app-icon
+      [name]="icon()!"
+      [size]="24"
+    />
+  }
+
+  @if (navigationIcon() === 'circle-plus') {
+    <span class="button__navigation-icon button__navigation-icon--circle-plus">
+      <i
+        class="fa-solid fa-circle-plus"
+        aria-hidden="true"
+      ></i>
+    </span>
+  }
+
+  <span class="button__label">
+    <ng-content />
+  </span>
+
+  @if (icon() && iconPosition() === 'right') {
+    <app-icon
+      [name]="icon()!"
+      [size]="24"
+    />
+  }
+
+  @if (navigationIcon() === 'chevron-right') {
+    <span class="button__navigation-icon button__navigation-icon--chevron">
+      <i
+        class="fa-solid fa-chevron-right"
+        aria-hidden="true"
+      ></i>
+    </span>
+  }
+</button>

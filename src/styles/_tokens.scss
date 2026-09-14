@@ -1,0 +1,109 @@
+:root {
+  // ======================================================
+  // GRID
+  // ======================================================
+
+  // Mobile portrait - valeur par défaut
+  --grid-columns: 4;
+  --grid-gutter: 16px;
+  --grid-margin: 24px;
+
+  // ======================================================
+  // COLORS - Background
+  // ======================================================
+
+  --color-bg-primary-default: #fff699;
+  --color-bg-primary-hover: #ffef4e;
+  --color-bg-primary-focus: var(--color-bg-primary-default);
+  --color-bg-primary-disabled: rgba(255, 246, 153, 0.3);
+
+  --color-bg-secondary-default: #a6f5d8;
+  --color-bg-secondary-hover: #5cffc3;
+  --color-bg-secondary-focus: var(--color-bg-secondary-default);
+  --color-bg-secondary-disabled: rgba(166, 245, 216, 0.3);
+
+  --color-bg-tertiary-default: #102b54;
+  --color-bg-tertiary-hover: #b7e7f3;
+  --color-bg-tertiary-focus: var(--color-bg-tertiary-default);
+  --color-bg-tertiary-disabled: rgba(16, 43, 84, 0.4);
+
+  --color-bg-tertiary-default-ico: #c9b7ff;
+  --color-bg-tertiary-hover-ico: #b69eff;
+
+  // ======================================================
+  // COLORS - Text
+  // ======================================================
+
+  --color-text-primary-default: #102b54;
+  --color-text-primary-hover: #102b54;
+  --color-text-primary-focus: #102b54;
+  --color-text-primary-disabled: rgba(16, 43, 84, 0.5);
+
+  --color-text-secondary-default: #102b54;
+  --color-text-secondary-hover: #102b54;
+  --color-text-secondary-focus: #102b54;
+  --color-text-secondary-disabled: rgba(16, 43, 84, 0.5);
+
+  --color-text-tertiary-default: #b7e7f3;
+  --color-text-tertiary-hover: #102b54;
+  --color-text-tertiary-focus: #b7e7f3;
+  --color-text-tertiary-disabled: rgba(183, 231, 243, 0.5);
+
+  --color-text-tertiary-default-ico: #102b54;
+  --color-text-tertiary-hover-ico: #102b54;
+
+  --color-text-outline-default: #5b0ebf;
+  --color-text-outline-hover: #5b0ebf;
+
+  // ======================================================
+  // COLORS - Border
+  // ======================================================
+
+  --color-border-primary-focus: #1356a0;
+  --color-border-secondary-focus: #1356a0;
+  --color-border-tertiary-focus: #1356a0;
+  --color-border-outline-default: #c9b7ff;
+  --color-border-outline-hover: #5b0ebf;
+
+  --radius-button: 100px;
+
+  // ======================================================
+  // GRID - Responsive
+  // ======================================================
+
+  /* Tablette portrait - 832px */
+  @media (min-width: 832px) {
+    :root {
+      --grid-columns: 8;
+      --grid-gutter: 24px;
+      --grid-margin: 32px;
+    }
+  }
+
+  /* Desktop small - 1024px */
+  @media (min-width: 1024px) {
+    :root {
+      --grid-columns: 12;
+      --grid-gutter: 32px;
+      --grid-margin: 16px;
+    }
+  }
+
+  /* Desktop large - 1440px */
+  @media (min-width: 1440px) {
+    :root {
+      --grid-columns: 12;
+      --grid-gutter: 32px;
+      --grid-margin: 96px;
+    }
+  }
+
+  /* Desktop extra large - 1920px */
+  @media (min-width: 1920px) {
+    :root {
+      --grid-columns: 12;
+      --grid-gutter: 32px;
+      --grid-margin: 300px;
+    }
+  }
+}

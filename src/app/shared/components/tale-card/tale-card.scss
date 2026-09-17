@@ -1,0 +1,168 @@
+:host {
+  display: block;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  gap: 10px;
+  padding: 24px;
+
+  background: var(--color-background-primary, #fff);
+  border-radius: 48px;
+
+  box-shadow: var(
+    --shadow-card,
+    0 4px 16px rgb(0 0 0 / 8%)
+  );
+}
+
+.card__languages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-height: 24px;
+}
+
+.card__cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  height: 223px;
+
+  img {
+    display: block;
+    width: 145px;
+    height: 223px;
+    object-fit: contain;
+  }
+}
+
+.card__social {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.card__like-container {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-card);
+  font-weight: var(--font-weight-bold);
+}
+
+.card__like,
+.card__archive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+
+  color: var(--color-text-card);
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+.card__social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.card__likes {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card__themes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  color: var(--color-bg-tertiary-default);
+}
+
+.card__theme {
+  box-sizing: border-box;
+  overflow: hidden;
+
+  padding: 4px 12px;
+
+  background: var(--color-bg-theme-default);
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 130%;
+  letter-spacing: 0;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card__title {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: var(--color-text-primary, #111);
+}
+
+.card__title-decoration {
+  display: block;
+
+  width: 40px;
+  height: 5px;
+
+  margin-top: 6px;
+
+  background: var(--color-accent, #f6be2c);
+}
+
+.card__description {
+  margin: 16px 0 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: var(--color-text-primary, #111);
+}
+
+.card__available-languages {
+  margin: 14px 0 0;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  color: var(--color-primary, #003b8f);
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+}

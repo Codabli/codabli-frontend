@@ -26,9 +26,10 @@
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-heavy: 800;
 
   --font-color-text-anthracite: #000;
-  --font-color-primary:#102B54;
+  --font-color-primary: #102b54;
 
   --line-height-h1: 100%;
   --line-height-h2: 120%;
@@ -63,6 +64,8 @@
   --color-bg-tertiary-default-ico: #c9b7ff;
   --color-bg-tertiary-hover-ico: #b69eff;
 
+  --color-bg-theme-default: rgba(201, 183, 255, 0.6);
+
   // ======================================================
   // COLORS - Text
   // ======================================================
@@ -87,6 +90,8 @@
 
   --color-text-outline-default: #5b0ebf;
   --color-text-outline-hover: #5b0ebf;
+
+  --color-text-card: #00368c;
 
   // ======================================================
   // COLORS - Border

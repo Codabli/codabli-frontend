@@ -1,0 +1,74 @@
+<article class="card">
+  <div class="card__languages">
+    @for (language of tale().languages; track language) {
+      <span class="card__flag">
+        <app-language-flag [language]="language"></app-language-flag>
+      </span>
+    }
+  </div>
+
+  <div class="card__cover">
+    <img
+      [src]="tale().coverUrl"
+      [alt]="'Couverture de ' + tale().title"
+    />
+  </div>
+
+  <div class="card__social">
+    <div class="card__like-container">
+    <button
+      type="button"
+      class="card__like"
+      aria-label="J’aime"
+    >
+      <app-icon
+        name="heart"
+        [size]="24"
+      />
+    </button>
+    <span>{{ tale().likes }}</span>
+    </div>
+
+    <button
+      type="button"
+      class="card__archive"
+      aria-label="Ajouter aux favoris"
+    >
+      <app-icon
+        name="archive"
+        [size]="24"
+      />
+    </button>
+  </div>
+
+  <div class="card__themes">
+    @for (theme of tale().themes; track theme) {
+      <span class="card__theme">
+        {{ theme }}
+      </span>
+    }
+  </div>
+
+  <div class="card__content">
+    <h3 class="card__title">
+      {{ tale().title }}
+    </h3>
+
+    <span class="card__title-decoration"></span>
+
+    <p class="card__description">
+      {{ tale().description }}
+    </p>
+
+    <p class="card__available-languages">
+      <strong>Langues disponibles :</strong>
+      {{ tale().languages.join(', ') }}
+    </p>
+  </div>
+
+  <footer class="card__footer">
+    <app-button variant="primary">Consulter</app-button>
+
+    <app-button variant="secondary">Adopter ce conte</app-button>
+  </footer>
+</article>

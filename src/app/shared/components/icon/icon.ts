@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 
-export type IconName = 'arrow-right4';
+export type IconName = 'arrow-right4' | 'heart' | 'archive';
 
 @Component({
   selector: 'app-icon',
@@ -10,5 +10,5 @@ export type IconName = 'arrow-right4';
 })
 export class Icon {
   name = input.required<IconName>();
-  size = input(24);
+  size = input<number>(24);
 }

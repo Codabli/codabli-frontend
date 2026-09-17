@@ -2,7 +2,7 @@
   box-sizing: border-box;
   height: 51px;
 
-  border: 2px solid transparent;
+  border: 0px;
   border-radius: var(--radius-button);
   padding: 12px 20px;
 
@@ -17,11 +17,12 @@
   justify-content: center;
   gap: 10px;
 
+  white-space: nowrap;
+
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-border-primary-focus);
   }
 
   &:disabled {

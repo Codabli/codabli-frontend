@@ -1,6 +1,9 @@
 @use './styles/tokens';
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-included-countries: ('fr', 'es', 'gb')
+);
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baloo:wght@400;600;700&display=swap');
 

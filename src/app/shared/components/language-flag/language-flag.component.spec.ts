@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Icon } from './icon';
+import { LanguageFlag } from './language-flag.component';
 
-describe('Icon', () => {
-  let component: Icon;
-  let fixture: ComponentFixture<Icon>;
+describe('LanguageFlag', () => {
+  let component: LanguageFlag;
+  let fixture: ComponentFixture<LanguageFlag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Icon],
+      imports: [LanguageFlag],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Icon);
+    fixture = TestBed.createComponent(LanguageFlag);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

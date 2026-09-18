@@ -3,8 +3,8 @@ import { Component, computed, input } from '@angular/core'
 @Component({
   imports: [],
   selector: 'app-language-flag',
-  styleUrl: './language-flag.scss',
-  templateUrl: './language-flag.html',
+  styleUrl: './language-flag.component.scss',
+  templateUrl: './language-flag.component.html',
 })
 export class LanguageFlag {
   language = input.required<LanguageCode>();
@@ -31,5 +31,5 @@ export class LanguageFlag {
     };
     return labels[this.language()];
   })
-}import { LanguageCode } from '../../../models/types/language-code';
+}import { LanguageCode } from '../../../models/types/language-code.type';
 

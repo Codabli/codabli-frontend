@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LanguageFlag } from './language-flag';
+import { TaleCard } from './tale-card.component';
 
-describe('LanguageFlag', () => {
-  let component: LanguageFlag;
-  let fixture: ComponentFixture<LanguageFlag>;
+describe('TaleCard', () => {
+  let component: TaleCard;
+  let fixture: ComponentFixture<TaleCard>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LanguageFlag],
+      imports: [TaleCard],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LanguageFlag);
+    fixture = TestBed.createComponent(TaleCard);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

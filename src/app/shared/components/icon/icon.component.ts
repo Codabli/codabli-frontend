@@ -5,8 +5,8 @@ export type IconName = 'arrow-right4' | 'heart' | 'archive';
 @Component({
   selector: 'app-icon',
   imports: [],
-  templateUrl: './icon.html',
-  styleUrl: './icon.scss',
+  templateUrl: './icon.component.html',
+  styleUrl: './icon.component.scss',
 })
 export class Icon {
   name = input.required<IconName>();

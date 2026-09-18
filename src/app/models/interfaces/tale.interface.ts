@@ -1,4 +1,4 @@
-import type { LanguageCode } from '../types/language-code';
+import type { LanguageCode } from '../types/language-code.type';
 
 export interface Tale {
   id: number;

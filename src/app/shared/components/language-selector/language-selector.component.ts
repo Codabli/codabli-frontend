@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { Language } from '../../../core/services/language';
-import type { AppLanguage } from '../../../models/types/app-language';
+import { Language } from '../../../core/services/language.service';
+import type { AppLanguage } from '../../../models/types/app-language.type';
 
 @Component({
   imports: [],
   selector: 'app-language-selector',
-  styleUrl: './language-selector.scss',
-  templateUrl: './language-selector.html',
+  styleUrl: './language-selector.component.scss',
+  templateUrl: './language-selector.component.html',
 })
 export class LanguageSelector {
   readonly language = inject(Language);

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { IconName, Icon } from '../icon/icon';
+import { IconName, Icon } from '../icon/icon.component';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'tertiary-ico' | 'outline';
 
@@ -10,8 +10,8 @@ export type ButtonNavigationIcon = 'chevron-left' | 'chevron-right' | 'circle-pl
 @Component({
   imports: [Icon],
   selector: 'app-button',
-  styleUrl: './button.scss',
-  templateUrl: './button.html',
+  styleUrl: './button.component.scss',
+  templateUrl: './button.component.html',
 })
 export class Button {
   variant = input<ButtonVariant>('primary');

@@ -1,0 +1,157 @@
+<section class="contact grid">
+  <header class="contact__header">
+    <h1>{{ 'contact.title' | translate }}</h1>
+
+    <p>
+      {{ 'contact.description' | translate }}
+    </p>
+  </header>
+
+  <form
+    class="contact-form"
+    [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="form-field">
+      <label for="profile">
+        {{ 'contact.form.profile.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <select id="profile" formControlName="profile">
+        <option value="" disabled>
+          {{ 'contact.form.profile.placeholder' | translate }}
+        </option>
+
+        <option value="school">
+          {{ 'contact.form.profile.options.school' | translate }}
+        </option>
+
+        <option value="student">
+          {{ 'contact.form.profile.options.student' | translate }}
+        </option>
+
+        <option value="parent">
+          {{ 'contact.form.profile.options.parent' | translate }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="fullName">
+        {{ 'contact.form.fullName.label' | translate }}
+      </label>
+
+      <input
+        id="fullName"
+        type="text"
+        formControlName="fullName"
+        [placeholder]="'contact.form.fullName.placeholder' | translate"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="schoolName">
+        {{ 'contact.form.schoolName.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="schoolName"
+        type="text"
+        formControlName="schoolName"
+        [placeholder]="'contact.form.schoolName.placeholder' | translate"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="country">
+        {{ 'contact.form.country.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="country"
+        type="text"
+        formControlName="country"
+        [placeholder]="'contact.form.country.placeholder' | translate"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="email">
+        {{ 'contact.form.email.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+        [placeholder]="'contact.form.email.placeholder' | translate"
+      />
+    </div>
+
+    <div class="form-field">
+      <label for="subject">
+        {{ 'contact.form.subject.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <select id="subject" formControlName="subject">
+        <option value="" disabled>
+          {{ 'contact.form.subject.placeholder' | translate }}
+        </option>
+
+        <option value="information">
+          {{ 'contact.form.subject.options.information' | translate }}
+        </option>
+
+        <option value="registration">
+          {{ 'contact.form.subject.options.registration' | translate }}
+        </option>
+
+        <option value="technical">
+          {{ 'contact.form.subject.options.technical' | translate }}
+        </option>
+
+        <option value="other">
+          {{ 'contact.form.subject.options.other' | translate }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="message">
+        {{ 'contact.form.message.label' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <textarea
+        id="message"
+        formControlName="message"
+        rows="6"
+        [placeholder]="'contact.form.message.placeholder' | translate"
+      ></textarea>
+    </div>
+
+    <div class="form-checkbox">
+      <input
+        id="termsAccepted"
+        type="checkbox"
+        formControlName="termsAccepted"
+      />
+
+      <label for="termsAccepted">
+        {{ 'contact.form.termsAccepted.label' | translate }}
+      </label>
+    </div>
+
+    <div class="contact-form__actions">
+    <app-button variant="primary" type="submit">
+      {{ 'contact.form.submit' | translate }}
+    </app-button>
+    </div>
+  </form>
+</section>

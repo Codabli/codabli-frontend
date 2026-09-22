@@ -1,0 +1,139 @@
+.site-footer {
+  width: 100%;
+  background-color: #ffffff;
+  color: #0b1f3b;
+  font-family: inherit;
+  border-top: 1px solid #eaeaea;
+
+  .footer-container {
+    max-width: 1440px;
+    min-height: 160px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    h3, h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0b1f3b;
+      margin-bottom: 6px;
+    }
+
+    p, a {
+      font-size: 0.85rem;
+      color: #333333;
+      text-decoration: none;
+      line-height: 1.4;
+      margin: 2px 0;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  // Bloc 1 : Logo + Infos Asso
+  .footer-brand {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    .footer-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  // Bloc 2 : Contact
+  .footer-contact {
+    a {
+      color: #0b1f3b;
+      font-weight: 600;
+    }
+  }
+
+  // Bloc 3 : Réseaux sociaux
+  .footer-social {
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+
+      .social-icon {
+        width: 22px;
+        height: 22px;
+        transition: transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+
+  // Bouton Retour en haut
+  .footer-action {
+    align-items: flex-end;
+
+    .scroll-to-top {
+      background: #0b1f3b;
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: #1a365d;
+      }
+    }
+  }
+
+  // Barre inférieure (Liens légaux)
+  .footer-bottom {
+    background-color: #0b1f3b;
+    width: 100%;
+    height: 61px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+
+    .footer-legal-links {
+      display: flex;
+      gap: 40px;
+
+      a {
+        color: #ffffff;
+        font-size: 0.85rem;
+        text-decoration: underline;
+
+        &:hover {
+          opacity: 0.85;
+        }
+      }
+    }
+  }
+}

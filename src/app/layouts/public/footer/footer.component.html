@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="footer-container">
+
+    <!-- Bloc 1 : Logo et Infos de l'association -->
+    <div class="footer-col footer-brand">
+      <img src="assets/icons/logo-codabli.svg" alt="Logo Codabli" class="footer-logo" />
+      <div class="brand-info">
+        <h3>{{ assoInfo().name }}</h3>
+        <p>{{ assoInfo().address }}</p>
+        <p>{{ assoInfo().city }}</p>
+      </div>
+    </div>
+
+    <!-- Bloc 2 : Contact -->
+    <div class="footer-col footer-contact">
+      <h4>Contactez-nous</h4>
+      <p>Tél. : {{ assoInfo().phone }}</p>
+      <a routerLink="/contact">Contactez l'asso</a>
+    </div>
+
+    <!-- Bloc 3 : Réseaux sociaux -->
+    <div class="footer-col footer-social">
+      <h4>Suivez-nous</h4>
+      <div class="social-icons">
+        @for (social of socialLinks(); track social.name) {
+        <a [href]="social.url" target="_blank" rel="noopener noreferrer" [title]="social.name">
+          <img [src]="social.iconUrl" [alt]="social.name" class="social-icon" />
+        </a>
+        }
+      </div>
+    </div>
+
+    <!-- Bloc 4 : Partenaires -->
+    <div class="footer-col footer-partners">
+      <h4>Nos partenaires</h4>
+      <p>Fondation AG2R La Mondiale</p>
+    </div>
+
+    <!-- Bouton Retour en haut -->
+    <div class="footer-col footer-action">
+      <button class="scroll-to-top" (click)="scrollToTop()" aria-label="Retour en haut de page">
+        ↑
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Barre de bas de page (Liens légaux) -->
+  <div class="footer-bottom">
+    <div class="footer-legal-links">
+      @for (link of legalLinks(); track link.path) {
+      <a [routerLink]="link.path">{{ link.label }}</a>
+      }
+    </div>
+  </div>
+</footer>

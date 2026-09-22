@@ -10,5 +10,7 @@
   "include": [
     "src/**/*.d.ts",
     "src/**/*.spec.ts"
-, "src/app/shared/components/button/button.spec.component.ts", "src/app/shared/components/tale-card/tale-card.spec.component.ts"  ]
+, "src/app/shared/components/button/button.spec.component.ts",
+    "src/app/shared/components/tale-card/tale-card.component.spec.ts"
+  ]
 }

@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideTranslateHttpLoader(),
-        provideTranslateService({
+    provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: '/i18n/',
         suffix: '.json',
@@ -17,5 +17,5 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'fr',
       lang: 'fr',
     }),
-  ]
+  ],
 };

@@ -1,0 +1,61 @@
+{
+  "contact": {
+    "title": "Nous contacter",
+    "description": "Texte explicatif de cette page...",
+
+    "form": {
+      "profile": {
+        "label": "Votre profil",
+        "placeholder": "Sélectionnez votre profil",
+        "options": {
+          "school": "Établissement scolaire",
+          "student": "Élève / Étudiant",
+          "parent": "Parent",
+          "other": "Autre"
+        }
+      },
+
+      "fullName": {
+        "label": "Votre nom et prénom",
+        "placeholder": "Renseignez votre nom et prénom"
+      },
+
+      "schoolName": {
+        "label": "Nom de l'établissement scolaire",
+        "placeholder": "Renseignez le nom de l'établissement"
+      },
+
+      "country": {
+        "label": "Pays",
+        "placeholder": "Renseignez votre pays"
+      },
+
+      "email": {
+        "label": "Votre adresse mail",
+        "placeholder": "Renseignez votre adresse mail"
+      },
+
+      "subject": {
+        "label": "Sujet de votre demande",
+        "placeholder": "Sélectionnez le sujet de votre demande",
+        "options": {
+          "information": "Demande d'information",
+          "registration": "Inscription",
+          "technical": "Problème technique",
+          "other": "Autre"
+        }
+      },
+
+      "message": {
+        "label": "Décrivez votre demande",
+        "placeholder": "Décrivez votre demande"
+      },
+
+      "termsAccepted": {
+        "label": "J'accepte les CGU et la politique de confidentialité"
+      },
+
+      "submit": "Envoyer ma demande"
+    }
+  }
+}

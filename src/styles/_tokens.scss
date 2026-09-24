@@ -65,6 +65,9 @@
   --color-bg-tertiary-hover-ico: #b69eff;
 
   --color-bg-theme-default: rgba(201, 183, 255, 0.6);
+  --color-bg-surface: #fff;
+  --color-bg-navigation: rgba(235, 230, 250, 0.4);
+  --color-bg-page: #1356a0;
 
   // ======================================================
   // COLORS - Text
@@ -106,6 +109,19 @@
   --radius-button: 100px;
 
   // ======================================================
+  // SPACING
+  // ======================================================
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+}
+
+  // ======================================================
   // GRID - Responsive
   // ======================================================
 
@@ -144,4 +160,3 @@
       --grid-margin: 300px;
     }
   }
-}

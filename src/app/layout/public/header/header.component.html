@@ -1,0 +1,74 @@
+<header class="header">
+  <div class="header__grid grid">
+    <div class="header__content">
+      <button
+        class="header__menu-button"
+        type="button"
+        aria-label="Ouvrir le menu"
+      >
+        <app-icon
+          name="menu"
+          [size]="24"
+        />
+      </button>
+
+      <a
+        class="header__brand"
+        routerLink="/"
+        aria-label="Retour à l'accueil"
+      >
+        <img
+          class="header__logo"
+          src="/assets/brand/logo.svg"
+          alt=""
+        />
+      </a>
+
+      <div class="header__search">
+        <app-search-input />
+      </div>
+
+      <div class="header__actions">
+        <div class="header__language">
+          <span class="header__language-code">fr</span>
+
+          <button
+            class="header__language-button"
+            type="button"
+            aria-label="Choisir la langue"
+            aria-haspopup="menu"
+          >
+            <app-icon
+              name="arrow-down4"
+              [size]="20"
+            />
+          </button>
+        </div>
+
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir le panier"
+        >
+          <app-icon
+            name="shop"
+            [size]="24"
+          />
+        </button>
+
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir mon profil"
+        >
+          <app-icon
+            name="profile"
+            [size]="24"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-navbar />
+</header>

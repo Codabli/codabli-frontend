@@ -1,6 +1,10 @@
 @use './styles/tokens';
 @use 'flag-icons/sass/flag-icons' with (
-  $flag-icons-included-countries: ('fr', 'es', 'gb')
+  $flag-icons-included-countries: (
+    'fr',
+    'es',
+    'gb',
+  )
 );
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;800&display=swap');
@@ -8,6 +12,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo:wght@400;600;700&display=swap');
 
 /* Styles globaux */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
 
 body {
   margin: 0;
@@ -69,6 +83,7 @@ h6 {
 
 .grid {
   display: grid;
+  width: 100%;
 
   grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
 

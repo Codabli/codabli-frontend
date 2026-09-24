@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+  background-color: var(--color-bg-navigation);
+}
+
+.navbar__grid {
+  width: 100%;
+}
+
+.navbar__content {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  padding-block: var(--spacing-md);
+}
+
+// ======================================================
+// NAVIGATION
+// ======================================================
+
+.navbar__navigation {
+  display: flex;
+  align-items: center;
+
+  flex: 1;
+  min-width: 0;
+
+  gap: var(--spacing-lg);
+}
+
+.navbar__link {
+  flex: 1;
+  min-width: 0;
+  
+  color: var(--font-color-primary);
+
+  font-size: var(--font-size-navigation);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-navigation);
+
+  text-decoration: none;
+  text-align: center;
+  white-space: normal;
+
+  transition: opacity 150ms ease;
+
+  &:first-child {
+    text-align: left;
+  }
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-primary-focus);
+    outline-offset: 4px;
+  }
+
+  &--active {
+    // On ajoutera le style correspondant à l'onglet actif
+    // lorsque celui-ci sera défini dans la maquette.
+  }
+}
+
+// ======================================================
+// ACTIONS
+// ======================================================
+
+.navbar__subscribe {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  margin-left: var(--spacing-xl);
+}

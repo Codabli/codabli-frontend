@@ -57,5 +57,16 @@
 
       "submit": "Envoyer ma demande"
     }
-  }
+  },
+  "navbar": {
+    "dancedTales": "Bibliothèque - Contes dansés",
+    "interactiveGame": "Jeu Lecture Créative",
+    "storyCards": "Cartes à contes dansés",
+    "createDancedTale": "Créer mon conte dansé",
+    "artGallery": "Galerie d'art",
+    "shop": "Boutique",
+    "partners": "Partenaires",
+    "subscriptions": "Nos abonnements"
+    
+  } 
 }

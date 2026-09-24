@@ -1,0 +1,29 @@
+<nav
+  class="navbar"
+  aria-label="Navigation principale"
+>
+  <div class="navbar__grid grid">
+    <div class="navbar__content">
+      <div class="navbar__navigation">
+        @for (item of navItems; track item.route) {
+          <a
+            class="navbar__link"
+            [routerLink]="item.route"
+            routerLinkActive="navbar__link--active"
+          >
+            {{ item.labelKey | translate }}
+          </a>
+        }
+      </div>
+
+      <div class="navbar__subscribe">
+        <app-button
+          variant="tertiary"
+          routerLink="/subscriptions"
+        >
+          {{ 'navbar.subscriptions' | translate }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+</nav>

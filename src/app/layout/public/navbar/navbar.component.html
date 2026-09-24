@@ -11,14 +11,17 @@
             [routerLink]="item.route"
             routerLinkActive="navbar__link--active"
           >
-            {{ item.label }}
+            {{ item.labelKey | translate }}
           </a>
         }
       </div>
 
       <div class="navbar__subscribe">
-        <app-button variant="tertiary" routerLink="/subscriptions">
-          Nos abonnements
+        <app-button
+          variant="tertiary"
+          routerLink="/subscriptions"
+        >
+          {{ 'navbar.subscriptions' | translate }}
         </app-button>
       </div>
     </div>

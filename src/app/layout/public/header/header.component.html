@@ -30,45 +30,68 @@
 
       <div class="header__actions">
         <div class="header__language">
-          <span class="header__language-code">fr</span>
+          <span class="header__language-code">
+            {{ languageService.currentLanguage() }}
+          </span>
 
           <button
             class="header__language-button"
             type="button"
             aria-label="Choisir la langue"
             aria-haspopup="menu"
+            [attr.aria-expanded]="isLanguageMenuOpen()"
+            (click)="toggleLanguageMenu()"
           >
             <app-icon
               name="arrow-down4"
               [size]="20"
             />
           </button>
+
+          @if (isLanguageMenuOpen()) {
+            <div
+              class="header__language-menu"
+              role="menu"
+            >
+              @for (item of languageService.languages; track item.code) {
+                <button
+                  class="header__language-option"
+                  type="button"
+                  role="menuitemradio"
+                  [attr.aria-checked]="languageService.currentLanguage() === item.code"
+                  [class.header__language-option--active]="languageService.currentLanguage() === item.code"
+                  (click)="selectLanguage(item.code)"
+                >
+                  {{ item.label }}
+                </button>
+              }
+            </div>
+          }
         </div>
-
-        <button
-          class="header__action"
-          type="button"
-          aria-label="Ouvrir le panier"
-        >
-          <app-icon
-            name="shop"
-            [size]="24"
-          />
-        </button>
-
-        <button
-          class="header__action"
-          type="button"
-          aria-label="Ouvrir mon profil"
-        >
-          <app-icon
-            name="profile"
-            [size]="24"
-          />
-        </button>
       </div>
+
+      <button
+        class="header__action"
+        type="button"
+        aria-label="Ouvrir le panier"
+      >
+        <app-icon
+          name="shop"
+          [size]="24"
+        />
+      </button>
+
+      <button
+        class="header__action"
+        type="button"
+        aria-label="Ouvrir mon profil"
+      >
+        <app-icon
+          name="profile"
+          [size]="24"
+        />
+      </button>
     </div>
   </div>
-
   <app-navbar />
 </header>

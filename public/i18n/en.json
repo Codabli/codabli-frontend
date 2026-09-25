@@ -1,0 +1,61 @@
+{
+  "contact": {
+    "title": "Contact us",
+    "description": "Explanatory text for this page...",
+
+    "form": {
+      "profile": {
+        "label": "Your profile",
+        "placeholder": "Select your profile",
+        "options": {
+          "school": "School",
+          "student": "Student",
+          "parent": "Parent",
+          "other": "Other"
+        }
+      },
+
+      "fullName": {
+        "label": "Your full name",
+        "placeholder": "Enter your full name"
+      },
+
+      "schoolName": {
+        "label": "School name",
+        "placeholder": "Enter the name of your school"
+      },
+
+      "country": {
+        "label": "Country",
+        "placeholder": "Enter your country"
+      },
+
+      "email": {
+        "label": "Your email address",
+        "placeholder": "Enter your email address"
+      },
+
+      "subject": {
+        "label": "Subject of your request",
+        "placeholder": "Select the subject of your request",
+        "options": {
+          "information": "Information request",
+          "registration": "Registration",
+          "technical": "Technical issue",
+          "other": "Other"
+        }
+      },
+
+      "message": {
+        "label": "Describe your request",
+        "placeholder": "Describe your request"
+      },
+
+      "termsAccepted": {
+        "label": "I accept the Terms and Conditions and the Privacy Policy"
+      },
+
+      "submit": "Send my request"
+    }
+  }
+}

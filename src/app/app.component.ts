@@ -5,9 +5,9 @@ import { ContactComponent } from './pages/contact/contact.component';
 @Component({
   imports: [RouterOutlet, ContactComponent],
   selector: 'app-root',
-  styleUrl: './app.scss',
-  templateUrl: './app.html',
+  styleUrl: './app.component.scss',
+  templateUrl: './app.component.html',
 })
-export class App {
+export class AppComponent {
   protected readonly title = signal('codabli-frontend');
 }

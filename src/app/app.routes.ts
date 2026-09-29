@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { ContactComponent } from './pages/contact/contact.component';
+import { MainLayoutComponent } from './layout/public/main-layout/main-layout.component';
 
 export const routes: Routes = [
-    {
-        path: 'contact-us',
-        component: ContactComponent,
-    }
+  {
+    path: '',
+    component: MainLayoutComponent,
+  }
 ];

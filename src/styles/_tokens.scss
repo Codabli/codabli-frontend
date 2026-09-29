@@ -46,6 +46,8 @@
   // COLORS - Background
   // ======================================================
 
+  --color-white: #ffffff;
+
   --color-bg-primary-default: #fff699;
   --color-bg-primary-hover: #ffef4e;
   --color-bg-primary-focus: var(--color-bg-primary-default);
@@ -96,6 +98,8 @@
 
   --color-text-card: #00368c;
 
+  --color-text-muted: #333333;
+
   // ======================================================
   // COLORS - Border
   // ======================================================
@@ -105,6 +109,8 @@
   --color-border-tertiary-focus: #1356a0;
   --color-border-outline-default: #c9b7ff;
   --color-border-outline-hover: #5b0ebf;
+
+  --color-border-light: #eaeaea;
 
   --radius-button: 100px;
 

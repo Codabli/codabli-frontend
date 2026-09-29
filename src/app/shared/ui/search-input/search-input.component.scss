@@ -1,0 +1,66 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 48px;
+
+  padding-inline: var(--spacing-lg);
+
+  background-color: var(--color-bg-surface);
+
+  border: 1px solid var(--font-color-primary);
+  border-radius: var(--radius-button);
+
+  &:focus-within {
+    outline: 2px solid var(--color-border-primary-focus);
+    outline-offset: 2px;
+  }
+}
+
+.search-input__field {
+  flex: 1;
+  min-width: 0;
+
+  padding: 0;
+
+  color: var(--font-color-primary);
+  background: transparent;
+
+  border: 0;
+  outline: 0;
+
+  font: inherit;
+  font-size: var(--font-size-body);
+
+  &::placeholder {
+    color: var(--font-color-primary);
+    opacity: 0.6;
+  }
+
+  // Retire la croix native de certains navigateurs
+  &::-webkit-search-cancel-button {
+    appearance: none;
+  }
+}
+
+.search-input__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  padding: 0;
+
+  color: var(--font-color-primary);
+  background: transparent;
+
+  border: 0;
+
+  cursor: pointer;
+}

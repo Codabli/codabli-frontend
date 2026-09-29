@@ -57,5 +57,15 @@
 
       "submit": "Send my request"
     }
+  },
+  "navbar": {
+    "dancedTales": "Dance Tales Library",
+    "interactiveGame": "Creative Reading Game",
+    "storyCards": "Dance Story Cards",
+    "createDancedTale": "Create My Dance Tale",
+    "artGallery": "Art Gallery",
+    "shop": "Shop",
+    "partners": "Partners",
+    "subscriptions": "Our Subscriptions"
   }
 }

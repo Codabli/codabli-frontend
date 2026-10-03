@@ -1,0 +1,17 @@
+<section class="audience" id="publics" aria-labelledby="audience-title">
+  <div class="section-heading">
+    <h2 id="audience-title">À qui s’adresse-t-on&nbsp;?</h2>
+  </div>
+  <div class="audience__grid">
+    @for (audience of audiences; track audience.title) {
+      <article class="audience-card">
+        <img class="audience-card__image" [src]="audience.image" alt="" />
+        <h3>{{ audience.title }}</h3>
+        <p>{{ audience.description }}</p>
+        <button class="audience-card__link" type="button">
+          {{ audience.action }}
+        </button>
+      </article>
+    }
+  </div>
+</section>

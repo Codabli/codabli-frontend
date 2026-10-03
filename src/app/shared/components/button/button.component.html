@@ -2,50 +2,52 @@
   type="button"
   [class]="'button button--' + variant()"
   [class.button--with-icon]="icon() || navigationIcon()"
+  [class.button--carousel-icon]="carouselIcon()"
+  [attr.aria-label]="ariaLabel() || null"
   [disabled]="disabled()"
 >
-  @if (navigationIcon() === 'chevron-left') {
-    <span class="button__navigation-icon button__navigation-icon--chevron">
+  @if (carouselIcon()) {
+    <span
+      class="button__carousel-icon button__carousel-icon--circle-chevron"
+      aria-hidden="true"
+    >
       <i
-        class="fa-solid fa-chevron-left"
-        aria-hidden="true"
+        class="fa-solid"
+        [class.fa-chevron-left]="carouselIcon() === 'left'"
+        [class.fa-chevron-right]="carouselIcon() === 'right'"
       ></i>
     </span>
   }
 
-  @if (icon() && iconPosition() === 'left') {
-    <app-icon
-      [name]="icon()!"
-      [size]="24"
-    />
+  @if (navigationIcon() === "chevron-left") {
+    <span class="button__navigation-icon button__navigation-icon--chevron">
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </span>
   }
 
-  @if (navigationIcon() === 'circle-plus') {
+  @if (icon() && iconPosition() === "left") {
+    <app-icon [name]="icon()!" [size]="24" />
+  }
+
+  @if (navigationIcon() === "circle-plus") {
     <span class="button__navigation-icon button__navigation-icon--circle-plus">
-      <i
-        class="fa-solid fa-circle-plus"
-        aria-hidden="true"
-      ></i>
+      <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
     </span>
   }
 
-  <span class="button__label">
-    <ng-content />
-  </span>
-
-  @if (icon() && iconPosition() === 'right') {
-    <app-icon
-      [name]="icon()!"
-      [size]="24"
-    />
+  @if (!carouselIcon()) {
+    <span class="button__label">
+      <ng-content />
+    </span>
   }
 
-  @if (navigationIcon() === 'chevron-right') {
+  @if (icon() && iconPosition() === "right") {
+    <app-icon [name]="icon()!" [size]="24" />
+  }
+
+  @if (navigationIcon() === "chevron-right") {
     <span class="button__navigation-icon button__navigation-icon--chevron">
-      <i
-        class="fa-solid fa-chevron-right"
-        aria-hidden="true"
-      ></i>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
     </span>
   }
 </button>

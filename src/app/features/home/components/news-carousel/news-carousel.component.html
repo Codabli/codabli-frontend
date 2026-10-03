@@ -1,0 +1,51 @@
+<section class="news" id="actualite" aria-labelledby="news-title">
+  <div class="section-heading">
+    <h2 id="news-title">Notre actualité</h2>
+    <button class="news__all-link" type="button">
+      Voir toutes les actualités
+    </button>
+  </div>
+  <div
+    #newsTrack
+    class="news__track"
+    role="region"
+    aria-label="Articles d’actualité"
+    tabindex="0"
+  >
+    @for (item of news; track item.title) {
+      <article class="news-card">
+        <img
+          class="news-card__image"
+          [src]="item.image"
+          alt=""
+          loading="lazy"
+        />
+        <div class="news-card__body">
+          <p class="news-card__date">{{ item.date }}</p>
+          <h3>{{ item.title }}</h3>
+          <button class="news-card__link" type="button">En savoir plus</button>
+        </div>
+      </article>
+    }
+  </div>
+  <div
+    class="news__controls"
+    role="group"
+    aria-label="Navigation des actualités"
+  >
+    <app-button
+      class="news__control"
+      variant="tertiary"
+      carouselIcon="left"
+      ariaLabel="Actualité précédente"
+      (click)="scrollNews(-1)"
+    />
+    <app-button
+      class="news__control"
+      variant="tertiary"
+      carouselIcon="right"
+      ariaLabel="Actualité suivante"
+      (click)="scrollNews(1)"
+    />
+  </div>
+</section>

@@ -1,0 +1,102 @@
+.universe {
+  max-width: 1440px;
+  margin: auto;
+  padding: clamp(48px, 6vw, 84px) max(7vw, 32px);
+}
+
+.universe__title {
+  margin: 0 0 32px;
+  color: var(--font-color-primary);
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h1);
+  text-align: center;
+}
+
+.universe__content {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 24px;
+}
+
+.universe__visual {
+  display: grid;
+  aspect-ratio: 608 / 342;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 30px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.universe__copy h3 {
+  margin: 0;
+  color: var(--font-color-text-anthracite);
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-h3);
+}
+
+.universe__copy p {
+  margin: 18px 0 0;
+  color: #4e5b6d;
+  line-height: 1.65;
+}
+
+.universe__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 24px;
+  border: 0;
+  padding: 12px 20px;
+  border-radius: var(--radius-button);
+  background: var(--color-bg-primary-default);
+  color: var(--font-color-text-anthracite);
+  font-family: var(--font-family-arial), sans-serif;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+
+  &:hover {
+    background: var(--color-bg-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: 4px;
+  }
+}
+
+@media (max-width: 900px) {
+  .universe {
+    padding-inline: 6vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .universe {
+    padding: 48px 22px;
+  }
+
+  .universe__title {
+    margin-bottom: 24px;
+  }
+
+  .universe__content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

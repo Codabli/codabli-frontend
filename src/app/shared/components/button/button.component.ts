@@ -1,11 +1,14 @@
 import { Component, input } from '@angular/core';
 import { IconName, Icon } from '../icon/icon.component';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'tertiary-ico' | 'outline';
+export type ButtonVariant =
+  'primary' | 'secondary' | 'tertiary' | 'tertiary-ico' | 'outline';
 
 export type IconPosition = 'left' | 'right';
 
-export type ButtonNavigationIcon = 'chevron-left' | 'chevron-right' | 'circle-plus';
+export type ButtonNavigationIcon =
+  'chevron-left' | 'chevron-right' | 'circle-plus';
+export type ButtonCarouselIcon = 'left' | 'right';
 
 @Component({
   imports: [Icon],
@@ -21,4 +24,6 @@ export class Button {
   iconPosition = input<IconPosition>('left');
 
   navigationIcon = input<ButtonNavigationIcon | undefined>(undefined);
+  carouselIcon = input<ButtonCarouselIcon | undefined>(undefined);
+  ariaLabel = input<string | undefined>(undefined);
 }

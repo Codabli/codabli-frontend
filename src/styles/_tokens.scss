@@ -23,6 +23,11 @@
   --font-size-small: 14px;
   --font-size-large: 12px;
 
+  --font-family-primary: "Baloo";
+  --font-family-secondary: "Baloo 2";
+  --font-family-body: "Lato";
+  --font-family-arial: Arial;
+
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
@@ -113,6 +118,7 @@
   --color-border-light: #eaeaea;
 
   --radius-button: 100px;
+  --radius-card: 32px;
 
   // ======================================================
   // SPACING
@@ -125,44 +131,45 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
 }
 
-  // ======================================================
-  // GRID - Responsive
-  // ======================================================
+// ======================================================
+// GRID - Responsive
+// ======================================================
 
-  /* Tablette portrait - 832px */
-  @media (min-width: 832px) {
-    :root {
-      --grid-columns: 8;
-      --grid-gutter: 24px;
-      --grid-margin: 32px;
-    }
+/* Tablette portrait - 832px */
+@media (min-width: 832px) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
   }
+}
 
-  /* Desktop small - 1024px */
-  @media (min-width: 1024px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 16px;
-    }
+/* Desktop small - 1024px */
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 16px;
   }
+}
 
-  /* Desktop large - 1440px */
-  @media (min-width: 1440px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 96px;
-    }
+/* Desktop large - 1440px */
+@media (min-width: 1440px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 96px;
   }
+}
 
-  /* Desktop extra large - 1920px */
-  @media (min-width: 1920px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 300px;
-    }
+/* Desktop extra large - 1920px */
+@media (min-width: 1920px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 300px;
   }
+}

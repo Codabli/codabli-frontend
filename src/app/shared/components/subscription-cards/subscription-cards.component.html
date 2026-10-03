@@ -1,0 +1,33 @@
+<section
+  class="subscriptions"
+  id="abonnements"
+  aria-labelledby="subscriptions-title"
+>
+  <div class="subscriptions__inner">
+    <div class="subscriptions__heading">
+      <p class="eyebrow">Un abonnement selon vos envies</p>
+      <h2 id="subscriptions-title">Nos abonnements</h2>
+      <p>
+        Choisissez le parcours qui correspond à votre façon de vivre Codabli®.
+      </p>
+    </div>
+    <div class="subscriptions__grid">
+      @for (plan of plans; track plan.name) {
+        <article class="plan-card">
+          <span
+            class="plan-card__icon plan-card__icon--{{ plan.color }}"
+            aria-hidden="true"
+          >
+            <i [class]="plan.icon" aria-hidden="true"></i>
+          </span>
+          <h3>{{ plan.name }}</h3>
+          <p>{{ plan.description }}</p>
+          <button class="plan-card__link" type="button">
+            Découvrir la formule
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </article>
+      }
+    </div>
+  </div>
+</section>

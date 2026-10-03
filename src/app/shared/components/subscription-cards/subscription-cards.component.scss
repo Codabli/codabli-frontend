@@ -1,0 +1,141 @@
+:host {
+  display: block;
+}
+
+.subscriptions {
+  padding: clamp(64px, 8vw, 104px) max(7vw, 32px);
+  background: #fbf7f5;
+}
+
+.subscriptions__inner {
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.subscriptions__heading {
+  margin-bottom: 38px;
+  text-align: center;
+
+  .eyebrow {
+    margin: 0 0 12px;
+    color: #6954a8;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.9rem);
+    line-height: 1.08;
+  }
+
+  > p:last-child {
+    margin: 14px 0 0;
+    color: #5a6471;
+  }
+}
+
+.subscriptions__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.plan-card {
+  display: flex;
+  min-height: 270px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 24px;
+  padding: 30px 24px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(16, 43, 84, 0.05);
+  text-align: center;
+
+  h3 {
+    margin: 17px 0 0;
+    color: #171b24;
+    font-family: var(--font-family-secondary), sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  > p {
+    max-width: 280px;
+    margin: 12px 0 24px;
+    color: #596372;
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+}
+
+.plan-card__icon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 1.35rem;
+}
+
+.plan-card__icon--yellow {
+  background: #fff699;
+}
+.plan-card__icon--pink {
+  background: #f6c0dc;
+}
+.plan-card__icon--blue {
+  background: #b7e7f3;
+}
+
+.plan-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: #fff699;
+  color: var(--color-text-primary-default);
+  font-family: var(--font-family-arial), sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+
+  &:hover {
+    background: #ffef4e;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 800px) {
+  .subscriptions {
+    padding-inline: 6vw;
+  }
+
+  .subscriptions__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .subscriptions {
+    padding: 64px 22px;
+  }
+
+  .subscriptions__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .plan-card {
+    min-height: 240px;
+  }
+}

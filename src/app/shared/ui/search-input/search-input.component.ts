@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Icon } from '../../components/icon/icon.component';
+import { IconComponent } from '../../components/icon/icon.component';
 
 @Component({
-  imports: [Icon],
+  imports: [IconComponent],
   selector: 'app-search-input',
   styleUrl: './search-input.component.scss',
   templateUrl: './search-input.component.html',

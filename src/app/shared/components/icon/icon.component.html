@@ -123,6 +123,36 @@
   </svg>
 }
 
+@if (name() === 'arrow-circle-left') {
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM13.79 15C14.08 15.29 14.08 15.77 13.79 16.06C13.64 16.21 13.45 16.28 13.26 16.28C13.07 16.28 12.88 16.21 12.73 16.06L9.2 12.53C8.91 12.24 8.91 11.76 9.2 11.47L12.73 7.94C13.02 7.65 13.5 7.65 13.79 7.94C14.08 8.23 14.08 8.71 13.79 9L10.79 12L13.79 15Z"
+      fill="currentColor"
+    />
+  </svg>
+}
+
+@if (name() === 'arrow-circle-right') {
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM14.79 12.53L11.26 16.06C11.11 16.21 10.92 16.28 10.73 16.28C10.54 16.28 10.35 16.21 10.2 16.06C9.91 15.77 9.91 15.29 10.2 15L13.2 12L10.2 9C9.91 8.71 9.91 8.23 10.2 7.94C10.49 7.65 10.97 7.65 11.26 7.94L14.79 11.47C15.09 11.76 15.09 12.24 14.79 12.53Z"
+      fill="currentColor"
+    />
+  </svg>
+}
+
 <!-- @if (name() === 'profile') {
   <svg
     [attr.width]="size()"
@@ -223,6 +253,76 @@
       fill="white"
       stroke="currentColor"
       style="fill: var(--fillg)"
+    />
+  </svg>
+}
+
+@if (name() === 'grid') {
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M11.25 12.75V22H7.81C4.17 22 2 19.83 2 16.19V12.75H11.25Z"
+      fill="currrentColor"
+      style="fill: var(--fillg)"
+    />
+    <path
+      d="M22 7.81V11.25H12.75V2H16.19C19.83 2 22 4.17 22 7.81Z"
+      fill="currrentColor"
+      style="fill: var(--fillg)"
+    />
+    <path
+      d="M11.25 2V11.25H2V7.81C2 4.17 4.17 2 7.81 2H11.25Z"
+      fill="currrentColor"
+      style="fill: var(--fillg)"
+    />
+    <path
+      d="M22 12.75V16.19C22 19.83 19.83 22 16.19 22H12.75V12.75H22Z"
+      fill="currrentColor"
+      style="fill: var(--fillg)"
+    />
+  </svg>
+}
+
+@if (name() === 'switch-on') {
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      opacity="0.4"
+      d="M10.14 3.85938H13.86C18.35 3.85938 22 7.50938 22 11.9994C22 16.4894 18.35 20.1394 13.86 20.1394H10.14C5.65 20.1394 2 16.4894 2 11.9994C2 7.50938 5.65 3.85938 10.14 3.85938Z"
+      fill="currentColor"
+    />
+    <path
+      d="M13.8599 16.4201C16.301 16.4201 18.2799 14.4412 18.2799 12.0001C18.2799 9.55898 16.301 7.58008 13.8599 7.58008C11.4188 7.58008 9.43994 9.55898 9.43994 12.0001C9.43994 14.4412 11.4188 16.4201 13.8599 16.4201Z"
+      fill="currentColor"
+    />
+  </svg>
+}
+@if (name() === 'switch-off') {
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    viewBox="0 0 24 24"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      opacity="0.4"
+      d="M13.86 3.85938H10.14C5.65 3.85938 2 7.50938 2 11.9994C2 16.4894 5.65 20.1394 10.14 20.1394H13.86C18.35 20.1394 22 16.4894 22 11.9994C22 7.50938 18.35 3.85938 13.86 3.85938Z"
+      fill="currentColor"
+    />
+    <path
+      d="M10.1402 16.4201C12.5813 16.4201 14.5602 14.4412 14.5602 12.0001C14.5602 9.55898 12.5813 7.58008 10.1402 7.58008C7.69912 7.58008 5.72021 9.55898 5.72021 12.0001C5.72021 14.4412 7.69912 16.4201 10.1402 16.4201Z"
+      fill="currentColor"
     />
   </svg>
 }

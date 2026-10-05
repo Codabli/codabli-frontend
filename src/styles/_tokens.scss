@@ -7,6 +7,7 @@
   --grid-columns: 4;
   --grid-gutter: 16px;
   --grid-margin: 24px;
+  --grid-max-width: none;
 
   // ======================================================
   // TYPOGRAPHY
@@ -119,6 +120,9 @@
   --color-border-outline-hover: #5b0ebf;
 
   --color-border-light: #eaeaea;
+  --color-border-search: #ffcf9f;
+  --shadow-search: 0 0 20px 0 rgb(255 207 159 / 50%);
+  --shadow-search-focus: 0 0px 50px 0 rgb(255 207 159 / 70%);
 
   --radius-button: 100px;
   --radius-card: 32px;
@@ -159,14 +163,14 @@
   }
 }
 
-/* Desktop large - 1440px */
-@media (min-width: 1440px) {
-  :root {
-    --grid-columns: 12;
-    --grid-gutter: 32px;
-    --grid-margin: 96px;
+  /* Desktop large - 1440px */
+  @media (min-width: 1440px) {
+    :root {
+      --grid-columns: 12;
+      --grid-gutter: 32px;
+      --grid-margin: 96px;
+    }
   }
-}
 
 /* Desktop extra large - 1920px */
 @media (min-width: 1920px) {

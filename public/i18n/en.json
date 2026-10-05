@@ -285,6 +285,15 @@
     "partners": "Partners",
     "subscriptions": "Our Subscriptions"
   },
+  "library": {
+    "title": "Dance Tales Library",
+    "subtitle": "Discover our dance tales",
+    "viewList": "List view",
+    "viewGrid": "Grid view",
+    "talesFound": "tales found",
+    "showMoreResults": "Show more results",
+    "showLessResults": "Show less results"
+  },
   "home": {
     "hero": {
       "ariaLabel": "Welcome to the world of Codabli",

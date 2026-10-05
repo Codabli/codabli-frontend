@@ -9,6 +9,13 @@ export const routes: Routes = [
     children: [
       ...HOME_ROUTES,
       {
+        path: 'danced-tales',
+        loadComponent: () =>
+          import('./features/library/library.component').then(
+            (m) => m.LibraryComponent
+          ),
+      },
+      {
         path: 'creer-un-compte/enseignant',
         loadComponent: () =>
           import('./pages/teacher-account/teacher-account.component').then(

@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.library-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+
+  width: 100%;
+}
+
+.library-carousel__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding-block: var(--spacing-2xl);
+}
+
+.library-carousel__track {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  touch-action: pan-y pinch-zoom;
+}
+
+.library-carousel__item {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 calc((100% - (2 * var(--spacing-lg))) / 3);
+  min-width: 0;
+
+  app-tale-card {
+    width: min(100%, 320px);
+  }
+}
+
+.library-carousel__item--active {
+  app-tale-card {
+    width: min(100%, 380px);
+
+    --card-cover-width: 210px;
+    --card-border-width: 3px;
+    --card-border-color: var(--color-border-outline-default);
+  }
+}
+
+.library-carousel__navigation {
+  position: relative;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  color: var(--font-color-primary);
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+}
+
+.library-carousel__navigation--previous {
+  transform: translateX(24px);
+}
+
+.library-carousel__navigation--next {
+  transform: translateX(-24px);
+}

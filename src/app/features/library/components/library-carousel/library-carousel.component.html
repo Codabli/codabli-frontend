@@ -1,0 +1,41 @@
+<div class="library-carousel">
+  <button
+    class="library-carousel__navigation library-carousel__navigation--previous"
+    type="button"
+    aria-label="Conte précédent"
+    (click)="previous()"
+  >
+    <app-icon
+      name="arrow-circle-left"
+      [size]="24"
+    />
+  </button>
+
+  <div
+    #viewport
+    class="library-carousel__viewport"
+  >
+    <div class="library-carousel__track">
+      @for (tale of tales(); track tale.id; let index = $index) {
+        <div
+          class="library-carousel__item"
+          [class.library-carousel__item--active]="index === selectedIndex()"
+        >
+          <app-tale-card [tale]="tale" />
+        </div>
+      }
+    </div>
+  </div>
+
+  <button
+    class="library-carousel__navigation library-carousel__navigation--next"
+    type="button"
+    aria-label="Conte suivant"
+    (click)="next()"
+  >
+    <app-icon
+      name="arrow-circle-right"
+      [size]="24"
+    />
+  </button>
+</div>

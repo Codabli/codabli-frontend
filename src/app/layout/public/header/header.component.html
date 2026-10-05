@@ -29,7 +29,7 @@
       </div>
 
       <div class="header__actions">
-        <div class="header__language">
+        <div #languageSelector class="header__language">
           <span class="header__language-code">
             {{ languageService.currentLanguage() }}
           </span>
@@ -68,29 +68,28 @@
             </div>
           }
         </div>
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir le panier"
+        >
+          <app-icon
+            name="shop"
+            [size]="24"
+          />
+        </button>
+
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir mon profil"
+        >
+          <app-icon
+            name="profile"
+            [size]="24"
+          />
+        </button>
       </div>
-
-      <button
-        class="header__action"
-        type="button"
-        aria-label="Ouvrir le panier"
-      >
-        <app-icon
-          name="shop"
-          [size]="24"
-        />
-      </button>
-
-      <button
-        class="header__action"
-        type="button"
-        aria-label="Ouvrir mon profil"
-      >
-        <app-icon
-          name="profile"
-          [size]="24"
-        />
-      </button>
     </div>
   </div>
   <app-navbar />

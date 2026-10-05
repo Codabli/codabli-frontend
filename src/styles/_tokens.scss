@@ -7,6 +7,7 @@
   --grid-columns: 4;
   --grid-gutter: 16px;
   --grid-margin: 24px;
+  --grid-max-width: none;
 
   // ======================================================
   // TYPOGRAPHY
@@ -68,8 +69,9 @@
 
   --color-bg-theme-default: rgba(201, 183, 255, 0.6);
   --color-bg-surface: #fff;
-  --color-bg-navigation: rgba(235, 230, 250, 0.4);
-  --color-bg-page: #1356a0;
+  --color-bg-header: #fff;
+  --color-bg-navigation:#F4B8D6;
+  --color-bg-page: #A0C5FC;
 
   // ======================================================
   // COLORS - Text
@@ -111,8 +113,13 @@
   --color-border-outline-hover: #5b0ebf;
 
   --color-border-light: #eaeaea;
+  --color-border-search: #ffcf9f;
+  --shadow-search: 0 0 20px 0 rgb(255 207 159 / 50%);
+  --shadow-search-focus: 0 0px 50px 0 rgb(255 207 159 / 70%);
 
   --radius-button: 100px;
+
+  --shadow-card: 0 0 30px 0 rgb(0 0 0 / 15%);
 
   // ======================================================
   // SPACING
@@ -120,49 +127,51 @@
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
+  --spacing-md: 10px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
 }
 
-  // ======================================================
-  // GRID - Responsive
-  // ======================================================
+// ======================================================
+// GRID - Responsive
+// ======================================================
 
-  /* Tablette portrait - 832px */
-  @media (min-width: 832px) {
-    :root {
-      --grid-columns: 8;
-      --grid-gutter: 24px;
-      --grid-margin: 32px;
-    }
+/* Tablette portrait - 832px */
+@media (min-width: 832px) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
   }
+}
 
-  /* Desktop small - 1024px */
-  @media (min-width: 1024px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 16px;
-    }
+/* Desktop small - 1024px */
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 16px;
   }
+}
 
-  /* Desktop large - 1440px */
-  @media (min-width: 1440px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 96px;
-    }
+/* Desktop large - 1440px */
+@media (min-width: 1440px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 0px;
+    --grid-max-width: 1324px;
   }
+}
 
-  /* Desktop extra large - 1920px */
-  @media (min-width: 1920px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 300px;
-    }
+/* Desktop extra large - 1920px */
+@media (min-width: 1920px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 300px;
   }
+}

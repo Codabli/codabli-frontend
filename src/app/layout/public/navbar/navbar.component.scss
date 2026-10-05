@@ -20,7 +20,10 @@
 
   width: 100%;
 
-  padding-block: var(--spacing-md);
+  min-width: 0;
+
+  padding-inline: var(--spacing-2xl);
+  padding-block: var(--spacing-sm);
 }
 
 // ======================================================
@@ -30,17 +33,18 @@
 .navbar__navigation {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   flex: 1;
   min-width: 0;
 
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
 }
 
 .navbar__link {
   flex: 1;
   min-width: 0;
-  
+
   color: var(--font-color-primary);
 
   font-size: var(--font-size-navigation);
@@ -81,5 +85,5 @@
   align-items: center;
   justify-content: flex-end;
   flex-shrink: 0;
-  margin-left: var(--spacing-xl);
+  margin-left: var(--spacing-2xl);
 }

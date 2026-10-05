@@ -1,0 +1,71 @@
+<img
+  class="page-banner"
+  src="/assets/images/banner.webp"
+  alt=""
+/>
+
+<section class="library">
+  <header class="library__header">
+    <h1 class="library__title">
+      {{ 'library.title' | translate }}
+    </h1>
+
+    <p class="library__subtitle">
+      {{ 'library.subtitle' | translate }}
+    </p>
+  </header>
+
+  <app-library-filters />
+
+  <section class="library__results">
+    <div class="library__results-content">
+      <div class="library__results-header">
+        <p class="library__results-count">{{ tales().length }} {{ 'library.talesFound' | translate }}</p>
+
+        <div class="library__view-toggle">
+          <app-icon
+            name="grid"
+            [size]="24"
+          />
+
+          <span>{{ showAllResults() ? ('library.viewList' | translate) : ('library.viewGrid' | translate) }}</span>
+
+          <button
+            type="button"
+            class="library__view-switch"
+            role="switch"
+            [attr.aria-checked]="showAllResults()"
+            aria-label="Afficher tous les contes"
+            (click)="toggleResultsView()"
+          >
+            <app-icon
+              [name]="showAllResults() ? 'switch-on' : 'switch-off'"
+              [size]="24"
+            />
+          </button>
+        </div>
+      </div>
+
+      @if (showAllResults()) {
+        <div class="library__results-grid">
+          @for (tale of tales(); track tale.id) {
+            <app-tale-card [tale]="tale" />
+          }
+        </div>
+      } @else {
+        <app-library-carousel [tales]="tales()" />
+      }
+    </div>
+
+    <div class="library__more">
+      <app-button
+        variant="tertiary"
+        (click)="showMoreResults()"
+        [iconPosition]="'left'"
+        [navigationIcon]="showAllResults() ? 'circle-minus' : 'circle-plus'"
+      >
+        {{ showAllResults() ? ('library.showLessResults' | translate) : ('library.showMoreResults' | translate) }}
+      </app-button>
+    </div>
+  </section>
+</section>

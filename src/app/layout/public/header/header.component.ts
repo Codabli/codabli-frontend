@@ -1,9 +1,9 @@
 import { Component, ElementRef, inject, signal, viewChild, HostListener } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { SearchInputComponent } from '../../../shared/ui/search-input/search-input.component';
-import { IconComponent } from '../../../shared/components/icon/icon.component';
-import { AppLanguage } from '../../../models/types/app-language.type';
-import { LanguageService } from '../../../core/services/language.service';
+import { SearchInputComponent } from '@shared/ui/search-input/search-input.component';
+import { IconComponent } from '@shared/components/icon/icon.component';
+import { AppLanguage } from '@models/types/app-language.type';
+import { LanguageService } from '@core/services/language.service';
 
 @Component({
   imports: [NavbarComponent, SearchInputComponent, IconComponent],

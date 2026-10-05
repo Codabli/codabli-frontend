@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Tale } from '../../models/interfaces/tale.interface';
-import { Button } from '../../shared/components/button/button.component';
-import { TaleCardComponent } from '../../shared/components/tale-card/tale-card.component';
+import { Tale } from '@models/interfaces/tale.interface';
+import { Button } from '@shared/components/button/button.component';
+import { TaleCardComponent } from '@shared/components/tale-card/tale-card.component';
 import { LibraryCarouselComponent } from './components/library-carousel/library-carousel.component';
 import { LibraryFiltersComponent } from './components/library-filters/library-filters.component';
-import { IconComponent } from '../../shared/components/icon/icon.component';
+import { IconComponent } from '@shared/components/icon/icon.component';
 
 @Component({
   imports: [TranslatePipe, TaleCardComponent, LibraryFiltersComponent, Button, LibraryCarouselComponent, IconComponent],

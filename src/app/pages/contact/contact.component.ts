@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactForm } from './contact.form';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../shared/components/button/button.component';
+import { Button } from '@shared/components/button/button.component';
 
 @Component({
   imports: [ReactiveFormsModule, TranslatePipe, Button],

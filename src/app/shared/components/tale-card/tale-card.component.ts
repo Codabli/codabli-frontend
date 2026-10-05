@@ -1,8 +1,8 @@
 import { Component, Input, input } from '@angular/core';
 import { Button } from '../button/button.component';
-import { IconComponent } from '../icon/icon.component';
-import type { Tale } from '../../../models/interfaces/tale.interface';
-import { LanguageFlag } from '../language-flag/language-flag.component';
+import { IconComponent } from '@shared/components/icon/icon.component';
+import type { Tale } from '@models/interfaces/tale.interface';
+import { LanguageFlag } from '@shared/components/language-flag/language-flag.component';
 
 @Component({
   imports: [Button, IconComponent, LanguageFlag],

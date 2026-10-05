@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Button } from '../../../shared/components/button/button.component';
+import { Button } from '@shared/components/button/button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import type { NavItem } from '../../../models/interfaces/nav-item.interface';
 

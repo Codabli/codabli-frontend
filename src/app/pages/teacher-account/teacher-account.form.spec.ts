@@ -14,6 +14,7 @@ function fillValidForm(form: TeacherAccountForm): void {
     email: 'lea.martin@ac-paris.fr',
     password: VALID_PASSWORD,
     passwordConfirmation: VALID_PASSWORD,
+    termsAccepted: true,
   });
 }
 
@@ -30,10 +31,19 @@ describe('TeacherAccountForm', () => {
     expect(form.valid).toBe(true);
   });
 
-  it('should keep the platform goal optional', () => {
+  it('should keep the platform goal and accessibility needs optional', () => {
     fillValidForm(form);
 
     expect(form.controls.platformGoal.valid).toBe(true);
+    expect(form.controls.accessibility.valid).toBe(true);
+  });
+
+  it('should require the GDPR / terms consent', () => {
+    fillValidForm(form);
+    form.controls.termsAccepted.setValue(false);
+
+    expect(form.controls.termsAccepted.hasError('required')).toBe(true);
+    expect(form.valid).toBe(false);
   });
 
   it.each(['schoolId', 'academy', 'ageRange', 'girlsCount', 'boysCount'] as const)(
@@ -100,13 +110,20 @@ describe('TeacherAccountForm', () => {
 
   it('should build a clean payload without the password confirmation', () => {
     fillValidForm(form);
-    form.patchValue({ lastName: '  Martin ', email: ' Lea.Martin@AC-Paris.fr ' });
+    form.patchValue({
+      lastName: '  Martin ',
+      email: ' Lea.Martin@AC-Paris.fr ',
+      accessibility: { highContrast: true, dysPmrSupport: true },
+    });
 
     const account = form.toTeacherAccount();
 
     expect(account.lastName).toBe('Martin');
     expect(account.email).toBe('lea.martin@ac-paris.fr');
     expect(account.girlsCount).toBe(12);
+    expect(account.accessibilityNeeds).toEqual(['highContrast', 'dysPmrSupport']);
+    expect(account.subscriptionOfferId).toBeNull();
+    expect(account.termsAccepted).toBe(true);
     expect(account).not.toHaveProperty('passwordConfirmation');
   });
 });

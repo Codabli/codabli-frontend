@@ -68,7 +68,9 @@
     "sections": {
       "class": "About your class",
       "personal": "Personal information",
-      "password": "Password"
+      "password": "Password",
+      "accessibility": "Specific needs",
+      "subscription": "Subscription"
     },
     "form": {
       "school": {
@@ -131,6 +133,27 @@
         "label": "Repeat the password",
         "placeholder": "Enter your password"
       },
+      "accessibility": {
+        "legend": "Optional: tick the adjustments you or your pupils need.",
+        "options": {
+          "highContrast": "High contrast",
+          "reducedMotion": "Reduced motion",
+          "signLanguageAudioDescription": "Sign language / Audio description",
+          "dysPmrSupport": "Support for dyslexia-related and reduced-mobility needs"
+        }
+      },
+      "subscription": {
+        "legend": "Optional: choose an offer now or later from your account. The subscription will be finalised once your account is created.",
+        "later": "I'll choose later",
+        "laterDescription": "Create your account and explore the platform before subscribing.",
+        "duration": {
+          "mensuel": "per month",
+          "annuel": "per year"
+        }
+      },
+      "termsAccepted": {
+        "label": "I accept the Terms of Use and the Privacy Policy, and I undertake to respect pupils' image rights."
+      },
       "submit": "Confirm and create my account"
     },
     "errors": {
@@ -142,7 +165,8 @@
       "minLength": "This field must contain at least {{min}} characters.",
       "maxLength": "This field must contain at most {{max}} characters.",
       "passwordStrength": "The password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",
-      "passwordMismatch": "Passwords do not match."
+      "passwordMismatch": "Passwords do not match.",
+      "termsRequired": "You must accept the terms to create your account."
     }
   }
 }

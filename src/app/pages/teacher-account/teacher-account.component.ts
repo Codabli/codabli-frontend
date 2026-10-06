@@ -3,11 +3,18 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { catchError, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
+import { LanguageService } from '../../core/services/language.service';
 import { SchoolService } from '../../core/services/school.service';
+import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
 import { Button } from '../../shared/components/button/button.component';
 import { TeacherAccountForm } from './teacher-account.form';
-import { ACADEMIES, AGE_RANGES, PLATFORM_GOALS } from './teacher-account.options';
+import {
+  ACADEMIES,
+  ACCESSIBILITY_NEEDS,
+  AGE_RANGES,
+  PLATFORM_GOALS,
+} from './teacher-account.options';
 
 export interface FieldError {
   key: string;
@@ -43,10 +50,13 @@ const ERROR_MESSAGES: Record<string, (error: any) => FieldError> = {
 })
 export class TeacherAccountComponent {
   private readonly schoolService = inject(SchoolService);
+  private readonly subscriptionOfferService = inject(SubscriptionOfferService);
+  private readonly languageService = inject(LanguageService);
 
   readonly academies = ACADEMIES;
   readonly ageRanges = AGE_RANGES;
   readonly platformGoals = PLATFORM_GOALS;
+  readonly accessibilityNeeds = ACCESSIBILITY_NEEDS;
 
   schoolsUnavailable = signal(false);
 
@@ -60,9 +70,25 @@ export class TeacherAccountComponent {
     { initialValue: [] },
   );
 
+  // En cas d'erreur, la zone propose seulement « Je choisirai plus tard ».
+  subscriptionOffers = toSignal(
+    this.subscriptionOfferService.getOffers('enseignant').pipe(
+      map((offers) => offers.filter((offer) => offer.actif)),
+      catchError(() => of([])),
+    ),
+    { initialValue: [] },
+  );
+
   teacherAccountForm = new TeacherAccountForm();
 
   submitAttempted = signal(false);
+
+  formatPrice(amount: number): string {
+    return new Intl.NumberFormat(this.languageService.currentLanguage(), {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(amount);
+  }
 
   hasError(control: AbstractControl): boolean {
     return control.invalid && (control.touched || this.submitAttempted());

@@ -4,7 +4,13 @@ import {
   passwordMatchValidator,
   passwordStrengthValidator,
 } from '../../shared/validators/password.validators';
-import { Academy, AgeRange, PlatformGoal } from './teacher-account.options';
+import {
+  Academy,
+  ACCESSIBILITY_NEEDS,
+  AccessibilityNeed,
+  AgeRange,
+  PlatformGoal,
+} from './teacher-account.options';
 
 export const NAME_MIN_LENGTH = 2;
 export const NAME_MAX_LENGTH = 50;
@@ -24,6 +30,8 @@ const studentCountValidators = [
   Validators.pattern(/^\d+$/),
 ];
 
+type AccessibilityControls = Record<AccessibilityNeed, FormControl<boolean>>;
+
 export interface TeacherAccount {
   schoolId: string;
   academy: Academy;
@@ -35,6 +43,9 @@ export interface TeacherAccount {
   firstName: string;
   email: string;
   password: string;
+  accessibilityNeeds: AccessibilityNeed[];
+  subscriptionOfferId: string | null;
+  termsAccepted: boolean;
 }
 
 export class TeacherAccountForm extends FormGroup<{
@@ -49,6 +60,9 @@ export class TeacherAccountForm extends FormGroup<{
   email: FormControl<string>;
   password: FormControl<string>;
   passwordConfirmation: FormControl<string>;
+  accessibility: FormGroup<AccessibilityControls>;
+  subscriptionOfferId: FormControl<string | null>;
+  termsAccepted: FormControl<boolean>;
 }> {
   constructor() {
     super(
@@ -91,6 +105,20 @@ export class TeacherAccountForm extends FormGroup<{
           nonNullable: true,
           validators: Validators.required,
         }),
+
+        accessibility: new FormGroup(
+          Object.fromEntries(
+            ACCESSIBILITY_NEEDS.map((need) => [need, new FormControl(false, { nonNullable: true })]),
+          ) as AccessibilityControls,
+        ),
+
+        // null = « Je choisirai plus tard » : la souscription se fait une fois connecté.
+        subscriptionOfferId: new FormControl<string | null>(null),
+
+        termsAccepted: new FormControl(false, {
+          nonNullable: true,
+          validators: Validators.requiredTrue,
+        }),
       },
       { validators: passwordMatchValidator('password', 'passwordConfirmation') },
     );
@@ -111,6 +139,9 @@ export class TeacherAccountForm extends FormGroup<{
       firstName: value.firstName.trim(),
       email: value.email.trim().toLowerCase(),
       password: value.password,
+      accessibilityNeeds: ACCESSIBILITY_NEEDS.filter((need) => value.accessibility[need]),
+      subscriptionOfferId: value.subscriptionOfferId,
+      termsAccepted: value.termsAccepted,
     };
   }
 }

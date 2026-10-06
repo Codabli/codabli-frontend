@@ -52,3 +52,13 @@ export const PLATFORM_GOALS = [
 ] as const;
 
 export type PlatformGoal = (typeof PLATFORM_GOALS)[number];
+
+// Libellés traduits via teacherAccount.form.accessibility.options.<valeur>.
+export const ACCESSIBILITY_NEEDS = [
+  'highContrast',
+  'reducedMotion',
+  'signLanguageAudioDescription',
+  'dysPmrSupport',
+] as const;
+
+export type AccessibilityNeed = (typeof ACCESSIBILITY_NEEDS)[number];

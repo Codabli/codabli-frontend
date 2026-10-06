@@ -68,7 +68,9 @@
     "sections": {
       "class": "Informations sur votre classe",
       "personal": "Informations personnelles",
-      "password": "Mot de passe"
+      "password": "Mot de passe",
+      "accessibility": "Besoins spécifiques",
+      "subscription": "Abonnement"
     },
     "form": {
       "school": {
@@ -131,6 +133,27 @@
         "label": "Répétez le mot de passe",
         "placeholder": "Renseignez votre mot de passe"
       },
+      "accessibility": {
+        "legend": "Optionnel : cochez les adaptations dont vous ou vos élèves avez besoin.",
+        "options": {
+          "highContrast": "Contraste élevé",
+          "reducedMotion": "Réduction des animations",
+          "signLanguageAudioDescription": "Support LSF/Audiodescription",
+          "dysPmrSupport": "Prise en charge des besoins DYS/PMR"
+        }
+      },
+      "subscription": {
+        "legend": "Optionnel : choisissez une offre maintenant ou plus tard depuis votre espace. La souscription sera finalisée après la création de votre compte.",
+        "later": "Je choisirai plus tard",
+        "laterDescription": "Créez votre compte et découvrez la plateforme avant de vous abonner.",
+        "duration": {
+          "mensuel": "par mois",
+          "annuel": "par an"
+        }
+      },
+      "termsAccepted": {
+        "label": "J'accepte les Conditions Générales d'Utilisation et la Politique de Confidentialité, et je m'engage à respecter le droit à l'image des élèves."
+      },
       "submit": "Valider et créer mon compte"
     },
     "errors": {
@@ -142,7 +165,8 @@
       "minLength": "Ce champ doit contenir au moins {{min}} caractères.",
       "maxLength": "Ce champ doit contenir au maximum {{max}} caractères.",
       "passwordStrength": "Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",
-      "passwordMismatch": "Les mots de passe ne correspondent pas."
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "termsRequired": "Vous devez accepter les conditions pour créer votre compte."
     }
   }
 }

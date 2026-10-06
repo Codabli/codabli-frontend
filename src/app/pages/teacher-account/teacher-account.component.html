@@ -308,10 +308,118 @@
       </div>
     </section>
 
-    <div class="teacher-account__actions">
-      <app-button variant="tertiary" type="submit">
-        {{ 'teacherAccount.form.submit' | translate }}
-      </app-button>
+    <!-- Besoins spécifiques (optionnel) -->
+    <section class="form-section" aria-labelledby="accessibility-title">
+      <h2 id="accessibility-title" class="form-section__title">
+        {{ 'teacherAccount.sections.accessibility' | translate }}
+      </h2>
+
+      <fieldset class="form-section__checkboxes" formGroupName="accessibility">
+        <legend class="form-section__legend">
+          {{ 'teacherAccount.form.accessibility.legend' | translate }}
+        </legend>
+
+        @for (need of accessibilityNeeds; track need) {
+          <div class="form-checkbox">
+            <input [id]="'accessibility-' + need" type="checkbox" [formControlName]="need" />
+
+            <label [for]="'accessibility-' + need">
+              {{ 'teacherAccount.form.accessibility.options.' + need | translate }}
+            </label>
+          </div>
+        }
+      </fieldset>
+    </section>
+
+    <!-- Abonnement (optionnel) : la souscription se fait une fois le compte créé -->
+    <section class="form-section" aria-labelledby="subscription-title">
+      <h2 id="subscription-title" class="form-section__title">
+        {{ 'teacherAccount.sections.subscription' | translate }}
+      </h2>
+
+      <fieldset class="subscription-offers">
+        <legend class="form-section__legend">
+          {{ 'teacherAccount.form.subscription.legend' | translate }}
+        </legend>
+
+        <label class="subscription-offer" for="subscription-later">
+          <input
+            id="subscription-later"
+            type="radio"
+            name="subscriptionOfferId"
+            formControlName="subscriptionOfferId"
+            [value]="null"
+          />
+
+          <span class="subscription-offer__body">
+            <span class="subscription-offer__name">
+              {{ 'teacherAccount.form.subscription.later' | translate }}
+            </span>
+            <span class="subscription-offer__description">
+              {{ 'teacherAccount.form.subscription.laterDescription' | translate }}
+            </span>
+          </span>
+        </label>
+
+        @for (offer of subscriptionOffers(); track offer.id) {
+          <label class="subscription-offer" [for]="'subscription-' + offer.id">
+            <input
+              [id]="'subscription-' + offer.id"
+              type="radio"
+              name="subscriptionOfferId"
+              formControlName="subscriptionOfferId"
+              [value]="offer.id"
+            />
+
+            <span class="subscription-offer__body">
+              <span class="subscription-offer__name">{{ offer.nom }}</span>
+
+              @if (offer.description) {
+                <span class="subscription-offer__description">{{ offer.description }}</span>
+              }
+            </span>
+
+            <span class="subscription-offer__price">
+              {{ formatPrice(offer.tarif) }}
+              <span class="subscription-offer__duration">
+                {{ 'teacherAccount.form.subscription.duration.' + offer.duree | translate }}
+              </span>
+            </span>
+          </label>
+        }
+      </fieldset>
+    </section>
+
+    <div class="teacher-account__footer">
+      <!-- Consentements RGPD & CGU -->
+      <div class="teacher-account__consent">
+        <div class="form-checkbox">
+          <input
+            id="termsAccepted"
+            type="checkbox"
+            formControlName="termsAccepted"
+            [attr.aria-invalid]="hasError(f.termsAccepted)"
+            aria-describedby="termsAccepted-error"
+            required
+          />
+
+          <label for="termsAccepted">
+            {{ 'teacherAccount.form.termsAccepted.label' | translate }}
+          </label>
+        </div>
+
+        @if (hasError(f.termsAccepted)) {
+          <p id="termsAccepted-error" class="form-field__error">
+            {{ 'teacherAccount.errors.termsRequired' | translate }}
+          </p>
+        }
+      </div>
+
+      <div class="teacher-account__actions">
+        <app-button variant="tertiary" type="submit">
+          {{ 'teacherAccount.form.submit' | translate }}
+        </app-button>
+      </div>
     </div>
   </form>
 </section>

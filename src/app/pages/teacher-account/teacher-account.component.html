@@ -1,0 +1,317 @@
+@let f = teacherAccountForm.controls;
+
+<section class="teacher-account grid">
+  <nav class="teacher-account__breadcrumb" [attr.aria-label]="'teacherAccount.breadcrumb.label' | translate">
+    <ol>
+      <li>
+        <a routerLink="/">{{ 'teacherAccount.breadcrumb.home' | translate }}</a>
+      </li>
+      <li aria-current="page">{{ 'teacherAccount.title' | translate }}</li>
+    </ol>
+  </nav>
+
+  <h1 class="teacher-account__title">{{ 'teacherAccount.title' | translate }}</h1>
+
+  <form
+    class="teacher-account__form"
+    [formGroup]="teacherAccountForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <!-- Informations sur votre classe -->
+    <section class="form-section" aria-labelledby="class-title">
+      <h2 id="class-title" class="form-section__title">
+        {{ 'teacherAccount.sections.class' | translate }}
+      </h2>
+
+      <div class="form-section__fields">
+        <div class="form-field">
+          <label for="schoolId">{{ 'teacherAccount.form.school.label' | translate }}</label>
+
+          <select
+            id="schoolId"
+            formControlName="schoolId"
+            [attr.aria-invalid]="hasError(f.schoolId)"
+            aria-describedby="schoolId-error"
+            required
+          >
+            <option [ngValue]="null" disabled>
+              {{ 'teacherAccount.form.school.placeholder' | translate }}
+            </option>
+
+            @for (school of schools(); track school.id) {
+              <option [ngValue]="school.id">
+                {{ school.nom }}{{ school.ville ? ' (' + school.ville + ')' : '' }}
+              </option>
+            }
+          </select>
+
+          @if (fieldError(f.schoolId); as error) {
+            <p id="schoolId-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          } @else if (schoolsUnavailable()) {
+            <p id="schoolId-error" class="form-field__error">
+              {{ 'teacherAccount.form.school.unavailable' | translate }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="academy">{{ 'teacherAccount.form.academy.label' | translate }}</label>
+
+          <select
+            id="academy"
+            formControlName="academy"
+            [attr.aria-invalid]="hasError(f.academy)"
+            aria-describedby="academy-error"
+            required
+          >
+            <option [ngValue]="null" disabled>
+              {{ 'teacherAccount.form.academy.placeholder' | translate }}
+            </option>
+
+            @for (academy of academies; track academy) {
+              <option [ngValue]="academy">{{ academy }}</option>
+            }
+          </select>
+
+          @if (fieldError(f.academy); as error) {
+            <p id="academy-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="ageRange">{{ 'teacherAccount.form.ageRange.label' | translate }}</label>
+
+          <select
+            id="ageRange"
+            formControlName="ageRange"
+            [attr.aria-invalid]="hasError(f.ageRange)"
+            aria-describedby="ageRange-error"
+            required
+          >
+            <option [ngValue]="null" disabled>
+              {{ 'teacherAccount.form.ageRange.placeholder' | translate }}
+            </option>
+
+            @for (ageRange of ageRanges; track ageRange) {
+              <option [ngValue]="ageRange">
+                {{ 'teacherAccount.form.ageRange.options.' + ageRange | translate }}
+              </option>
+            }
+          </select>
+
+          @if (fieldError(f.ageRange); as error) {
+            <p id="ageRange-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="girlsCount">{{ 'teacherAccount.form.girlsCount.label' | translate }}</label>
+
+          <input
+            id="girlsCount"
+            type="number"
+            inputmode="numeric"
+            min="0"
+            max="99"
+            step="1"
+            formControlName="girlsCount"
+            [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.girlsCount)"
+            aria-describedby="girlsCount-error"
+            required
+          />
+
+          @if (fieldError(f.girlsCount); as error) {
+            <p id="girlsCount-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="boysCount">{{ 'teacherAccount.form.boysCount.label' | translate }}</label>
+
+          <input
+            id="boysCount"
+            type="number"
+            inputmode="numeric"
+            min="0"
+            max="99"
+            step="1"
+            formControlName="boysCount"
+            [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.boysCount)"
+            aria-describedby="boysCount-error"
+            required
+          />
+
+          @if (fieldError(f.boysCount); as error) {
+            <p id="boysCount-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="platformGoal">{{ 'teacherAccount.form.platformGoal.label' | translate }}</label>
+
+          <select id="platformGoal" formControlName="platformGoal">
+            <option [ngValue]="null">
+              {{ 'teacherAccount.form.platformGoal.placeholder' | translate }}
+            </option>
+
+            @for (platformGoal of platformGoals; track platformGoal) {
+              <option [ngValue]="platformGoal">
+                {{ 'teacherAccount.form.platformGoal.options.' + platformGoal | translate }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Informations personnelles -->
+    <section class="form-section" aria-labelledby="personal-title">
+      <h2 id="personal-title" class="form-section__title">
+        {{ 'teacherAccount.sections.personal' | translate }}
+      </h2>
+
+      <div class="form-section__fields">
+        <div class="form-field">
+          <label for="lastName">{{ 'teacherAccount.form.lastName.label' | translate }}</label>
+
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            autocomplete="family-name"
+            maxlength="50"
+            [placeholder]="'teacherAccount.form.lastName.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.lastName)"
+            aria-describedby="lastName-error"
+            required
+          />
+
+          @if (fieldError(f.lastName); as error) {
+            <p id="lastName-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="firstName">{{ 'teacherAccount.form.firstName.label' | translate }}</label>
+
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            autocomplete="given-name"
+            maxlength="50"
+            [placeholder]="'teacherAccount.form.firstName.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.firstName)"
+            aria-describedby="firstName-error"
+            required
+          />
+
+          @if (fieldError(f.firstName); as error) {
+            <p id="firstName-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="email">{{ 'teacherAccount.form.email.label' | translate }}</label>
+
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            [placeholder]="'teacherAccount.form.email.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.email)"
+            aria-describedby="email-error"
+            required
+          />
+
+          @if (fieldError(f.email); as error) {
+            <p id="email-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Mot de passe -->
+    <section class="form-section" aria-labelledby="password-title">
+      <h2 id="password-title" class="form-section__title">
+        {{ 'teacherAccount.sections.password' | translate }}
+      </h2>
+
+      <div class="form-section__fields">
+        <div class="form-field">
+          <label for="password">{{ 'teacherAccount.form.password.label' | translate }}</label>
+
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="new-password"
+            [placeholder]="'teacherAccount.form.password.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.password)"
+            aria-describedby="password-error"
+            required
+          />
+
+          @if (fieldError(f.password); as error) {
+            <p id="password-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="passwordConfirmation">
+            {{ 'teacherAccount.form.passwordConfirmation.label' | translate }}
+          </label>
+
+          <input
+            id="passwordConfirmation"
+            type="password"
+            formControlName="passwordConfirmation"
+            autocomplete="new-password"
+            [placeholder]="'teacherAccount.form.passwordConfirmation.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.passwordConfirmation) || hasPasswordMismatch()"
+            aria-describedby="passwordConfirmation-error"
+            required
+          />
+
+          @if (fieldError(f.passwordConfirmation); as error) {
+            <p id="passwordConfirmation-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          } @else if (hasPasswordMismatch()) {
+            <p id="passwordConfirmation-error" class="form-field__error">
+              {{ 'teacherAccount.errors.passwordMismatch' | translate }}
+            </p>
+          }
+        </div>
+      </div>
+    </section>
+
+    <div class="teacher-account__actions">
+      <app-button variant="tertiary" type="submit">
+        {{ 'teacherAccount.form.submit' | translate }}
+      </app-button>
+    </div>
+  </form>
+</section>

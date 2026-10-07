@@ -58,6 +58,28 @@
       "submit": "Envoyer ma demande"
     }
   },
+
+    "login": {
+    "title": "Connexion",
+    "description": "Connectez-vous à votre compte",
+    "form": {
+      "email": {
+        "label": "Adresse mail",
+        "placeholder": "Renseignez votre adresse mail"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "submit": "Me connecter"
+    },
+    "register": {
+      "title": "Ou créez un nouveau compte",
+      "teacher": "Compte enseignant",
+      "family": "Compte famille"
+    }
+  },
+
   "navbar": {
     "dancedTales": "Bibliothèque - Contes dansés",
     "interactiveGame": "Jeu Lecture Créative",

@@ -1,0 +1,62 @@
+<section class="login grid">
+  <div class="login__content">
+
+    <header class="login__header">
+      <h1>{{ 'login.title' | translate }}</h1>
+      <p>{{ 'login.description' | translate }}</p>
+    </header>
+
+    <form
+      class="login-form"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-field">
+        <label for="email">
+          {{ 'login.form.email.label' | translate }}
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          [placeholder]="'login.form.email.placeholder' | translate"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="password">
+          {{ 'login.form.password.label' | translate }}
+        </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          [placeholder]="'login.form.password.placeholder' | translate"
+        />
+      </div>
+
+      <div class="login-form__actions">
+        <app-button variant="tertiary" type="submit">
+          {{ 'login.form.submit' | translate }}
+        </app-button>
+      </div>
+    </form>
+
+    <div class="login__register">
+      <p>{{ 'login.register.title' | translate }}</p>
+
+      <div class="login__register-actions">
+        <app-button variant="tertiary" routerLink="/register/teacher">
+          {{ 'login.register.teacher' | translate }}
+        </app-button>
+
+        <app-button variant="tertiary" routerLink="/register/family">
+          {{ 'login.register.family' | translate }}
+        </app-button>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,5 +1,5 @@
 <button
-  type="button"
+  [type]="type()"
   [class]="'button button--' + variant()"
   [class.button--with-icon]="icon() || navigationIcon()"
   [disabled]="disabled()"

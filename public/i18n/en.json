@@ -58,6 +58,28 @@
       "submit": "Send my request"
     }
   },
+
+    "login": {
+    "title": "Log in",
+    "description": "Log in to your account",
+    "form": {
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Log in"
+    },
+    "register": {
+      "title": "Or create a new account",
+      "teacher": "Teacher account",
+      "family": "Family account"
+    }
+  },
+
   "navbar": {
     "dancedTales": "Dance Tales Library",
     "interactiveGame": "Creative Reading Game",

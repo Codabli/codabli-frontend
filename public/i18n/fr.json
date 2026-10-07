@@ -58,6 +58,110 @@
       "submit": "Envoyer ma demande"
     }
   },
+  "createDancedTale": {
+    "title": "Créez votre conte dansé sur-mesure",
+    "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
+    "next": "Étape suivante",
+
+    "steps": {
+      "label": "Étapes de création du conte dansé",
+      "position": "Étape {{current}} sur {{total}} :",
+      "context": "Contexte du projet",
+      "discovery": "Découverte artistique",
+      "resources": "Ressources culturelles",
+      "classResources": "Ressources de la classe",
+      "universe": "Univers du conte",
+      "structure": "Trame du récit",
+      "writing": "Écriture de l'histoire",
+      "staging": "Adaptation et scénographie"
+    },
+
+    "comingSoon": {
+      "message": "Le contexte de votre projet est enregistré. Cette étape sera bientôt disponible.",
+      "back": "Revenir au contexte du projet"
+    },
+
+    "context": {
+      "requiredHint": "Les champs marqués d'un * sont obligatoires.",
+
+      "ageRange": {
+        "title": "L'âge des acteurs",
+        "label": "Choisissez la tranche d'âge de la classe",
+        "option": "{{range}} ans",
+        "error": "Choisissez une tranche d'âge."
+      },
+
+      "location": {
+        "title": "Votre zone géographique",
+        "country": {
+          "label": "Pays",
+          "placeholder": "Ex : France",
+          "error": "Renseignez le pays de votre établissement."
+        },
+        "region": {
+          "label": "Région",
+          "placeholder": "Ex : Centre-Val de Loire",
+          "error": "Renseignez la région de votre établissement."
+        },
+        "city": {
+          "label": "Ville",
+          "placeholder": "Ex : Tours"
+        }
+      },
+
+      "theme": {
+        "title": "Le monde de votre conte dansé",
+        "label": "Thème pédagogique principal",
+        "placeholder": "Rechercher ou saisir un thème",
+        "hint": "Choisissez un thème dans la liste ou saisissez le vôtre.",
+        "error": "Renseignez un thème pédagogique.",
+        "suggestions": {
+          "fantasy": "Fantastique",
+          "worldTales": "Contes du monde",
+          "mythsAndLegends": "Mythes et légendes",
+          "middleAges": "Le Moyen Âge",
+          "nature": "Nature et environnement",
+          "animals": "Les animaux",
+          "emotions": "Les émotions",
+          "livingTogether": "Vivre ensemble",
+          "travel": "Le voyage"
+        }
+      },
+
+      "ingredients": {
+        "title": "Les ingrédients secrets",
+        "label": "Ajoutez des détails ou des mots-clés (facultatif)",
+        "placeholder": "Ex : châteaux forts, dragons, voyage dans le temps...",
+        "hint": "Appuyez sur Entrée ou sur « Ajouter » pour créer un mot-clé.",
+        "add": "Ajouter",
+        "listLabel": "Ingrédients secrets ajoutés",
+        "remove": "Retirer « {{ingredient}} »"
+      },
+
+      "space": {
+        "title": "L'espace de représentation",
+        "label": "Où le conte dansé sera-t-il présenté ?",
+        "options": {
+          "salle_spectacle": {
+            "title": "Salle de spectacle",
+            "description": "Avec coulisses, pendrillons, côté jardin et côté cour"
+          },
+          "gymnase": {
+            "title": "Gymnase",
+            "description": "Un grand espace ouvert, sans décor fixe"
+          },
+          "classe": {
+            "title": "Classe",
+            "description": "Un espace réduit, à aménager"
+          },
+          "exterieur": {
+            "title": "Extérieur",
+            "description": "Cour, jardin ou espace en plein air"
+          }
+        }
+      }
+    }
+  },
   "navbar": {
     "dancedTales": "Bibliothèque - Contes dansés",
     "interactiveGame": "Jeu Lecture Créative",

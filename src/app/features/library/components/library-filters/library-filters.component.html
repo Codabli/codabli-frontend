@@ -61,14 +61,17 @@
       <div class="library-filters__controls">
         <app-filter-select
           [placeholder]="'library.filters.themes.placeholder' | translate"
+          [options]="themeOptions()"
         />
 
         <app-filter-select
           [placeholder]="'library.filters.age.placeholder' | translate"
+          [options]="ageOptions()"
         />
 
         <app-filter-select
           [placeholder]="'library.filters.languages.placeholder' | translate"
+          [options]="languageOptions()"
         />
       </div>
 

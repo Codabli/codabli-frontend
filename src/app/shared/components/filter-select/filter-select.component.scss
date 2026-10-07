@@ -31,6 +31,15 @@
   white-space: nowrap;
 }
 
+.filter-select__icon {
+  display: inline-flex;
+  transition: transform 150ms ease;
+}
+
+.filter-select__icon--open {
+  transform: rotate(180deg);
+}
+
 .filter-select__dropdown {
   position: absolute;
   z-index: 10;
@@ -39,4 +48,24 @@
   left: 0;
 
   min-width: 100%;
+  padding: var(--spacing-sm);
+
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-select-filters);
+  border-radius: 16px;
+}
+
+.filter-select__option {
+  padding: var(--spacing-sm) var(--spacing-lg);
+
+  font-family: 'Lato', sans-serif;
+  font-size: var(--font-size-small);
+  color: var(--font-color-primary);
+  text-align: left;
+  white-space: nowrap;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
 }

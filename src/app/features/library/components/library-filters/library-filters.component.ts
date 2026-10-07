@@ -1,4 +1,5 @@
 import { Component, signal, output } from '@angular/core';
+import type { FilterSelectOption } from '@models/interfaces/filter-select-option.interface';
 import type { TaleFilters } from '@models/interfaces/tale-filters.interface';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonComponent } from '@shared/components/button/button.component';
@@ -20,6 +21,10 @@ export class LibraryFiltersComponent {
   protected readonly search = signal('');
 
   readonly filtersChange = output<TaleFilters>();
+
+  protected readonly themeOptions = signal<FilterSelectOption[]>([]);
+  protected readonly languageOptions = signal<FilterSelectOption[]>([]);
+  protected readonly ageOptions = signal<FilterSelectOption[]>([]);
 
   protected onSearch(value: string): void {
     this.search.set(value);

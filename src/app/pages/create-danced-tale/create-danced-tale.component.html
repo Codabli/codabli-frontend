@@ -1,0 +1,41 @@
+<section class="create-danced-tale grid">
+  <header class="create-danced-tale__header">
+    <h1>{{ 'createDancedTale.title' | translate }}</h1>
+    <p>{{ 'createDancedTale.subtitle' | translate }}</p>
+  </header>
+
+  <nav
+    class="stepper"
+    [attr.aria-label]="'createDancedTale.steps.label' | translate"
+  >
+    <ol class="stepper__list">
+      @for (step of steps; track step.path; let i = $index) {
+        <li
+          class="stepper__item"
+          [class.stepper__item--done]="i < currentIndex()"
+          [class.stepper__item--current]="i === currentIndex()"
+          [attr.aria-current]="i === currentIndex() ? 'step' : null"
+        >
+          <span class="stepper__number" aria-hidden="true">
+            @if (i < currentIndex()) {
+              <i class="fa-solid fa-check"></i>
+            } @else {
+              {{ i + 1 }}
+            }
+          </span>
+
+          <span class="stepper__label">
+            <span class="visually-hidden">
+              {{ 'createDancedTale.steps.position' | translate: { current: i + 1, total: steps.length } }}
+            </span>
+            {{ step.labelKey | translate }}
+          </span>
+        </li>
+      }
+    </ol>
+  </nav>
+
+  <div class="create-danced-tale__content">
+    <router-outlet />
+  </div>
+</section>

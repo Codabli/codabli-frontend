@@ -1,0 +1,284 @@
+<form
+  class="project-context"
+  [formGroup]="form"
+  (ngSubmit)="onNext()"
+  novalidate
+>
+  <p class="project-context__required-hint">
+    {{ 'createDancedTale.context.requiredHint' | translate }}
+  </p>
+
+  <!-- 1. Tranche d'âge -->
+  <fieldset
+    class="form-section"
+    [attr.aria-describedby]="hasError('ageRange') ? 'ageRange-error' : null"
+  >
+    <legend class="form-section__title">
+      {{ 'createDancedTale.context.ageRange.title' | translate }}
+      <span class="required" aria-hidden="true">*</span>
+    </legend>
+
+    <p class="form-section__label">
+      {{ 'createDancedTale.context.ageRange.label' | translate }}
+    </p>
+
+    <div class="pill-group">
+      @for (ageRange of ageRanges; track ageRange) {
+        <label class="pill">
+          <input
+            type="radio"
+            name="ageRange"
+            [id]="'ageRange-' + ageRange"
+            formControlName="ageRange"
+            [value]="ageRange"
+          />
+          <span class="pill__label">
+            {{ 'createDancedTale.context.ageRange.option' | translate: { range: ageRange } }}
+          </span>
+        </label>
+      }
+    </div>
+
+    @if (hasError('ageRange')) {
+      <p id="ageRange-error" class="form-error">
+        {{ 'createDancedTale.context.ageRange.error' | translate }}
+      </p>
+    }
+  </fieldset>
+
+  <!-- 2. Localisation (pas de géolocalisation automatique) -->
+  <fieldset class="form-section">
+    <legend class="form-section__title">
+      {{ 'createDancedTale.context.location.title' | translate }}
+    </legend>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="country">
+          {{ 'createDancedTale.context.location.country.label' | translate }}
+          <span class="required" aria-hidden="true">*</span>
+        </label>
+
+        <input
+          id="country"
+          type="text"
+          formControlName="country"
+          autocomplete="country-name"
+          required
+          [attr.aria-invalid]="hasError('country')"
+          [attr.aria-describedby]="hasError('country') ? 'country-error' : null"
+          [placeholder]="'createDancedTale.context.location.country.placeholder' | translate"
+        />
+
+        @if (hasError('country')) {
+          <p id="country-error" class="form-error">
+            {{ 'createDancedTale.context.location.country.error' | translate }}
+          </p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="region">
+          {{ 'createDancedTale.context.location.region.label' | translate }}
+          <span class="required" aria-hidden="true">*</span>
+        </label>
+
+        <input
+          id="region"
+          type="text"
+          formControlName="region"
+          autocomplete="address-level1"
+          required
+          [attr.aria-invalid]="hasError('region')"
+          [attr.aria-describedby]="hasError('region') ? 'region-error' : null"
+          [placeholder]="'createDancedTale.context.location.region.placeholder' | translate"
+        />
+
+        @if (hasError('region')) {
+          <p id="region-error" class="form-error">
+            {{ 'createDancedTale.context.location.region.error' | translate }}
+          </p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="city">
+          {{ 'createDancedTale.context.location.city.label' | translate }}
+        </label>
+
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          autocomplete="address-level2"
+          [placeholder]="'createDancedTale.context.location.city.placeholder' | translate"
+        />
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- 3. Thème pédagogique -->
+  <fieldset class="form-section">
+    <legend class="form-section__title">
+      {{ 'createDancedTale.context.theme.title' | translate }}
+    </legend>
+
+    <div class="form-field">
+      <label for="theme">
+        {{ 'createDancedTale.context.theme.label' | translate }}
+        <span class="required" aria-hidden="true">*</span>
+      </label>
+
+      <div class="input-with-icon">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+
+        <input
+          id="theme"
+          type="search"
+          formControlName="theme"
+          list="theme-suggestions"
+          autocomplete="off"
+          required
+          [attr.aria-invalid]="hasError('theme')"
+          [attr.aria-describedby]="hasError('theme') ? 'theme-hint theme-error' : 'theme-hint'"
+          [placeholder]="'createDancedTale.context.theme.placeholder' | translate"
+        />
+      </div>
+
+      <datalist id="theme-suggestions">
+        @for (key of themeSuggestionKeys; track key) {
+          <option [value]="'createDancedTale.context.theme.suggestions.' + key | translate"></option>
+        }
+      </datalist>
+
+      <p id="theme-hint" class="form-hint">
+        {{ 'createDancedTale.context.theme.hint' | translate }}
+      </p>
+
+      @if (hasError('theme')) {
+        <p id="theme-error" class="form-error">
+          {{ 'createDancedTale.context.theme.error' | translate }}
+        </p>
+      }
+    </div>
+  </fieldset>
+
+  <!-- 4. Ingrédients secrets (RG-CMC-02) -->
+  <fieldset class="form-section">
+    <legend class="form-section__title">
+      {{ 'createDancedTale.context.ingredients.title' | translate }}
+    </legend>
+
+    <div class="form-field">
+      <label for="ingredient">
+        {{ 'createDancedTale.context.ingredients.label' | translate }}
+      </label>
+
+      <div class="ingredient-input">
+        <input
+          id="ingredient"
+          type="text"
+          autocomplete="off"
+          aria-describedby="ingredient-hint"
+          [formControl]="ingredientInput"
+          [maxlength]="ingredientMaxLength"
+          [placeholder]="'createDancedTale.context.ingredients.placeholder' | translate"
+          (keydown)="onIngredientKeydown($event)"
+        />
+
+        <app-button
+          variant="outline"
+          navigationIcon="circle-plus"
+          (click)="addIngredient()"
+        >
+          {{ 'createDancedTale.context.ingredients.add' | translate }}
+        </app-button>
+      </div>
+
+      <p id="ingredient-hint" class="form-hint">
+        {{ 'createDancedTale.context.ingredients.hint' | translate }}
+      </p>
+    </div>
+
+    @if (form.controls.secretIngredients.value.length) {
+      <ul
+        class="chip-list"
+        [attr.aria-label]="'createDancedTale.context.ingredients.listLabel' | translate"
+      >
+        @for (ingredient of form.controls.secretIngredients.value; track ingredient; let i = $index) {
+          <li class="chip">
+            <span>{{ ingredient }}</span>
+
+            <button
+              type="button"
+              class="chip__remove"
+              [attr.aria-label]="'createDancedTale.context.ingredients.remove' | translate: { ingredient }"
+              (click)="removeIngredient(i)"
+            >
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </fieldset>
+
+  <!-- 5. Espace de représentation -->
+  <fieldset class="form-section">
+    <legend class="form-section__title">
+      {{ 'createDancedTale.context.space.title' | translate }}
+    </legend>
+
+    <p class="form-section__label">
+      {{ 'createDancedTale.context.space.label' | translate }}
+    </p>
+
+    <div class="space-cards">
+      @for (space of performanceSpaces; track space) {
+        <label class="space-card">
+          <input
+            type="radio"
+            name="performanceSpace"
+            [id]="'performanceSpace-' + space"
+            formControlName="performanceSpace"
+            [value]="space"
+          />
+
+          <span class="space-card__body">
+            <i
+              class="fa-solid space-card__icon"
+              [class]="performanceSpaceIcons[space]"
+              aria-hidden="true"
+            ></i>
+
+            <span class="space-card__title">
+              {{ 'createDancedTale.context.space.options.' + space + '.title' | translate }}
+            </span>
+
+            <span class="space-card__description">
+              {{ 'createDancedTale.context.space.options.' + space + '.description' | translate }}
+            </span>
+          </span>
+        </label>
+      }
+    </div>
+  </fieldset>
+
+  @if (saveErrorKey(); as errorKey) {
+    <p class="project-context__save-error" role="alert">
+      {{ errorKey | translate }}
+    </p>
+  }
+
+  <div class="project-context__actions">
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      [disabled]="saving()"
+      (click)="onNext()"
+    >
+      {{ (saving() ? 'createDancedTale.saving' : 'createDancedTale.next') | translate }}
+    </app-button>
+  </div>
+</form>

@@ -72,6 +72,9 @@
   --color-bg-header: #fff;
   --color-bg-navigation:#F4B8D6;
   --color-bg-page: #A0C5FC;
+  --color-background-filters: #b7e7f3;
+
+  --color-bg-select-filters: #fff;
 
   // ======================================================
   // COLORS - Text
@@ -114,6 +117,8 @@
 
   --color-border-light: #eaeaea;
   --color-border-search: #ffcf9f;
+  --color-border-select-filters: #E0E0E0;
+
   --shadow-search: 0 0 20px 0 rgb(255 207 159 / 50%);
   --shadow-search-focus: 0 0px 50px 0 rgb(255 207 159 / 70%);
 
@@ -131,7 +136,7 @@
   --spacing-lg: 16px;
   --spacing-xl: 24px;
   --spacing-2xl: 32px;
-  --spacing-3xl: 48px;
+  --spacing-3xl: 40px;
   --spacing-4xl: 64px;
 }
 

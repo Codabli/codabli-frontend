@@ -201,7 +201,25 @@
     "viewGrid": "Vue grille",
     "talesFound": "contes trouvés",
     "showLessResults": "Moins de résultats",
-    "showMoreResults": "Plus de résultats"
+    "showMoreResults": "Plus de résultats",
+    "search": {
+      "title": "Recherche",
+      "placeholder": "Veuillez saisir les mots-clés",
+      "button": "Rechercher"
+    },
+    "filters": {
+      "title": "Filtres avancés",
+      "reset": "Réinitialiser les filtres",
+      "themes": {
+        "placeholder": "Sélectionnez vos thématiques"
+      },
+      "age": {
+        "placeholder": "Sélectionnez un âge"
+      },
+      "languages": {
+        "placeholder": "Sélectionnez une ou des langue(s)"
+      }
+    }
   },
   "teacherAccount": {
     "breadcrumb": {

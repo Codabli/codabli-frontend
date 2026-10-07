@@ -1,4 +1,11 @@
-import { Component, input, signal, viewChild, ElementRef, afterNextRender } from '@angular/core';
+import {
+  Component,
+  input,
+  signal,
+  viewChild,
+  ElementRef,
+  afterNextRender,
+} from '@angular/core';
 import { Tale } from '@models/interfaces/tale.interface';
 import { TaleCardComponent } from '../../../../shared/components/tale-card/tale-card.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
@@ -16,7 +23,8 @@ export class LibraryCarouselComponent {
 
   private emblaApi?: EmblaCarouselType;
 
-  private readonly viewport = viewChild.required<ElementRef<HTMLElement>>('viewport');
+  private readonly viewport =
+    viewChild.required<ElementRef<HTMLElement>>('viewport');
 
   constructor() {
     afterNextRender(() => {

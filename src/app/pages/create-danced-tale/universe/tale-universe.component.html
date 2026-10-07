@@ -1,0 +1,349 @@
+<form
+  class="tale-universe"
+  [formGroup]="form"
+  (ngSubmit)="onNext()"
+  novalidate
+>
+  <header class="tale-universe__intro">
+    <h2 class="tale-universe__title">
+      {{ 'createDancedTale.universe.title' | translate }}
+    </h2>
+
+    @if (theme) {
+      <p class="tale-universe__theme">
+        {{ 'createDancedTale.universe.theme' | translate }}
+        <strong>{{ theme }}</strong>
+      </p>
+    }
+
+    <p class="tale-universe__description">
+      {{ 'createDancedTale.universe.description' | translate }}
+    </p>
+
+    <p class="tale-universe__hint">
+      {{ 'createDancedTale.universe.requiredHint' | translate }}
+    </p>
+  </header>
+
+  <datalist id="role-suggestions">
+    @for (key of roleSuggestionKeys; track key) {
+      <option [value]="'createDancedTale.universe.card.role.suggestions.' + key | translate"></option>
+    }
+  </datalist>
+
+  @for (section of sections; track section) {
+    <section
+      class="universe-section"
+      [attr.aria-labelledby]="section + '-title'"
+    >
+      <div class="universe-section__header">
+        <div class="universe-section__heading">
+          <h3
+            [id]="section + '-title'"
+            class="universe-section__title"
+          >
+            <i
+              class="fa-solid"
+              [class]="sectionIcons[section]"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.universe.sections.' + section + '.title' | translate }}
+          </h3>
+
+          <p class="universe-section__question">
+            {{ 'createDancedTale.universe.sections.' + section + '.question' | translate }}
+          </p>
+        </div>
+
+        <app-button
+          [id]="'add-' + section"
+          variant="outline"
+          navigationIcon="circle-plus"
+          (click)="addCard(section)"
+        >
+          {{ 'createDancedTale.universe.sections.' + section + '.add' | translate }}
+        </app-button>
+      </div>
+
+      @if (cards(section).length) {
+        <div class="card-grid">
+          @for (card of cards(section); track card.controls.id.value; let i = $index) {
+            <fieldset
+              class="universe-card"
+              [formGroup]="card"
+            >
+              <legend class="universe-card__title">
+                {{ 'createDancedTale.universe.sections.' + section + '.card' | translate: { number: i + 1 } }}
+              </legend>
+
+              <button
+                type="button"
+                class="universe-card__remove"
+                [attr.aria-label]="
+                  'createDancedTale.universe.card.remove'
+                    | translate
+                      : {
+                          card:
+                            ('createDancedTale.universe.sections.' + section + '.card'
+                            | translate: { number: i + 1 }),
+                        }
+                "
+                (click)="removeCard(section, i)"
+              >
+                <i
+                  class="fa-solid fa-trash-can"
+                  aria-hidden="true"
+                ></i>
+              </button>
+
+              <!-- Nom -->
+              <div class="form-field">
+                <label [for]="fieldId(card, 'name')">
+                  {{ 'createDancedTale.universe.sections.' + section + '.name' | translate }}
+                  <span
+                    class="required"
+                    aria-hidden="true"
+                    >*</span
+                  >
+                </label>
+
+                <input
+                  [id]="fieldId(card, 'name')"
+                  type="text"
+                  formControlName="name"
+                  autocomplete="off"
+                  required
+                  [maxlength]="nameMaxLength"
+                  [attr.aria-invalid]="hasError(card, 'name')"
+                  [attr.aria-describedby]="describedBy(card, 'name')"
+                  [placeholder]="'createDancedTale.universe.sections.' + section + '.namePlaceholder' | translate"
+                />
+
+                @if (hasError(card, 'name')) {
+                  <p
+                    [id]="fieldId(card, 'name') + '-error'"
+                    class="form-error"
+                  >
+                    {{ 'createDancedTale.universe.card.nameError' | translate }}
+                  </p>
+                }
+              </div>
+
+              <!-- Rôle (RG-CMC-08) -->
+              @if (card.isCharacter) {
+                <div class="form-field">
+                  <label [for]="fieldId(card, 'role')">
+                    {{ 'createDancedTale.universe.card.role.label' | translate }}
+                    <span
+                      class="required"
+                      aria-hidden="true"
+                      >*</span
+                    >
+                  </label>
+
+                  <input
+                    [id]="fieldId(card, 'role')"
+                    type="text"
+                    formControlName="role"
+                    list="role-suggestions"
+                    autocomplete="off"
+                    required
+                    [maxlength]="roleMaxLength"
+                    [attr.aria-invalid]="hasError(card, 'role')"
+                    [attr.aria-describedby]="describedBy(card, 'role')"
+                    [placeholder]="'createDancedTale.universe.card.role.placeholder' | translate"
+                  />
+
+                  @if (hasError(card, 'role')) {
+                    <p
+                      [id]="fieldId(card, 'role') + '-error'"
+                      class="form-error"
+                    >
+                      {{ 'createDancedTale.universe.card.role.error' | translate }}
+                    </p>
+                  }
+                </div>
+              }
+
+              <!-- Description -->
+              <div class="form-field">
+                <label [for]="fieldId(card, 'description')">
+                  {{ 'createDancedTale.universe.card.description.label' | translate }}
+                  @if (card.isCharacter) {
+                    <span
+                      class="required"
+                      aria-hidden="true"
+                      >*</span
+                    >
+                  }
+                </label>
+
+                <textarea
+                  [id]="fieldId(card, 'description')"
+                  formControlName="description"
+                  rows="3"
+                  [required]="card.isCharacter"
+                  [maxlength]="textMaxLength"
+                  [attr.aria-invalid]="hasError(card, 'description')"
+                  [attr.aria-describedby]="describedBy(card, 'description')"
+                  [placeholder]="'createDancedTale.universe.sections.' + section + '.descriptionPlaceholder' | translate"
+                ></textarea>
+
+                @if (hasError(card, 'description')) {
+                  <p
+                    [id]="fieldId(card, 'description') + '-error'"
+                    class="form-error"
+                  >
+                    {{ 'createDancedTale.universe.card.description.error' | translate }}
+                  </p>
+                }
+              </div>
+
+              <!-- Objectif (RG-CMC-08) -->
+              @if (card.isCharacter) {
+                <div class="form-field">
+                  <label [for]="fieldId(card, 'goal')">
+                    {{ 'createDancedTale.universe.card.goal.label' | translate }}
+                    <span
+                      class="required"
+                      aria-hidden="true"
+                      >*</span
+                    >
+                  </label>
+
+                  <textarea
+                    [id]="fieldId(card, 'goal')"
+                    formControlName="goal"
+                    rows="2"
+                    required
+                    [maxlength]="textMaxLength"
+                    [attr.aria-invalid]="hasError(card, 'goal')"
+                    [attr.aria-describedby]="describedBy(card, 'goal')"
+                    [placeholder]="'createDancedTale.universe.card.goal.placeholder' | translate"
+                  ></textarea>
+
+                  @if (hasError(card, 'goal')) {
+                    <p
+                      [id]="fieldId(card, 'goal') + '-error'"
+                      class="form-error"
+                    >
+                      {{ 'createDancedTale.universe.card.goal.error' | translate }}
+                    </p>
+                  }
+                </div>
+              }
+
+              <!-- Image (facultative, conservée dans le brouillon) -->
+              <div class="card-image">
+                @if (card.controls.image.value; as image) {
+                  <img
+                    class="card-image__preview"
+                    [src]="image"
+                    [alt]="
+                      'createDancedTale.universe.card.image.alt'
+                        | translate: { name: card.controls.name.value || ('createDancedTale.universe.sections.' + section + '.card' | translate: { number: i + 1 }) }
+                    "
+                  />
+                }
+
+                <div class="card-image__actions">
+                  <label class="card-image__picker">
+                    <input
+                      class="sr-only"
+                      type="file"
+                      accept="image/*"
+                      [id]="fieldId(card, 'image')"
+                      [attr.aria-describedby]="imageErrors()[card.controls.id.value] ? fieldId(card, 'image') + '-error' : null"
+                      (change)="onImageSelected(card, $event)"
+                    />
+                    <i
+                      class="fa-solid fa-image"
+                      aria-hidden="true"
+                    ></i>
+                    @if (card.controls.image.value) {
+                      {{ 'createDancedTale.universe.card.image.change' | translate }}
+                    } @else {
+                      {{ 'createDancedTale.universe.card.image.add' | translate }}
+                    }
+                  </label>
+
+                  @if (card.controls.image.value) {
+                    <button
+                      type="button"
+                      class="card-image__remove"
+                      (click)="removeImage(card)"
+                    >
+                      {{ 'createDancedTale.universe.card.image.remove' | translate }}
+                    </button>
+                  }
+                </div>
+
+                @if (imageErrors()[card.controls.id.value]; as errorKind) {
+                  <p
+                    [id]="fieldId(card, 'image') + '-error'"
+                    class="form-error"
+                  >
+                    {{ 'createDancedTale.universe.card.image.errors.' + errorKind | translate }}
+                  </p>
+                }
+              </div>
+
+              <!--
+                TODO(IA) : assistance « Générer des idées » (SCRUM-90) — 3 propositions modifiables
+                ou sélectionnables. Désactivé tant que le service IA n'existe pas.
+              -->
+              <button
+                type="button"
+                class="ideas-button"
+                disabled
+              >
+                <i
+                  class="fa-solid fa-wand-magic-sparkles"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.universe.card.ideas.label' | translate }}
+                <span class="ideas-button__soon">
+                  {{ 'createDancedTale.universe.card.ideas.soon' | translate }}
+                </span>
+              </button>
+            </fieldset>
+          }
+        </div>
+      } @else {
+        <p class="universe-section__empty">
+          {{ 'createDancedTale.universe.sections.' + section + '.empty' | translate }}
+        </p>
+      }
+    </section>
+  }
+
+  @if (storageFull()) {
+    <p
+      id="storage-error"
+      class="form-error tale-universe__storage-error"
+      role="alert"
+      tabindex="-1"
+    >
+      {{ 'createDancedTale.universe.storageFull' | translate }}
+    </p>
+  }
+
+  <div class="tale-universe__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+</form>

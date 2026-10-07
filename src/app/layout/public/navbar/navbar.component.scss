@@ -27,20 +27,34 @@
 // NAVIGATION
 // ======================================================
 
+// Les libellés longs tiennent sur 2 lignes au plus, comme sur la maquette :
+// un libellé court garde sa largeur naturelle, un long est limité à environ 9em.
 .navbar__navigation {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: fit-content(9em);
   align-items: center;
+  justify-content: space-between;
 
   flex: 1;
   min-width: 0;
 
   gap: var(--spacing-lg);
+
+  @media (max-width: 1199px) {
+    gap: var(--spacing-md);
+  }
+
+  @media (max-width: 1023px) {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
 }
 
 .navbar__link {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
-  
+
   color: var(--font-color-primary);
 
   font-size: var(--font-size-navigation);
@@ -52,6 +66,14 @@
   white-space: normal;
 
   transition: opacity 150ms ease;
+
+  @media (max-width: 1199px) {
+    font-size: var(--font-size-body);
+  }
+
+  @media (max-width: 1023px) {
+    font-size: var(--font-size-small);
+  }
 
   &:first-child {
     text-align: left;
@@ -82,4 +104,12 @@
   justify-content: flex-end;
   flex-shrink: 0;
   margin-left: var(--spacing-xl);
+
+  @media (max-width: 1199px) {
+    margin-left: var(--spacing-md);
+  }
+
+  @media (max-width: 1023px) {
+    margin-left: var(--spacing-sm);
+  }
 }

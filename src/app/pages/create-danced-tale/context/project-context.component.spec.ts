@@ -125,4 +125,12 @@ describe('ProjectContextComponent', () => {
     expect(input('performanceSpace-classe').checked).toBe(true);
     expect(element.querySelectorAll('.chip')).toHaveLength(2);
   });
+
+  it('affiche l\'écran avec un brouillon d\'une version précédente (champs manquants)', async () => {
+    await setup({ ageRange: '6-8', country: 'France', region: 'Bretagne', theme: 'Nature' } as ProjectContext);
+
+    expect(input('region').value).toBe('Bretagne');
+    expect(input('ageRange-6-8').checked).toBe(true);
+    expect(element.querySelectorAll('.chip')).toHaveLength(0);
+  });
 });

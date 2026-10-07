@@ -84,6 +84,49 @@ describe('ProjectContextForm', () => {
     expect(form.toProjectContext()).toEqual(context);
   });
 
+  describe('brouillon incomplet ou invalide (localStorage)', () => {
+    it('reprend les champs présents et laisse les autres à leur valeur par défaut', () => {
+      // Brouillon d'une version précédente : ni ingrédients, ni espace, ni ville.
+      const ancienBrouillon = { ageRange: '6-8', country: 'France', region: 'Bretagne', theme: 'Nature' };
+
+      expect(() => form.fromProjectContext(ancienBrouillon as Partial<ProjectContext>)).not.toThrow();
+      expect(form.getRawValue()).toEqual({
+        ageRange: '6-8',
+        country: 'France',
+        region: 'Bretagne',
+        city: '',
+        theme: 'Nature',
+        secretIngredients: [],
+        performanceSpace: null,
+      });
+      expect(form.valid).toBe(true);
+    });
+
+    it('ignore les valeurs de mauvais type ou hors liste', () => {
+      const brouillonAbime = {
+        ageRange: '3-6',
+        country: 42,
+        city: null,
+        secretIngredients: ['dragons', 7, null],
+        performanceSpace: 'theater',
+      } as unknown as Partial<ProjectContext>;
+
+      expect(() => form.fromProjectContext(brouillonAbime)).not.toThrow();
+      expect(form.getRawValue()).toMatchObject({
+        ageRange: null,
+        country: '',
+        city: '',
+        secretIngredients: ['dragons'],
+        performanceSpace: null,
+      });
+    });
+
+    it('ne plante pas sur un contexte vide', () => {
+      expect(() => form.fromProjectContext({})).not.toThrow();
+      expect(form.valid).toBe(false);
+    });
+  });
+
   it('nettoie les espaces des champs texte à la conversion', () => {
     form.patchValue({ ageRange: '3-5', region: ' Bretagne ', theme: ' Nature ', city: ' Brest ' });
 

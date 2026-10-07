@@ -1,6 +1,6 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AGE_RANGES, AgeRange } from '../../../models/types/age-range.type';
-import { PERFORMANCE_SPACES, PerformanceSpace } from '../../../models/types/performance-space.type';
+import { AgeRange } from '../../../models/types/age-range.type';
+import { PerformanceSpace } from '../../../models/types/performance-space.type';
 import { ProjectContext } from '../../../models/interfaces/project-context.interface';
 
 export const SECRET_INGREDIENT_MAX_LENGTH = 40;
@@ -8,14 +8,6 @@ export const SECRET_INGREDIENT_MAX_LENGTH = 40;
 // Validators.required accepte une chaîne composée d'espaces.
 function requiredText(control: AbstractControl<string>): ValidationErrors | null {
   return control.value?.trim() ? null : { required: true };
-}
-
-function textOrUndefined(value: unknown): string | undefined {
-  return typeof value === 'string' ? value : undefined;
-}
-
-function oneOf<T extends string>(values: readonly T[], value: unknown): T | undefined {
-  return values.includes(value as T) ? (value as T) : undefined;
 }
 
 export class ProjectContextForm extends FormGroup<{
@@ -70,29 +62,12 @@ export class ProjectContextForm extends FormGroup<{
     this.controls.secretIngredients.markAsDirty();
   }
 
-  /**
-   * Le contexte vient du localStorage et peut dater d'une version précédente du formulaire :
-   * on ne reprend que les valeurs présentes et du bon type. Les autres sont retirées avant
-   * patchValue, qui ignore les clés absentes : ces champs gardent leur valeur par défaut.
-   */
+  /** Le brouillon peut dater d'une version précédente du formulaire : patchValue ignore les clés absentes. */
   fromProjectContext(context: Partial<ProjectContext>): void {
-    const ingredients = Array.isArray(context.secretIngredients)
-      ? context.secretIngredients.filter((ingredient): ingredient is string => typeof ingredient === 'string')
-      : undefined;
-
-    this.patchValue(
-      Object.fromEntries(
-        Object.entries({
-          ageRange: oneOf(AGE_RANGES, context.ageRange),
-          country: textOrUndefined(context.country),
-          region: textOrUndefined(context.region),
-          city: textOrUndefined(context.city),
-          theme: textOrUndefined(context.theme),
-          secretIngredients: ingredients,
-          performanceSpace: oneOf(PERFORMANCE_SPACES, context.performanceSpace),
-        }).filter(([, value]) => value !== undefined),
-      ),
-    );
+    this.patchValue({
+      ...context,
+      secretIngredients: Array.isArray(context.secretIngredients) ? [...context.secretIngredients] : [],
+    });
   }
 
   /** À n'appeler que sur un formulaire valide. */

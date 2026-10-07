@@ -13,7 +13,8 @@ export type IconName =
   | 'arrow-circle-right'
   | 'grid'
   | 'switch-on'
-  | 'switch-off';
+  | 'switch-off'
+  | 'reset';
 
 @Component({
   selector: 'app-icon',

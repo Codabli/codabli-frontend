@@ -1,0 +1,23 @@
+<div class="filter-select">
+  <button
+    type="button"
+    class="filter-select__trigger"
+    [attr.aria-expanded]="isOpen()"
+    (click)="toggle()"
+  >
+    <span class="filter-select__placeholder">
+      {{ placeholder() }}
+    </span>
+
+    <app-icon
+      name="arrow-down4"
+      [size]="16"
+    />
+  </button>
+
+  @if (isOpen()) {
+    <div class="filter-select__dropdown">
+      <!-- Options plus tard -->
+    </div>
+  }
+</div>

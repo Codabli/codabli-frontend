@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-md);
+
 
   width: 100%;
 }
@@ -16,13 +16,14 @@
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  padding-block: var(--spacing-2xl);
+  padding-top: var(--spacing-3xl);
+  padding-bottom: var(--spacing-3xl);
 }
 
 .library-carousel__track {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
   touch-action: pan-y pinch-zoom;
 }
 
@@ -33,15 +34,20 @@
   min-width: 0;
 
   app-tale-card {
-    width: min(100%, 320px);
+    flex: 0 0 321px;
+    width: 321px;
   }
 }
 
 .library-carousel__item--active {
-  app-tale-card {
-    width: min(100%, 380px);
+  position: relative;
+  z-index: 1;
 
-    --card-cover-width: 210px;
+  app-tale-card {
+    flex-basis: 462px;
+    width: 462px;
+
+    --card-cover-width: 289px;
     --card-border-width: 3px;
     --card-border-color: var(--color-border-outline-default);
   }
@@ -49,7 +55,6 @@
 
 .library-carousel__navigation {
   position: relative;
-  z-index: 2;
 
   display: inline-flex;
   align-items: center;
@@ -65,12 +70,4 @@
   border: 0;
 
   cursor: pointer;
-}
-
-.library-carousel__navigation--previous {
-  transform: translateX(24px);
-}
-
-.library-carousel__navigation--next {
-  transform: translateX(-24px);
 }

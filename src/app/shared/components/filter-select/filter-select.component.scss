@@ -1,0 +1,42 @@
+:host {
+  display: inline-block;
+}
+
+.filter-select {
+  position: relative;
+}
+
+.filter-select__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: max-content;
+  height: 51px;
+
+  gap: var(--spacing-md);
+  padding-inline: var(--spacing-lg);
+
+  font-family: 'Lato', sans-serif;
+  color: var(--font-color-primary);
+
+  background-color: var(--color-bg-select-filters);
+  border: 1px solid var(--color-border-select-filters);
+  border-radius: var(--radius-button);
+
+  cursor: pointer;
+}
+
+.filter-select__placeholder {
+  white-space: nowrap;
+}
+
+.filter-select__dropdown {
+  position: absolute;
+  z-index: 10;
+
+  top: calc(100% + var(--spacing-sm));
+  left: 0;
+
+  min-width: 100%;
+}

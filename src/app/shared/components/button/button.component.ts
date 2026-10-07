@@ -9,6 +9,7 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 export type IconPosition = 'left' | 'right';
 
 export type ButtonNavigationIcon =
+ 
   'chevron-left' | 'chevron-right' | 'circle-plus' | 'circle-minus';
 export type ButtonCarouselIcon = 'left' | 'right';
 
@@ -18,7 +19,7 @@ export type ButtonCarouselIcon = 'left' | 'right';
   styleUrl: './button.component.scss',
   templateUrl: './button.component.html',
 })
-export class Button {
+export class ButtonComponent {
   variant = input<ButtonVariant>('primary');
   type = input<ButtonType>('button');
   disabled = input(false);

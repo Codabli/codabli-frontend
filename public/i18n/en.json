@@ -168,5 +168,120 @@
       "passwordMismatch": "Passwords do not match.",
       "termsRequired": "You must accept the terms to create your account."
     }
+  },
+  "familyAccount": {
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "home": "Home"
+    },
+    "title": "Create a family account",
+    "sections": {
+      "children": "About my children",
+      "personal": "My personal information",
+      "password": "Password",
+      "preferences": "Preferences",
+      "subscription": "Subscription"
+    },
+    "form": {
+      "child": {
+        "title": "Child {{index}}",
+        "remove": "Remove child {{index}}",
+        "add": "Add a child",
+        "lastName": {
+          "label": "Your child's last name",
+          "placeholder": "Enter your child's last name"
+        },
+        "firstName": {
+          "label": "Your child's first name",
+          "placeholder": "Enter your child's first name"
+        },
+        "birthDate": {
+          "label": "Date of birth"
+        }
+      },
+      "lastName": {
+        "label": "Your last name",
+        "placeholder": "Enter your last name"
+      },
+      "firstName": {
+        "label": "Your first name",
+        "placeholder": "Enter your first name"
+      },
+      "address": {
+        "label": "Postal address (number and street)",
+        "placeholder": "Enter your postal address"
+      },
+      "postalCodeCity": {
+        "label": "Postcode and city",
+        "placeholder": "Enter your postcode and city"
+      },
+      "phone": {
+        "label": "Phone number",
+        "placeholder": "00 00 00 00 00"
+      },
+      "platformGoal": {
+        "label": "What would you like to get from the platform?",
+        "placeholder": "Select an answer",
+        "options": {
+          "creativeActivities": "Creative activities for my children",
+          "readingPleasure": "Fostering a love of reading",
+          "danceDiscovery": "Discovering dance and the arts",
+          "familyTime": "Sharing family moments",
+          "other": "Other"
+        }
+      },
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "passwordConfirmation": {
+        "label": "Repeat the password",
+        "placeholder": "Enter your password"
+      },
+      "preferredLanguage": {
+        "label": "Interface language"
+      },
+      "notifications": {
+        "legend": "Optional: choose the email notifications you would like to receive.",
+        "options": {
+          "newsletter": "The Codabli newsletter",
+          "newContent": "New tales and activities",
+          "childActivity": "My children's creations"
+        }
+      },
+      "subscription": {
+        "legend": "Optional: choose an offer now or later from your account. The subscription will be finalised once your account is created.",
+        "later": "I'll choose later",
+        "laterDescription": "Create your account and explore the platform before subscribing.",
+        "duration": {
+          "mensuel": "per month",
+          "annuel": "per year"
+        }
+      },
+      "termsAccepted": {
+        "label": "I accept the Terms of Use and the Privacy Policy."
+      },
+      "salesTermsAccepted": {
+        "label": "I accept the Terms and Conditions of Sale."
+      },
+      "submit": "Create my Family account"
+    },
+    "errors": {
+      "required": "This field is required.",
+      "email": "The email address is not valid.",
+      "emailTaken": "This email is already in use.",
+      "phone": "The phone number is not valid.",
+      "futureDate": "The date of birth cannot be in the future.",
+      "minLength": "This field must contain at least {{min}} characters.",
+      "maxLength": "This field must contain at most {{max}} characters.",
+      "passwordRules": "The password must contain at least 12 characters, including 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",
+      "passwordMismatch": "Passwords do not match.",
+      "termsRequired": "You must accept the Terms of Use and the Privacy Policy to create your account.",
+      "salesTermsRequired": "You must accept the Terms and Conditions of Sale to create your account."
+    }
   }
 }

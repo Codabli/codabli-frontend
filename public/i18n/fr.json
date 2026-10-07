@@ -168,5 +168,120 @@
       "passwordMismatch": "Les mots de passe ne correspondent pas.",
       "termsRequired": "Vous devez accepter les conditions pour créer votre compte."
     }
+  },
+  "familyAccount": {
+    "breadcrumb": {
+      "label": "Fil d'Ariane",
+      "home": "Accueil"
+    },
+    "title": "Créer un compte famille",
+    "sections": {
+      "children": "Informations de mes enfants",
+      "personal": "Mes informations personnelles",
+      "password": "Mot de passe",
+      "preferences": "Préférences",
+      "subscription": "Abonnement"
+    },
+    "form": {
+      "child": {
+        "title": "Enfant {{index}}",
+        "remove": "Retirer l'enfant {{index}}",
+        "add": "Ajouter un enfant",
+        "lastName": {
+          "label": "Nom de votre enfant",
+          "placeholder": "Renseignez le nom de votre enfant"
+        },
+        "firstName": {
+          "label": "Prénom de votre enfant",
+          "placeholder": "Renseignez le prénom de votre enfant"
+        },
+        "birthDate": {
+          "label": "Date de naissance"
+        }
+      },
+      "lastName": {
+        "label": "Votre nom",
+        "placeholder": "Renseignez votre nom"
+      },
+      "firstName": {
+        "label": "Votre prénom",
+        "placeholder": "Renseignez votre prénom"
+      },
+      "address": {
+        "label": "Adresse postale (numéro et rue)",
+        "placeholder": "Renseignez votre adresse postale"
+      },
+      "postalCodeCity": {
+        "label": "Code postal et ville",
+        "placeholder": "Renseignez votre code postal et ville"
+      },
+      "phone": {
+        "label": "Numéro de téléphone",
+        "placeholder": "00 00 00 00 00"
+      },
+      "platformGoal": {
+        "label": "Quels apports pour vous à travers la plateforme ?",
+        "placeholder": "Sélectionnez une réponse",
+        "options": {
+          "creativeActivities": "Des activités créatives pour mes enfants",
+          "readingPleasure": "Donner le goût de la lecture",
+          "danceDiscovery": "Découvrir la danse et les arts",
+          "familyTime": "Partager des moments en famille",
+          "other": "Autre"
+        }
+      },
+      "email": {
+        "label": "Adresse mail",
+        "placeholder": "Renseignez votre adresse mail"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "passwordConfirmation": {
+        "label": "Répétez le mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "preferredLanguage": {
+        "label": "Langue de l'interface"
+      },
+      "notifications": {
+        "legend": "Optionnel : choisissez les notifications que vous souhaitez recevoir par e-mail.",
+        "options": {
+          "newsletter": "La newsletter Codabli",
+          "newContent": "Les nouveaux contes et activités",
+          "childActivity": "Les créations de mes enfants"
+        }
+      },
+      "subscription": {
+        "legend": "Optionnel : choisissez une offre maintenant ou plus tard depuis votre espace. La souscription sera finalisée après la création de votre compte.",
+        "later": "Je choisirai plus tard",
+        "laterDescription": "Créez votre compte et découvrez la plateforme avant de vous abonner.",
+        "duration": {
+          "mensuel": "par mois",
+          "annuel": "par an"
+        }
+      },
+      "termsAccepted": {
+        "label": "J'accepte les Conditions Générales d'Utilisation et la Politique de Confidentialité."
+      },
+      "salesTermsAccepted": {
+        "label": "J'accepte les Conditions Générales de Vente."
+      },
+      "submit": "Créer mon compte Famille"
+    },
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "email": "L'adresse mail n'est pas valide.",
+      "emailTaken": "Cet e-mail est déjà utilisé.",
+      "phone": "Le numéro de téléphone n'est pas valide.",
+      "futureDate": "La date de naissance ne peut pas être dans le futur.",
+      "minLength": "Ce champ doit contenir au moins {{min}} caractères.",
+      "maxLength": "Ce champ doit contenir au maximum {{max}} caractères.",
+      "passwordRules": "Le mot de passe doit contenir au moins 12 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "termsRequired": "Vous devez accepter les CGU et la Politique de Confidentialité pour créer votre compte.",
+      "salesTermsRequired": "Vous devez accepter les CGV pour créer votre compte."
+    }
   }
 }

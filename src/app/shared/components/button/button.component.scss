@@ -137,7 +137,7 @@
 
 .button--outline {
   background: var(--color-bg-outline-default);
-  border-color: var(--color-border-outline-default);
+  border: 1px solid var(--color-border-outline-default);
   color: var(--color-text-outline-default);
 
   &:hover {

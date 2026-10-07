@@ -1,0 +1,90 @@
+// Styles communs aux pages de création de compte (enseignant, famille).
+@use '../../../styles/account-form';
+
+// Blocs « Enfant N » de la maquette.
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.child-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  margin: 0;
+  padding: 20px;
+
+  background-color: #ebebeb;
+  border: none;
+  border-radius: 16px;
+
+  // Une legend ne se positionne pas normalement : float la sort du rendu spécial.
+  &__header {
+    float: left;
+
+    width: 100%;
+    padding: 0;
+  }
+
+  &__title {
+    color: var(--font-color-text-anthracite);
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-h6);
+  }
+
+  &__remove {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+    padding: 0;
+
+    color: var(--font-color-text-anthracite);
+    background: none;
+    border: none;
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: background-color 150ms ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+    }
+  }
+
+  // Les champs sont posés sur le fond gris : on garde le bloc compact.
+  .form-section__fields {
+    row-gap: var(--spacing-md);
+  }
+}
+
+// Maquette : la date de naissance est plus étroite que les autres champs.
+.form-field--narrow {
+  input {
+    max-width: 216px;
+  }
+}
+
+.consents {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}

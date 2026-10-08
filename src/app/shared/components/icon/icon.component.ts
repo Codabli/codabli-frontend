@@ -14,7 +14,8 @@ export type IconName =
   | 'grid'
   | 'switch-on'
   | 'switch-off'
-  | 'reset';
+  | 'reset'
+  | 'lock';
 
 @Component({
   selector: 'app-icon',

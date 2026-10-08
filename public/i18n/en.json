@@ -218,7 +218,16 @@
       "languages": {
         "placeholder": "Select one or more languages"
       }
+    },
+    "card": {
+      "consult": "Consult",
+      "adopt": "Adopt this tale",
+      "loginRequired": "Log in to consult this tale"
     }
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create an account"
   },
   "teacherAccount": {
     "breadcrumb": {

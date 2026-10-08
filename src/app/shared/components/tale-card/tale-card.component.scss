@@ -151,9 +151,28 @@
   }
 }
 
+
 .card__footer {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
+}
+
+.card__locked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.card__locked-message {
+  margin: 0;
+  color: var(--color-text-alert);
+  font-weight: var(--font-weight-bold);
+
+  app-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-right: var(--spacing-sm);
+  }
 }

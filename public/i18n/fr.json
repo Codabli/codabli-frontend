@@ -219,7 +219,16 @@
       "languages": {
         "placeholder": "Sélectionnez une ou des langue(s)"
       }
+    },
+    "card": {
+      "consult": "Consulter",
+      "adopt": "Adopter ce conte",
+      "loginRequired": "Connectez-vous pour consulter ce conte"
     }
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "Créer un compte"
   },
   "teacherAccount": {
     "breadcrumb": {

@@ -21,7 +21,12 @@
           class="library-carousel__item"
           [class.library-carousel__item--active]="index === selectedIndex()"
         >
-          <app-tale-card [tale]="tale" />
+          <app-tale-card
+            [tale]="tale"
+            [locked]="locked()"
+            (consult)="consult.emit(tale.id)"
+            (login)="login.emit()"
+          />
         </div>
       }
     </div>

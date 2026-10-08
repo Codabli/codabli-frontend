@@ -22,7 +22,9 @@
   <section class="library__results">
     <div class="library__results-content">
       <div class="library__results-header">
-        <p class="library__results-count">{{ filteredTales().length }} {{ 'library.talesFound' | translate }}</p>
+        <p class="library__results-count">
+          {{ filteredTales().length }} {{ 'library.talesFound' | translate }}
+        </p>
 
         <div class="library__view-toggle">
           <app-icon
@@ -30,7 +32,13 @@
             [size]="24"
           />
 
-          <span>{{ isGridView() ? ('library.viewList' | translate) : ('library.viewGrid' | translate) }}</span>
+          <span>
+            {{
+              isGridView()
+                ? ('library.viewList' | translate)
+                : ('library.viewGrid' | translate)
+            }}
+          </span>
 
           <button
             type="button"
@@ -51,7 +59,13 @@
       @if (isGridView()) {
         <div class="library__results-grid">
           @for (tale of visibleTales(); track tale.id) {
-            <app-tale-card [tale]="tale" />
+            <app-tale-card
+              [tale]="tale"
+              [locked]="!isAuthenticated()"
+              (consult)="consultTale(tale.id)"
+              (adopt)="adoptTale(tale.id)"
+              (login)="goToLogin()"
+            />
           }
         </div>
 
@@ -77,7 +91,12 @@
           }
         </div>
       } @else {
-        <app-library-carousel [tales]="filteredTales()" />
+        <app-library-carousel
+          [tales]="filteredTales()"
+          [locked]="!isAuthenticated()"
+          (consult)="consultTale($event)"
+          (login)="goToLogin()"
+        />
       }
     </div>
   </section>

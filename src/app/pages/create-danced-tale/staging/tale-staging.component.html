@@ -270,6 +270,13 @@
                 </ul>
               }
             </div>
+            <app-scene-stage
+              [sceneId]="step.id"
+              [elements]="stageElements()[step.id]"
+              [placements]="staging.placements ?? []"
+              (placementsChange)="setPlacements(step, $event)"
+            />
+
             <app-scene-dances
               [sceneId]="step.id"
               [sceneNumber]="i + 1"

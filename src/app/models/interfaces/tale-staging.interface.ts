@@ -36,6 +36,21 @@ export interface SceneCharacter {
   exitMoment?: string;
 }
 
+/** Élément placé sur le plateau : un personnage présent ou un décor de la scène (écran 8.3). */
+export type StageElementKind = 'character' | 'prop';
+
+/**
+ * Position d'un élément au début de la scène, en pourcentage du plateau
+ * (x : de gauche à droite vu du public, y : du fond de scène vers le public).
+ */
+export interface StagePlacement {
+  kind: StageElementKind;
+  /** Identifiant du personnage, ou libellé du décor. */
+  ref: string;
+  x: number;
+  y: number;
+}
+
 /**
  * Mise en scène d'une scène (écran 8.1 du parcours « Créer mon conte dansé », SCRUM-100).
  * Une scène correspond à une étape de la trame (écran 6).
@@ -47,6 +62,8 @@ export interface SceneStaging {
   props: string[];
   /** Absent des brouillons enregistrés avant l'écran 8.2. */
   dances?: SceneDance[];
+  /** Placement initial sur le plateau ; absent des brouillons enregistrés avant l'écran 8.3. */
+  placements?: StagePlacement[];
 }
 
 export interface TaleStaging {

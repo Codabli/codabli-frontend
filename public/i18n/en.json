@@ -101,6 +101,36 @@
       "error": "Saving is not possible on this device: the browser's storage is full."
     },
 
+    "stage": {
+      "title": "Stage space",
+      "hint": "Place the characters and set items at the start of the scene: drag them onto the stage, use the arrow keys on a placed item, or choose its area in the list.",
+      "noElements": "Add characters on stage or set items to place them on the stage.",
+      "reset": "Reset",
+      "back": "Upstage",
+      "audience": "Audience",
+      "left": "Stage left",
+      "right": "Stage right",
+      "backstage": "Backstage",
+      "curtain": "Curtain",
+      "apron": "Apron",
+      "footlights": "Footlights",
+      "zoneLabel": "Area: {{zone}}",
+      "toPlace": "To place",
+      "listTitle": "Place items without drag and drop",
+      "offStage": "Off stage (to place)",
+      "zones": {
+        "back-left": "Upstage left",
+        "back-center": "Upstage centre",
+        "back-right": "Upstage right",
+        "middle-left": "Centre stage left",
+        "middle-center": "Centre stage",
+        "middle-right": "Centre stage right",
+        "front-left": "Downstage left",
+        "front-center": "Downstage centre",
+        "front-right": "Downstage right"
+      }
+    },
+
     "dances": {
       "library": {
         "title": "Dance library",
@@ -143,7 +173,8 @@
         "moment": "When in the scene",
         "style": "Style",
         "remove": "Delete: {{name}}",
-        "addLabel": "Add a dance",
+        "addWithoutDrag": "Add a dance without drag and drop",
+        "addLabel": "Dance to add",
         "addPlaceholder": "Choose a dance…",
         "add": "Add",
         "announce": {

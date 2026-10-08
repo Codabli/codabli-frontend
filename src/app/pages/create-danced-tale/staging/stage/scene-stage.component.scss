@@ -1,0 +1,378 @@
+$focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%, transparent);
+
+.scene-stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: 0;
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__reset {
+    min-height: 44px;
+    padding: 0 var(--spacing-sm);
+
+    font-family: 'Lato', sans-serif;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary-default);
+    text-decoration: underline;
+
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+    }
+  }
+
+  &__hint {
+    margin: 0;
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+}
+
+// ---------- Plateau : plan du théâtre vu du dessus ----------
+
+$plan-line: #d9776b; // Traits du décor (fond de scène, pendrillons, rideau), comme la maquette.
+$hatch: repeating-linear-gradient(
+  135deg,
+  transparent 0 6px,
+  color-mix(in srgb, var(--color-border-outline-default) 45%, transparent) 6px 7px
+);
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-sm);
+
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+
+  background-color: var(--color-bg-navigation);
+  border-radius: 16px;
+
+  // Coulisses : bande hachurée derrière le fond de scène, et de chaque côté.
+  &__backstage,
+  &__wing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $hatch;
+    border: 2px solid var(--color-border-outline-default);
+  }
+
+  &__backstage {
+    padding: var(--spacing-xs);
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+  }
+
+  &__row {
+    display: flex;
+  }
+
+  &__wing {
+    width: 36px;
+
+    @media (max-width: 719px) {
+      width: 28px;
+    }
+
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+
+    &:first-child {
+      border-left-width: 2px;
+      border-right: 0;
+    }
+
+    &:last-child {
+      border-right-width: 2px;
+      border-left: 0;
+    }
+  }
+
+  // Aire de jeu, où l'on place les éléments.
+  &__floor {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-bg-surface);
+
+    // Écran étroit : plateau plus haut pour garder de la place entre les éléments
+    // (positions en pourcentage, donc inchangées).
+    @media (max-width: 719px) {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  &__backdrop,
+  &__curtain,
+  &__apron,
+  &__leg {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  // Fond de scène : trait en haut de l'aire de jeu.
+  &__backdrop {
+    top: 6%;
+    left: 12%;
+    right: 12%;
+    padding-top: 4px;
+    text-align: center;
+    border-top: 3px solid $plan-line;
+  }
+
+  // Pendrillons : deux traits en biais de chaque côté.
+  &__leg {
+    width: 9%;
+    border-top: 3px solid $plan-line;
+
+    &--left {
+      left: 1%;
+      transform: rotate(-35deg);
+    }
+
+    &--right {
+      right: 1%;
+      transform: rotate(35deg);
+    }
+
+    &--upper {
+      top: 30%;
+    }
+
+    &--lower {
+      top: 52%;
+    }
+  }
+
+  // Rideau : limite de l'avant-scène (CURTAIN_LINE dans le composant).
+  &__curtain {
+    top: 80%;
+    left: 0;
+    right: 0;
+    padding: 2px 6px 0;
+    text-align: right;
+    border-top: 2px dashed $plan-line;
+  }
+
+  // Libellé calé à gauche (comme « Rideau » à droite) : le centre reste libre pour les éléments.
+  &__apron {
+    bottom: 2px;
+    left: 6px;
+  }
+
+  // Rampe : bande hachurée entre l'avant-scène et le public.
+  &__footlights {
+    padding: 2px;
+    text-align: center;
+    background: repeating-linear-gradient(90deg, transparent 0 6px, color-mix(in srgb, #{$plan-line} 45%, transparent) 6px 8px);
+    border: 2px solid var(--color-border-outline-default);
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+  }
+
+  &__audience {
+    padding-top: var(--spacing-xs);
+    text-align: center;
+  }
+
+  &__zone-badge {
+    position: absolute;
+    top: var(--spacing-xs);
+    left: var(--spacing-xs);
+    z-index: 1;
+    padding: 2px 10px;
+
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--color-text-primary-default);
+
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border-outline-default);
+    border-radius: var(--radius-button);
+  }
+}
+
+// ---------- Pastilles ----------
+
+.token {
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+
+  font-family: 'Lato', sans-serif;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+
+  background-color: var(--color-text-outline-default);
+  border: 3px solid var(--color-white);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(16, 43, 84, 0.3);
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+
+  &--prop {
+    color: var(--color-text-primary-default);
+    background-color: var(--color-bg-primary-default);
+    border-radius: 10px;
+  }
+
+  &--selected,
+  &:focus-visible {
+    outline: none;
+    box-shadow: $focus-ring, 0 2px 6px rgba(16, 43, 84, 0.3);
+  }
+
+  &__name {
+    position: absolute;
+    top: 100%;
+    margin-top: 2px;
+    padding: 0 4px;
+
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+    color: var(--color-text-primary-default);
+
+    background-color: color-mix(in srgb, var(--color-bg-surface) 85%, transparent);
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  // Dans la zone « À placer », les pastilles sont alignées, avec leur nom à côté.
+  &--tray {
+    position: relative;
+    width: auto;
+    height: 44px;
+    padding: 0 12px 0 3px;
+    color: var(--color-text-primary-default);
+    background-color: var(--color-bg-surface);
+    border: 2px solid var(--color-border-outline-default);
+    border-radius: var(--radius-button);
+    box-shadow: none;
+    transform: none;
+
+    .token__name {
+      position: static;
+      margin: 0 0 0 8px;
+      font-size: var(--font-size-body);
+      background: none;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: var(--color-white);
+    background-color: var(--color-text-outline-default);
+    border-radius: 50%;
+
+    &--prop {
+      color: var(--color-text-primary-default);
+      background-color: var(--color-bg-primary-default);
+      border-radius: 8px;
+    }
+  }
+}
+
+.tray {
+  &__title {
+    margin: 0 0 var(--spacing-xs);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__tokens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+}
+
+// ---------- Liste des zones (alternative au glisser-déposer) ----------
+
+.placement-list {
+  summary {
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--spacing-sm) var(--spacing-md);
+    padding-top: var(--spacing-sm);
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    label {
+      font-weight: var(--font-weight-semibold);
+    }
+
+    select {
+      min-height: 48px;
+      padding: 8px 12px;
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      background-color: var(--color-bg-surface);
+      border: 2px solid var(--color-border-outline-default);
+      border-radius: 12px;
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-border-primary-focus);
+        box-shadow: $focus-ring;
+      }
+    }
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

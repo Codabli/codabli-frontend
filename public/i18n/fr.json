@@ -101,6 +101,36 @@
       "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
     },
 
+    "stage": {
+      "title": "Espace scénique",
+      "hint": "Placez les personnages et les décors au début de la scène : faites-les glisser sur le plateau, utilisez les flèches du clavier sur un élément placé, ou choisissez sa zone dans la liste.",
+      "noElements": "Ajoutez des personnages présents ou des décors pour les placer sur le plateau.",
+      "reset": "Réinitialiser",
+      "back": "Fond de scène",
+      "audience": "Public",
+      "left": "Côté jardin",
+      "right": "Côté cour",
+      "backstage": "Coulisses",
+      "curtain": "Rideau",
+      "apron": "Avant-scène",
+      "footlights": "Rampe",
+      "zoneLabel": "Zone : {{zone}}",
+      "toPlace": "À placer",
+      "listTitle": "Placer les éléments sans glisser-déposer",
+      "offStage": "Hors scène (à placer)",
+      "zones": {
+        "back-left": "Fond, côté jardin",
+        "back-center": "Fond, au centre",
+        "back-right": "Fond, côté cour",
+        "middle-left": "Milieu, côté jardin",
+        "middle-center": "Centre de la scène",
+        "middle-right": "Milieu, côté cour",
+        "front-left": "Avant-scène, côté jardin",
+        "front-center": "Avant-scène, au centre",
+        "front-right": "Avant-scène, côté cour"
+      }
+    },
+
     "dances": {
       "library": {
         "title": "Bibliothèque de danses",
@@ -143,7 +173,8 @@
         "moment": "Moment du passage",
         "style": "Style",
         "remove": "Supprimer : {{name}}",
-        "addLabel": "Ajouter une danse",
+        "addWithoutDrag": "Ajouter une danse sans glisser-déposer",
+        "addLabel": "Danse à ajouter",
         "addPlaceholder": "Choisir une danse…",
         "add": "Ajouter",
         "announce": {

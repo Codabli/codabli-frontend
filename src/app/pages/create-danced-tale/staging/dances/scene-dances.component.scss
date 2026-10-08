@@ -43,7 +43,18 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
     color: var(--color-text-muted);
   }
 
+  &__add-panel summary {
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+      outline-offset: 2px;
+    }
+  }
+
   &__add {
+    padding-top: var(--spacing-sm);
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;

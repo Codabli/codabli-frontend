@@ -1,5 +1,5 @@
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Button } from '../../../shared/components/button/button.component';
@@ -12,12 +12,14 @@ import {
   SceneCharacter,
   SceneDance,
   SceneStaging,
+  StagePlacement,
 } from '../../../models/interfaces/tale-staging.interface';
 import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
 import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
 import { DanceLibrary } from './dances/dance-library.component';
 import { SceneDances } from './dances/scene-dances.component';
+import { SceneStage, StageElement } from './stage/scene-stage.component';
 
 export const PROP_MAX_LENGTH = 40;
 export const INTENTION_MAX_LENGTH = 400;
@@ -33,7 +35,16 @@ function hasText(html: string | undefined): boolean {
  * avec ses personnages, leurs entrées et sorties, l'intention théâtrale et les décors.
  */
 @Component({
-  imports: [RouterLink, TranslatePipe, Button, AutosaveStatus, CdkDropListGroup, DanceLibrary, SceneDances],
+  imports: [
+    RouterLink,
+    TranslatePipe,
+    Button,
+    AutosaveStatus,
+    CdkDropListGroup,
+    DanceLibrary,
+    SceneDances,
+    SceneStage,
+  ],
   selector: 'app-tale-staging',
   styleUrl: './tale-staging.component.scss',
   templateUrl: './tale-staging.component.html',
@@ -56,6 +67,23 @@ export class TaleStagingComponent {
   private readonly texts = this.draftService.writing()?.texts ?? {};
 
   protected readonly scenes = signal<Record<string, SceneStaging>>(this.initialScenes());
+
+  /** Éléments à placer sur le plateau de chaque scène (écran 8.3) : personnages présents, puis décors. */
+  protected readonly stageElements = computed(() =>
+    Object.fromEntries(
+      Object.entries(this.scenes()).map(([stepId, scene]): [string, StageElement[]] => [
+        stepId,
+        [
+          ...scene.characters.map((character) => ({
+            kind: 'character' as const,
+            ref: character.characterId,
+            label: this.characterName(character.characterId),
+          })),
+          ...scene.props.map((prop) => ({ kind: 'prop' as const, ref: prop, label: prop })),
+        ],
+      ]),
+    ),
+  );
 
   protected readonly autosave = new Autosave(() =>
     this.draftService.saveStaging({ scenes: this.scenes() }),
@@ -116,6 +144,10 @@ export class TaleStagingComponent {
 
   protected setIntention(step: StoryStep, intention: string): void {
     this.updateScene(step, (scene) => ({ ...scene, intention }));
+  }
+
+  protected setPlacements(step: StoryStep, placements: StagePlacement[]): void {
+    this.updateScene(step, (scene) => ({ ...scene, placements }));
   }
 
   protected setDances(step: StoryStep, dances: SceneDance[]): void {

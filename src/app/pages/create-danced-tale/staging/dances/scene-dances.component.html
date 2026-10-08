@@ -1,0 +1,145 @@
+<div class="scene-dances">
+  <h4 class="scene-dances__title">{{ 'createDancedTale.dances.scene.title' | translate }}</h4>
+
+  <ol
+    class="scene-dances__list"
+    cdkDropList
+    [cdkDropListData]="dances()"
+    [cdkDropListEnterPredicate]="canEnter"
+    [attr.aria-label]="'createDancedTale.dances.scene.listLabel' | translate: { number: sceneNumber() }"
+    (cdkDropListDropped)="onDrop($event)"
+  >
+    @for (dance of dances(); track dance.id; let i = $index) {
+      <li
+        class="dance"
+        cdkDrag
+        [cdkDragData]="dance"
+      >
+        <div class="dance__header">
+          <span
+            class="dance__handle"
+            cdkDragHandle
+            aria-hidden="true"
+            [title]="'createDancedTale.structure.step.drag' | translate"
+          >
+            <i class="fa-solid fa-grip-vertical"></i>
+          </span>
+
+          <div class="form-field dance__name">
+            <label [for]="fieldId(dance, 'name')">
+              {{ 'createDancedTale.dances.scene.number' | translate: { number: i + 1 } }}
+              — {{ 'createDancedTale.dances.scene.name' | translate }}
+            </label>
+            <input
+              type="text"
+              autocomplete="off"
+              [id]="fieldId(dance, 'name')"
+              [value]="dance.name"
+              [attr.maxlength]="nameMaxLength"
+              (input)="setName(i, $any($event.target).value)"
+            />
+          </div>
+
+          <button
+            type="button"
+            class="dance__remove"
+            [attr.aria-label]="'createDancedTale.dances.scene.remove' | translate: { name: dance.name }"
+            (click)="remove(i)"
+          >
+            <i
+              class="fa-solid fa-trash-can"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+
+        <div class="dance__settings">
+          <fieldset class="moments">
+            <legend>{{ 'createDancedTale.dances.scene.moment' | translate }}</legend>
+
+            <div class="moments__options">
+              @for (moment of moments; track moment) {
+                <label class="moments__option">
+                  <input
+                    type="radio"
+                    [name]="fieldId(dance, 'moment')"
+                    [value]="moment"
+                    [checked]="dance.moment === moment"
+                    (change)="setMoment(i, moment)"
+                  />
+                  <span>{{ 'createDancedTale.dances.moments.' + moment | translate }}</span>
+                </label>
+              }
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label [for]="fieldId(dance, 'style')">{{ 'createDancedTale.dances.scene.style' | translate }}</label>
+            <select
+              [id]="fieldId(dance, 'style')"
+              (change)="setStyle(i, $any($event.target).value)"
+            >
+              @for (style of styles; track style) {
+                <option
+                  [value]="style"
+                  [selected]="dance.style === style"
+                >
+                  {{ 'createDancedTale.dances.styles.' + style | translate }}
+                </option>
+              }
+            </select>
+          </div>
+        </div>
+      </li>
+    }
+
+    <!-- Zone de dépôt toujours visible, même quand la scène a déjà des danses. -->
+    <li
+      class="scene-dances__drop-hint"
+      aria-hidden="true"
+    >
+      <i class="fa-solid fa-circle-plus"></i>
+      {{ 'createDancedTale.dances.scene.dropHint' | translate }}
+    </li>
+  </ol>
+
+  <!-- Alternative au glisser-déposer (clavier, tactile). -->
+  <div class="scene-dances__add">
+    <div class="form-field">
+      <label [for]="'scene-' + sceneId() + '-add-dance'">
+        {{ 'createDancedTale.dances.scene.addLabel' | translate }}
+      </label>
+      <select
+        [id]="'scene-' + sceneId() + '-add-dance'"
+        [value]="selectedDanceId()"
+        (change)="selectedDanceId.set($any($event.target).value)"
+      >
+        <option value="">{{ 'createDancedTale.dances.scene.addPlaceholder' | translate }}</option>
+        @for (dance of catalog; track dance.id) {
+          <option
+            [value]="dance.id"
+            [selected]="selectedDanceId() === dance.id"
+          >
+            {{ 'createDancedTale.dances.catalog.' + dance.id + '.name' | translate }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <app-button
+      variant="outline"
+      navigationIcon="circle-plus"
+      [disabled]="!selectedDanceId()"
+      (click)="addSelected()"
+    >
+      {{ 'createDancedTale.dances.scene.add' | translate }}
+    </app-button>
+  </div>
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+</div>

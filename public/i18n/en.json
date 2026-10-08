@@ -101,6 +101,108 @@
       "error": "Saving is not possible on this device: the browser's storage is full."
     },
 
+    "dances": {
+      "library": {
+        "title": "Dance library",
+        "hint": "Drag a dance into a scene, or use “Add a dance” in the scene.",
+        "search": "Search",
+        "searchPlaceholder": "E.g. circle",
+        "listLabel": "Available dances",
+        "noResult": "No dance matches your search."
+      },
+      "format": {
+        "label": "Format",
+        "all": "All",
+        "solo": "Solo",
+        "duo": "Duet",
+        "group": "Group"
+      },
+      "intensity": {
+        "label": "Intensity",
+        "all": "All",
+        "gentle": "Gentle",
+        "moderate": "Moderate",
+        "intense": "Intense"
+      },
+      "styles": {
+        "traditional": "Traditional",
+        "classical": "Classical",
+        "contemporary": "Contemporary"
+      },
+      "moments": {
+        "beginning": "Beginning",
+        "middle": "Middle",
+        "end": "End"
+      },
+      "scene": {
+        "title": "Dances in the scene",
+        "listLabel": "Dances in scene {{number}}",
+        "dropHint": "Drag a dance here",
+        "number": "Dance {{number}}",
+        "name": "name",
+        "moment": "When in the scene",
+        "style": "Style",
+        "remove": "Delete: {{name}}",
+        "addLabel": "Add a dance",
+        "addPlaceholder": "Choose a dance…",
+        "add": "Add",
+        "announce": {
+          "added": "“{{name}}” added to scene {{scene}}.",
+          "removed": "“{{name}}” deleted."
+        }
+      },
+      "catalog": {
+        "festiveRound": {
+          "name": "Festive round",
+          "description": "A joyful group dance in a circle."
+        },
+        "farandole": {
+          "name": "Farandole",
+          "description": "A chain winding through the space."
+        },
+        "royalMarch": {
+          "name": "Royal march",
+          "description": "A slow and majestic procession."
+        },
+        "courtBallet": {
+          "name": "Court ballet",
+          "description": "Elegance and gliding steps."
+        },
+        "storm": {
+          "name": "Storm dance",
+          "description": "Wide and fast movements."
+        },
+        "musicalStatues": {
+          "name": "Musical statues",
+          "description": "Freeze when the music stops."
+        },
+        "animals": {
+          "name": "Animal dance",
+          "description": "Imitate the gait of the animals in the tale."
+        },
+        "mirror": {
+          "name": "Mirror dance",
+          "description": "Two dancers answer each other."
+        },
+        "rhythmicDuel": {
+          "name": "Rhythmic duel",
+          "description": "A rhythmic mirrored confrontation."
+        },
+        "stageFight": {
+          "name": "Stage fight",
+          "description": "A confrontation without contact."
+        },
+        "heroSolo": {
+          "name": "Hero solo",
+          "description": "The character expresses their emotions."
+        },
+        "dream": {
+          "name": "Dream dance",
+          "description": "Slow movements, as if in slow motion."
+        }
+      }
+    },
+
     "staging": {
       "title": "Adapt your tale for the stage",
       "description": "For each scene, specify who is on stage, the intention to convey to the audience and the set. The scenes follow the outline of your story.",

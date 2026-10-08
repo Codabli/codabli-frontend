@@ -198,6 +198,23 @@ describe('TaleStagingComponent', () => {
     expect(scenes()[0].querySelector<HTMLSelectElement>('fieldset.movement select')!.value).toBe('enters');
   });
 
+  it('ajoute une danse à une scène et l\'enregistre', async () => {
+    await setup();
+    vi.useFakeTimers();
+    const select = scenes()[1].querySelector<HTMLSelectElement>('[id$="-add-dance"]')!;
+
+    select.value = 'farandole';
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    scenes()[1].querySelector<HTMLElement>('.scene-dances__add app-button')!.click();
+    saveNow();
+
+    expect(draftService.staging()!.scenes['s2'].dances).toEqual([
+      expect.objectContaining({ danceId: 'farandole', moment: 'beginning', style: 'traditional' }),
+    ]);
+    expect(scenes()[1].querySelectorAll('li.dance')).toHaveLength(1);
+  });
+
   it('enregistre la saisie en attente en revenant à l\'écriture', async () => {
     await setup();
     checkboxes(scenes()[1])[0].click();

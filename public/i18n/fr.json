@@ -101,6 +101,108 @@
       "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
     },
 
+    "dances": {
+      "library": {
+        "title": "Bibliothèque de danses",
+        "hint": "Faites glisser une danse dans une scène, ou utilisez « Ajouter une danse » dans la scène.",
+        "search": "Rechercher",
+        "searchPlaceholder": "Ex. : ronde",
+        "listLabel": "Danses disponibles",
+        "noResult": "Aucune danse ne correspond à votre recherche."
+      },
+      "format": {
+        "label": "Format",
+        "all": "Tous",
+        "solo": "Solo",
+        "duo": "Duo",
+        "group": "Groupe"
+      },
+      "intensity": {
+        "label": "Intensité",
+        "all": "Toutes",
+        "gentle": "Douce",
+        "moderate": "Modérée",
+        "intense": "Intense"
+      },
+      "styles": {
+        "traditional": "Traditionnel",
+        "classical": "Classique",
+        "contemporary": "Contemporain"
+      },
+      "moments": {
+        "beginning": "Début",
+        "middle": "Milieu",
+        "end": "Fin"
+      },
+      "scene": {
+        "title": "Danses de la scène",
+        "listLabel": "Danses de la scène {{number}}",
+        "dropHint": "Glisser une danse ici",
+        "number": "Danse {{number}}",
+        "name": "nom",
+        "moment": "Moment du passage",
+        "style": "Style",
+        "remove": "Supprimer : {{name}}",
+        "addLabel": "Ajouter une danse",
+        "addPlaceholder": "Choisir une danse…",
+        "add": "Ajouter",
+        "announce": {
+          "added": "« {{name}} » ajoutée à la scène {{scene}}.",
+          "removed": "« {{name}} » supprimée."
+        }
+      },
+      "catalog": {
+        "festiveRound": {
+          "name": "Ronde festive",
+          "description": "Danse collective en cercle, joyeuse."
+        },
+        "farandole": {
+          "name": "Farandole",
+          "description": "Une chaîne qui serpente dans l'espace."
+        },
+        "royalMarch": {
+          "name": "Marche royale",
+          "description": "Défilé lent et majestueux."
+        },
+        "courtBallet": {
+          "name": "Ballet de la cour",
+          "description": "Élégance et pas glissés."
+        },
+        "storm": {
+          "name": "Danse de la tempête",
+          "description": "Mouvements amples et rapides."
+        },
+        "musicalStatues": {
+          "name": "Statues musicales",
+          "description": "On se fige quand la musique s'arrête."
+        },
+        "animals": {
+          "name": "Danse des animaux",
+          "description": "Imiter la démarche des animaux du conte."
+        },
+        "mirror": {
+          "name": "Danse en miroir",
+          "description": "Deux danseurs se répondent."
+        },
+        "rhythmicDuel": {
+          "name": "Duel rythmé",
+          "description": "Confrontation en miroir, rythmée."
+        },
+        "stageFight": {
+          "name": "Combat chorégraphié",
+          "description": "Affrontement sans contact."
+        },
+        "heroSolo": {
+          "name": "Solo du héros",
+          "description": "Le personnage exprime ses émotions."
+        },
+        "dream": {
+          "name": "Danse du rêve",
+          "description": "Mouvements lents, comme au ralenti."
+        }
+      }
+    },
+
     "staging": {
       "title": "Adaptez votre conte pour la scène",
       "description": "Pour chaque scène, précisez qui est sur scène, l'intention à transmettre au public et les décors. Les scènes suivent la trame de votre récit.",

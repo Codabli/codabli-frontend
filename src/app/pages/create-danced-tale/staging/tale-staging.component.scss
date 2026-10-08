@@ -45,6 +45,27 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   }
 }
 
+// ---------- Bibliothèque de danses + scènes (écran 8.2) ----------
+
+.staging-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 300px minmax(0, 1fr);
+
+    // La bibliothèque reste visible pendant qu'on fait défiler les scènes (sous le header collant).
+    &__library {
+      position: sticky;
+      top: 200px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+    }
+  }
+}
+
 // ---------- Scènes ----------
 
 .scenes {

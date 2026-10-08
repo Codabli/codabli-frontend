@@ -7,6 +7,25 @@ export type CharacterExit = 'stays' | 'exits';
 export const CHARACTER_ENTRANCES: CharacterEntrance[] = ['onStage', 'enters'];
 export const CHARACTER_EXITS: CharacterExit[] = ['stays', 'exits'];
 
+/** Moment du passage dansé dans la scène (écran 8.2, SCRUM-101). */
+export type DanceMoment = 'beginning' | 'middle' | 'end';
+export const DANCE_MOMENTS: DanceMoment[] = ['beginning', 'middle', 'end'];
+
+export type DanceFormat = 'solo' | 'duo' | 'group';
+export type DanceIntensity = 'gentle' | 'moderate' | 'intense';
+export type DanceStyle = 'traditional' | 'classical' | 'contemporary';
+export const DANCE_STYLES: DanceStyle[] = ['traditional', 'classical', 'contemporary'];
+
+/** Danse placée dans une scène, à partir d'une danse de la bibliothèque. */
+export interface SceneDance {
+  id: string;
+  /** Identifiant de la danse dans la bibliothèque. */
+  danceId: string;
+  name: string;
+  moment: DanceMoment;
+  style: DanceStyle;
+}
+
 export interface SceneCharacter {
   characterId: string;
   entrance: CharacterEntrance;
@@ -26,6 +45,8 @@ export interface SceneStaging {
   intention: string;
   /** Décors et accessoires, en mots-clés. */
   props: string[];
+  /** Absent des brouillons enregistrés avant l'écran 8.2. */
+  dances?: SceneDance[];
 }
 
 export interface TaleStaging {

@@ -96,6 +96,59 @@
       "next": "Continue to the “{{step}}” step"
     },
 
+    "autosave": {
+      "saved": "Saved at {{hours}}:{{minutes}}",
+      "error": "Saving is not possible on this device: the browser's storage is full."
+    },
+
+    "staging": {
+      "title": "Adapt your tale for the stage",
+      "description": "For each scene, specify who is on stage, the intention to convey to the audience and the set. The scenes follow the outline of your story.",
+      "editStructure": "Edit the scenes in the story outline",
+      "scene": {
+        "title": "Scene {{number}} — {{title}}",
+        "showText": "Show the text of the scene"
+      },
+      "characters": {
+        "label": "Characters on stage"
+      },
+      "movements": {
+        "title": "Entrances and exits",
+        "entrance": "Entrance",
+        "exit": "Exit",
+        "entranceMoment": "When does the character enter?",
+        "entranceMomentPlaceholder": "E.g. when Merlin announces the Grail",
+        "exitMoment": "When does the character exit?",
+        "exitMomentPlaceholder": "E.g. after the banquet dance",
+        "entrances": {
+          "onStage": "On stage from the start",
+          "enters": "Enters during the scene"
+        },
+        "exits": {
+          "stays": "Stays until the end",
+          "exits": "Exits during the scene"
+        }
+      },
+      "intention": {
+        "label": "Theatrical intention",
+        "hint": "What emotion, what atmosphere do you want to convey to the audience?",
+        "placeholder": "E.g. the joy of the feast, then worry when Merlin arrives"
+      },
+      "props": {
+        "label": "Set and props",
+        "placeholder": "E.g. a banquet table",
+        "add": "Add",
+        "hint": "Press Enter to add an item.",
+        "listLabel": "Set and props of scene {{number}}",
+        "remove": "Remove: {{prop}}"
+      },
+      "autosaveIdle": "The staging is saved automatically.",
+      "conductor": {
+        "label": "Generate the show run sheet (PDF)",
+        "soon": "(coming soon)"
+      }
+    },
+
     "writing": {
       "title": "Write the story of your tale",
       "description": "Write the text of each step of your outline. Choose a step on the left: its summary and characters guide you.",
@@ -117,9 +170,7 @@
       "editorLabel": "Text of the “{{step}}” step",
       "placeholder": "Start writing here…",
       "autosave": {
-        "idle": "Your text is saved automatically as you write.",
-        "saved": "Saved at {{hours}}:{{minutes}}",
-        "error": "Saving is not possible on this device: the browser's storage is full."
+        "idle": "Your text is saved automatically as you write."
       },
       "globalRecommendations": "Overall recommendations",
       "assistant": {

@@ -1,5 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
+import { TaleStaging } from '../../models/interfaces/tale-staging.interface';
 import { TaleStructure } from '../../models/interfaces/tale-structure.interface';
 import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
 import { TaleWriting } from '../../models/interfaces/tale-writing.interface';
@@ -9,6 +10,7 @@ export interface CreateDancedTaleDraft {
   universe: TaleUniverse | null;
   structure: TaleStructure | null;
   writing: TaleWriting | null;
+  staging: TaleStaging | null;
 }
 
 export const CREATE_DANCED_TALE_DRAFT_KEY = 'codabli.createDancedTale.draft';
@@ -18,6 +20,7 @@ const EMPTY_DRAFT: CreateDancedTaleDraft = {
   universe: null,
   structure: null,
   writing: null,
+  staging: null,
 };
 
 /**
@@ -34,6 +37,7 @@ export class CreateDancedTaleDraftService {
   readonly universe = computed(() => this.draft().universe);
   readonly structure = computed(() => this.draft().structure);
   readonly writing = computed(() => this.draft().writing);
+  readonly staging = computed(() => this.draft().staging);
 
   saveContext(context: ProjectContext): void {
     this.draft.update((draft) => ({ ...draft, context }));
@@ -56,6 +60,11 @@ export class CreateDancedTaleDraftService {
 
   saveWriting(writing: TaleWriting): boolean {
     this.draft.update((draft) => ({ ...draft, writing }));
+    return this.persist();
+  }
+
+  saveStaging(staging: TaleStaging): boolean {
+    this.draft.update((draft) => ({ ...draft, staging }));
     return this.persist();
   }
 
@@ -84,13 +93,14 @@ export class CreateDancedTaleDraftService {
       const stored = localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY);
 
       if (stored) {
-        // Les brouillons enregistrés avant les écrans 5 à 7 n'ont pas tous les champs.
+        // Les brouillons enregistrés avant les écrans 5 à 8 n'ont pas tous les champs.
         const parsed = JSON.parse(stored) as Partial<CreateDancedTaleDraft>;
         return {
           context: parsed.context ?? null,
           universe: parsed.universe ?? null,
           structure: parsed.structure ?? null,
           writing: parsed.writing ?? null,
+          staging: parsed.staging ?? null,
         };
       }
     } catch {

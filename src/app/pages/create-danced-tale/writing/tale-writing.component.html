@@ -113,31 +113,10 @@
           />
         }
 
-        <p
-          class="autosave"
-          role="status"
-          [class.autosave--error]="saveStatus() === 'error'"
-        >
-          @switch (saveStatus()) {
-            @case ('saved') {
-              <i
-                class="fa-solid fa-cloud-arrow-up"
-                aria-hidden="true"
-              ></i>
-              {{ savedAtLabel() }}
-            }
-            @case ('error') {
-              <i
-                class="fa-solid fa-triangle-exclamation"
-                aria-hidden="true"
-              ></i>
-              {{ 'createDancedTale.writing.autosave.error' | translate }}
-            }
-            @default {
-              {{ 'createDancedTale.writing.autosave.idle' | translate }}
-            }
-          }
-        </p>
+        <app-autosave-status
+          idleKey="createDancedTale.writing.autosave.idle"
+          [autosave]="autosave"
+        />
 
         <!--
           TODO(IA) : « Recommandations globales » relit l'ensemble du conte et propose des pistes

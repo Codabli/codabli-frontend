@@ -96,6 +96,59 @@
       "next": "Continuer vers l'étape « {{step}} »"
     },
 
+    "autosave": {
+      "saved": "Sauvegardé à {{hours}}h{{minutes}}",
+      "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
+    },
+
+    "staging": {
+      "title": "Adaptez votre conte pour la scène",
+      "description": "Pour chaque scène, précisez qui est sur scène, l'intention à transmettre au public et les décors. Les scènes suivent la trame de votre récit.",
+      "editStructure": "Modifier les scènes dans la trame du récit",
+      "scene": {
+        "title": "Scène {{number}} — {{title}}",
+        "showText": "Voir le texte de la scène"
+      },
+      "characters": {
+        "label": "Personnages présents"
+      },
+      "movements": {
+        "title": "Entrées et sorties",
+        "entrance": "Entrée",
+        "exit": "Sortie",
+        "entranceMoment": "Moment de l'entrée",
+        "entranceMomentPlaceholder": "Ex. : quand Merlin annonce le Graal",
+        "exitMoment": "Moment de la sortie",
+        "exitMomentPlaceholder": "Ex. : après la danse du banquet",
+        "entrances": {
+          "onStage": "Sur scène dès le début",
+          "enters": "Entre pendant la scène"
+        },
+        "exits": {
+          "stays": "Reste jusqu'à la fin",
+          "exits": "Sort pendant la scène"
+        }
+      },
+      "intention": {
+        "label": "Intention théâtrale",
+        "hint": "Quelle émotion, quelle ambiance voulez-vous transmettre au public ?",
+        "placeholder": "Ex. : la joie de la fête, puis l'inquiétude quand Merlin arrive"
+      },
+      "props": {
+        "label": "Décors et accessoires",
+        "placeholder": "Ex. : une table de banquet",
+        "add": "Ajouter",
+        "hint": "Appuyez sur Entrée pour ajouter un élément.",
+        "listLabel": "Décors et accessoires de la scène {{number}}",
+        "remove": "Retirer : {{prop}}"
+      },
+      "autosaveIdle": "La mise en scène est enregistrée automatiquement.",
+      "conductor": {
+        "label": "Générer le conducteur du spectacle (PDF)",
+        "soon": "(bientôt disponible)"
+      }
+    },
+
     "writing": {
       "title": "Écrivez l'histoire de votre conte",
       "description": "Rédigez le texte de chaque étape de votre trame. Choisissez une étape à gauche : son résumé et ses personnages vous servent de repère.",
@@ -117,9 +170,7 @@
       "editorLabel": "Texte de l'étape « {{step}} »",
       "placeholder": "Commencez à écrire ici…",
       "autosave": {
-        "idle": "Votre texte est enregistré automatiquement pendant que vous écrivez.",
-        "saved": "Sauvegardé à {{hours}}h{{minutes}}",
-        "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
+        "idle": "Votre texte est enregistré automatiquement pendant que vous écrivez."
       },
       "globalRecommendations": "Recommandations globales",
       "assistant": {

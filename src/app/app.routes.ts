@@ -13,13 +13,17 @@ export const routes: Routes = [
             (m) => m.TeacherAccountComponent,
           ),
       },
-    ],
-  }
+      {
         path: 'create-danced-tale',
         loadChildren: () =>
           import('./pages/create-danced-tale/create-danced-tale.routes').then(
             (m) => m.CREATE_DANCED_TALE_ROUTES,
           ),
+      },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/login/login.component').then((m) => m.LoginComponent),
       },
     ],
   },

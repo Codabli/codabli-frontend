@@ -153,6 +153,36 @@
       }
     }
   },
+
+    "login": {
+    "title": "Log in",
+    "description": "Log in to your account",
+    "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+    },
+    "form": {
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Log in"
+    },
+    "register": {
+      "title": "Or create a new account",
+      "teacher": "Teacher account",
+      "family": "Family account"
+    },
+      "errors": {
+      "invalidCredentials": "Incorrect email address or password.",
+      "unavailable": "The login service is temporarily unavailable. Please try again in a few moments."
+    }
+  },
+
   "navbar": {
     "dancedTales": "Dance Tales Library",
     "interactiveGame": "Creative Reading Game",

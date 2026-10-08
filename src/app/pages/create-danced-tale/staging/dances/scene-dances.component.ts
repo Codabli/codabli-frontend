@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, inject, input, output, signal } from '@angular/core';
+import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Button } from '../../../../shared/components/button/button.component';
 import {
@@ -27,6 +27,7 @@ export const DANCE_NAME_MAX_LENGTH = 60;
 export class SceneDances {
   private readonly translate = inject(TranslateService);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly addPanel = viewChild<ElementRef<HTMLDetailsElement>>('addPanel');
 
   /** Identifiant de la scène, pour des identifiants de champs uniques. */
   readonly sceneId = input.required<string>();
@@ -80,8 +81,13 @@ export class SceneDances {
     this.dancesChange.emit(this.dances().filter((_, i) => i !== index));
     this.announce('createDancedTale.dances.scene.announce.removed', { name: removed.name });
 
-    // Le bouton supprimé disparaît : le focus revient sur la liste d'ajout.
-    this.focus(`#scene-${this.sceneId()}-add-dance`);
+    // Le bouton supprimé disparaît : le focus revient sur la liste d'ajout si elle est dépliée,
+    // sinon sur le titre du bloc d'ajout.
+    this.focus(
+      this.addPanel()?.nativeElement.open
+        ? `#scene-${this.sceneId()}-add-dance`
+        : `#scene-${this.sceneId()}-add-summary`,
+    );
   }
 
   protected setName(index: number, name: string): void {

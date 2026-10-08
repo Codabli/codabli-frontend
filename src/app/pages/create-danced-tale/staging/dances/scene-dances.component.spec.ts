@@ -107,7 +107,13 @@ describe('SceneDances', () => {
     expect(last()).toEqual([{ ...ROUND, name: 'Ronde du banquet', moment: 'end', style: 'classical' }]);
   });
 
-  it('supprime une danse et rend le focus à la liste d\'ajout', async () => {
+  it('replie l\'ajout sans glisser-déposer par défaut', async () => {
+    await setup();
+
+    expect(element.querySelector<HTMLDetailsElement>('.scene-dances__add-panel')!.open).toBe(false);
+  });
+
+  it('supprime une danse et rend le focus au titre du bloc d\'ajout, ou à sa liste s\'il est déplié', async () => {
     await setup([ROUND, DUEL]);
 
     element.querySelector<HTMLButtonElement>('.dance__remove')!.click();
@@ -115,6 +121,13 @@ describe('SceneDances', () => {
     await afterRender();
 
     expect(last()).toEqual([DUEL]);
+    expect(document.activeElement).toBe(element.querySelector('#scene-s1-add-summary'));
+
+    element.querySelector<HTMLDetailsElement>('.scene-dances__add-panel')!.open = true;
+    element.querySelector<HTMLButtonElement>('.dance__remove')!.click();
+    fixture.detectChanges();
+    await afterRender();
+
     expect(document.activeElement).toBe(element.querySelector('#scene-s1-add-dance'));
     expect(element.querySelector('[aria-live="polite"]')!.textContent).toContain(
       'createDancedTale.dances.scene.announce.removed',

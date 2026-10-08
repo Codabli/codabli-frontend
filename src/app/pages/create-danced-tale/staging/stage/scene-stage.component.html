@@ -1,0 +1,207 @@
+<div class="scene-stage">
+  <div class="scene-stage__header">
+    <h4 class="scene-stage__title">
+      <i
+        class="fa-solid fa-map"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.stage.title' | translate }}
+    </h4>
+
+    @if (placed().length) {
+      <button
+        type="button"
+        class="scene-stage__reset"
+        (click)="reset()"
+      >
+        {{ 'createDancedTale.stage.reset' | translate }}
+      </button>
+    }
+  </div>
+
+  @if (elements().length) {
+    <p class="scene-stage__hint">{{ 'createDancedTale.stage.hint' | translate }}</p>
+
+    <!-- Plan du théâtre vu du dessus : coulisses et fond de scène en haut, public en bas. -->
+    <div class="stage">
+      <span
+        class="stage__backstage"
+        aria-hidden="true"
+        >{{ 'createDancedTale.stage.backstage' | translate }}</span
+      >
+
+      <div class="stage__row">
+        <span
+          class="stage__wing"
+          aria-hidden="true"
+          >{{ 'createDancedTale.stage.left' | translate }}</span
+        >
+
+        <div
+          #floor
+          class="stage__floor"
+        >
+          <!-- Éléments du décor de théâtre, purement visuels. -->
+          <span
+            class="stage__backdrop"
+            aria-hidden="true"
+            >{{ 'createDancedTale.stage.back' | translate }}</span
+          >
+          <span
+            class="stage__leg stage__leg--left stage__leg--upper"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="stage__leg stage__leg--left stage__leg--lower"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="stage__leg stage__leg--right stage__leg--upper"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="stage__leg stage__leg--right stage__leg--lower"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="stage__curtain"
+            aria-hidden="true"
+            >{{ 'createDancedTale.stage.curtain' | translate }}</span
+          >
+          <span
+            class="stage__apron"
+            aria-hidden="true"
+            >{{ 'createDancedTale.stage.apron' | translate }}</span
+          >
+
+          @if (selectedZone(); as zone) {
+            <span class="stage__zone-badge">
+              {{ 'createDancedTale.stage.zoneLabel' | translate: { zone: zoneLabel(zone) } }}
+            </span>
+          }
+
+          @for (item of placed(); track key(item.placement)) {
+            <button
+              type="button"
+              class="token"
+              cdkDrag
+              [class.token--prop]="item.element.kind === 'prop'"
+              [class.token--selected]="selected() === key(item.element)"
+              [style.left.%]="item.placement.x"
+              [style.top.%]="item.placement.y"
+              [style.background-color]="color(item.element)"
+              [attr.aria-label]="item.element.label + ' : ' + zoneLabel(zoneOfElement(item.element))"
+              [title]="item.element.label"
+              (cdkDragEnded)="onDragEnded(item.element, $event)"
+              (focus)="selected.set(key(item.element))"
+              (keydown)="onKeydown(item.element, $event)"
+            >
+              @if (item.element.kind === 'prop') {
+                <i
+                  class="fa-solid fa-cube"
+                  aria-hidden="true"
+                ></i>
+              } @else {
+                <span aria-hidden="true">{{ initials(item.element.label) }}</span>
+              }
+              <span
+                class="token__name"
+                aria-hidden="true"
+                >{{ item.element.label }}</span
+              >
+            </button>
+          }
+        </div>
+
+        <span
+          class="stage__wing"
+          aria-hidden="true"
+          >{{ 'createDancedTale.stage.right' | translate }}</span
+        >
+      </div>
+
+      <span
+        class="stage__footlights"
+        aria-hidden="true"
+        >{{ 'createDancedTale.stage.footlights' | translate }}</span
+      >
+      <span
+        class="stage__audience"
+        aria-hidden="true"
+        >{{ 'createDancedTale.stage.audience' | translate }}</span
+      >
+    </div>
+
+    @if (unplaced().length) {
+      <div class="tray">
+        <p class="tray__title">{{ 'createDancedTale.stage.toPlace' | translate }}</p>
+        <div class="tray__tokens">
+          @for (element of unplaced(); track key(element)) {
+            <!-- La couleur ne s'applique qu'à la pastille : le nom reste sur fond clair (contraste). -->
+            <span
+              class="token token--tray"
+              cdkDrag
+              [title]="element.label"
+              (cdkDragEnded)="onDragEnded(element, $event)"
+            >
+              <span
+                class="token__badge"
+                aria-hidden="true"
+                [class.token__badge--prop]="element.kind === 'prop'"
+                [style.background-color]="color(element)"
+              >
+                @if (element.kind === 'prop') {
+                  <i class="fa-solid fa-cube"></i>
+                } @else {
+                  {{ initials(element.label) }}
+                }
+              </span>
+              <span class="token__name">{{ element.label }}</span>
+            </span>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Alternative au glisser-déposer : zone de chaque élément. -->
+    <details class="placement-list">
+      <summary>{{ 'createDancedTale.stage.listTitle' | translate }}</summary>
+
+      <div class="placement-list__items">
+        @for (element of elements(); track key(element)) {
+          <div class="placement-list__item">
+            <label [for]="fieldId(element)">{{ element.label }}</label>
+            <select
+              [id]="fieldId(element)"
+              (change)="onZoneChange(element, $any($event.target).value)"
+            >
+              <option
+                value=""
+                [selected]="!zoneOfElement(element)"
+              >
+                {{ 'createDancedTale.stage.offStage' | translate }}
+              </option>
+              @for (zone of zones; track zone) {
+                <option
+                  [value]="zone"
+                  [selected]="zoneOfElement(element) === zone"
+                >
+                  {{ 'createDancedTale.stage.zones.' + zone | translate }}
+                </option>
+              }
+            </select>
+          </div>
+        }
+      </div>
+    </details>
+  } @else {
+    <p class="scene-stage__hint">{{ 'createDancedTale.stage.noElements' | translate }}</p>
+  }
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+</div>

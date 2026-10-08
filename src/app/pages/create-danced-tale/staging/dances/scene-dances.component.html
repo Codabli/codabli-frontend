@@ -103,38 +103,47 @@
     </li>
   </ol>
 
-  <!-- Alternative au glisser-déposer (clavier, tactile). -->
-  <div class="scene-dances__add">
-    <div class="form-field">
-      <label [for]="'scene-' + sceneId() + '-add-dance'">
-        {{ 'createDancedTale.dances.scene.addLabel' | translate }}
-      </label>
-      <select
-        [id]="'scene-' + sceneId() + '-add-dance'"
-        [value]="selectedDanceId()"
-        (change)="selectedDanceId.set($any($event.target).value)"
-      >
-        <option value="">{{ 'createDancedTale.dances.scene.addPlaceholder' | translate }}</option>
-        @for (dance of catalog; track dance.id) {
-          <option
-            [value]="dance.id"
-            [selected]="selectedDanceId() === dance.id"
-          >
-            {{ 'createDancedTale.dances.catalog.' + dance.id + '.name' | translate }}
-          </option>
-        }
-      </select>
-    </div>
+  <!-- Alternative au glisser-déposer (clavier, tactile), repliée par défaut comme pour le plateau. -->
+  <details
+    #addPanel
+    class="scene-dances__add-panel"
+  >
+    <summary [id]="'scene-' + sceneId() + '-add-summary'">
+      {{ 'createDancedTale.dances.scene.addWithoutDrag' | translate }}
+    </summary>
 
-    <app-button
-      variant="outline"
-      navigationIcon="circle-plus"
-      [disabled]="!selectedDanceId()"
-      (click)="addSelected()"
-    >
-      {{ 'createDancedTale.dances.scene.add' | translate }}
-    </app-button>
-  </div>
+    <div class="scene-dances__add">
+      <div class="form-field">
+        <label [for]="'scene-' + sceneId() + '-add-dance'">
+          {{ 'createDancedTale.dances.scene.addLabel' | translate }}
+        </label>
+        <select
+          [id]="'scene-' + sceneId() + '-add-dance'"
+          [value]="selectedDanceId()"
+          (change)="selectedDanceId.set($any($event.target).value)"
+        >
+          <option value="">{{ 'createDancedTale.dances.scene.addPlaceholder' | translate }}</option>
+          @for (dance of catalog; track dance.id) {
+            <option
+              [value]="dance.id"
+              [selected]="selectedDanceId() === dance.id"
+            >
+              {{ 'createDancedTale.dances.catalog.' + dance.id + '.name' | translate }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <app-button
+        variant="outline"
+        navigationIcon="circle-plus"
+        [disabled]="!selectedDanceId()"
+        (click)="addSelected()"
+      >
+        {{ 'createDancedTale.dances.scene.add' | translate }}
+      </app-button>
+    </div>
+  </details>
 
   <p
     class="sr-only"

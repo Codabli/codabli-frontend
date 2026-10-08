@@ -5,6 +5,7 @@ import {
   viewChild,
   ElementRef,
   afterNextRender,
+  output
 } from '@angular/core';
 import { Tale } from '@models/interfaces/tale.interface';
 import { TaleCardComponent } from '../../../../shared/components/tale-card/tale-card.component';
@@ -20,6 +21,11 @@ import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel';
 export class LibraryCarouselComponent {
   readonly tales = input.required<Tale[]>();
   protected readonly selectedIndex = signal(1);
+
+  readonly locked = input(false);
+
+  readonly consult = output<string>();
+  readonly login = output<void>();
 
   private emblaApi?: EmblaCarouselType;
 

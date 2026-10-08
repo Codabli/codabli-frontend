@@ -9,10 +9,17 @@ export const routes: Routes = [
     children: [
       ...HOME_ROUTES,
       {
-        path: 'danced-tales',
+        path: 'library/tales',
         loadComponent: () =>
           import('./features/library/library.component').then(
             (m) => m.LibraryComponent
+          ),
+      },
+      {
+        path: 'library/tales/:id',
+        loadComponent: () =>
+          import('./features/library/tale-detail/tale-detail.component').then(
+            (m) => m.TaleDetailComponent
           ),
       },
       {

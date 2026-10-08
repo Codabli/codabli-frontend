@@ -12,7 +12,7 @@ import type { NavItem } from '../../../models/interfaces/nav-item.interface';
 })
 export class NavbarComponent {
   protected readonly navItems: NavItem[] = [
-    { labelKey: 'navbar.dancedTales', route: '/danced-tales' },
+    { labelKey: 'navbar.dancedTales', route: '/library/tales' },
     { labelKey: 'navbar.interactiveGame', route: '/interactive-game' },
     { labelKey: 'navbar.storyCards', route: '/story-cards' },
     { labelKey: 'navbar.createDancedTale', route: '/create-danced-tale' },

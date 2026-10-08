@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TaleFilters } from '@models/interfaces/tale-filters.interface';
 import { Tale } from '@models/interfaces/tale.interface';
@@ -7,6 +7,7 @@ import { TaleCardComponent } from '@shared/components/tale-card/tale-card.compon
 import { LibraryCarouselComponent } from './components/library-carousel/library-carousel.component';
 import { LibraryFiltersComponent } from './components/library-filters/library-filters.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [
@@ -23,8 +24,10 @@ import { IconComponent } from '@shared/components/icon/icon.component';
 })
 export class LibraryComponent {
   protected readonly isGridView = signal(true);
-
+  // protected readonly isAuthenticated = this.authService.isAuthenticated;
+  protected readonly isAuthenticated = signal(true);
   private readonly resultsStep = 8;
+  private readonly router = inject(Router);
 
   protected readonly visibleResultsCount = signal(this.resultsStep);
 
@@ -75,10 +78,22 @@ export class LibraryComponent {
     this.isGridView.update((isGrid) => !isGrid);
   }
 
+  protected consultTale(taleId: string): void {
+    this.router.navigate(['/library/tales', taleId]);
+  }
+
+  protected goToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  protected adoptTale(taleId: string): void {
+    // Redirection vers la boutique ??
+  }
+
   tales(): Tale[] {
     return [
       {
-        id: 1,
+        id: '1',
         title: 'Tale 1',
         description: 'Description 1',
         coverUrl: 'assets/images/tales-test.png',
@@ -89,7 +104,7 @@ export class LibraryComponent {
       },
 
       {
-        id: 2,
+        id: '2',
         title: 'Tale 2',
         description: 'Description 2',
         coverUrl: 'assets/images/tales-test.png',
@@ -99,7 +114,7 @@ export class LibraryComponent {
         themes: ['fantasy'],
       },
       {
-        id: 3,
+        id: '3',
         title: 'Tale 3',
         description: 'Description 3',
         coverUrl: 'assets/images/tales-test.png',
@@ -109,7 +124,7 @@ export class LibraryComponent {
         themes: ['mystery'],
       },
       {
-        id: 4,
+        id: '4',
         title: 'Tale 4',
         description: 'Description 4',
         coverUrl: 'assets/images/tales-test.png',
@@ -119,7 +134,7 @@ export class LibraryComponent {
         themes: ['horror'],
       },
       {
-        id: 5,
+        id: '5',
         title: 'Tale 5',
         description: 'Description 5',
         coverUrl: 'assets/images/tales-test.png',
@@ -129,7 +144,7 @@ export class LibraryComponent {
         themes: ['romance'],
       },
       {
-        id: 6,
+        id: '6',
         title: 'Tale 6',
         description: 'Description 6',
         coverUrl: 'assets/images/tales-test.png',
@@ -139,7 +154,7 @@ export class LibraryComponent {
         themes: ['historical'],
       },
       {
-        id: 7,
+        id: '7',
         title: 'Tale 7',
         description: 'Description 7',
         coverUrl: 'assets/images/tales-test.png',
@@ -149,7 +164,7 @@ export class LibraryComponent {
         themes: ['adventure'],
       },
       {
-        id: 8,
+        id: '8',
         title: 'Tale 8',
         description: 'Description 8',
         coverUrl: 'assets/images/tales-test.png',
@@ -159,7 +174,7 @@ export class LibraryComponent {
         themes: ['fantasy'],
       },
       {
-        id: 9,
+        id: '9',
         title: 'Tale 9',
         description: 'Description 9',
         coverUrl: 'assets/images/tales-test.png',

@@ -181,6 +181,10 @@
       "title": "Ou créez un nouveau compte",
       "teacher": "Compte enseignant",
       "family": "Compte famille"
+    },
+      "errors": {
+      "invalidCredentials": "Adresse mail ou mot de passe incorrect.",
+      "unavailable": "Le service de connexion est momentanément indisponible. Réessayez dans quelques instants."
     }
   },
 

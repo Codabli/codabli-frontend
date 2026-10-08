@@ -37,8 +37,18 @@
         />
       </div>
 
+      @if (errorKey(); as key) {
+        <p class="login-form__error" role="alert">
+          {{ key | translate }}
+        </p>
+      }
+
       <div class="login-form__actions">
-        <app-button variant="tertiary" type="submit">
+        <app-button
+          variant="tertiary"
+          type="submit"
+          [disabled]="isSubmitting()"
+        >
           {{ 'login.form.submit' | translate }}
         </app-button>
       </div>
@@ -48,13 +58,13 @@
       <p>{{ 'login.register.title' | translate }}</p>
 
       <div class="login__register-actions">
-        <app-button variant="tertiary" routerLink="/register/teacher">
+        <a class="login__register-link" routerLink="/creer-un-compte/enseignant">
           {{ 'login.register.teacher' | translate }}
-        </app-button>
+        </a>
 
-        <app-button variant="tertiary" routerLink="/register/family">
+        <a class="login__register-link" routerLink="/creer-un-compte/famille">
           {{ 'login.register.family' | translate }}
-        </app-button>
+        </a>
       </div>
     </div>
 

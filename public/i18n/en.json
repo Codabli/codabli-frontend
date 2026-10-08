@@ -181,6 +181,10 @@
       "title": "Or create a new account",
       "teacher": "Teacher account",
       "family": "Family account"
+    },
+      "errors": {
+      "invalidCredentials": "Incorrect email address or password.",
+      "unavailable": "The login service is temporarily unavailable. Please try again in a few moments."
     }
   },
 

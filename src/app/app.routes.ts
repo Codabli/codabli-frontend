@@ -21,5 +21,13 @@ export const routes: Routes = [
           ),
       },
     ],
+  }
+        path: 'create-danced-tale',
+        loadChildren: () =>
+          import('./pages/create-danced-tale/create-danced-tale.routes').then(
+            (m) => m.CREATE_DANCED_TALE_ROUTES,
+          ),
+      },
+    ],
   },
 ];

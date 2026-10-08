@@ -1,0 +1,300 @@
+<div class="tale-staging">
+  <header class="tale-staging__intro">
+    <h2 class="tale-staging__title">
+      {{ 'createDancedTale.staging.title' | translate }}
+    </h2>
+
+    @if (theme) {
+      <p>
+        {{ 'createDancedTale.universe.theme' | translate }}
+        <strong>{{ theme }}</strong>
+      </p>
+    }
+
+    <p>{{ 'createDancedTale.staging.description' | translate }}</p>
+
+    <p>
+      <a
+        class="tale-staging__link"
+        routerLink="../structure"
+      >
+        {{ 'createDancedTale.staging.editStructure' | translate }}
+      </a>
+    </p>
+  </header>
+
+  <ol class="scenes">
+    @for (step of steps; track step.id; let i = $index) {
+      @let staging = scene(step);
+
+      <li>
+        <article
+          class="scene"
+          [attr.aria-labelledby]="'scene-' + step.id + '-title'"
+        >
+          <header class="scene__header">
+            <span
+              class="scene__number"
+              aria-hidden="true"
+              >{{ i + 1 }}</span
+            >
+            <h3
+              class="scene__title"
+              [id]="'scene-' + step.id + '-title'"
+            >
+              {{ 'createDancedTale.staging.scene.title' | translate: { number: i + 1, title: step.title } }}
+            </h3>
+          </header>
+
+          <p class="scene__summary">
+            {{ step.summary || ('createDancedTale.writing.reminder.noSummary' | translate) }}
+          </p>
+
+          @if (writtenText(step); as text) {
+            <details class="scene__text">
+              <summary>{{ 'createDancedTale.staging.scene.showText' | translate }}</summary>
+              <div
+                class="scene__text-content"
+                [innerHTML]="text"
+              ></div>
+            </details>
+          }
+
+          <!-- Personnages présents -->
+          <fieldset class="field-group">
+            <legend class="field-group__legend">
+              {{ 'createDancedTale.staging.characters.label' | translate }}
+            </legend>
+
+            @if (characters.length) {
+              <div class="pill-group">
+                @for (character of characters; track character.id) {
+                  <label class="pill">
+                    <input
+                      type="checkbox"
+                      [checked]="isPresent(step, character.id)"
+                      (change)="toggleCharacter(step, character.id)"
+                    />
+                    <span class="pill__label">{{ character.name }}</span>
+                  </label>
+                }
+              </div>
+            } @else {
+              <p class="field-group__empty">
+                {{ 'createDancedTale.structure.step.characters.empty' | translate }}
+                <a routerLink="../universe">
+                  {{ 'createDancedTale.structure.step.characters.emptyLink' | translate }}
+                </a>
+              </p>
+            }
+          </fieldset>
+
+          <!-- Entrées et sorties, par personnage présent -->
+          @if (staging.characters.length) {
+            <div class="movements">
+              <h4 class="movements__title">
+                {{ 'createDancedTale.staging.movements.title' | translate }}
+              </h4>
+
+              @for (sceneCharacter of staging.characters; track sceneCharacter.characterId) {
+                @let fieldId = 'scene-' + step.id + '-' + sceneCharacter.characterId;
+
+                <fieldset class="movement">
+                  <legend class="movement__name">{{ characterName(sceneCharacter.characterId) }}</legend>
+
+                  <div class="form-field">
+                    <label [for]="fieldId + '-entrance'">
+                      {{ 'createDancedTale.staging.movements.entrance' | translate }}
+                    </label>
+                    <select
+                      [id]="fieldId + '-entrance'"
+                      [value]="sceneCharacter.entrance"
+                      (change)="setEntrance(step, sceneCharacter.characterId, $any($event.target).value)"
+                    >
+                      @for (entrance of entrances; track entrance) {
+                        <option
+                          [value]="entrance"
+                          [selected]="entrance === sceneCharacter.entrance"
+                        >
+                          {{ 'createDancedTale.staging.movements.entrances.' + entrance | translate }}
+                        </option>
+                      }
+                    </select>
+
+                    <!-- Moment précis, seulement si le personnage entre pendant la scène. -->
+                    @if (sceneCharacter.entrance === 'enters') {
+                      <label
+                        class="moment-label"
+                        [for]="fieldId + '-entrance-moment'"
+                      >
+                        {{ 'createDancedTale.staging.movements.entranceMoment' | translate }}
+                      </label>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        [id]="fieldId + '-entrance-moment'"
+                        [value]="sceneCharacter.entranceMoment ?? ''"
+                        [attr.maxlength]="momentMaxLength"
+                        [placeholder]="'createDancedTale.staging.movements.entranceMomentPlaceholder' | translate"
+                        (input)="setEntranceMoment(step, sceneCharacter.characterId, $any($event.target).value)"
+                      />
+                    }
+                  </div>
+
+                  <div class="form-field">
+                    <label [for]="fieldId + '-exit'">
+                      {{ 'createDancedTale.staging.movements.exit' | translate }}
+                    </label>
+                    <select
+                      [id]="fieldId + '-exit'"
+                      [value]="sceneCharacter.exit"
+                      (change)="setExit(step, sceneCharacter.characterId, $any($event.target).value)"
+                    >
+                      @for (exit of exits; track exit) {
+                        <option
+                          [value]="exit"
+                          [selected]="exit === sceneCharacter.exit"
+                        >
+                          {{ 'createDancedTale.staging.movements.exits.' + exit | translate }}
+                        </option>
+                      }
+                    </select>
+
+                    <!-- Moment précis, seulement si le personnage sort pendant la scène. -->
+                    @if (sceneCharacter.exit === 'exits') {
+                      <label
+                        class="moment-label"
+                        [for]="fieldId + '-exit-moment'"
+                      >
+                        {{ 'createDancedTale.staging.movements.exitMoment' | translate }}
+                      </label>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        [id]="fieldId + '-exit-moment'"
+                        [value]="sceneCharacter.exitMoment ?? ''"
+                        [attr.maxlength]="momentMaxLength"
+                        [placeholder]="'createDancedTale.staging.movements.exitMomentPlaceholder' | translate"
+                        (input)="setExitMoment(step, sceneCharacter.characterId, $any($event.target).value)"
+                      />
+                    }
+                  </div>
+                </fieldset>
+              }
+            </div>
+          }
+
+          <!-- Intention théâtrale -->
+          <div class="form-field">
+            <label [for]="'scene-' + step.id + '-intention'">
+              {{ 'createDancedTale.staging.intention.label' | translate }}
+            </label>
+            <p
+              class="form-hint"
+              [id]="'scene-' + step.id + '-intention-hint'"
+            >
+              {{ 'createDancedTale.staging.intention.hint' | translate }}
+            </p>
+            <textarea
+              rows="2"
+              [id]="'scene-' + step.id + '-intention'"
+              [value]="staging.intention"
+              [attr.maxlength]="intentionMaxLength"
+              [attr.aria-describedby]="'scene-' + step.id + '-intention-hint'"
+              [placeholder]="'createDancedTale.staging.intention.placeholder' | translate"
+              (input)="setIntention(step, $any($event.target).value)"
+            ></textarea>
+          </div>
+
+          <!-- Décors et accessoires -->
+          <div class="form-field">
+            <label [for]="'scene-' + step.id + '-prop'">
+              {{ 'createDancedTale.staging.props.label' | translate }}
+            </label>
+
+            <div class="prop-input">
+              <input
+                #propInput
+                type="text"
+                autocomplete="off"
+                [id]="'scene-' + step.id + '-prop'"
+                [attr.maxlength]="propMaxLength"
+                [attr.aria-describedby]="'scene-' + step.id + '-prop-hint'"
+                [placeholder]="'createDancedTale.staging.props.placeholder' | translate"
+                (keydown)="onPropKeydown(step, $event, propInput)"
+              />
+
+              <app-button
+                variant="outline"
+                navigationIcon="circle-plus"
+                (click)="addProp(step, propInput)"
+              >
+                {{ 'createDancedTale.staging.props.add' | translate }}
+              </app-button>
+            </div>
+
+            <p
+              class="form-hint"
+              [id]="'scene-' + step.id + '-prop-hint'"
+            >
+              {{ 'createDancedTale.staging.props.hint' | translate }}
+            </p>
+
+            @if (staging.props.length) {
+              <ul
+                class="chip-list"
+                [attr.aria-label]="'createDancedTale.staging.props.listLabel' | translate: { number: i + 1 }"
+              >
+                @for (prop of staging.props; track prop; let propIndex = $index) {
+                  <li class="chip">
+                    <span>{{ prop }}</span>
+                    <button
+                      type="button"
+                      class="chip__remove"
+                      [attr.aria-label]="'createDancedTale.staging.props.remove' | translate: { prop }"
+                      (click)="removeProp(step, propIndex, propInput)"
+                    >
+                      <i
+                        class="fa-solid fa-xmark"
+                        aria-hidden="true"
+                      ></i>
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </article>
+      </li>
+    }
+  </ol>
+
+  <app-autosave-status
+    idleKey="createDancedTale.staging.autosaveIdle"
+    [autosave]="autosave"
+  />
+
+  <div class="tale-staging__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <!-- TODO(SCRUM-104) : conducteur du spectacle en PDF (écran 8.5). -->
+    <button
+      type="button"
+      class="conductor-button"
+      disabled
+    >
+      <i
+        class="fa-solid fa-file-pdf"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.staging.conductor.label' | translate }}
+      <em>{{ 'createDancedTale.staging.conductor.soon' | translate }}</em>
+    </button>
+  </div>
+</div>

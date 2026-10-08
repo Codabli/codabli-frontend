@@ -50,6 +50,7 @@ describe('CreateDancedTaleDraftService', () => {
       universe: null,
       structure: null,
       writing: null,
+      staging: null,
     });
   });
 

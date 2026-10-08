@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
-import { AUTOSAVE_DELAY_MS, TaleWritingComponent } from './tale-writing.component';
+import { TaleWritingComponent } from './tale-writing.component';
+import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 import { RichTextEditor } from '../../../shared/components/rich-text-editor/rich-text-editor.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import { TaleWriting } from '../../../models/interfaces/tale-writing.interface';
@@ -111,7 +112,7 @@ describe('TaleWritingComponent', () => {
     fixture.detectChanges();
 
     expect(draftService.writing()).toEqual({ title: '', texts: { s1: '<p>Il était une fois</p>' } });
-    expect(element.querySelector('.autosave')!.textContent).toContain('createDancedTale.writing.autosave.saved');
+    expect(element.querySelector('.autosave')!.textContent).toContain('createDancedTale.autosave.saved');
     expect(stepButtons()[0].querySelector('.steps-panel__status--done')).not.toBeNull();
   });
 

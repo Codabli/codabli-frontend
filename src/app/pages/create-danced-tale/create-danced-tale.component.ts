@@ -31,4 +31,6 @@ export class CreateDancedTaleComponent {
       0,
     );
   });
+
+  protected readonly isWide = computed(() => !!this.steps[this.currentIndex()].wide);
 }

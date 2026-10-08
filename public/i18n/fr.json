@@ -58,6 +58,19 @@
       "submit": "Envoyer ma demande"
     }
   },
+  "richTextEditor": {
+    "title": "Titre",
+    "subtitle": "Sous-titre",
+    "toolbar": "Mise en forme du texte",
+    "bold": "Gras",
+    "italic": "Italique",
+    "bulletList": "Liste à puces",
+    "undo": "Annuler",
+    "redo": "Rétablir",
+    "undoShortcut": "Annuler (Ctrl+Z)",
+    "redoShortcut": "Rétablir (Ctrl+Y)"
+  },
+
   "createDancedTale": {
     "title": "Créez votre conte dansé sur-mesure",
     "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
@@ -81,6 +94,47 @@
       "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
       "back": "Revenir à l'étape « {{step}} »",
       "next": "Continuer vers l'étape « {{step}} »"
+    },
+
+    "writing": {
+      "title": "Écrivez l'histoire de votre conte",
+      "description": "Rédigez le texte de chaque étape de votre trame. Choisissez une étape à gauche : son résumé et ses personnages vous servent de repère.",
+      "taleTitle": {
+        "label": "Titre de votre conte dansé",
+        "placeholder": "Ex. : Arthur et l'épée du rocher"
+      },
+      "steps": {
+        "label": "Étapes du récit",
+        "position": "Étape {{current}} sur {{total}}",
+        "written": "Rédigée",
+        "empty": "À écrire"
+      },
+      "reminder": {
+        "summary": "Résumé de la trame",
+        "noSummary": "Pas encore de résumé pour cette étape.",
+        "characters": "Personnages"
+      },
+      "editorLabel": "Texte de l'étape « {{step}} »",
+      "placeholder": "Commencez à écrire ici…",
+      "autosave": {
+        "idle": "Votre texte est enregistré automatiquement pendant que vous écrivez.",
+        "saved": "Sauvegardé à {{hours}}h{{minutes}}",
+        "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
+      },
+      "globalRecommendations": "Recommandations globales",
+      "assistant": {
+        "title": "Assistant pédagogique",
+        "warning": "L'assistant IA peut faire des erreurs. Discutez et vérifiez ensemble.",
+        "intro": "L'assistant pose des questions et donne des indices : c'est la classe qui écrit.",
+        "actions": {
+          "vocabulary": "Trouver du vocabulaire",
+          "checkSentence": "Vérifier notre phrase",
+          "askQuestion": "Poser une question",
+          "dialogueIdeas": "Idées de dialogues"
+        },
+        "soon": "L'assistant sera bientôt disponible.",
+        "soonShort": "(bientôt disponible)"
+      }
     },
 
     "structure": {

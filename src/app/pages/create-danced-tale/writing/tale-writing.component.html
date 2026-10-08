@@ -1,0 +1,230 @@
+<div class="tale-writing">
+  <header class="tale-writing__intro">
+    <h2 class="tale-writing__title">
+      {{ 'createDancedTale.writing.title' | translate }}
+    </h2>
+
+    @if (theme) {
+      <p>
+        {{ 'createDancedTale.universe.theme' | translate }}
+        <strong>{{ theme }}</strong>
+      </p>
+    }
+
+    <p>{{ 'createDancedTale.writing.description' | translate }}</p>
+  </header>
+
+  <div class="form-field">
+    <label for="tale-title">
+      {{ 'createDancedTale.writing.taleTitle.label' | translate }}
+    </label>
+
+    <input
+      id="tale-title"
+      type="text"
+      autocomplete="off"
+      [formControl]="title"
+      [maxlength]="titleMaxLength"
+      [placeholder]="'createDancedTale.writing.taleTitle.placeholder' | translate"
+    />
+  </div>
+
+  <div class="workspace">
+    <div class="writing-main">
+      <!-- 1. Étapes de la trame (écran 6), en onglets au-dessus de l'éditeur -->
+      <nav
+        class="steps-panel"
+        [attr.aria-label]="'createDancedTale.writing.steps.label' | translate"
+      >
+        <ol class="steps-panel__list">
+          @for (step of steps; track step.id; let i = $index) {
+            <li>
+              <button
+                type="button"
+                class="steps-panel__step"
+                [class.steps-panel__step--current]="i === currentIndex()"
+                [attr.aria-current]="i === currentIndex() ? 'step' : null"
+                (click)="selectStep(i)"
+              >
+                <span class="steps-panel__name">{{ i + 1 }}. {{ step.title }}</span>
+                <span
+                  class="steps-panel__status"
+                  [class.steps-panel__status--done]="isWritten(step)"
+                >
+                  @if (isWritten(step)) {
+                    <i
+                      class="fa-solid fa-check"
+                      aria-hidden="true"
+                    ></i>
+                    {{ 'createDancedTale.writing.steps.written' | translate }}
+                  } @else {
+                    {{ 'createDancedTale.writing.steps.empty' | translate }}
+                  }
+                </span>
+              </button>
+            </li>
+          }
+        </ol>
+      </nav>
+
+      <!-- 2. Éditeur de l'étape sélectionnée -->
+      <section
+        class="editor-panel"
+        aria-labelledby="current-step-title"
+      >
+        @let step = currentStep();
+
+        <p class="editor-panel__position">
+          {{ 'createDancedTale.writing.steps.position' | translate: { current: currentIndex() + 1, total: steps.length } }}
+        </p>
+
+        <h3
+          id="current-step-title"
+          class="editor-panel__step-title"
+        >
+          {{ step.title }}
+        </h3>
+
+        <div
+          id="step-reminder"
+          class="reminder"
+        >
+          <p class="reminder__summary">
+            <span class="reminder__label">{{ 'createDancedTale.writing.reminder.summary' | translate }}</span>
+            {{ step.summary || ('createDancedTale.writing.reminder.noSummary' | translate) }}
+          </p>
+
+          @if (characterNamesOf(step).length) {
+            <p class="reminder__characters">
+              <span class="reminder__label">{{ 'createDancedTale.writing.reminder.characters' | translate }}</span>
+              {{ characterNamesOf(step).join(', ') }}
+            </p>
+          }
+        </div>
+
+        <!-- Un éditeur par étape : l'historique annuler / rétablir reste propre à l'étape. -->
+        @for (editedStep of [step]; track editedStep.id) {
+          <app-rich-text-editor
+            describedBy="step-reminder"
+            [content]="texts()[editedStep.id] ?? ''"
+            [label]="'createDancedTale.writing.editorLabel' | translate: { step: editedStep.title }"
+            [placeholder]="'createDancedTale.writing.placeholder' | translate"
+            (contentChange)="onTextChange(editedStep.id, $event)"
+          />
+        }
+
+        <p
+          class="autosave"
+          role="status"
+          [class.autosave--error]="saveStatus() === 'error'"
+        >
+          @switch (saveStatus()) {
+            @case ('saved') {
+              <i
+                class="fa-solid fa-cloud-arrow-up"
+                aria-hidden="true"
+              ></i>
+              {{ savedAtLabel() }}
+            }
+            @case ('error') {
+              <i
+                class="fa-solid fa-triangle-exclamation"
+                aria-hidden="true"
+              ></i>
+              {{ 'createDancedTale.writing.autosave.error' | translate }}
+            }
+            @default {
+              {{ 'createDancedTale.writing.autosave.idle' | translate }}
+            }
+          }
+        </p>
+
+        <!--
+          TODO(IA) : « Recommandations globales » relit l'ensemble du conte et propose des pistes
+          d'amélioration (questions, indices), sans réécrire le texte (RG-CMC-11).
+        -->
+        <button
+          type="button"
+          class="ai-button ai-button--wide"
+          disabled
+        >
+          <i
+            class="fa-solid fa-wand-magic-sparkles"
+            aria-hidden="true"
+          ></i>
+          {{ 'createDancedTale.writing.globalRecommendations' | translate }}
+          <em>{{ 'createDancedTale.writing.assistant.soonShort' | translate }}</em>
+        </button>
+      </section>
+    </div>
+
+    <!-- 3. Assistant pédagogique IA -->
+    <aside
+      class="assistant"
+      aria-labelledby="assistant-title"
+    >
+      <h3
+        id="assistant-title"
+        class="assistant__title"
+      >
+        <i
+          class="fa-solid fa-wand-magic-sparkles"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.writing.assistant.title' | translate }}
+      </h3>
+
+      <!-- Avertissement éthique affiché en permanence (RG-CMC-11). -->
+      <p class="assistant__warning">
+        <i
+          class="fa-solid fa-circle-info"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.writing.assistant.warning' | translate }}
+      </p>
+
+      <p class="assistant__intro">
+        {{ 'createDancedTale.writing.assistant.intro' | translate }}
+      </p>
+
+      <p class="assistant__soon">
+        {{ 'createDancedTale.writing.assistant.soon' | translate }}
+      </p>
+
+      <!--
+        TODO(IA) : actions guidées de l'assistant (SCRUM-94). Les réponses s'afficheront en cartes
+        pédagogiques (indices, explications, pistes) ; l'IA ne rédige jamais le texte (RG-CMC-11).
+      -->
+      <div class="assistant__actions">
+        @for (key of assistantActionKeys; track key) {
+          <button
+            type="button"
+            class="ai-button"
+            disabled
+          >
+            {{ 'createDancedTale.writing.assistant.actions.' + key | translate }}
+          </button>
+        }
+      </div>
+    </aside>
+  </div>
+
+  <div class="tale-writing__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+</div>

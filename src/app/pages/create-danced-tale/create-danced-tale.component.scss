@@ -2,6 +2,19 @@
   padding-block: var(--spacing-2xl) 80px;
   row-gap: var(--spacing-xl);
 
+  // Écran d'écriture (onglets, éditeur, assistant) : plus de place que pour les formulaires.
+  &--wide {
+    // Au-delà de 1920px, la marge de 300px du site (palier 1920px) est ramenée à 80px.
+    @media (min-width: 1920px) {
+      --grid-margin: 80px;
+    }
+
+    // Les formulaires restent sur 10 colonnes ; l'écriture prend toute la largeur de la grille.
+    .create-danced-tale__content {
+      grid-column: 1 / -1;
+    }
+  }
+
   &__header {
     grid-column: 1 / -1;
     text-align: center;

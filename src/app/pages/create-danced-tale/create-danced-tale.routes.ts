@@ -4,7 +4,8 @@ import { ProjectContextComponent } from './context/project-context.component';
 import { StepComingSoonComponent } from './coming-soon/step-coming-soon.component';
 import { TaleStructureComponent } from './structure/tale-structure.component';
 import { TaleUniverseComponent } from './universe/tale-universe.component';
-import { requireProjectContext } from './create-danced-tale.guards';
+import { TaleWritingComponent } from './writing/tale-writing.component';
+import { requireProjectContext, requireTaleStructure } from './create-danced-tale.guards';
 
 export const CREATE_DANCED_TALE_ROUTES: Routes = [
   {
@@ -21,10 +22,11 @@ export const CREATE_DANCED_TALE_ROUTES: Routes = [
       },
       { path: 'universe', component: TaleUniverseComponent, canActivate: [requireProjectContext] },
       { path: 'structure', component: TaleStructureComponent, canActivate: [requireProjectContext] },
+      { path: 'writing', component: TaleWritingComponent, canActivate: [requireTaleStructure] },
       {
-        path: 'writing',
+        path: 'staging',
         component: StepComingSoonComponent,
-        data: { previousStep: 'structure' },
+        data: { previousStep: 'writing' },
       },
     ],
   },

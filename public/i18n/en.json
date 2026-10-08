@@ -58,6 +58,19 @@
       "submit": "Send my request"
     }
   },
+  "richTextEditor": {
+    "title": "Heading",
+    "subtitle": "Subheading",
+    "toolbar": "Text formatting",
+    "bold": "Bold",
+    "italic": "Italic",
+    "bulletList": "Bulleted list",
+    "undo": "Undo",
+    "redo": "Redo",
+    "undoShortcut": "Undo (Ctrl+Z)",
+    "redoShortcut": "Redo (Ctrl+Y)"
+  },
+
   "createDancedTale": {
     "title": "Create your own dance tale",
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
@@ -81,6 +94,47 @@
       "message": "Your answers are saved. This step will be available soon.",
       "back": "Back to the “{{step}}” step",
       "next": "Continue to the “{{step}}” step"
+    },
+
+    "writing": {
+      "title": "Write the story of your tale",
+      "description": "Write the text of each step of your outline. Choose a step on the left: its summary and characters guide you.",
+      "taleTitle": {
+        "label": "Title of your danced tale",
+        "placeholder": "E.g. Arthur and the sword in the stone"
+      },
+      "steps": {
+        "label": "Story steps",
+        "position": "Step {{current}} of {{total}}",
+        "written": "Written",
+        "empty": "To write"
+      },
+      "reminder": {
+        "summary": "Outline summary",
+        "noSummary": "No summary for this step yet.",
+        "characters": "Characters"
+      },
+      "editorLabel": "Text of the “{{step}}” step",
+      "placeholder": "Start writing here…",
+      "autosave": {
+        "idle": "Your text is saved automatically as you write.",
+        "saved": "Saved at {{hours}}:{{minutes}}",
+        "error": "Saving is not possible on this device: the browser's storage is full."
+      },
+      "globalRecommendations": "Overall recommendations",
+      "assistant": {
+        "title": "Learning assistant",
+        "warning": "The AI assistant can make mistakes. Discuss and check together.",
+        "intro": "The assistant asks questions and gives hints: the class does the writing.",
+        "actions": {
+          "vocabulary": "Find vocabulary",
+          "checkSentence": "Check our sentence",
+          "askQuestion": "Ask a question",
+          "dialogueIdeas": "Dialogue ideas"
+        },
+        "soon": "The assistant will be available soon.",
+        "soonShort": "(coming soon)"
+      }
     },
 
     "structure": {

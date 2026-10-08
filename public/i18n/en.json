@@ -2,7 +2,6 @@
   "contact": {
     "title": "Contact us",
     "description": "Explanatory text for this page...",
-
     "form": {
       "profile": {
         "label": "Your profile",
@@ -14,27 +13,22 @@
           "other": "Other"
         }
       },
-
       "fullName": {
         "label": "Your full name",
         "placeholder": "Enter your full name"
       },
-
       "schoolName": {
         "label": "School name",
         "placeholder": "Enter the name of your school"
       },
-
       "country": {
         "label": "Country",
         "placeholder": "Enter your country"
       },
-
       "email": {
         "label": "Your email address",
         "placeholder": "Enter your email address"
       },
-
       "subject": {
         "label": "Subject of your request",
         "placeholder": "Select the subject of your request",
@@ -45,16 +39,13 @@
           "other": "Other"
         }
       },
-
       "message": {
         "label": "Describe your request",
         "placeholder": "Describe your request"
       },
-
       "termsAccepted": {
         "label": "I accept the Terms and Conditions and the Privacy Policy"
       },
-
       "submit": "Send my request"
     }
   },
@@ -197,5 +188,115 @@
     "shop": "Shop",
     "partners": "Partners",
     "subscriptions": "Our Subscriptions"
+  },
+  "teacherAccount": {
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "home": "Home"
+    },
+    "title": "Create a teacher account",
+    "sections": {
+      "class": "About your class",
+      "personal": "Personal information",
+      "password": "Password",
+      "accessibility": "Specific needs",
+      "subscription": "Subscription"
+    },
+    "form": {
+      "school": {
+        "label": "School",
+        "placeholder": "Select a school",
+        "unavailable": "The list of schools could not be loaded."
+      },
+      "academy": {
+        "label": "Education authority (académie)",
+        "placeholder": "Select an education authority"
+      },
+      "ageRange": {
+        "label": "Age range of your pupils",
+        "placeholder": "Select an age range",
+        "options": {
+          "3-6": "3 - 6 years",
+          "6-8": "6 - 8 years",
+          "8-11": "8 - 11 years",
+          "11-15": "11 - 15 years",
+          "15-18": "15 - 18 years"
+        }
+      },
+      "girlsCount": {
+        "label": "Number of girls in your class"
+      },
+      "boysCount": {
+        "label": "Number of boys in your class"
+      },
+      "studentCount": {
+        "placeholder": "Enter the number of pupils"
+      },
+      "platformGoal": {
+        "label": "What are you looking for on the platform?",
+        "placeholder": "Select an answer",
+        "options": {
+          "dancedTales": "Dance tales",
+          "pedagogicalResources": "Teaching resources",
+          "creativeReading": "Creative reading activities",
+          "artGallery": "An art gallery",
+          "other": "Other"
+        }
+      },
+      "lastName": {
+        "label": "Your last name",
+        "placeholder": "Enter your last name"
+      },
+      "firstName": {
+        "label": "Your first name",
+        "placeholder": "Enter your first name"
+      },
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email address"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "passwordConfirmation": {
+        "label": "Repeat the password",
+        "placeholder": "Enter your password"
+      },
+      "accessibility": {
+        "legend": "Optional: tick the adjustments you or your pupils need.",
+        "options": {
+          "highContrast": "High contrast",
+          "reducedMotion": "Reduced motion",
+          "signLanguageAudioDescription": "Sign language / Audio description",
+          "dysPmrSupport": "Support for dyslexia-related and reduced-mobility needs"
+        }
+      },
+      "subscription": {
+        "legend": "Optional: choose an offer now or later from your account. The subscription will be finalised once your account is created.",
+        "later": "I'll choose later",
+        "laterDescription": "Create your account and explore the platform before subscribing.",
+        "duration": {
+          "mensuel": "per month",
+          "annuel": "per year"
+        }
+      },
+      "termsAccepted": {
+        "label": "I accept the Terms of Use and the Privacy Policy, and I undertake to respect pupils' image rights."
+      },
+      "submit": "Confirm and create my account"
+    },
+    "errors": {
+      "required": "This field is required.",
+      "email": "The email address is not valid.",
+      "integer": "Please enter a whole number.",
+      "min": "The value must be greater than or equal to {{min}}.",
+      "max": "The value must be less than or equal to {{max}}.",
+      "minLength": "This field must contain at least {{min}} characters.",
+      "maxLength": "This field must contain at most {{max}} characters.",
+      "passwordStrength": "The password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",
+      "passwordMismatch": "Passwords do not match.",
+      "termsRequired": "You must accept the terms to create your account."
+    }
   }
 }

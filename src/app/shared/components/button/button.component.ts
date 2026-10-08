@@ -3,6 +3,8 @@ import { IconName, Icon } from '../icon/icon.component';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'tertiary-ico' | 'outline';
 
+export type ButtonType = 'button' | 'submit' | 'reset';
+
 export type IconPosition = 'left' | 'right';
 
 export type ButtonNavigationIcon = 'chevron-left' | 'chevron-right' | 'circle-plus';
@@ -15,6 +17,7 @@ export type ButtonNavigationIcon = 'chevron-left' | 'chevron-right' | 'circle-pl
 })
 export class Button {
   variant = input<ButtonVariant>('primary');
+  type = input<ButtonType>('button');
   disabled = input(false);
 
   type = input<'button' | 'submit'>('button')

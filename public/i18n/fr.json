@@ -2,7 +2,6 @@
   "contact": {
     "title": "Nous contacter",
     "description": "Texte explicatif de cette page...",
-
     "form": {
       "profile": {
         "label": "Votre profil",
@@ -14,27 +13,22 @@
           "other": "Autre"
         }
       },
-
       "fullName": {
         "label": "Votre nom et prénom",
         "placeholder": "Renseignez votre nom et prénom"
       },
-
       "schoolName": {
         "label": "Nom de l'établissement scolaire",
         "placeholder": "Renseignez le nom de l'établissement"
       },
-
       "country": {
         "label": "Pays",
         "placeholder": "Renseignez votre pays"
       },
-
       "email": {
         "label": "Votre adresse mail",
         "placeholder": "Renseignez votre adresse mail"
       },
-
       "subject": {
         "label": "Sujet de votre demande",
         "placeholder": "Sélectionnez le sujet de votre demande",
@@ -45,16 +39,13 @@
           "other": "Autre"
         }
       },
-
       "message": {
         "label": "Décrivez votre demande",
         "placeholder": "Décrivez votre demande"
       },
-
       "termsAccepted": {
         "label": "J'accepte les CGU et la politique de confidentialité"
       },
-
       "submit": "Envoyer ma demande"
     }
   },
@@ -197,6 +188,115 @@
     "shop": "Boutique",
     "partners": "Partenaires",
     "subscriptions": "Nos abonnements"
-    
-  } 
+  },
+  "teacherAccount": {
+    "breadcrumb": {
+      "label": "Fil d'Ariane",
+      "home": "Accueil"
+    },
+    "title": "Créer un compte enseignant",
+    "sections": {
+      "class": "Informations sur votre classe",
+      "personal": "Informations personnelles",
+      "password": "Mot de passe",
+      "accessibility": "Besoins spécifiques",
+      "subscription": "Abonnement"
+    },
+    "form": {
+      "school": {
+        "label": "Établissement scolaire",
+        "placeholder": "Sélectionnez un établissement scolaire",
+        "unavailable": "La liste des établissements n'a pas pu être chargée."
+      },
+      "academy": {
+        "label": "Académie",
+        "placeholder": "Sélectionnez une académie"
+      },
+      "ageRange": {
+        "label": "Tranche d'âge de vos élèves",
+        "placeholder": "Sélectionnez une tranche d'âge",
+        "options": {
+          "3-6": "3 - 6 ans",
+          "6-8": "6 - 8 ans",
+          "8-11": "8 - 11 ans",
+          "11-15": "11 - 15 ans",
+          "15-18": "15 - 18 ans"
+        }
+      },
+      "girlsCount": {
+        "label": "Nombre de filles dans votre classe"
+      },
+      "boysCount": {
+        "label": "Nombre de garçons dans votre classe"
+      },
+      "studentCount": {
+        "placeholder": "Renseignez le nombre de vos élèves"
+      },
+      "platformGoal": {
+        "label": "Qu'est-ce que vous recherchez sur la plateforme ?",
+        "placeholder": "Sélectionnez une réponse",
+        "options": {
+          "dancedTales": "Des contes dansés",
+          "pedagogicalResources": "Des ressources pédagogiques",
+          "creativeReading": "Des activités de lecture créative",
+          "artGallery": "Une galerie d'art",
+          "other": "Autre"
+        }
+      },
+      "lastName": {
+        "label": "Votre nom",
+        "placeholder": "Renseignez votre nom"
+      },
+      "firstName": {
+        "label": "Votre prénom",
+        "placeholder": "Renseignez votre prénom"
+      },
+      "email": {
+        "label": "Adresse mail",
+        "placeholder": "Renseignez votre adresse mail"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "passwordConfirmation": {
+        "label": "Répétez le mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "accessibility": {
+        "legend": "Optionnel : cochez les adaptations dont vous ou vos élèves avez besoin.",
+        "options": {
+          "highContrast": "Contraste élevé",
+          "reducedMotion": "Réduction des animations",
+          "signLanguageAudioDescription": "Support LSF/Audiodescription",
+          "dysPmrSupport": "Prise en charge des besoins DYS/PMR"
+        }
+      },
+      "subscription": {
+        "legend": "Optionnel : choisissez une offre maintenant ou plus tard depuis votre espace. La souscription sera finalisée après la création de votre compte.",
+        "later": "Je choisirai plus tard",
+        "laterDescription": "Créez votre compte et découvrez la plateforme avant de vous abonner.",
+        "duration": {
+          "mensuel": "par mois",
+          "annuel": "par an"
+        }
+      },
+      "termsAccepted": {
+        "label": "J'accepte les Conditions Générales d'Utilisation et la Politique de Confidentialité, et je m'engage à respecter le droit à l'image des élèves."
+      },
+      "submit": "Valider et créer mon compte"
+    },
+    "errors": {
+      "required": "Ce champ est obligatoire.",
+      "email": "L'adresse mail n'est pas valide.",
+      "integer": "Veuillez saisir un nombre entier.",
+      "min": "La valeur doit être supérieure ou égale à {{min}}.",
+      "max": "La valeur doit être inférieure ou égale à {{max}}.",
+      "minLength": "Ce champ doit contenir au moins {{min}} caractères.",
+      "maxLength": "Ce champ doit contenir au maximum {{max}} caractères.",
+      "passwordStrength": "Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "termsRequired": "Vous devez accepter les conditions pour créer votre compte."
+    }
+  }
 }

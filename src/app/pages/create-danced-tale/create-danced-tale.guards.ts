@@ -16,3 +16,18 @@ export const requireProjectContext: CanActivateFn = (route) => {
 
   return inject(Router).createUrlTree(siblingPath(route, 'context'));
 };
+
+/** L'écriture (écran 7) suit les étapes de la trame (écran 6) : sans trame, on y renvoie. */
+export const requireTaleStructure: CanActivateFn = (route) => {
+  const draft = inject(CreateDancedTaleDraftService);
+
+  if (!draft.context()) {
+    return inject(Router).createUrlTree(siblingPath(route, 'context'));
+  }
+
+  if (draft.structure()?.steps.length) {
+    return true;
+  }
+
+  return inject(Router).createUrlTree(siblingPath(route, 'structure'));
+};

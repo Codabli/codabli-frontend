@@ -1,4 +1,7 @@
-<section class="create-danced-tale grid">
+<section
+  class="create-danced-tale grid"
+  [class.create-danced-tale--wide]="isWide()"
+>
   <header class="create-danced-tale__header">
     <h1>{{ 'createDancedTale.title' | translate }}</h1>
     <p>{{ 'createDancedTale.subtitle' | translate }}</p>

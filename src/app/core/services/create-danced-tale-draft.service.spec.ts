@@ -49,6 +49,7 @@ describe('CreateDancedTaleDraftService', () => {
       context: CONTEXT,
       universe: null,
       structure: null,
+      writing: null,
     });
   });
 

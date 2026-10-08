@@ -2,16 +2,23 @@ import { Injectable, computed, signal } from '@angular/core';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
 import { TaleStructure } from '../../models/interfaces/tale-structure.interface';
 import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
+import { TaleWriting } from '../../models/interfaces/tale-writing.interface';
 
 export interface CreateDancedTaleDraft {
   context: ProjectContext | null;
   universe: TaleUniverse | null;
   structure: TaleStructure | null;
+  writing: TaleWriting | null;
 }
 
 export const CREATE_DANCED_TALE_DRAFT_KEY = 'codabli.createDancedTale.draft';
 
-const EMPTY_DRAFT: CreateDancedTaleDraft = { context: null, universe: null, structure: null };
+const EMPTY_DRAFT: CreateDancedTaleDraft = {
+  context: null,
+  universe: null,
+  structure: null,
+  writing: null,
+};
 
 /**
  * Brouillon du parcours « Créer mon conte dansé », partagé entre les écrans.
@@ -26,6 +33,7 @@ export class CreateDancedTaleDraftService {
   readonly context = computed(() => this.draft().context);
   readonly universe = computed(() => this.draft().universe);
   readonly structure = computed(() => this.draft().structure);
+  readonly writing = computed(() => this.draft().writing);
 
   saveContext(context: ProjectContext): void {
     this.draft.update((draft) => ({ ...draft, context }));
@@ -43,6 +51,11 @@ export class CreateDancedTaleDraftService {
 
   saveStructure(structure: TaleStructure): boolean {
     this.draft.update((draft) => ({ ...draft, structure }));
+    return this.persist();
+  }
+
+  saveWriting(writing: TaleWriting): boolean {
+    this.draft.update((draft) => ({ ...draft, writing }));
     return this.persist();
   }
 
@@ -71,12 +84,13 @@ export class CreateDancedTaleDraftService {
       const stored = localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY);
 
       if (stored) {
-        // Les brouillons enregistrés avant les écrans 5 et 6 n'ont pas tous les champs.
+        // Les brouillons enregistrés avant les écrans 5 à 7 n'ont pas tous les champs.
         const parsed = JSON.parse(stored) as Partial<CreateDancedTaleDraft>;
         return {
           context: parsed.context ?? null,
           universe: parsed.universe ?? null,
           structure: parsed.structure ?? null,
+          writing: parsed.writing ?? null,
         };
       }
     } catch {

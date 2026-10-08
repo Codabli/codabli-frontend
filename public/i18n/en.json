@@ -58,6 +58,110 @@
       "submit": "Send my request"
     }
   },
+  "createDancedTale": {
+    "title": "Create your own dance tale",
+    "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
+    "next": "Next step",
+
+    "steps": {
+      "label": "Dance tale creation steps",
+      "position": "Step {{current}} of {{total}}:",
+      "context": "Project context",
+      "discovery": "Artistic discovery",
+      "resources": "Cultural resources",
+      "classResources": "Class resources",
+      "universe": "Tale universe",
+      "structure": "Story outline",
+      "writing": "Story writing",
+      "staging": "Adaptation and staging"
+    },
+
+    "comingSoon": {
+      "message": "Your project context has been saved. This step will be available soon.",
+      "back": "Back to the project context"
+    },
+
+    "context": {
+      "requiredHint": "Fields marked with * are required.",
+
+      "ageRange": {
+        "title": "The performers' age",
+        "label": "Choose the age range of the class",
+        "option": "{{range}} years",
+        "error": "Choose an age range."
+      },
+
+      "location": {
+        "title": "Your location",
+        "country": {
+          "label": "Country",
+          "placeholder": "E.g. France",
+          "error": "Enter the country of your school."
+        },
+        "region": {
+          "label": "Region",
+          "placeholder": "E.g. Centre-Val de Loire",
+          "error": "Enter the region of your school."
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "E.g. Tours"
+        }
+      },
+
+      "theme": {
+        "title": "The world of your dance tale",
+        "label": "Main educational theme",
+        "placeholder": "Search or enter a theme",
+        "hint": "Pick a theme from the list or enter your own.",
+        "error": "Enter an educational theme.",
+        "suggestions": {
+          "fantasy": "Fantasy",
+          "worldTales": "Tales from around the world",
+          "mythsAndLegends": "Myths and legends",
+          "middleAges": "The Middle Ages",
+          "nature": "Nature and environment",
+          "animals": "Animals",
+          "emotions": "Emotions",
+          "livingTogether": "Living together",
+          "travel": "Travel"
+        }
+      },
+
+      "ingredients": {
+        "title": "The secret ingredients",
+        "label": "Add details or keywords (optional)",
+        "placeholder": "E.g. castles, dragons, time travel...",
+        "hint": "Press Enter or \"Add\" to create a keyword.",
+        "add": "Add",
+        "listLabel": "Secret ingredients added",
+        "remove": "Remove \"{{ingredient}}\""
+      },
+
+      "space": {
+        "title": "The performance space",
+        "label": "Where will the dance tale be performed?",
+        "options": {
+          "salle_spectacle": {
+            "title": "Theatre",
+            "description": "With wings, side curtains, stage left and stage right"
+          },
+          "gymnase": {
+            "title": "Gym",
+            "description": "A large open space with no fixed set"
+          },
+          "classe": {
+            "title": "Classroom",
+            "description": "A small space to arrange"
+          },
+          "exterieur": {
+            "title": "Outdoors",
+            "description": "Playground, garden or open-air space"
+          }
+        }
+      }
+    }
+  },
 
     "login": {
     "title": "Log in",

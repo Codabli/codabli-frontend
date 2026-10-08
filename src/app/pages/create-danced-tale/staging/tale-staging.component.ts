@@ -1,3 +1,4 @@
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,11 +10,14 @@ import {
   CharacterEntrance,
   CharacterExit,
   SceneCharacter,
+  SceneDance,
   SceneStaging,
 } from '../../../models/interfaces/tale-staging.interface';
 import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
 import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
+import { DanceLibrary } from './dances/dance-library.component';
+import { SceneDances } from './dances/scene-dances.component';
 
 export const PROP_MAX_LENGTH = 40;
 export const INTENTION_MAX_LENGTH = 400;
@@ -29,7 +33,7 @@ function hasText(html: string | undefined): boolean {
  * avec ses personnages, leurs entrées et sorties, l'intention théâtrale et les décors.
  */
 @Component({
-  imports: [RouterLink, TranslatePipe, Button, AutosaveStatus],
+  imports: [RouterLink, TranslatePipe, Button, AutosaveStatus, CdkDropListGroup, DanceLibrary, SceneDances],
   selector: 'app-tale-staging',
   styleUrl: './tale-staging.component.scss',
   templateUrl: './tale-staging.component.html',
@@ -112,6 +116,10 @@ export class TaleStagingComponent {
 
   protected setIntention(step: StoryStep, intention: string): void {
     this.updateScene(step, (scene) => ({ ...scene, intention }));
+  }
+
+  protected setDances(step: StoryStep, dances: SceneDance[]): void {
+    this.updateScene(step, (scene) => ({ ...scene, dances }));
   }
 
   protected onPropKeydown(step: StoryStep, event: KeyboardEvent, input: HTMLInputElement): void {

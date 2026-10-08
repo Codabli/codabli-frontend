@@ -1,0 +1,158 @@
+$focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%, transparent);
+
+.library {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-md);
+
+  font-size: 18px;
+  color: var(--color-text-primary-default);
+
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-outline-default);
+  border-radius: 24px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: 0;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+    color: var(--font-color-primary);
+  }
+
+  &__hint {
+    margin: 0;
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__empty {
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  label {
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  input,
+  select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 12px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+
+    background-color: var(--color-bg-surface);
+    border: 2px solid var(--color-border-outline-default);
+    border-radius: 12px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-border-primary-focus);
+      box-shadow: $focus-ring;
+    }
+  }
+}
+
+.dance-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-light);
+  border-radius: 16px;
+  cursor: grab;
+  touch-action: none;
+
+  &:hover {
+    border-color: var(--color-border-outline-default);
+  }
+
+  &--placeholder {
+    min-height: 72px;
+    opacity: 0.5;
+  }
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    background-color: var(--color-bg-secondary-default);
+    border-radius: 10px;
+
+    &[data-style='traditional'] {
+      background-color: var(--color-bg-primary-default);
+    }
+
+    &[data-style='classical'] {
+      background-color: var(--color-bg-theme-default);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__description,
+  &__tags {
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+
+  &__tags {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__grip {
+    color: var(--color-text-muted);
+  }
+
+  // Carte en cours de glisser : clonée dans <body> avec ses attributs (styles conservés).
+  &.cdk-drag-preview {
+    box-sizing: border-box;
+    box-shadow: 0 12px 32px rgba(16, 43, 84, 0.25);
+  }
+}

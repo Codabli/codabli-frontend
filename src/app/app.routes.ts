@@ -7,6 +7,14 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
+        path: 'creer-un-compte/enseignant',
+        loadComponent: () =>
+          import('./pages/teacher-account/teacher-account.component').then(
+            (m) => m.TeacherAccountComponent,
+          ),
+      },
+    ],
+  }
         path: 'create-danced-tale',
         loadChildren: () =>
           import('./pages/create-danced-tale/create-danced-tale.routes').then(

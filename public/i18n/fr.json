@@ -157,6 +157,10 @@
     "login": {
     "title": "Connexion",
     "description": "Connectez-vous à votre compte",
+    "breadcrumb": {
+    "label": "Fil d'Ariane",
+    "home": "Accueil"
+    },
     "form": {
       "email": {
         "label": "Adresse mail",

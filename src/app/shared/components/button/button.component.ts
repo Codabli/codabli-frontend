@@ -20,7 +20,6 @@ export class Button {
   type = input<ButtonType>('button');
   disabled = input(false);
 
-  type = input<'button' | 'submit'>('button')
   icon = input<IconName | undefined>(undefined);
   iconPosition = input<IconPosition>('left');
 

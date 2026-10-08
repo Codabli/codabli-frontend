@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/public/main-layout/main-layout.component';
-import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   {
@@ -14,8 +13,7 @@ export const routes: Routes = [
             (m) => m.TeacherAccountComponent,
           ),
       },
-    ],
-  }
+      {
         path: 'create-danced-tale',
         loadChildren: () =>
           import('./pages/create-danced-tale/create-danced-tale.routes').then(

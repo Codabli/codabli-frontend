@@ -157,6 +157,10 @@
     "login": {
     "title": "Log in",
     "description": "Log in to your account",
+    "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+    },
     "form": {
       "email": {
         "label": "Email address",

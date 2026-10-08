@@ -53,6 +53,7 @@
     "title": "Créez votre conte dansé sur-mesure",
     "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
     "next": "Étape suivante",
+    "previous": "Étape précédente",
 
     "steps": {
       "label": "Étapes de création du conte dansé",
@@ -68,8 +69,99 @@
     },
 
     "comingSoon": {
-      "message": "Le contexte de votre projet est enregistré. Cette étape sera bientôt disponible.",
-      "back": "Revenir au contexte du projet"
+      "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
+      "back": "Revenir à l'étape « {{step}} »",
+      "next": "Continuer vers l'étape « {{step}} »"
+    },
+
+    "universe": {
+      "title": "Construisez l'univers de votre conte",
+      "theme": "Le thème :",
+      "description": "Décrivez sans trop détailler les lieux, les personnages, l'époque et les objets importants de votre histoire.",
+      "requiredHint": "Les champs marqués d'un astérisque (*) sont obligatoires. Une carte laissée vide est ignorée.",
+      "storageFull": "Le brouillon n'a pas pu être enregistré sur cet appareil : les images prennent trop de place. Retirez une ou plusieurs images puis réessayez.",
+      "sections": {
+        "places": {
+          "title": "Les lieux",
+          "question": "Où se passe l'histoire ?",
+          "add": "Ajouter un lieu",
+          "card": "Lieu {{number}}",
+          "name": "Nom du lieu",
+          "namePlaceholder": "Ex. : La forêt murmurante",
+          "descriptionPlaceholder": "Ex. : Une forêt où les arbres chuchotent des secrets…",
+          "empty": "Aucun lieu pour l'instant."
+        },
+        "characters": {
+          "title": "Les personnages",
+          "question": "Qui vit cette histoire ?",
+          "add": "Ajouter un personnage",
+          "card": "Personnage {{number}}",
+          "name": "Nom du personnage",
+          "namePlaceholder": "Ex. : Le roi Arthur",
+          "descriptionPlaceholder": "Ex. : Un roi adoré de sa cour…",
+          "empty": "Aucun personnage pour l'instant."
+        },
+        "periods": {
+          "title": "La temporalité",
+          "question": "Quand se passe l'histoire ?",
+          "add": "Ajouter une époque",
+          "card": "Époque {{number}}",
+          "name": "Époque",
+          "namePlaceholder": "Ex. : Le Moyen Âge",
+          "descriptionPlaceholder": "Ex. : À cette époque, les chevaliers parcouraient le royaume…",
+          "empty": "Aucune époque pour l'instant."
+        },
+        "objects": {
+          "title": "Les objets importants",
+          "question": "Quels objets comptent dans l'histoire ?",
+          "add": "Ajouter un objet",
+          "card": "Objet {{number}}",
+          "name": "Nom de l'objet",
+          "namePlaceholder": "Ex. : L'épée Excalibur",
+          "descriptionPlaceholder": "Ex. : Une épée plantée dans un rocher, que seul le futur roi peut retirer…",
+          "empty": "Aucun objet pour l'instant."
+        }
+      },
+      "card": {
+        "remove": "Supprimer : {{card}}",
+        "ideas": {
+          "label": "Générer des idées",
+          "soon": "(bientôt disponible)"
+        },
+        "nameError": "Indiquez un nom.",
+        "description": {
+          "label": "Description",
+          "error": "Décrivez ce personnage."
+        },
+        "role": {
+          "label": "Rôle",
+          "placeholder": "Ex. : Héros",
+          "error": "Indiquez le rôle de ce personnage.",
+          "suggestions": {
+            "hero": "Héros ou héroïne",
+            "ally": "Allié",
+            "opponent": "Adversaire",
+            "mentor": "Guide",
+            "secondary": "Personnage secondaire"
+          }
+        },
+        "goal": {
+          "label": "Que veut ce personnage ?",
+          "placeholder": "Ex. : Retrouver l'épée perdue",
+          "error": "Indiquez ce que veut ce personnage."
+        },
+        "image": {
+          "add": "Ajouter une image (facultatif)",
+          "change": "Changer l'image",
+          "remove": "Retirer l'image",
+          "alt": "Image : {{name}}",
+          "errors": {
+            "not-an-image": "Ce fichier n'est pas une image.",
+            "too-large": "Cette image est trop lourde (10 Mo maximum).",
+            "unreadable": "Cette image n'a pas pu être lue. Essayez un autre fichier."
+          }
+        }
+      }
     },
 
     "context": {

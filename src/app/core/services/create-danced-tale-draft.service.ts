@@ -1,11 +1,15 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
+import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
 
 export interface CreateDancedTaleDraft {
   context: ProjectContext | null;
+  universe: TaleUniverse | null;
 }
 
 export const CREATE_DANCED_TALE_DRAFT_KEY = 'codabli.createDancedTale.draft';
+
+const EMPTY_DRAFT: CreateDancedTaleDraft = { context: null, universe: null };
 
 /**
  * Brouillon du parcours « Créer mon conte dansé », partagé entre les écrans.
@@ -18,14 +22,24 @@ export class CreateDancedTaleDraftService {
   private readonly draft = signal<CreateDancedTaleDraft>(this.restore());
 
   readonly context = computed(() => this.draft().context);
+  readonly universe = computed(() => this.draft().universe);
 
   saveContext(context: ProjectContext): void {
     this.draft.update((draft) => ({ ...draft, context }));
     this.persist();
   }
 
+  /**
+   * Retourne false si le brouillon n'a pas pu être écrit dans le localStorage
+   * (quota dépassé à cause des images, par exemple). Il reste alors en mémoire.
+   */
+  saveUniverse(universe: TaleUniverse): boolean {
+    this.draft.update((draft) => ({ ...draft, universe }));
+    return this.persist();
+  }
+
   clear(): void {
-    this.draft.set({ context: null });
+    this.draft.set(EMPTY_DRAFT);
 
     try {
       localStorage.removeItem(CREATE_DANCED_TALE_DRAFT_KEY);
@@ -34,11 +48,13 @@ export class CreateDancedTaleDraftService {
     }
   }
 
-  private persist(): void {
+  private persist(): boolean {
     try {
       localStorage.setItem(CREATE_DANCED_TALE_DRAFT_KEY, JSON.stringify(this.draft()));
+      return true;
     } catch {
-      // Stockage indisponible : le brouillon reste en mémoire pour la session.
+      // Stockage indisponible ou plein : le brouillon reste en mémoire pour la session.
+      return false;
     }
   }
 
@@ -47,13 +63,14 @@ export class CreateDancedTaleDraftService {
       const stored = localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY);
 
       if (stored) {
+        // Les brouillons enregistrés avant l'écran 5 n'ont pas de champ `universe`.
         const parsed = JSON.parse(stored) as Partial<CreateDancedTaleDraft>;
-        return { context: parsed.context ?? null };
+        return { context: parsed.context ?? null, universe: parsed.universe ?? null };
       }
     } catch {
       // Brouillon illisible ou stockage indisponible : on repart d'un brouillon vide.
     }
 
-    return { context: null };
+    return EMPTY_DRAFT;
   }
 }

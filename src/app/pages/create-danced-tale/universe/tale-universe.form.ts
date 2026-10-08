@@ -6,15 +6,11 @@ import {
   UniverseSection,
 } from '../../../models/interfaces/tale-universe.interface';
 import { requiredText } from '../context/project-context.form';
+import { newId } from '../new-id';
 
 export const CARD_NAME_MAX_LENGTH = 60;
 export const CARD_ROLE_MAX_LENGTH = 40;
 export const CARD_TEXT_MAX_LENGTH = 500;
-
-function newCardId(): string {
-  // randomUUID n'existe que dans un contexte sécurisé (https ou localhost).
-  return globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-}
 
 /**
  * Carte d'une sous-section. Tous les types de carte partagent les mêmes contrôles :
@@ -36,7 +32,7 @@ export class UniverseCardForm extends FormGroup<{
     const characterOnly = isCharacter ? requiredText : [];
 
     super({
-      id: new FormControl(card?.id ?? newCardId(), { nonNullable: true }),
+      id: new FormControl(card?.id ?? newId(), { nonNullable: true }),
       name: new FormControl(card?.name ?? '', { nonNullable: true, validators: requiredText }),
       description: new FormControl(card?.description ?? '', {
         nonNullable: true,

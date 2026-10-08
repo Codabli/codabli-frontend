@@ -83,6 +83,70 @@
       "next": "Continuer vers l'étape « {{step}} »"
     },
 
+    "structure": {
+      "title": "Structurez le récit de votre conte",
+      "description": "Voici une proposition de plan. Réorganisez, modifiez ou ajoutez des étapes pour créer la structure de votre histoire.",
+      "reorderHint": "Faites glisser une étape par sa poignée, ou utilisez les flèches pour la monter ou la descendre. Le titre de chaque étape est obligatoire.",
+      "listLabel": "Étapes du récit",
+      "addStep": "Ajouter une étape",
+      "regenerate": {
+        "label": "Régénérer",
+        "soon": "(bientôt disponible)"
+      },
+      "kinds": {
+        "initialSituation": {
+          "title": "La situation initiale",
+          "hint": "Présentez les personnages principaux, le lieu et le contexte de départ, avant que l'intrigue ne commence."
+        },
+        "trigger": {
+          "title": "L'élément déclencheur",
+          "hint": "Un événement inattendu vient bouleverser la situation de départ et lance l'aventure."
+        },
+        "adventures": {
+          "title": "Les péripéties",
+          "hint": "Les actions et événements que les personnages doivent affronter pour résoudre le problème."
+        },
+        "resolution": {
+          "title": "La résolution",
+          "hint": "Le problème principal trouve sa solution, souvent lors d'un moment fort ou d'une confrontation finale."
+        },
+        "finalSituation": {
+          "title": "La situation finale",
+          "hint": "Le nouvel équilibre après l'aventure : comment les personnages ont-ils changé ?"
+        }
+      },
+      "step": {
+        "number": "Étape {{number}}",
+        "drag": "Faire glisser pour déplacer",
+        "title": {
+          "label": "Titre de l'étape",
+          "placeholder": "Ex. : La rencontre avec le dragon",
+          "error": "Donnez un titre à cette étape."
+        },
+        "summary": {
+          "label": "Résumé court",
+          "placeholder": "En quelques phrases, que se passe-t-il ?",
+          "emptyWarning": "Cette étape essentielle du récit est encore vide."
+        },
+        "characters": {
+          "label": "Personnages présents",
+          "empty": "Aucun personnage n'a encore été créé.",
+          "emptyLink": "Ajouter des personnages dans l'univers du conte"
+        },
+        "moveUp": "Monter : {{step}}",
+        "moveDown": "Descendre : {{step}}",
+        "remove": "Supprimer : {{step}}"
+      },
+      "announce": {
+        "moved": "{{step}} déplacée en position {{position}} sur {{total}}.",
+        "removed": "{{step}} supprimée."
+      },
+      "emptyAlert": {
+        "message": "{{count}} étape(s) essentielle(s) sans résumé. Vous pouvez les compléter maintenant ou plus tard.",
+        "continue": "Continuer quand même"
+      }
+    },
+
     "universe": {
       "title": "Construisez l'univers de votre conte",
       "theme": "Le thème :",

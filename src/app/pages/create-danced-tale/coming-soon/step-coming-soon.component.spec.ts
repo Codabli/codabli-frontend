@@ -18,7 +18,7 @@ describe('StepComingSoonComponent', () => {
                 component: StepComingSoonComponent,
                 data: { previousStep: 'context', nextStep: 'universe' },
               },
-              { path: 'structure', component: StepComingSoonComponent, data: { previousStep: 'universe' } },
+              { path: 'writing', component: StepComingSoonComponent, data: { previousStep: 'structure' } },
             ],
           },
         ]),
@@ -41,8 +41,8 @@ describe('StepComingSoonComponent', () => {
   });
 
   it('n\'affiche que le retour s\'il n\'y a pas d\'étape suivante', async () => {
-    const element = await render('/create-danced-tale/structure');
+    const element = await render('/create-danced-tale/writing');
 
-    expect(hrefs(element)).toEqual(['/create-danced-tale/universe']);
+    expect(hrefs(element)).toEqual(['/create-danced-tale/structure']);
   });
 });

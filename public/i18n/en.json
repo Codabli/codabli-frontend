@@ -83,6 +83,70 @@
       "next": "Continue to the “{{step}}” step"
     },
 
+    "structure": {
+      "title": "Structure the story of your tale",
+      "description": "Here is a suggested outline. Reorder, edit or add steps to build the structure of your story.",
+      "reorderHint": "Drag a step by its handle, or use the arrows to move it up or down. Each step needs a title.",
+      "listLabel": "Story steps",
+      "addStep": "Add a step",
+      "regenerate": {
+        "label": "Regenerate",
+        "soon": "(coming soon)"
+      },
+      "kinds": {
+        "initialSituation": {
+          "title": "The initial situation",
+          "hint": "Introduce the main characters, the place and the starting point, before the plot begins."
+        },
+        "trigger": {
+          "title": "The inciting incident",
+          "hint": "An unexpected event upsets the starting situation and launches the adventure."
+        },
+        "adventures": {
+          "title": "The twists and turns",
+          "hint": "The actions and events the characters must face to solve the problem."
+        },
+        "resolution": {
+          "title": "The resolution",
+          "hint": "The main problem is solved, often during a climax or a final confrontation."
+        },
+        "finalSituation": {
+          "title": "The final situation",
+          "hint": "The new balance after the adventure: how have the characters changed?"
+        }
+      },
+      "step": {
+        "number": "Step {{number}}",
+        "drag": "Drag to move",
+        "title": {
+          "label": "Step title",
+          "placeholder": "E.g. Meeting the dragon",
+          "error": "Give this step a title."
+        },
+        "summary": {
+          "label": "Short summary",
+          "placeholder": "In a few sentences, what happens?",
+          "emptyWarning": "This essential step of the story is still empty."
+        },
+        "characters": {
+          "label": "Characters in this step",
+          "empty": "No characters have been created yet.",
+          "emptyLink": "Add characters in the world of the tale"
+        },
+        "moveUp": "Move up: {{step}}",
+        "moveDown": "Move down: {{step}}",
+        "remove": "Delete: {{step}}"
+      },
+      "announce": {
+        "moved": "{{step}} moved to position {{position}} of {{total}}.",
+        "removed": "{{step}} deleted."
+      },
+      "emptyAlert": {
+        "message": "{{count}} essential step(s) without a summary. You can fill them in now or later.",
+        "continue": "Continue anyway"
+      }
+    },
+
     "universe": {
       "title": "Build the world of your tale",
       "theme": "Theme:",

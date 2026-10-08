@@ -1,7 +1,7 @@
 @let f = teacherAccountForm.controls;
 
-<section class="teacher-account grid">
-  <nav class="teacher-account__breadcrumb" [attr.aria-label]="'teacherAccount.breadcrumb.label' | translate">
+<section class="account-page grid">
+  <nav class="account-page__breadcrumb" [attr.aria-label]="'teacherAccount.breadcrumb.label' | translate">
     <ol>
       <li>
         <a routerLink="/">{{ 'teacherAccount.breadcrumb.home' | translate }}</a>
@@ -10,10 +10,10 @@
     </ol>
   </nav>
 
-  <h1 class="teacher-account__title">{{ 'teacherAccount.title' | translate }}</h1>
+  <h1 class="account-page__title">{{ 'teacherAccount.title' | translate }}</h1>
 
   <form
-    class="teacher-account__form"
+    class="account-page__form"
     [formGroup]="teacherAccountForm"
     (ngSubmit)="onSubmit()"
     novalidate
@@ -390,9 +390,9 @@
       </fieldset>
     </section>
 
-    <div class="teacher-account__footer">
+    <div class="account-page__footer">
       <!-- Consentements RGPD & CGU -->
-      <div class="teacher-account__consent">
+      <div class="account-page__consent">
         <div class="form-checkbox">
           <input
             id="termsAccepted"
@@ -415,7 +415,7 @@
         }
       </div>
 
-      <div class="teacher-account__actions">
+      <div class="account-page__actions">
         <app-button variant="tertiary" type="submit">
           {{ 'teacherAccount.form.submit' | translate }}
         </app-button>

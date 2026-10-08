@@ -13,6 +13,13 @@ export const routes: Routes = [
             (m) => m.TeacherAccountComponent,
           ),
       },
+      {
+        path: 'creer-un-compte/famille',
+        loadComponent: () =>
+          import('./pages/family-account/family-account.component').then(
+            (m) => m.FamilyAccountComponent,
+          ),
+      },
     ],
   }
         path: 'create-danced-tale',

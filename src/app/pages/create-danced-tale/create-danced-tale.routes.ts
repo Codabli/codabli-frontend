@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { CreateDancedTaleComponent } from './create-danced-tale.component';
 import { ProjectContextComponent } from './context/project-context.component';
 import { StepComingSoonComponent } from './coming-soon/step-coming-soon.component';
+import { TaleStructureComponent } from './structure/tale-structure.component';
 import { TaleUniverseComponent } from './universe/tale-universe.component';
 import { requireProjectContext } from './create-danced-tale.guards';
 
@@ -19,10 +20,11 @@ export const CREATE_DANCED_TALE_ROUTES: Routes = [
         data: { previousStep: 'context', nextStep: 'universe' },
       },
       { path: 'universe', component: TaleUniverseComponent, canActivate: [requireProjectContext] },
+      { path: 'structure', component: TaleStructureComponent, canActivate: [requireProjectContext] },
       {
-        path: 'structure',
+        path: 'writing',
         component: StepComingSoonComponent,
-        data: { previousStep: 'universe' },
+        data: { previousStep: 'structure' },
       },
     ],
   },

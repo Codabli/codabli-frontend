@@ -1,15 +1,17 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
+import { TaleStructure } from '../../models/interfaces/tale-structure.interface';
 import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
 
 export interface CreateDancedTaleDraft {
   context: ProjectContext | null;
   universe: TaleUniverse | null;
+  structure: TaleStructure | null;
 }
 
 export const CREATE_DANCED_TALE_DRAFT_KEY = 'codabli.createDancedTale.draft';
 
-const EMPTY_DRAFT: CreateDancedTaleDraft = { context: null, universe: null };
+const EMPTY_DRAFT: CreateDancedTaleDraft = { context: null, universe: null, structure: null };
 
 /**
  * Brouillon du parcours « Créer mon conte dansé », partagé entre les écrans.
@@ -23,6 +25,7 @@ export class CreateDancedTaleDraftService {
 
   readonly context = computed(() => this.draft().context);
   readonly universe = computed(() => this.draft().universe);
+  readonly structure = computed(() => this.draft().structure);
 
   saveContext(context: ProjectContext): void {
     this.draft.update((draft) => ({ ...draft, context }));
@@ -35,6 +38,11 @@ export class CreateDancedTaleDraftService {
    */
   saveUniverse(universe: TaleUniverse): boolean {
     this.draft.update((draft) => ({ ...draft, universe }));
+    return this.persist();
+  }
+
+  saveStructure(structure: TaleStructure): boolean {
+    this.draft.update((draft) => ({ ...draft, structure }));
     return this.persist();
   }
 
@@ -63,9 +71,13 @@ export class CreateDancedTaleDraftService {
       const stored = localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY);
 
       if (stored) {
-        // Les brouillons enregistrés avant l'écran 5 n'ont pas de champ `universe`.
+        // Les brouillons enregistrés avant les écrans 5 et 6 n'ont pas tous les champs.
         const parsed = JSON.parse(stored) as Partial<CreateDancedTaleDraft>;
-        return { context: parsed.context ?? null, universe: parsed.universe ?? null };
+        return {
+          context: parsed.context ?? null,
+          universe: parsed.universe ?? null,
+          structure: parsed.structure ?? null,
+        };
       }
     } catch {
       // Brouillon illisible ou stockage indisponible : on repart d'un brouillon vide.

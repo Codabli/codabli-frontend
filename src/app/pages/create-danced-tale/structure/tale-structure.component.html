@@ -1,0 +1,313 @@
+<form
+  class="tale-structure"
+  [formGroup]="form"
+  (ngSubmit)="onNext()"
+  novalidate
+>
+  <header class="tale-structure__intro">
+    <div class="tale-structure__heading">
+      <h2 class="tale-structure__title">
+        {{ 'createDancedTale.structure.title' | translate }}
+      </h2>
+
+      <!--
+        TODO(IA) : « Régénérer » propose une autre structure à partir du contexte et de l'univers.
+        Désactivé tant que le service IA n'existe pas.
+      -->
+      <button
+        type="button"
+        class="regenerate-button"
+        disabled
+      >
+        <i
+          class="fa-solid fa-rotate"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.structure.regenerate.label' | translate }}
+        <span class="regenerate-button__soon">
+          {{ 'createDancedTale.structure.regenerate.soon' | translate }}
+        </span>
+      </button>
+    </div>
+
+    @if (theme) {
+      <p class="tale-structure__theme">
+        {{ 'createDancedTale.universe.theme' | translate }}
+        <strong>{{ theme }}</strong>
+      </p>
+    }
+
+    <p class="tale-structure__description">
+      {{ 'createDancedTale.structure.description' | translate }}
+    </p>
+
+    <p class="tale-structure__hint">
+      {{ 'createDancedTale.structure.reorderHint' | translate }}
+    </p>
+  </header>
+
+  @if (ready()) {
+    <ol
+      class="step-list"
+      cdkDropList
+      cdkDropListLockAxis="y"
+      [cdkDropListData]="form.steps"
+      [attr.aria-label]="'createDancedTale.structure.listLabel' | translate"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      @for (step of form.steps; track step.controls.id.value; let i = $index; let first = $first; let last = $last) {
+        <li
+          class="story-step"
+          cdkDrag
+          [formGroup]="step"
+          [class.story-step--warning]="showEmptyWarning(step)"
+        >
+          <div
+            class="story-step__placeholder"
+            *cdkDragPlaceholder
+          ></div>
+
+          <!-- Poignée pour la souris et le tactile ; au clavier : boutons monter / descendre. -->
+          <span
+            class="story-step__handle"
+            cdkDragHandle
+            aria-hidden="true"
+            [title]="'createDancedTale.structure.step.drag' | translate"
+          >
+            <i class="fa-solid fa-grip-vertical"></i>
+          </span>
+
+          <span
+            class="story-step__number"
+            aria-hidden="true"
+            >{{ i + 1 }}</span
+          >
+
+          <fieldset class="story-step__body">
+            <legend class="story-step__legend">
+              {{ 'createDancedTale.structure.step.number' | translate: { number: i + 1 } }}
+            </legend>
+
+            <!-- Titre -->
+            <div class="form-field">
+              <label [for]="fieldId(step, 'title')">
+                {{ 'createDancedTale.structure.step.title.label' | translate }}
+                <span
+                  class="required"
+                  aria-hidden="true"
+                  >*</span
+                >
+              </label>
+
+              <input
+                class="story-step__title-input"
+                type="text"
+                formControlName="title"
+                autocomplete="off"
+                required
+                [id]="fieldId(step, 'title')"
+                [maxlength]="titleMaxLength"
+                [attr.aria-invalid]="hasTitleError(step)"
+                [attr.aria-describedby]="hasTitleError(step) ? fieldId(step, 'title') + '-error' : null"
+                [placeholder]="'createDancedTale.structure.step.title.placeholder' | translate"
+              />
+
+              @if (hasTitleError(step)) {
+                <p
+                  class="form-error"
+                  [id]="fieldId(step, 'title') + '-error'"
+                >
+                  {{ 'createDancedTale.structure.step.title.error' | translate }}
+                </p>
+              }
+            </div>
+
+            <!-- Résumé court -->
+            <div class="form-field">
+              <label [for]="fieldId(step, 'summary')">
+                {{ 'createDancedTale.structure.step.summary.label' | translate }}
+              </label>
+
+              @if (step.controls.kind.value; as kind) {
+                <p
+                  class="form-hint"
+                  [id]="fieldId(step, 'hint')"
+                >
+                  {{ kindKey(kind) + '.hint' | translate }}
+                </p>
+              }
+
+              <textarea
+                formControlName="summary"
+                rows="3"
+                [id]="fieldId(step, 'summary')"
+                [maxlength]="summaryMaxLength"
+                [attr.aria-describedby]="summaryDescribedBy(step) || null"
+                [placeholder]="'createDancedTale.structure.step.summary.placeholder' | translate"
+              ></textarea>
+
+              @if (showEmptyWarning(step)) {
+                <p
+                  class="step-warning"
+                  [id]="fieldId(step, 'warning')"
+                >
+                  <i
+                    class="fa-solid fa-triangle-exclamation"
+                    aria-hidden="true"
+                  ></i>
+                  {{ 'createDancedTale.structure.step.summary.emptyWarning' | translate }}
+                </p>
+              }
+            </div>
+
+            <!-- Personnages présents -->
+            <fieldset class="characters">
+              <legend class="characters__legend">
+                {{ 'createDancedTale.structure.step.characters.label' | translate }}
+              </legend>
+
+              @if (characters.length) {
+                <div class="pill-group">
+                  @for (character of characters; track character.id) {
+                    <label class="pill">
+                      <input
+                        type="checkbox"
+                        [checked]="step.hasCharacter(character.id)"
+                        (change)="step.toggleCharacter(character.id)"
+                      />
+                      <span class="pill__label">{{ character.name }}</span>
+                    </label>
+                  }
+                </div>
+              } @else {
+                <p class="characters__empty">
+                  {{ 'createDancedTale.structure.step.characters.empty' | translate }}
+                  <a routerLink="../universe">
+                    {{ 'createDancedTale.structure.step.characters.emptyLink' | translate }}
+                  </a>
+                </p>
+              }
+            </fieldset>
+          </fieldset>
+
+          <div class="story-step__actions">
+            <button
+              type="button"
+              class="icon-button"
+              [id]="fieldId(step, 'up')"
+              [disabled]="first"
+              [attr.aria-label]="'createDancedTale.structure.step.moveUp' | translate: { step: stepName(step, i) }"
+              (click)="moveUp(i)"
+            >
+              <i
+                class="fa-solid fa-arrow-up"
+                aria-hidden="true"
+              ></i>
+            </button>
+
+            <button
+              type="button"
+              class="icon-button"
+              [id]="fieldId(step, 'down')"
+              [disabled]="last"
+              [attr.aria-label]="'createDancedTale.structure.step.moveDown' | translate: { step: stepName(step, i) }"
+              (click)="moveDown(i)"
+            >
+              <i
+                class="fa-solid fa-arrow-down"
+                aria-hidden="true"
+              ></i>
+            </button>
+
+            <button
+              type="button"
+              class="icon-button icon-button--danger"
+              [disabled]="first && last"
+              [attr.aria-label]="'createDancedTale.structure.step.remove' | translate: { step: stepName(step, i) }"
+              (click)="removeStep(i)"
+            >
+              <i
+                class="fa-solid fa-trash-can"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </div>
+        </li>
+      }
+    </ol>
+
+    <button
+      id="add-step"
+      type="button"
+      class="add-step"
+      (click)="addStep()"
+    >
+      <i
+        class="fa-solid fa-plus"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.structure.addStep' | translate }}
+    </button>
+  }
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+
+  @if (emptyStepsAlert() && form.emptyEssentialSteps().length) {
+    <div
+      id="empty-steps-alert"
+      class="empty-steps-alert"
+      role="alert"
+      tabindex="-1"
+    >
+      <p>
+        <i
+          class="fa-solid fa-triangle-exclamation"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.structure.emptyAlert.message' | translate: { count: form.emptyEssentialSteps().length } }}
+      </p>
+
+      <app-button
+        variant="outline"
+        (click)="saveAndContinue()"
+      >
+        {{ 'createDancedTale.structure.emptyAlert.continue' | translate }}
+      </app-button>
+    </div>
+  }
+
+  @if (storageFull()) {
+    <p
+      id="storage-error"
+      class="step-warning"
+      role="alert"
+      tabindex="-1"
+    >
+      {{ 'createDancedTale.universe.storageFull' | translate }}
+    </p>
+  }
+
+  <div class="tale-structure__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+</form>

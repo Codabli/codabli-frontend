@@ -48,6 +48,7 @@ describe('CreateDancedTaleDraftService', () => {
     expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({
       context: CONTEXT,
       universe: null,
+      structure: null,
     });
   });
 
@@ -69,6 +70,22 @@ describe('CreateDancedTaleDraftService', () => {
     const restored = createService();
     expect(restored.context()).toEqual(CONTEXT);
     expect(restored.universe()).toEqual(UNIVERSE);
+  });
+
+  it('enregistre la trame sans perdre le contexte ni l\'univers', () => {
+    const service = createService();
+    service.saveContext(CONTEXT);
+    service.saveUniverse(UNIVERSE);
+    const structure = {
+      steps: [{ id: 's1', kind: 'initialSituation' as const, title: 'La situation initiale', summary: '', characterIds: ['c1'] }],
+    };
+
+    expect(service.saveStructure(structure)).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.universe()).toEqual(UNIVERSE);
+    expect(restored.structure()).toEqual(structure);
   });
 
   it('signale un univers qui n\'a pas pu être écrit (stockage plein) et le garde en mémoire', () => {

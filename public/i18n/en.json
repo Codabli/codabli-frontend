@@ -101,6 +101,33 @@
       "error": "Saving is not possible on this device: the browser's storage is full."
     },
 
+    "sounds": {
+      "title": "Music and sound effects",
+      "import": "Import music or a sound effect",
+      "titleLabel": "Title",
+      "player": "Listen: {{title}}",
+      "kind": "Type",
+      "kinds": {
+        "music": "Music",
+        "effect": "Sound effect"
+      },
+      "moment": "When",
+      "dance": "Goes with the dance",
+      "noDance": "No particular dance",
+      "remove": "Delete: {{title}}",
+      "missing": "File “{{fileName}}” not found on this device.",
+      "replace": "Import again",
+      "errors": {
+        "notAudio": "This file is not an audio file.",
+        "tooLarge": "This file is larger than 20 MB.",
+        "storage": "The file could not be saved in the browser."
+      },
+      "announce": {
+        "added": "“{{title}}” added to the scene.",
+        "removed": "“{{title}}” deleted."
+      }
+    },
+
     "stage": {
       "title": "Stage space",
       "hint": "Place the characters and set items at the start of the scene: drag them onto the stage, use the arrow keys on a placed item, or choose its area in the list.",
@@ -134,7 +161,7 @@
     "dances": {
       "library": {
         "title": "Dance library",
-        "hint": "Drag a dance into a scene, or use “Add a dance” in the scene.",
+        "hint": "Drag a dance into a scene, or use “Add a dance without drag and drop” in the scene.",
         "search": "Search",
         "searchPlaceholder": "E.g. circle",
         "listLabel": "Available dances",
@@ -160,6 +187,7 @@
         "contemporary": "Contemporary"
       },
       "moments": {
+        "wholeScene": "Whole scene",
         "beginning": "Beginning",
         "middle": "Middle",
         "end": "End"

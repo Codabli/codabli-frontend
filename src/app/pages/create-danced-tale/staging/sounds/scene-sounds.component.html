@@ -1,0 +1,165 @@
+<div class="scene-sounds">
+  <h4 class="scene-sounds__title">
+    <i
+      class="fa-solid fa-music"
+      aria-hidden="true"
+    ></i>
+    {{ 'createDancedTale.sounds.title' | translate }}
+  </h4>
+
+  @if (sounds().length) {
+    <ul class="scene-sounds__list">
+      @for (sound of sounds(); track sound.id) {
+        <li class="sound">
+          <div class="sound__header">
+            <div class="form-field sound__title">
+              <label [for]="fieldId(sound, 'title')">{{ 'createDancedTale.sounds.titleLabel' | translate }}</label>
+              <input
+                type="text"
+                autocomplete="off"
+                [id]="fieldId(sound, 'title')"
+                [value]="sound.title"
+                [attr.maxlength]="titleMaxLength"
+                (input)="setTitle(sound, $any($event.target).value)"
+              />
+            </div>
+
+            <button
+              type="button"
+              class="sound__remove"
+              [attr.aria-label]="'createDancedTale.sounds.remove' | translate: { title: sound.title }"
+              (click)="remove(sound)"
+            >
+              <i
+                class="fa-solid fa-trash-can"
+                aria-hidden="true"
+              ></i>
+            </button>
+          </div>
+
+          <!-- Lecteur natif : lecture, pause, position et volume accessibles au clavier. -->
+          @if (urls()[sound.fileId]; as url) {
+            <audio
+              class="sound__player"
+              controls
+              preload="metadata"
+              [src]="url"
+              [attr.aria-label]="'createDancedTale.sounds.player' | translate: { title: sound.title }"
+            ></audio>
+          } @else if (missing().has(sound.fileId)) {
+            <p class="sound__missing">
+              <i
+                class="fa-solid fa-triangle-exclamation"
+                aria-hidden="true"
+              ></i>
+              {{ 'createDancedTale.sounds.missing' | translate: { fileName: sound.fileName } }}
+              <label class="file-button">
+                <input
+                  class="sr-only"
+                  type="file"
+                  accept="audio/*"
+                  (change)="onFileSelected($event, sound)"
+                />
+                {{ 'createDancedTale.sounds.replace' | translate }}
+              </label>
+            </p>
+          }
+
+          <div class="sound__settings">
+            <fieldset class="segmented">
+              <legend>{{ 'createDancedTale.sounds.kind' | translate }}</legend>
+              <div class="segmented__options">
+                @for (kind of kinds; track kind) {
+                  <label class="segmented__option">
+                    <input
+                      type="radio"
+                      [name]="fieldId(sound, 'kind')"
+                      [checked]="sound.kind === kind"
+                      (change)="setKind(sound, kind)"
+                    />
+                    <span>{{ 'createDancedTale.sounds.kinds.' + kind | translate }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+
+            <fieldset class="segmented">
+              <legend>{{ 'createDancedTale.sounds.moment' | translate }}</legend>
+              <div class="segmented__options">
+                @for (moment of moments; track moment) {
+                  <label class="segmented__option">
+                    <input
+                      type="radio"
+                      [name]="fieldId(sound, 'moment')"
+                      [checked]="sound.moment === moment"
+                      (change)="setMoment(sound, moment)"
+                    />
+                    <span>{{ 'createDancedTale.dances.moments.' + moment | translate }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+
+            @if (dances().length) {
+              <div class="form-field">
+                <label [for]="fieldId(sound, 'dance')">{{ 'createDancedTale.sounds.dance' | translate }}</label>
+                <select
+                  [id]="fieldId(sound, 'dance')"
+                  (change)="setDance(sound, $any($event.target).value)"
+                >
+                  <option
+                    value=""
+                    [selected]="!danceOf(sound)"
+                  >
+                    {{ 'createDancedTale.sounds.noDance' | translate }}
+                  </option>
+                  @for (dance of dances(); track dance.id) {
+                    <option
+                      [value]="dance.id"
+                      [selected]="danceOf(sound) === dance.id"
+                    >
+                      {{ dance.name }}
+                    </option>
+                  }
+                </select>
+              </div>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  }
+
+  <div class="scene-sounds__import">
+    <label class="file-button">
+      <input
+        class="sr-only"
+        type="file"
+        accept="audio/*"
+        [id]="'scene-' + sceneId() + '-sound-file'"
+        (change)="onFileSelected($event)"
+      />
+      <i
+        class="fa-solid fa-file-audio"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.sounds.import' | translate }}
+    </label>
+
+    @if (importError(); as error) {
+      <p
+        class="scene-sounds__error"
+        role="alert"
+      >
+        {{ 'createDancedTale.sounds.errors.' + error | translate }}
+      </p>
+    }
+  </div>
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+</div>

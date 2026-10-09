@@ -283,6 +283,13 @@
               [dances]="staging.dances ?? []"
               (dancesChange)="setDances(step, $event)"
             />
+
+            <app-scene-sounds
+              [sceneId]="step.id"
+              [sounds]="staging.sounds ?? []"
+              [dances]="staging.dances ?? []"
+              (soundsChange)="setSounds(step, $event)"
+            />
           </article>
         </li>
       }

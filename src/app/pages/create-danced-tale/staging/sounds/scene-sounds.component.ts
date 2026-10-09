@@ -37,7 +37,12 @@ export class SceneSounds {
   private readonly translate = inject(TranslateService);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
+  /** Identifiant unique (scène ou danse) pour les identifiants de champs. */
   readonly sceneId = input.required<string>();
+  /** Titre et bouton d'import selon l'emplacement : ambiance d'une danse ou bruitages d'une scène. */
+  readonly headingKey = input('createDancedTale.sounds.danceTitle');
+  readonly importKey = input('createDancedTale.sounds.importDance');
+  readonly headingLevel = input(5);
   readonly sounds = input<SceneSound[]>([]);
   /** Danses de la scène, pour indiquer celle qu'un son accompagne. */
   readonly dances = input<SceneDance[]>([]);
@@ -124,8 +129,8 @@ export class SceneSounds {
       id: newId(),
       title: titleFromFileName(file.name),
       kind: 'music',
-      // Le plus courant pour une musique : une ambiance qui dure toute la scène.
-      moment: 'wholeScene',
+      // Sans moment : le son dure toute la scène, le plus courant pour une musique.
+      moment: null,
       danceId: null,
       fileId,
       fileName: file.name,
@@ -151,8 +156,9 @@ export class SceneSounds {
     this.update(sound, { kind });
   }
 
-  protected setMoment(sound: SceneSound, moment: DanceMoment): void {
-    this.update(sound, { moment });
+  /** Choisit le moment, ou le retire s'il était déjà choisi (le son dure alors toute la scène). */
+  protected toggleMoment(sound: SceneSound, moment: DanceMoment): void {
+    this.update(sound, { moment: sound.moment === moment ? null : moment });
   }
 
   protected setDance(sound: SceneSound, danceId: string): void {

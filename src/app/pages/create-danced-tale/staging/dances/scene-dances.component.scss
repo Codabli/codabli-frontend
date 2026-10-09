@@ -1,46 +1,40 @@
 $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%, transparent);
 
 .scene-dances {
+  // Les deux colonnes du module dépendent de la place disponible, pas de la taille de l'écran.
+  container-type: inline-size;
+
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-
-  &__title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: var(--font-weight-semibold);
-  }
 
   &__list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    min-height: 64px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  // Toute la liste est une zone de dépôt, mise en évidence pendant un glisser.
-  &__list {
-    padding: var(--spacing-sm);
-    border: 2px dashed var(--color-border-outline-default);
-    border-radius: 16px;
-  }
-
-  &__list.cdk-drop-list-receiving,
-  &__list.cdk-drop-list-dragging {
-    background-color: var(--color-bg-navigation);
-    border-color: var(--color-border-outline-hover);
-  }
-
+  // « Glisser une danse ici » : zone en pointillés, comme la maquette.
   &__drop-hint {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-sm);
-    min-height: 44px;
+    min-height: 52px;
+
     color: var(--color-text-muted);
+
+    border: 2px dashed var(--color-border-outline-default);
+    border-radius: 12px;
+  }
+
+  &__list.cdk-drop-list-receiving &__drop-hint,
+  &__list.cdk-drop-list-dragging &__drop-hint {
+    background-color: var(--color-bg-navigation);
+    border-color: var(--color-border-outline-hover);
   }
 
   &__add-panel summary {
@@ -58,11 +52,11 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   }
 
   &__add {
-    padding-top: var(--spacing-sm);
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     gap: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
 
     .form-field {
       flex: 1 1 240px;
@@ -70,39 +64,89 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   }
 }
 
+// ---------- Danse : ligne repliée ou module ouvert ----------
+
 .dance {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  position: relative;
 
-  background-color: var(--color-bg-navigation);
-  border-left: 6px solid var(--color-bg-secondary-default);
-  border-radius: 16px;
+  // Rattachement à la frise des scènes, comme la maquette : trait horizontal et point.
+  // --dance-connector est fixé par l'écran (distance jusqu'au trait de la frise).
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+  }
 
-  &__header {
-    display: flex;
-    align-items: flex-end;
-    gap: var(--spacing-sm);
+  &::before {
+    top: 30px;
+    left: calc(-1 * var(--dance-connector, 0px));
+    width: var(--dance-connector, 0px);
+    border-top: 2px solid var(--color-border-outline-default);
+  }
+
+  &::after {
+    top: 25px;
+    left: calc(-1 * var(--dance-connector, 0px) - 5px);
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-border-outline-hover);
+    border-radius: 50%;
+  }
+
+  &.cdk-drag-preview {
+    box-sizing: border-box;
+    box-shadow: 0 12px 32px rgba(16, 43, 84, 0.25);
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  &.cdk-drag-placeholder {
+    opacity: 0.4;
+  }
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    color: var(--color-text-primary-default);
+    background-color: var(--color-bg-secondary-default);
+    border-radius: 10px;
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 0 10px;
+    white-space: nowrap;
+
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+
+    background-color: var(--color-bg-theme-default);
+    border-radius: var(--radius-button);
   }
 
   &__handle {
     display: inline-flex;
     align-items: center;
-    height: 52px;
     font-size: 20px;
     cursor: grab;
     touch-action: none;
   }
 
-  &__name {
-    flex: 1;
-  }
+  &__remove,
+  .dance-row__edit {
+    min-width: 44px;
+    height: 44px;
 
-  &__remove {
-    width: 44px;
-    height: 52px;
-
+    font-family: 'Lato', sans-serif;
     font-size: 18px;
     color: var(--color-text-primary-default);
 
@@ -111,34 +155,155 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
     border-radius: 12px;
     cursor: pointer;
 
-    &:hover {
-      color: var(--color-text-outline-default);
-    }
-
     &:focus-visible {
       outline: 2px solid var(--color-border-primary-focus);
     }
   }
 
-  &__settings {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-sm) var(--spacing-md);
+  &__remove:hover {
+    color: var(--color-text-outline-default);
+  }
+}
 
-    @media (min-width: 720px) {
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-      align-items: end;
+.dance-row {
+  display: flex;
+  // Place réduite : les boutons passent sous le texte plutôt que de l'écraser.
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-outline-default);
+  border-radius: 16px;
+
+  &__text {
+    display: flex;
+    flex: 1 1 180px;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__details {
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+
+  &__edit {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 0 var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+
+    &:hover {
+      background-color: var(--color-bg-navigation);
+    }
+  }
+}
+
+.dance-module {
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-outline-default);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(16, 43, 84, 0.08);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border-bottom: 2px solid var(--color-border-light);
+  }
+
+  &__heading {
+    flex: 1;
+    min-width: 0;
+
+    h4 {
+      margin: 0;
+      font-family: 'Baloo 2', sans-serif;
+      font-size: var(--font-size-h6);
+      color: var(--font-color-primary);
     }
   }
 
-  &.cdk-drag-preview {
-    box-sizing: border-box;
-    box-shadow: 0 12px 32px rgba(16, 43, 84, 0.25);
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md);
   }
 
-  &.cdk-drag-placeholder {
-    opacity: 0.4;
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    min-width: 0;
   }
+
+  &__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    background-color: var(--color-bg-navigation);
+    border-top: 2px solid var(--color-border-light);
+    border-radius: 0 0 14px 14px;
+  }
+
+  &__cancel {
+    min-height: 44px;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: var(--color-text-primary-default);
+    text-decoration: underline;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+    }
+  }
+}
+
+// Module large : deux colonnes, comme la maquette (réglages | ambiance musicale),
+// puis l'espace scénique sur toute la largeur.
+@container (min-width: 680px) {
+  .dance-module__body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .dance-module__stage {
+    grid-column: 1 / -1;
+  }
+}
+
+// Module étroit (téléphone) : « Modifier » et « Replier » sans texte, le nom de la danse garde la place.
+// Le nom accessible reste porté par aria-label.
+@container (max-width: 479px) {
+  .dance-row__edit-text {
+    display: none;
+  }
+}
+
+// ---------- Champs ----------
+
+// Libellés de section comme dans la maquette (« MOMENT DU PASSAGE »).
+.section-label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
 }
 
 .form-field {
@@ -172,7 +337,7 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   }
 }
 
-// Moment du passage : boutons radio présentés en segments.
+// Moment du passage : boutons bascule présentés en segments (aucun choix = toute la scène).
 .moments {
   min-width: 0;
   margin: 0;
@@ -182,7 +347,6 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   legend {
     padding: 0;
     margin-bottom: var(--spacing-xs);
-    font-weight: var(--font-weight-semibold);
   }
 
   &__options {
@@ -194,33 +358,33 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   }
 
   &__option {
-    position: relative;
     flex: 1;
+    min-height: 40px;
+    padding: 0 4px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: inherit;
+
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
     cursor: pointer;
 
-    input {
-      position: absolute;
-      opacity: 0;
-      width: 1px;
-      height: 1px;
-    }
-
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      border-radius: 8px;
-    }
-
-    input:checked + span {
+    &[aria-pressed='true'] {
       font-weight: var(--font-weight-bold);
       background-color: var(--color-bg-secondary-default);
     }
 
-    input:focus-visible + span {
+    &:focus-visible {
+      outline: none;
       box-shadow: $focus-ring;
     }
+  }
+
+  &__hint {
+    margin: var(--spacing-xs) 0 0;
+    color: var(--color-text-muted);
   }
 }
 

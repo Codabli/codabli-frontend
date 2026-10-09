@@ -6,7 +6,8 @@ import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import { TaleStaging } from '../../../models/interfaces/tale-staging.interface';
 
-describe('TaleStagingComponent', () => {
+// Le premier rendu de l'écran (scènes, danses, plateau) dépasse parfois 5 s quand toute la suite tourne.
+describe('TaleStagingComponent', { timeout: 15000 }, () => {
   let fixture: ComponentFixture<TaleStagingComponent>;
   let element: HTMLElement;
   let router: Router;
@@ -62,8 +63,9 @@ describe('TaleStagingComponent', () => {
     vi.useRealTimers();
   });
 
+  /** Une entrée de la frise : la carte de la scène et ses danses. */
   function scenes(): HTMLElement[] {
-    return Array.from(element.querySelectorAll<HTMLElement>('article.scene'));
+    return Array.from(element.querySelectorAll<HTMLElement>('li.scene-item'));
   }
 
   function checkboxes(scene: HTMLElement): HTMLInputElement[] {
@@ -210,9 +212,54 @@ describe('TaleStagingComponent', () => {
     saveNow();
 
     expect(draftService.staging()!.scenes['s2'].dances).toEqual([
-      expect.objectContaining({ danceId: 'farandole', moment: 'beginning', style: 'traditional' }),
+      expect.objectContaining({ danceId: 'farandole', moment: null, style: 'traditional' }),
     ]);
     expect(scenes()[1].querySelectorAll('li.dance')).toHaveLength(1);
+  });
+
+  it('range les champs du ticket dans le bloc replié « Mise en scène de la scène »', async () => {
+    await setup();
+    const setup_ = scenes()[0].querySelector<HTMLDetailsElement>('details.scene__setup')!;
+
+    expect(setup_.open).toBe(false);
+    expect(setup_.querySelector('fieldset.field-group')).not.toBeNull();
+    expect(setup_.querySelector('textarea')).not.toBeNull();
+    expect(setup_.querySelector('app-scene-sounds')).not.toBeNull();
+  });
+
+  it('migre un ancien brouillon : la musique associée à une danse passe dans la danse', async () => {
+    const sound = (id: string, danceId: string | null) => ({
+      id,
+      title: id,
+      kind: 'music' as const,
+      moment: 'wholeScene' as const,
+      danceId,
+      fileId: id,
+      fileName: `${id}.mp3`,
+    });
+    await setup({
+      scenes: {
+        s1: {
+          characters: [],
+          intention: '',
+          props: [],
+          dances: [{ id: 'd1', danceId: 'festiveRound', name: 'Ronde', moment: 'beginning', style: 'traditional' }],
+          sounds: [sound('luth', 'd1'), sound('orage', null)],
+          placements: [{ kind: 'character', ref: 'arthur', x: 50, y: 50 }],
+        } as never,
+      },
+    });
+    vi.useFakeTimers();
+    // Une modification déclenche l'enregistrement du brouillon migré.
+    checkboxes(scenes()[0])[1].click();
+    saveNow();
+
+    const scene = draftService.staging()!.scenes['s1'];
+    expect(scene.dances![0].sounds!.map((s) => s.title)).toEqual(['luth']);
+    expect(scene.sounds!.map((s) => s.title)).toEqual(['orage']);
+    // « Toute la scène » devient l'absence de moment.
+    expect(scene.sounds![0].moment).toBeNull();
+    expect('placements' in scene).toBe(false);
   });
 
   it('enregistre la saisie en attente en revenant à l\'écriture', async () => {

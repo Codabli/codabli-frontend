@@ -13,13 +13,17 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
     gap: var(--spacing-sm);
   }
 
+  // Libellé de section comme dans la maquette (« ESPACE SCÉNIQUE »).
   &__title {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
     margin: 0;
-    font-size: 18px;
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
   }
 
   &__reset {

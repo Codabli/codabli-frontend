@@ -64,7 +64,7 @@ describe('SceneDances', () => {
     await afterRender();
 
     expect(last()).toEqual([
-      { id: expect.any(String), danceId: 'dream', name: expect.any(String), moment: 'beginning', style: 'contemporary' },
+      { id: expect.any(String), danceId: 'dream', name: expect.any(String), moment: null, style: 'contemporary' },
     ]);
     expect(document.activeElement).toBe(element.querySelector('.dance input[type="text"]'));
     expect(select.value).toBe('');
@@ -88,8 +88,78 @@ describe('SceneDances', () => {
     expect(last()).toEqual([DUEL, ROUND]);
   });
 
+  function openModule(index = 0): void {
+    element.querySelectorAll<HTMLButtonElement>('.dance-row__edit')[index].click();
+    fixture.detectChanges();
+  }
+
+  it('replie les danses en une ligne de résumé, comme la maquette', async () => {
+    await setup([ROUND, DUEL]);
+
+    expect(element.querySelectorAll('.dance-row')).toHaveLength(2);
+    expect(element.querySelector('.dance-module')).toBeNull();
+    expect(element.querySelector('.dance-row__details')!.textContent).toContain(
+      'createDancedTale.dances.moments.beginning',
+    );
+  });
+
+  it('ouvre le module d\'une danse avec ses réglages, son plateau et son ambiance musicale', async () => {
+    await setup([ROUND]);
+
+    openModule();
+
+    const module = element.querySelector('.dance-module')!;
+    expect(module.querySelector('h4')!.textContent).toContain('Ronde');
+    expect(module.querySelector('app-scene-stage')).not.toBeNull();
+    expect(module.querySelector('app-scene-sounds')).not.toBeNull();
+  });
+
+  it('« Valider ce module » replie la danse et rend le focus à « Modifier »', async () => {
+    await setup([ROUND]);
+    openModule();
+
+    element.querySelector<HTMLElement>('.dance-module__footer app-button')!.click();
+    fixture.detectChanges();
+    await afterRender();
+
+    expect(element.querySelector('.dance-module')).toBeNull();
+    expect(document.activeElement).toBe(element.querySelector('.dance-row__edit'));
+  });
+
+  it('« Replier » referme le module en gardant les réglages', async () => {
+    await setup([ROUND]);
+    openModule();
+    const name = element.querySelector<HTMLInputElement>('.dance-module input[type="text"]')!;
+    name.value = 'Ronde du banquet';
+    name.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    element.querySelector<HTMLButtonElement>('.dance-module__header .dance-row__edit')!.click();
+    fixture.detectChanges();
+
+    expect(element.querySelector('.dance-module')).toBeNull();
+    expect(last()).toEqual([{ ...ROUND, name: 'Ronde du banquet' }]);
+    expect(element.querySelector('.dance-row__name')!.textContent).toBe('Ronde du banquet');
+  });
+
+  it('« Annuler » rétablit la danse telle qu\'à l\'ouverture du module', async () => {
+    await setup([ROUND]);
+    openModule();
+    const name = element.querySelector<HTMLInputElement>('.dance-module input[type="text"]')!;
+    name.value = 'Autre nom';
+    name.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    element.querySelector<HTMLButtonElement>('.dance-module__cancel')!.click();
+    fixture.detectChanges();
+
+    expect(last()).toEqual([ROUND]);
+    expect(element.querySelector('.dance-module')).toBeNull();
+  });
+
   it('modifie le nom, le moment et le style d\'une danse', async () => {
     await setup([ROUND]);
+    openModule();
     const dance = () => element.querySelector<HTMLElement>('li.dance')!;
 
     const name = dance().querySelector<HTMLInputElement>('input[type="text"]')!;
@@ -97,8 +167,8 @@ describe('SceneDances', () => {
     name.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    // Moments : toute la scène, début, milieu, fin.
-    dance().querySelectorAll<HTMLInputElement>('input[type="radio"]')[3].click();
+    // Moments : début, milieu, fin.
+    dance().querySelectorAll<HTMLButtonElement>('.moments__option')[2].click();
     fixture.detectChanges();
 
     const style = dance().querySelector<HTMLSelectElement>('select')!;
@@ -106,6 +176,21 @@ describe('SceneDances', () => {
     style.dispatchEvent(new Event('change'));
 
     expect(last()).toEqual([{ ...ROUND, name: 'Ronde du banquet', moment: 'end', style: 'classical' }]);
+  });
+
+  it('rend le moment facultatif : un second clic le retire, la danse dure toute la scène', async () => {
+    await setup([ROUND]);
+    openModule();
+    const options = () => Array.from(element.querySelectorAll<HTMLButtonElement>('.moments__option'));
+
+    expect(options().map((option) => option.getAttribute('aria-pressed'))).toEqual(['true', 'false', 'false']);
+
+    options()[0].click();
+    fixture.detectChanges();
+
+    expect(last()).toEqual([{ ...ROUND, moment: null }]);
+    expect(options().every((option) => option.getAttribute('aria-pressed') === 'false')).toBe(true);
+    expect(element.querySelector('fieldset.moments')!.getAttribute('aria-describedby')).toBe('dance-d1-moment-hint');
   });
 
   it('replie l\'ajout sans glisser-déposer par défaut', async () => {

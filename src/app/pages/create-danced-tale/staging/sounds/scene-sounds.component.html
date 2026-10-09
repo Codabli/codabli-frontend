@@ -1,11 +1,15 @@
 <div class="scene-sounds">
-  <h4 class="scene-sounds__title">
+  <p
+    class="scene-sounds__title"
+    role="heading"
+    [attr.aria-level]="headingLevel()"
+  >
     <i
       class="fa-solid fa-music"
       aria-hidden="true"
     ></i>
-    {{ 'createDancedTale.sounds.title' | translate }}
-  </h4>
+    {{ headingKey() | translate }}
+  </p>
 
   @if (sounds().length) {
     <ul class="scene-sounds__list">
@@ -83,21 +87,32 @@
               </div>
             </fieldset>
 
-            <fieldset class="segmented">
-              <legend>{{ 'createDancedTale.sounds.moment' | translate }}</legend>
+            <!-- Moment facultatif : un nouveau clic sur le moment choisi le retire (toute la scène). -->
+            <fieldset
+              class="segmented"
+              [attr.aria-describedby]="fieldId(sound, 'moment-hint')"
+            >
+              <legend>
+                {{ 'createDancedTale.sounds.moment' | translate }}
+              </legend>
               <div class="segmented__options">
                 @for (moment of moments; track moment) {
-                  <label class="segmented__option">
-                    <input
-                      type="radio"
-                      [name]="fieldId(sound, 'moment')"
-                      [checked]="sound.moment === moment"
-                      (change)="setMoment(sound, moment)"
-                    />
-                    <span>{{ 'createDancedTale.dances.moments.' + moment | translate }}</span>
-                  </label>
+                  <button
+                    type="button"
+                    class="segmented__toggle"
+                    [attr.aria-pressed]="sound.moment === moment"
+                    (click)="toggleMoment(sound, moment)"
+                  >
+                    {{ 'createDancedTale.dances.moments.' + moment | translate }}
+                  </button>
                 }
               </div>
+              <p
+                class="segmented__hint"
+                [id]="fieldId(sound, 'moment-hint')"
+              >
+                {{ 'createDancedTale.dances.moments.hint' | translate }}
+              </p>
             </fieldset>
 
             @if (dances().length) {
@@ -143,7 +158,7 @@
         class="fa-solid fa-file-audio"
         aria-hidden="true"
       ></i>
-      {{ 'createDancedTale.sounds.import' | translate }}
+      {{ importKey() | translate }}
     </label>
 
     @if (importError(); as error) {

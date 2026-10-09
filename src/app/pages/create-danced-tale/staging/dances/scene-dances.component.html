@@ -1,6 +1,4 @@
 <div class="scene-dances">
-  <h4 class="scene-dances__title">{{ 'createDancedTale.dances.scene.title' | translate }}</h4>
-
   <ol
     class="scene-dances__list"
     cdkDropList
@@ -14,86 +12,222 @@
         class="dance"
         cdkDrag
         [cdkDragData]="dance"
+        [cdkDragDisabled]="openId() === dance.id"
       >
-        <div class="dance__header">
-          <span
-            class="dance__handle"
-            cdkDragHandle
-            aria-hidden="true"
-            [title]="'createDancedTale.structure.step.drag' | translate"
+        @if (openId() === dance.id) {
+          <!-- Module ouvert, comme la maquette : réglages à gauche, ambiance musicale à droite. -->
+          <section
+            class="dance-module"
+            [attr.aria-labelledby]="fieldId(dance, 'heading')"
           >
-            <i class="fa-solid fa-grip-vertical"></i>
-          </span>
+            <header class="dance-module__header">
+              <span
+                class="dance__icon"
+                aria-hidden="true"
+              >
+                <i class="fa-solid fa-music"></i>
+              </span>
 
-          <div class="form-field dance__name">
-            <label [for]="fieldId(dance, 'name')">
-              {{ 'createDancedTale.dances.scene.number' | translate: { number: i + 1 } }}
-              — {{ 'createDancedTale.dances.scene.name' | translate }}
-            </label>
-            <input
-              type="text"
-              autocomplete="off"
-              [id]="fieldId(dance, 'name')"
-              [value]="dance.name"
-              [attr.maxlength]="nameMaxLength"
-              (input)="setName(i, $any($event.target).value)"
-            />
-          </div>
+              <div class="dance-module__heading">
+                <h4 [id]="fieldId(dance, 'heading')">{{ dance.name }}</h4>
+                <span class="dance__badge">
+                  {{ 'createDancedTale.dances.scene.number' | translate: { number: i + 1 } }}
+                </span>
+              </div>
 
-          <button
-            type="button"
-            class="dance__remove"
-            [attr.aria-label]="'createDancedTale.dances.scene.remove' | translate: { name: dance.name }"
-            (click)="remove(i)"
-          >
-            <i
-              class="fa-solid fa-trash-can"
-              aria-hidden="true"
-            ></i>
-          </button>
-        </div>
+              <button
+                type="button"
+                class="dance-row__edit"
+                [attr.aria-expanded]="true"
+                [attr.aria-label]="'createDancedTale.dances.scene.collapseLabel' | translate: { name: dance.name }"
+                (click)="validate(dance)"
+              >
+                <i
+                  class="fa-solid fa-chevron-up"
+                  aria-hidden="true"
+                ></i>
+                <span class="dance-row__edit-text">{{ 'createDancedTale.dances.scene.collapse' | translate }}</span>
+              </button>
 
-        <div class="dance__settings">
-          <fieldset class="moments">
-            <legend>{{ 'createDancedTale.dances.scene.moment' | translate }}</legend>
+              <button
+                type="button"
+                class="dance__remove"
+                [attr.aria-label]="'createDancedTale.dances.scene.remove' | translate: { name: dance.name }"
+                (click)="remove(i)"
+              >
+                <i
+                  class="fa-solid fa-trash-can"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </header>
 
-            <div class="moments__options">
-              @for (moment of moments; track moment) {
-                <label class="moments__option">
+            <div class="dance-module__body">
+              <div class="dance-module__column">
+                <div class="form-field">
+                  <label [for]="fieldId(dance, 'name')">{{ 'createDancedTale.dances.scene.name' | translate }}</label>
                   <input
-                    type="radio"
-                    [name]="fieldId(dance, 'moment')"
-                    [value]="moment"
-                    [checked]="dance.moment === moment"
-                    (change)="setMoment(i, moment)"
+                    type="text"
+                    autocomplete="off"
+                    [id]="fieldId(dance, 'name')"
+                    [value]="dance.name"
+                    [attr.maxlength]="nameMaxLength"
+                    (input)="setName(i, $any($event.target).value)"
                   />
-                  <span>{{ 'createDancedTale.dances.moments.' + moment | translate }}</span>
-                </label>
-              }
-            </div>
-          </fieldset>
+                </div>
 
-          <div class="form-field">
-            <label [for]="fieldId(dance, 'style')">{{ 'createDancedTale.dances.scene.style' | translate }}</label>
-            <select
-              [id]="fieldId(dance, 'style')"
-              (change)="setStyle(i, $any($event.target).value)"
-            >
-              @for (style of styles; track style) {
-                <option
-                  [value]="style"
-                  [selected]="dance.style === style"
+                <!-- Moment facultatif : un nouveau clic sur le moment choisi le retire (toute la scène). -->
+                <fieldset
+                  class="moments"
+                  [attr.aria-describedby]="fieldId(dance, 'moment-hint')"
                 >
-                  {{ 'createDancedTale.dances.styles.' + style | translate }}
-                </option>
-              }
-            </select>
+                  <legend class="section-label">
+                    {{ 'createDancedTale.dances.scene.moment' | translate }}
+                  </legend>
+
+                  <div class="moments__options">
+                    @for (moment of moments; track moment) {
+                      <button
+                        type="button"
+                        class="moments__option"
+                        [attr.aria-pressed]="dance.moment === moment"
+                        (click)="toggleMoment(i, dance, moment)"
+                      >
+                        {{ 'createDancedTale.dances.moments.' + moment | translate }}
+                      </button>
+                    }
+                  </div>
+
+                  <p
+                    class="moments__hint"
+                    [id]="fieldId(dance, 'moment-hint')"
+                  >
+                    {{ 'createDancedTale.dances.moments.hint' | translate }}
+                  </p>
+                </fieldset>
+
+                <div class="form-field">
+                  <label
+                    class="section-label"
+                    [for]="fieldId(dance, 'style')"
+                    >{{ 'createDancedTale.dances.scene.style' | translate }}</label
+                  >
+                  <select
+                    [id]="fieldId(dance, 'style')"
+                    (change)="setStyle(i, $any($event.target).value)"
+                  >
+                    @for (style of styles; track style) {
+                      <option
+                        [value]="style"
+                        [selected]="dance.style === style"
+                      >
+                        {{ 'createDancedTale.dances.styles.' + style | translate }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              </div>
+
+              <div class="dance-module__column">
+                <app-scene-sounds
+                  [sceneId]="dance.id"
+                  [sounds]="dance.sounds ?? []"
+                  (soundsChange)="update(i, { sounds: $event })"
+                />
+              </div>
+
+              <!-- Espace scénique sur toute la largeur du module, sous les deux colonnes. -->
+              <app-scene-stage
+                class="dance-module__stage"
+                [sceneId]="dance.id"
+                [elements]="stageElements()"
+                [placements]="dance.placements ?? []"
+                (placementsChange)="update(i, { placements: $event })"
+              />
+            </div>
+
+            <footer class="dance-module__footer">
+              <button
+                type="button"
+                class="dance-module__cancel"
+                (click)="cancel(dance)"
+              >
+                {{ 'createDancedTale.dances.scene.cancel' | translate }}
+              </button>
+
+              <app-button
+                variant="primary"
+                (click)="validate(dance)"
+              >
+                <i
+                  class="fa-solid fa-check"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.dances.scene.validate' | translate }}
+              </app-button>
+            </footer>
+          </section>
+        } @else {
+          <!-- Danse repliée : une ligne de résumé. -->
+          <div class="dance-row">
+            <span
+              class="dance__handle"
+              cdkDragHandle
+              aria-hidden="true"
+              [title]="'createDancedTale.structure.step.drag' | translate"
+            >
+              <i class="fa-solid fa-grip-vertical"></i>
+            </span>
+
+            <span
+              class="dance__icon"
+              aria-hidden="true"
+            >
+              <i class="fa-solid fa-music"></i>
+            </span>
+
+            <span class="dance-row__text">
+              <span class="dance-row__name">{{ dance.name }}</span>
+              <span class="dance-row__details">
+                <span class="dance__badge">
+                  {{ 'createDancedTale.dances.scene.number' | translate: { number: i + 1 } }}
+                </span>
+                {{ summary(dance) }}
+              </span>
+            </span>
+
+            <button
+              type="button"
+              class="dance-row__edit"
+              [id]="fieldId(dance, 'edit')"
+              [attr.aria-expanded]="false"
+              [attr.aria-label]="'createDancedTale.dances.scene.editLabel' | translate: { name: dance.name }"
+              (click)="open(dance)"
+            >
+              <i
+                class="fa-solid fa-pen"
+                aria-hidden="true"
+              ></i>
+              <span class="dance-row__edit-text">{{ 'createDancedTale.dances.scene.edit' | translate }}</span>
+            </button>
+
+            <button
+              type="button"
+              class="dance__remove"
+              [attr.aria-label]="'createDancedTale.dances.scene.remove' | translate: { name: dance.name }"
+              (click)="remove(i)"
+            >
+              <i
+                class="fa-solid fa-trash-can"
+                aria-hidden="true"
+              ></i>
+            </button>
           </div>
-        </div>
+        }
       </li>
     }
 
-    <!-- Zone de dépôt toujours visible, même quand la scène a déjà des danses. -->
+    <!-- Zone de dépôt toujours visible, comme « Glisser une danse ici » dans la maquette. -->
     <li
       class="scene-dances__drop-hint"
       aria-hidden="true"
@@ -103,7 +237,7 @@
     </li>
   </ol>
 
-  <!-- Alternative au glisser-déposer (clavier, tactile), repliée par défaut comme pour le plateau. -->
+  <!-- Alternative au glisser-déposer (clavier, tactile), repliée par défaut. -->
   <details
     #addPanel
     class="scene-dances__add-panel"
@@ -122,7 +256,9 @@
           [value]="selectedDanceId()"
           (change)="selectedDanceId.set($any($event.target).value)"
         >
-          <option value="">{{ 'createDancedTale.dances.scene.addPlaceholder' | translate }}</option>
+          <option value="">
+            {{ 'createDancedTale.dances.scene.addPlaceholder' | translate }}
+          </option>
           @for (dance of catalog; track dance.id) {
             <option
               [value]="dance.id"

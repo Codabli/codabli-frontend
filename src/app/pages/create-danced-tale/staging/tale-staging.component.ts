@@ -11,6 +11,7 @@ import {
   CharacterExit,
   SceneCharacter,
   SceneDance,
+  SceneSound,
   SceneStaging,
   StagePlacement,
 } from '../../../models/interfaces/tale-staging.interface';
@@ -19,6 +20,7 @@ import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
 import { DanceLibrary } from './dances/dance-library.component';
 import { SceneDances } from './dances/scene-dances.component';
+import { SceneSounds } from './sounds/scene-sounds.component';
 import { SceneStage, StageElement } from './stage/scene-stage.component';
 
 export const PROP_MAX_LENGTH = 40;
@@ -44,6 +46,7 @@ function hasText(html: string | undefined): boolean {
     DanceLibrary,
     SceneDances,
     SceneStage,
+    SceneSounds,
   ],
   selector: 'app-tale-staging',
   styleUrl: './tale-staging.component.scss',
@@ -148,6 +151,10 @@ export class TaleStagingComponent {
 
   protected setPlacements(step: StoryStep, placements: StagePlacement[]): void {
     this.updateScene(step, (scene) => ({ ...scene, placements }));
+  }
+
+  protected setSounds(step: StoryStep, sounds: SceneSound[]): void {
+    this.updateScene(step, (scene) => ({ ...scene, sounds }));
   }
 
   protected setDances(step: StoryStep, dances: SceneDance[]): void {

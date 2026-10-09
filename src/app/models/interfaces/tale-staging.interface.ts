@@ -7,9 +7,12 @@ export type CharacterExit = 'stays' | 'exits';
 export const CHARACTER_ENTRANCES: CharacterEntrance[] = ['onStage', 'enters'];
 export const CHARACTER_EXITS: CharacterExit[] = ['stays', 'exits'];
 
-/** Moment du passage dansé dans la scène (écran 8.2, SCRUM-101). */
-export type DanceMoment = 'beginning' | 'middle' | 'end';
-export const DANCE_MOMENTS: DanceMoment[] = ['beginning', 'middle', 'end'];
+/**
+ * Moment d'une danse ou d'un son dans la scène (écrans 8.2 et 8.4) :
+ * toute la scène, ou au début, au milieu, à la fin.
+ */
+export type DanceMoment = 'wholeScene' | 'beginning' | 'middle' | 'end';
+export const DANCE_MOMENTS: DanceMoment[] = ['wholeScene', 'beginning', 'middle', 'end'];
 
 export type DanceFormat = 'solo' | 'duo' | 'group';
 export type DanceIntensity = 'gentle' | 'moderate' | 'intense';
@@ -34,6 +37,22 @@ export interface SceneCharacter {
   exit: CharacterExit;
   /** Moment précis de la sortie, en texte libre, si le personnage sort pendant la scène. */
   exitMoment?: string;
+}
+
+/** Musique ou bruitage d'une scène (écran 8.4, SCRUM-103). */
+export type SoundKind = 'music' | 'effect';
+export const SOUND_KINDS: SoundKind[] = ['music', 'effect'];
+
+export interface SceneSound {
+  id: string;
+  title: string;
+  kind: SoundKind;
+  moment: DanceMoment;
+  /** Danse de la scène que le son accompagne (identifiant de SceneDance), facultatif. */
+  danceId: string | null;
+  /** Identifiant du fichier : dans le navigateur (IndexedDB) tant que le back n'existe pas. */
+  fileId: string;
+  fileName: string;
 }
 
 /** Élément placé sur le plateau : un personnage présent ou un décor de la scène (écran 8.3). */
@@ -64,6 +83,8 @@ export interface SceneStaging {
   dances?: SceneDance[];
   /** Placement initial sur le plateau ; absent des brouillons enregistrés avant l'écran 8.3. */
   placements?: StagePlacement[];
+  /** Musiques et bruitages ; absent des brouillons enregistrés avant l'écran 8.4. */
+  sounds?: SceneSound[];
 }
 
 export interface TaleStaging {

@@ -325,7 +325,11 @@ $hatch: repeating-linear-gradient(
 
 .placement-list {
   summary {
-    font-weight: var(--font-weight-bold);
+    // Option secondaire : style de lien discret, différent des titres de partie.
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    color: var(--color-text-primary-default);
+    text-decoration: underline;
     cursor: pointer;
 
     &:focus-visible {

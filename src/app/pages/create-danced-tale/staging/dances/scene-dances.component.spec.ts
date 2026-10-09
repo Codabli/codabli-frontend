@@ -97,7 +97,8 @@ describe('SceneDances', () => {
     name.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    dance().querySelectorAll<HTMLInputElement>('input[type="radio"]')[2].click();
+    // Moments : toute la scène, début, milieu, fin.
+    dance().querySelectorAll<HTMLInputElement>('input[type="radio"]')[3].click();
     fixture.detectChanges();
 
     const style = dance().querySelector<HTMLSelectElement>('select')!;

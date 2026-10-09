@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CDK_DRAG_PARENT, CDK_DROP_LIST, CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { StageElementKind, StagePlacement } from '../../../../models/interfaces/tale-staging.interface';
@@ -57,6 +57,12 @@ function zoneCenter(zone: string, offset: number): { x: number; y: number } {
  */
 @Component({
   imports: [TranslatePipe, CdkDrag],
+  // Le plateau est dans le module d'une danse, elle-même dans la liste des danses : sans cela,
+  // les pastilles se rattacheraient à cette liste au lieu de se déplacer librement.
+  viewProviders: [
+    { provide: CDK_DROP_LIST, useValue: null },
+    { provide: CDK_DRAG_PARENT, useValue: null },
+  ],
   selector: 'app-scene-stage',
   styleUrl: './scene-stage.component.scss',
   templateUrl: './scene-stage.component.html',
@@ -65,7 +71,10 @@ export class SceneStage {
   private readonly translate = inject(TranslateService);
   private readonly floor = viewChild<ElementRef<HTMLElement>>('floor');
 
+  /** Identifiant unique (danse) pour les identifiants de champs. */
   readonly sceneId = input.required<string>();
+  /** Niveau de titre selon l'emplacement (dans le module danse : 5). */
+  readonly headingLevel = input(5);
   readonly elements = input<StageElement[]>([]);
   readonly placements = input<StagePlacement[]>([]);
 

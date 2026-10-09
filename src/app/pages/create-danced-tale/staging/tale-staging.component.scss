@@ -56,6 +56,10 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   @media (min-width: 1200px) {
     grid-template-columns: 300px minmax(0, 1fr);
 
+    &--library-collapsed {
+      grid-template-columns: 64px minmax(0, 1fr);
+    }
+
     // La bibliothèque reste visible pendant qu'on fait défiler les scènes (sous le header collant).
     &__library {
       position: sticky;
@@ -71,21 +75,82 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
 .scenes {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
   margin: 0;
   padding: 0;
   list-style: none;
+
+  // « Ajouter une étape » sous la frise : renvoie à la trame (écran 6).
+  &__add-step {
+    justify-self: center;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary-default);
+
+    @media (min-width: 1200px) {
+      grid-column: 2;
+    }
+  }
+}
+
+// Frise verticale, comme la maquette : numéro de la scène relié par un trait à la suivante.
+.scene-item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+
+  background: linear-gradient(var(--color-border-outline-default), var(--color-border-outline-default)) 19px 0 / 2px
+    100% no-repeat;
+
+  &:last-child {
+    background-size: 2px 40px;
+  }
+
+  &__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+
+    background-color: var(--color-bg-primary-default);
+    border: 2px solid var(--color-bg-surface);
+    border-radius: 50%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    min-width: 0;
+  }
+
+  // Danses en retrait de la scène, reliées au trait de la frise (centre à 20px,
+  // contenu à 40px + 16px d'écart, plus le retrait).
+  app-scene-dances {
+    --dance-indent: 40px;
+    --dance-connector: calc(36px + var(--dance-indent));
+
+    margin-left: var(--dance-indent);
+
+    @media (max-width: 599px) {
+      --dance-indent: 12px;
+    }
+  }
 }
 
 .scene {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
 
   background-color: var(--color-bg-surface);
   border: 2px solid var(--color-border-outline-default);
-  border-radius: 24px;
+  border-radius: 16px;
 
   &__header {
     display: flex;
@@ -93,29 +158,21 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
     gap: var(--spacing-md);
   }
 
-  &__number {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-
-    font-family: 'Baloo 2', sans-serif;
-    font-size: var(--font-size-h6);
-    font-weight: var(--font-weight-bold);
-
-    background-color: var(--color-bg-primary-default);
-    border-radius: 50%;
+  // Bloc replié « Mise en scène de la scène » (personnages, intention, décors, bruitages).
+  &__setup-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-md);
   }
 
   &__title {
     margin: 0;
 
     font-family: 'Baloo 2', sans-serif;
-    font-size: var(--font-size-h5);
+    font-size: var(--font-size-h6);
     font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-h5);
+    line-height: var(--line-height-h6);
     color: var(--font-color-primary);
   }
 
@@ -124,7 +181,8 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
     color: var(--color-text-muted);
   }
 
-  &__text {
+  &__text,
+  &__setup {
     padding: var(--spacing-sm) var(--spacing-md);
     background-color: var(--color-bg-navigation);
     border-radius: 12px;

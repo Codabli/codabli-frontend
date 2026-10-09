@@ -125,12 +125,15 @@
       "announce": {
         "added": "« {{title}} » ajouté à la scène.",
         "removed": "« {{title}} » supprimé."
-      }
+      },
+      "danceTitle": "Ambiance musicale",
+      "sceneTitle": "Bruitages et ambiance de la scène",
+      "importDance": "Importer ma propre musique"
     },
 
     "stage": {
       "title": "Espace scénique",
-      "hint": "Placez les personnages et les décors au début de la scène : faites-les glisser sur le plateau, utilisez les flèches du clavier sur un élément placé, ou choisissez sa zone dans la liste.",
+      "hint": "Glissez-déposez les éléments pour définir le placement initial, ou utilisez les flèches du clavier.",
       "noElements": "Ajoutez des personnages présents ou des décors pour les placer sur le plateau.",
       "reset": "Réinitialiser",
       "back": "Fond de scène",
@@ -187,7 +190,7 @@
         "contemporary": "Contemporain"
       },
       "moments": {
-        "wholeScene": "Toute la scène",
+        "hint": "Facultatif : sans choix, toute la scène.",
         "beginning": "Début",
         "middle": "Milieu",
         "end": "Fin"
@@ -196,10 +199,10 @@
         "title": "Danses de la scène",
         "listLabel": "Danses de la scène {{number}}",
         "dropHint": "Glisser une danse ici",
-        "number": "Danse {{number}}",
-        "name": "nom",
+        "number": "Danse n° {{number}}",
+        "name": "Nom de la danse",
         "moment": "Moment du passage",
-        "style": "Style",
+        "style": "Typologie de danse",
         "remove": "Supprimer : {{name}}",
         "addWithoutDrag": "Ajouter une danse sans glisser-déposer",
         "addLabel": "Danse à ajouter",
@@ -208,7 +211,14 @@
         "announce": {
           "added": "« {{name}} » ajoutée à la scène {{scene}}.",
           "removed": "« {{name}} » supprimée."
-        }
+        },
+        "validate": "Valider ce module",
+        "cancel": "Annuler",
+        "edit": "Modifier",
+        "editLabel": "Modifier : {{name}}",
+        "collapse": "Replier",
+        "collapseLabel": "Replier : {{name}}",
+        "noMusic": "Sans musique"
       },
       "catalog": {
         "festiveRound": {
@@ -307,7 +317,9 @@
       "conductor": {
         "label": "Générer le conducteur du spectacle (PDF)",
         "soon": "(bientôt disponible)"
-      }
+      },
+      "setup": "Mise en scène de la scène",
+      "addStep": "Ajouter une étape dans la trame"
     },
 
     "writing": {

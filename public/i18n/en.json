@@ -125,12 +125,15 @@
       "announce": {
         "added": "“{{title}}” added to the scene.",
         "removed": "“{{title}}” deleted."
-      }
+      },
+      "danceTitle": "Music",
+      "sceneTitle": "Sound effects and atmosphere of the scene",
+      "importDance": "Import my own music"
     },
 
     "stage": {
       "title": "Stage space",
-      "hint": "Place the characters and set items at the start of the scene: drag them onto the stage, use the arrow keys on a placed item, or choose its area in the list.",
+      "hint": "Drag and drop the items to set the starting positions, or use the arrow keys.",
       "noElements": "Add characters on stage or set items to place them on the stage.",
       "reset": "Reset",
       "back": "Upstage",
@@ -187,7 +190,7 @@
         "contemporary": "Contemporary"
       },
       "moments": {
-        "wholeScene": "Whole scene",
+        "hint": "Optional: with no choice, the whole scene.",
         "beginning": "Beginning",
         "middle": "Middle",
         "end": "End"
@@ -196,10 +199,10 @@
         "title": "Dances in the scene",
         "listLabel": "Dances in scene {{number}}",
         "dropHint": "Drag a dance here",
-        "number": "Dance {{number}}",
-        "name": "name",
+        "number": "Dance no. {{number}}",
+        "name": "Dance name",
         "moment": "When in the scene",
-        "style": "Style",
+        "style": "Dance type",
         "remove": "Delete: {{name}}",
         "addWithoutDrag": "Add a dance without drag and drop",
         "addLabel": "Dance to add",
@@ -208,7 +211,14 @@
         "announce": {
           "added": "“{{name}}” added to scene {{scene}}.",
           "removed": "“{{name}}” deleted."
-        }
+        },
+        "validate": "Confirm this module",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "editLabel": "Edit: {{name}}",
+        "collapse": "Collapse",
+        "collapseLabel": "Collapse: {{name}}",
+        "noMusic": "No music"
       },
       "catalog": {
         "festiveRound": {
@@ -307,7 +317,9 @@
       "conductor": {
         "label": "Generate the show run sheet (PDF)",
         "soon": "(coming soon)"
-      }
+      },
+      "setup": "Staging of the scene",
+      "addStep": "Add a step in the outline"
     },
 
     "writing": {

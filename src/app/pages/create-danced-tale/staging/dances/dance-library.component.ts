@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, model, signal } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DanceFormat, DanceIntensity } from '../../../../models/interfaces/tale-staging.interface';
 import { CatalogDance, DANCE_CATALOG } from './dance-catalog';
@@ -22,6 +22,9 @@ const INTENSITIES: DanceIntensity[] = ['gentle', 'moderate', 'intense'];
 })
 export class DanceLibrary {
   private readonly translate = inject(TranslateService);
+
+  /** Bibliothèque repliée : l'écran donne alors la place aux scènes. */
+  readonly collapsed = model(false);
 
   protected readonly formats = FORMATS;
   protected readonly intensities = INTENSITIES;

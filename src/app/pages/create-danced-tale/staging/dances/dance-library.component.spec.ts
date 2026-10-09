@@ -41,6 +41,23 @@ describe('DanceLibrary', () => {
     fixture.detectChanges();
   }
 
+  it('se replie et se déplie depuis son titre', () => {
+    const toggle = element.querySelector<HTMLButtonElement>('h3 .library__toggle')!;
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+
+    toggle.click();
+    fixture.detectChanges();
+
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    expect(cards()).toHaveLength(0);
+    expect(element.querySelector('#dance-search')).toBeNull();
+
+    toggle.click();
+    fixture.detectChanges();
+
+    expect(cards()).toHaveLength(DANCE_CATALOG.length);
+  });
+
   it('affiche tout le catalogue', () => {
     expect(cards()).toHaveLength(DANCE_CATALOG.length);
   });

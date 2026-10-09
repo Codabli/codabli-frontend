@@ -90,7 +90,7 @@ describe('SceneSounds', () => {
       expect.objectContaining({
         title: 'Luth royal',
         kind: 'music',
-        moment: 'wholeScene',
+        moment: null,
         danceId: null,
         fileName: 'Luth royal.mp3',
       }),
@@ -147,8 +147,8 @@ describe('SceneSounds', () => {
 
     sound().querySelectorAll<HTMLInputElement>('input[type="radio"]')[1].click();
     fixture.detectChanges();
-    // Radios : 2 types, puis 4 moments (toute la scène, début, milieu, fin).
-    sound().querySelectorAll<HTMLInputElement>('input[type="radio"]')[5].click();
+    // Moments facultatifs : début, milieu, fin.
+    sound().querySelectorAll<HTMLButtonElement>('.segmented__toggle')[2].click();
     fixture.detectChanges();
     const dance = sound().querySelector<HTMLSelectElement>('select')!;
     dance.value = 'd1';

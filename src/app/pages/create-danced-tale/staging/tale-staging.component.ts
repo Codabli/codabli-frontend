@@ -8,12 +8,13 @@ import {
   CHARACTER_ENTRANCES,
   CHARACTER_EXITS,
   CharacterEntrance,
+  DANCE_MOMENTS,
+  DanceMoment,
   CharacterExit,
   SceneCharacter,
   SceneDance,
   SceneSound,
   SceneStaging,
-  StagePlacement,
 } from '../../../models/interfaces/tale-staging.interface';
 import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
 import { Autosave } from '../autosave/autosave';
@@ -21,11 +22,40 @@ import { AutosaveStatus } from '../autosave/autosave-status.component';
 import { DanceLibrary } from './dances/dance-library.component';
 import { SceneDances } from './dances/scene-dances.component';
 import { SceneSounds } from './sounds/scene-sounds.component';
-import { SceneStage, StageElement } from './stage/scene-stage.component';
+import { StageElement } from './stage/scene-stage.component';
 
 export const PROP_MAX_LENGTH = 40;
 export const INTENTION_MAX_LENGTH = 400;
 export const MOMENT_MAX_LENGTH = 150;
+
+/**
+ * Brouillons enregistrés avant la composition de la maquette : le plateau et les musiques
+ * étaient rattachés à la scène. Une musique associée à une danse passe dans cette danse ;
+ * l'ancien placement par scène est abandonné (chaque danse a désormais son plateau).
+ */
+function migrateScene(scene: SceneStaging & { placements?: unknown }): SceneStaging {
+  const { placements: _legacyPlacements, ...rest } = scene;
+  const sounds = (rest.sounds ?? []).map(withOptionalMoment);
+  const dances = (rest.dances ?? []).map((dance) => {
+    const moved = sounds.filter((sound) => sound.danceId === dance.id).map((sound) => ({ ...sound, danceId: null }));
+    return withOptionalMoment({
+      ...dance,
+      sounds: [...(dance.sounds ?? []).map(withOptionalMoment), ...moved],
+    });
+  });
+  const danceIds = new Set(dances.map((dance) => dance.id));
+
+  return {
+    ...rest,
+    dances,
+    sounds: sounds.filter((sound) => !sound.danceId || !danceIds.has(sound.danceId)),
+  };
+}
+
+/** Ancien brouillon : le moment « toute la scène » est désormais l'absence de moment. */
+function withOptionalMoment<T extends { moment: DanceMoment | null }>(item: T): T {
+  return DANCE_MOMENTS.includes(item.moment as DanceMoment) ? item : { ...item, moment: null };
+}
 
 /** Un texte est rédigé s'il contient autre chose que des balises vides. */
 function hasText(html: string | undefined): boolean {
@@ -45,7 +75,6 @@ function hasText(html: string | undefined): boolean {
     CdkDropListGroup,
     DanceLibrary,
     SceneDances,
-    SceneStage,
     SceneSounds,
   ],
   selector: 'app-tale-staging',
@@ -70,6 +99,7 @@ export class TaleStagingComponent {
   private readonly texts = this.draftService.writing()?.texts ?? {};
 
   protected readonly scenes = signal<Record<string, SceneStaging>>(this.initialScenes());
+  protected readonly libraryCollapsed = signal(false);
 
   /** Éléments à placer sur le plateau de chaque scène (écran 8.3) : personnages présents, puis décors. */
   protected readonly stageElements = computed(() =>
@@ -149,10 +179,6 @@ export class TaleStagingComponent {
     this.updateScene(step, (scene) => ({ ...scene, intention }));
   }
 
-  protected setPlacements(step: StoryStep, placements: StagePlacement[]): void {
-    this.updateScene(step, (scene) => ({ ...scene, placements }));
-  }
-
   protected setSounds(step: StoryStep, sounds: SceneSound[]): void {
     this.updateScene(step, (scene) => ({ ...scene, sounds }));
   }
@@ -229,7 +255,10 @@ export class TaleStagingComponent {
 
         return [
           step.id,
-          { ...scene, characters: scene.characters.filter((character) => knownIds.has(character.characterId)) },
+          migrateScene({
+            ...scene,
+            characters: scene.characters.filter((character) => knownIds.has(character.characterId)),
+          }),
         ];
       }),
     );

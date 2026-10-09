@@ -1,12 +1,16 @@
 <div class="scene-stage">
   <div class="scene-stage__header">
-    <h4 class="scene-stage__title">
+    <p
+      class="scene-stage__title"
+      role="heading"
+      [attr.aria-level]="headingLevel()"
+    >
       <i
         class="fa-solid fa-map"
         aria-hidden="true"
       ></i>
       {{ 'createDancedTale.stage.title' | translate }}
-    </h4>
+    </p>
 
     @if (placed().length) {
       <button
@@ -20,8 +24,6 @@
   </div>
 
   @if (elements().length) {
-    <p class="scene-stage__hint">{{ 'createDancedTale.stage.hint' | translate }}</p>
-
     <!-- Plan du théâtre vu du dessus : coulisses et fond de scène en haut, public en bas. -->
     <div class="stage">
       <span
@@ -131,6 +133,15 @@
         >{{ 'createDancedTale.stage.audience' | translate }}</span
       >
     </div>
+
+    <!-- Consigne sous le plan, comme la maquette. -->
+    <p class="scene-stage__hint">
+      <i
+        class="fa-solid fa-hand-pointer"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.stage.hint' | translate }}
+    </p>
 
     @if (unplaced().length) {
       <div class="tray">

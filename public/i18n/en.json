@@ -193,6 +193,42 @@
     "partners": "Partners",
     "subscriptions": "Our Subscriptions"
   },
+  "library": {
+    "title": "Dance Tales Library",
+    "subtitle": "Discover our dance tales",
+    "viewList": "List view",
+    "viewGrid": "Grid view",
+    "talesFound": "tales found",
+    "showMoreResults": "Show more results",
+    "showLessResults": "Show less results",
+    "search": {
+      "title": "Search",
+      "placeholder": "Please enter keywords",
+      "button": "Search"
+    },
+    "filters": {
+      "title": "Advanced filters",
+      "reset": "Reset filters",
+      "themes": {
+        "placeholder": "Select your themes"
+      },
+      "age": {
+        "placeholder": "Select an age"
+      },
+      "languages": {
+        "placeholder": "Select one or more languages"
+      }
+    },
+    "card": {
+      "consult": "Consult",
+      "adopt": "Adopt this tale",
+      "loginRequired": "Log in to consult this tale"
+    }
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create an account"
+  },
   "teacherAccount": {
     "breadcrumb": {
       "label": "Breadcrumb",

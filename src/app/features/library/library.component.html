@@ -1,0 +1,103 @@
+<img
+  class="page-banner"
+  src="/assets/images/banner.webp"
+  alt=""
+/>
+
+<section class="library">
+  <div class="library__intro">
+    <header class="library__header">
+      <h1 class="library__title">
+        {{ 'library.title' | translate }}
+      </h1>
+
+      <p class="library__subtitle">
+        {{ 'library.subtitle' | translate }}
+      </p>
+    </header>
+
+    <app-library-filters (filtersChange)="onFiltersChange($event)" />
+  </div>
+
+  <section class="library__results">
+    <div class="library__results-content">
+      <div class="library__results-header">
+        <p class="library__results-count">
+          {{ filteredTales().length }} {{ 'library.talesFound' | translate }}
+        </p>
+
+        <div class="library__view-toggle">
+          <app-icon
+            name="grid"
+            [size]="24"
+          />
+
+          <span>
+            {{
+              isGridView()
+                ? ('library.viewList' | translate)
+                : ('library.viewGrid' | translate)
+            }}
+          </span>
+
+          <button
+            type="button"
+            class="library__view-switch"
+            role="switch"
+            [attr.aria-checked]="isGridView()"
+            aria-label="Afficher tous les contes"
+            (click)="toggleResultsView()"
+          >
+            <app-icon
+              [name]="isGridView() ? 'switch-on' : 'switch-off'"
+              [size]="24"
+            />
+          </button>
+        </div>
+      </div>
+
+      @if (isGridView()) {
+        <div class="library__results-grid">
+          @for (tale of visibleTales(); track tale.id) {
+            <app-tale-card
+              [tale]="tale"
+              [locked]="!isAuthenticated()"
+              (consult)="consultTale(tale.id)"
+              (adopt)="adoptTale(tale.id)"
+              (login)="goToLogin()"
+            />
+          }
+        </div>
+
+        <div class="library__more">
+          @if (canShowMore()) {
+            <app-button
+              variant="tertiary"
+              iconPosition="left"
+              navigationIcon="circle-plus"
+              (click)="showMoreResults()"
+            >
+              {{ 'library.showMoreResults' | translate }}
+            </app-button>
+          } @else {
+            <app-button
+              variant="tertiary"
+              iconPosition="left"
+              navigationIcon="circle-minus"
+              (click)="showLessResults()"
+            >
+              {{ 'library.showLessResults' | translate }}
+            </app-button>
+          }
+        </div>
+      } @else {
+        <app-library-carousel
+          [tales]="filteredTales()"
+          [locked]="!isAuthenticated()"
+          (consult)="consultTale($event)"
+          (login)="goToLogin()"
+        />
+      }
+    </div>
+  </section>
+</section>

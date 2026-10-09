@@ -4,11 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import type { ApiError } from '../../models/interfaces/api-error.interface';
-import { Button } from '../../shared/components/button/button.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 import { LoginForm } from './login.form';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, ButtonComponent],
   selector: 'app-login',
   styleUrl: './login.component.scss',
   templateUrl: './login.component.html',

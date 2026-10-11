@@ -106,14 +106,6 @@
   font: inherit;
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition:
-    background-color 160ms ease,
-    transform 160ms ease;
-
-  &:hover {
-    background: color-mix(in srgb, var(--plan-accent), white 24%);
-    transform: scale(1.04);
-  }
 
   &:focus-visible {
     outline: 3px solid var(--color-border-primary-focus);
@@ -156,11 +148,5 @@
 
   .plan-card__description {
     min-height: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .plan-card__button {
-    transition: none;
   }
 }

@@ -1,21 +1,79 @@
 <section class="shop" id="boutique" aria-labelledby="shop-title">
-  <div class="shop__copy">
-    <p class="eyebrow">Prolongez l’aventure</p>
+  <div class="shop__heading">
     <h2 id="shop-title">Visitez également notre boutique</h2>
-    <p>
-      Retrouvez des histoires et des idées pour continuer à lire, jouer et créer
-      ensemble. La boutique est ouverte à toutes et à tous.
-    </p>
-    <button class="button" type="button">
-      Explorer la boutique
-      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-    </button>
+    <p>Vous pouvez acheter sans vous abonner</p>
   </div>
-  <div class="shop__feature">
-    <img
-      src="/assets/images/tales/tales-test.png"
-      alt="Couverture illustrée du conte La bonne fée"
-      loading="lazy"
+
+  <div
+    #shopTrack
+    class="shop__track"
+    role="region"
+    aria-label="Articles de la boutique"
+    tabindex="0"
+    (scroll)="onProductsScroll()"
+    (scrollend)="onProductsScrollEnd()"
+  >
+    @for (product of carouselProducts; track $index) {
+      <article
+        class="shop-card"
+        [class.shop-card--side]="isSideProduct($index)"
+        [attr.aria-hidden]="
+          $index < originalProductCount || $index >= originalProductCount * 2
+            ? 'true'
+            : null
+        "
+        [attr.inert]="
+          $index < originalProductCount || $index >= originalProductCount * 2
+            ? ''
+            : null
+        "
+      >
+        <img
+          class="shop-card__image"
+          [src]="product.image"
+          [alt]="product.imageAlt"
+          loading="lazy"
+        />
+        <div class="shop-card__details">
+          <h3>{{ product.name }}</h3>
+          <p class="shop-card__price">{{ product.price }} €</p>
+          <div class="shop-card__actions">
+            <button
+              class="shop-card__action shop-card__action--view"
+              type="button"
+            >
+              Consulter
+            </button>
+            <button
+              class="shop-card__action shop-card__action--adopt"
+              type="button"
+            >
+              Adopter ce conte
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div
+    class="shop__controls"
+    role="group"
+    aria-label="Navigation des articles de la boutique"
+  >
+    <app-button
+      class="shop__control"
+      variant="tertiary"
+      carouselIcon="left"
+      ariaLabel="Article précédent"
+      (click)="scrollProducts(-1)"
+    />
+    <app-button
+      class="shop__control"
+      variant="tertiary"
+      carouselIcon="right"
+      ariaLabel="Article suivant"
+      (click)="scrollProducts(1)"
     />
   </div>
 </section>

@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Button } from '../../../../shared/components/button/button.component';
+import {
+  getCenteredItemIndex,
+  scrollToCenteredItem,
+} from '../../../../shared/utils/centered-carousel';
 
 @Component({
   imports: [Button],
@@ -44,7 +48,7 @@ export class NewsCarouselComponent implements AfterViewInit {
     const track = this.newsTrack?.nativeElement;
     if (!track) return;
 
-    const currentIndex = this.getCenteredCardIndex(track);
+    const currentIndex = getCenteredItemIndex(track, '.news-card');
     this.scrollToCard(currentIndex + direction);
   }
 
@@ -52,7 +56,7 @@ export class NewsCarouselComponent implements AfterViewInit {
     const track = this.newsTrack?.nativeElement;
     if (!track) return;
 
-    const centeredIndex = this.getCenteredCardIndex(track);
+    const centeredIndex = getCenteredItemIndex(track, '.news-card');
     if (centeredIndex < this.news.length) {
       this.scrollToCard(centeredIndex + this.news.length, true);
     } else if (centeredIndex >= this.news.length * 2) {
@@ -60,43 +64,9 @@ export class NewsCarouselComponent implements AfterViewInit {
     }
   }
 
-  private getCenteredCardIndex(track: HTMLElement): number {
-    const trackCenter =
-      track.getBoundingClientRect().left + track.clientWidth / 2;
-    const cards = track.querySelectorAll<HTMLElement>('.news-card');
-    let closestIndex = 0;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    cards.forEach((card, index) => {
-      const bounds = card.getBoundingClientRect();
-      const distance = Math.abs(bounds.left + bounds.width / 2 - trackCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    return closestIndex;
-  }
-
   private scrollToCard(index: number, instant = false): void {
     const track = this.newsTrack?.nativeElement;
-    const card = track?.querySelectorAll<HTMLElement>('.news-card')[index];
-    if (!track || !card) return;
-
-    const trackCenter =
-      track.getBoundingClientRect().left + track.clientWidth / 2;
-    const bounds = card.getBoundingClientRect();
-    const cardCenter = bounds.left + bounds.width / 2;
-    const target = track.scrollLeft + cardCenter - trackCenter;
-
-    if (instant) {
-      const previousScrollBehavior = track.style.scrollBehavior;
-      track.style.scrollBehavior = 'auto';
-      track.scrollLeft = target;
-      track.style.scrollBehavior = previousScrollBehavior;
-    } else {
-      track.scrollTo({ left: target });
-    }
+    if (!track) return;
+    scrollToCenteredItem(track, '.news-card', index, instant);
   }
 }

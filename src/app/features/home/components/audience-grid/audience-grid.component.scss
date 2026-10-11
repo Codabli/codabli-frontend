@@ -73,14 +73,6 @@
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-bold);
   cursor: pointer;
-  transition:
-    background-color 160ms ease,
-    transform 160ms ease;
-
-  &:hover {
-    background: var(--color-bg-primary-hover);
-    transform: translateY(-2px);
-  }
 
   &:focus-visible {
     outline: 3px solid var(--color-border-primary-focus);

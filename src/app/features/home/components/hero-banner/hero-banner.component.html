@@ -1,0 +1,24 @@
+<section class="hero" aria-label="Bienvenue dans l’univers de Codabli">
+  <img
+    class="hero__image"
+    src="/assets/images/storyteller/hero-banner.jpg"
+    alt="Des enfants dansent autour d’un livre ouvert, d’un château et d’un arc-en-ciel"
+    width="1440"
+    height="474"
+    fetchpriority="high"
+  />
+  <div class="hero__actions" role="group" aria-label="Découvrir Codabli">
+    @for (action of actions; track action.label) {
+      <button
+        class="hero__action"
+        [class.hero__action--pink]="action.color === 'pink'"
+        [class.hero__action--blue]="action.color === 'blue'"
+        [class.hero__action--yellow]="action.color === 'yellow'"
+        [class.hero__action--turquoise]="action.color === 'turquoise'"
+        type="button"
+      >
+        {{ action.label }}
+      </button>
+    }
+  </div>
+</section>

@@ -24,10 +24,22 @@ describe('HomeComponent', () => {
   it('should render the active home sections without the deferred sections', () => {
     const home = fixture.nativeElement as HTMLElement;
     const content = home.textContent as string;
+    const heroButtons = home.querySelectorAll('.hero__action');
+    const heroImage = home.querySelector('.hero__image');
+    const universeImage = home.querySelector('.universe__visual img');
     const audienceImages = home.querySelectorAll(
       '.audience-card__image',
     ) as NodeListOf<HTMLImageElement>;
 
+    expect(heroButtons).toHaveLength(4);
+    expect(heroImage?.getAttribute('src')).toContain('hero-banner.jpg');
+    expect(heroImage?.getAttribute('fetchpriority')).toBe('high');
+    expect(heroImage?.getAttribute('width')).toBe('1440');
+    expect(heroImage?.getAttribute('height')).toBe('474');
+    expect(universeImage?.getAttribute('loading')).toBe('lazy');
+    expect(audienceImages[0].getAttribute('loading')).toBe('lazy');
+    expect(content).toContain('Découvrez nos contes dansés');
+    expect(content).toContain('Créez vos propres contes dansés');
     expect(content).toContain('Plongez-vous dans l’univers de Codabli');
     expect(content).toContain('Conte Dansé');
     expect(content).toContain('À qui s’adresse-t-on');

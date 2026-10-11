@@ -19,21 +19,29 @@ export class NewsCarouselComponent implements AfterViewInit {
       title: 'Les histoires prennent vie avec le Conte Dansé',
       date: 'Publiée le 10 septembre 2026',
       image: '/assets/images/news/Visuel.png',
+      imageWidth: 395,
+      imageHeight: 219,
     },
     {
       title: 'Place à l’imagination : inventez votre propre conte',
       date: 'Publiée le 25 janvier 2026',
       image: '/assets/images/Video.png',
+      imageWidth: 608,
+      imageHeight: 342,
     },
     {
       title: 'Des œuvres et des histoires à regarder autrement',
       date: 'Publiée le 23 mars 2026',
       image: '/assets/images/news/Visuel.png',
+      imageWidth: 395,
+      imageHeight: 219,
     },
     {
       title: 'Des idées pour faire vivre les histoires au quotidien',
       date: 'Publiée le 05 octobre 2026',
       image: '/assets/images/Video.png',
+      imageWidth: 608,
+      imageHeight: 342,
     },
   ];
 

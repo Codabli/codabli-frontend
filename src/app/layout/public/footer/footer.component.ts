@@ -19,10 +19,26 @@ export class FooterComponent {
   };
 
   readonly socialLinks = [
-    { name: 'Facebook', iconUrl: 'assets/icons/facebook.svg', url: '#' },
-    { name: 'Instagram', iconUrl: 'assets/icons/instagram.svg', url: '#' },
-    { name: 'YouTube', iconUrl: 'assets/icons/youtube.svg', url: '#' },
-    { name: 'LinkedIn', iconUrl: 'assets/icons/linkedin.svg', url: '#' },
+    {
+      name: 'Facebook',
+      iconUrl: '/assets/icons/socials/facebook.svg',
+      url: '#',
+    },
+    {
+      name: 'Instagram',
+      iconUrl: '/assets/icons/socials/instagram.svg',
+      url: '#',
+    },
+    {
+      name: 'YouTube',
+      iconUrl: '/assets/icons/socials/youtube.svg',
+      url: '#',
+    },
+    {
+      name: 'LinkedIn',
+      iconUrl: '/assets/icons/socials/linkedin.svg',
+      url: '#',
+    },
   ];
 
   readonly legalLinks = [

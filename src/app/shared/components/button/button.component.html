@@ -11,11 +11,14 @@
       class="button__carousel-icon button__carousel-icon--circle-chevron"
       aria-hidden="true"
     >
-      <i
-        class="fa-solid"
-        [class.fa-chevron-left]="carouselIcon() === 'left'"
-        [class.fa-chevron-right]="carouselIcon() === 'right'"
-      ></i>
+      <img
+        [src]="
+          carouselIcon() === 'left'
+            ? 'assets/icons/carousel/arrow-left.svg'
+            : 'assets/icons/carousel/arrow-right.svg'
+        "
+        alt=""
+      />
     </span>
   }
 

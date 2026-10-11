@@ -3,29 +3,33 @@
   id="abonnements"
   aria-labelledby="subscriptions-title"
 >
-  <h2 id="subscriptions-title">Nos abonnements</h2>
+  <h2 id="subscriptions-title">{{ "home.subscriptions.title" | translate }}</h2>
 
   <div class="subscriptions__grid">
-    @for (plan of plans; track plan.name) {
+    @for (plan of plans; track plan.nameKey) {
       <article
         class="plan-card"
         [class.plan-card--yellow]="plan.accent === 'yellow'"
         [class.plan-card--pink]="plan.accent === 'pink'"
         [class.plan-card--blue]="plan.accent === 'blue'"
       >
-        <h3>{{ plan.name }}</h3>
+        <h3>{{ plan.nameKey | translate }}</h3>
         <span class="plan-card__accent" aria-hidden="true"></span>
         <p class="plan-card__price">
           <span class="plan-card__amount">{{ plan.price }} €</span>
-          <span>/ mois</span>
+          <span>{{ "home.subscriptions.perMonth" | translate }}</span>
         </p>
-        <p class="plan-card__description">{{ plan.description }}</p>
+        <p class="plan-card__description">
+          {{ plan.descriptionKey | translate }}
+        </p>
         <ul class="plan-card__benefits">
           @for (benefit of plan.benefits; track benefit) {
-            <li>{{ benefit }}</li>
+            <li>{{ benefit | translate }}</li>
           }
         </ul>
-        <button class="plan-card__button" type="button">M’abonner</button>
+        <button class="plan-card__button" type="button">
+          {{ "home.subscriptions.subscribe" | translate }}
+        </button>
       </article>
     }
   </div>

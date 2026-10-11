@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type SubscriptionPlan = {
-  name: string;
+  nameKey: string;
   price: number;
-  description: string;
+  descriptionKey: string;
   benefits: string[];
   accent: 'yellow' | 'pink' | 'blue';
 };
 
 @Component({
+  imports: [TranslatePipe],
   selector: 'app-subscription-plans',
   styleUrl: './subscription-plans.component.scss',
   templateUrl: './subscription-plans.component.html',
@@ -16,44 +18,41 @@ type SubscriptionPlan = {
 export class SubscriptionPlansComponent {
   protected readonly plans: SubscriptionPlan[] = [
     {
-      name: 'Formule Famille 1',
+      nameKey: 'home.subscriptions.plans.first.name',
       price: 2,
-      description:
-        'Une première formule pour découvrir les contes dansés en famille.',
+      descriptionKey: 'home.subscriptions.plans.first.description',
       benefits: [
-        'Accès à une sélection de contes',
-        'De nouvelles histoires régulièrement',
-        'Des activités à partager',
-        'Un espace adapté aux familles',
-        'Sans engagement',
+        'home.subscriptions.plans.benefits.selectedTales',
+        'home.subscriptions.plans.benefits.newStories',
+        'home.subscriptions.plans.benefits.activities',
+        'home.subscriptions.plans.benefits.familySpace',
+        'home.subscriptions.plans.benefits.noCommitment',
       ],
       accent: 'yellow',
     },
     {
-      name: 'Formule Famille 2',
+      nameKey: 'home.subscriptions.plans.second.name',
       price: 2,
-      description:
-        'Encore plus d’histoires et d’idées pour faire vivre l’imagination.',
+      descriptionKey: 'home.subscriptions.plans.second.description',
       benefits: [
-        'Accès à tous les contes',
-        'De nouvelles histoires régulièrement',
-        'Des activités à partager',
-        'Un espace adapté aux familles',
-        'Sans engagement',
+        'home.subscriptions.plans.benefits.allTales',
+        'home.subscriptions.plans.benefits.newStories',
+        'home.subscriptions.plans.benefits.activities',
+        'home.subscriptions.plans.benefits.familySpace',
+        'home.subscriptions.plans.benefits.noCommitment',
       ],
       accent: 'pink',
     },
     {
-      name: 'Formule Famille 3',
+      nameKey: 'home.subscriptions.plans.third.name',
       price: 2,
-      description:
-        'Toute la créativité de Codabli pour accompagner petits et grands.',
+      descriptionKey: 'home.subscriptions.plans.third.description',
       benefits: [
-        'Accès à tous les contes',
-        'Des contenus exclusifs',
-        'Des activités à partager',
-        'Un espace adapté aux familles',
-        'Sans engagement',
+        'home.subscriptions.plans.benefits.allTales',
+        'home.subscriptions.plans.benefits.exclusiveContent',
+        'home.subscriptions.plans.benefits.activities',
+        'home.subscriptions.plans.benefits.familySpace',
+        'home.subscriptions.plans.benefits.noCommitment',
       ],
       accent: 'blue',
     },

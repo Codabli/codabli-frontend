@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
@@ -9,8 +10,35 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), provideTranslateService()],
     }).compileComponents();
+
+    const translate = TestBed.inject(TranslateService);
+    translate.setTranslation('fr', {
+      home: {
+        hero: {
+          discoverTales: 'Découvrez nos contes dansés',
+          createTales: 'Créez vos propres contes dansés',
+        },
+        universe: {
+          title: 'Plongez-vous dans l’univers de Codabli',
+          question: 'Qu’est-ce qu’un Conte Dansé ?',
+        },
+        audience: {
+          title: 'À qui s’adresse-t-on ?',
+          children: { title: 'Les enfants' },
+          educators: { title: 'Les professionnels de l’éducation' },
+          parents: { title: 'Les parents' },
+        },
+        news: {
+          title: 'Notre actualité',
+          all: 'Voir toutes les actualités',
+        },
+        subscriptions: { title: 'Nos abonnements' },
+        shop: { title: 'Visitez également notre boutique' },
+      },
+    });
+    translate.use('fr');
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;

@@ -90,11 +90,17 @@
   scroll-snap-align: center;
 }
 
+.news-card__media {
+  width: 100%;
+  aspect-ratio: 395 / 219;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
 .news-card__image {
   display: block;
   width: 100%;
-  aspect-ratio: 395 / 219;
-  border-radius: var(--radius-card);
+  height: 100%;
   object-fit: cover;
 }
 
@@ -110,7 +116,7 @@
     min-height: 2.2em;
     margin: var(--spacing-md) 0 var(--spacing-lg);
     overflow: hidden;
-    color: var(--font-color-text-anthracite);
+    color: var(--font-color-primary);
     font-family: var(--font-family-secondary), sans-serif;
     font-size: var(--font-size-h5);
     font-weight: var(--font-weight-bold);

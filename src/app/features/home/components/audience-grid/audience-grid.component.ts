@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
+  imports: [TranslatePipe],
   selector: 'app-audience-grid',
   styleUrl: './audience-grid.component.scss',
   templateUrl: './audience-grid.component.html',
@@ -9,24 +11,18 @@ export class AudienceGridComponent {
   protected readonly audiences = [
     {
       image: '/assets/images/audience/enfants.png',
-      title: 'Les enfants',
-      description:
-        'Lire, bouger, imaginer : les enfants deviennent les héros de leurs histoires.',
-      action: 'Découvrir nos solutions pour vous',
+      titleKey: 'home.audience.children.title',
+      descriptionKey: 'home.audience.children.description',
     },
     {
       image: '/assets/images/audience/professionnels_de_l_education.png',
-      title: 'Les professionnels de l’éducation',
-      description:
-        'Des ressources créatives pour faire vivre les histoires et accompagner les apprentissages.',
-      action: 'Découvrir nos solutions pour vous',
+      titleKey: 'home.audience.educators.title',
+      descriptionKey: 'home.audience.educators.description',
     },
     {
       image: '/assets/images/audience/parents.png',
-      title: 'Les parents',
-      description:
-        'Un moment complice pour lire, danser et créer de beaux souvenirs ensemble.',
-      action: 'Découvrir nos solutions pour vous',
+      titleKey: 'home.audience.parents.title',
+      descriptionKey: 'home.audience.parents.description',
     },
   ];
 }

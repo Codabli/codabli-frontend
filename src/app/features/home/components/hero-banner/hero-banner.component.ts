@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type HeroActionColor = 'pink' | 'blue' | 'yellow' | 'turquoise';
 
 interface HeroAction {
-  label: string;
+  labelKey: string;
   color: HeroActionColor;
 }
 
 @Component({
+  imports: [TranslatePipe],
   selector: 'app-hero-banner',
   styleUrl: './hero-banner.component.scss',
   templateUrl: './hero-banner.component.html',
@@ -15,9 +17,9 @@ interface HeroAction {
 })
 export class HeroBannerComponent {
   readonly actions: HeroAction[] = [
-    { label: 'Découvrez nos contes dansés', color: 'yellow' },
-    { label: 'Créez vos propres contes dansés', color: 'turquoise' },
-    { label: 'Explorez notre univers', color: 'pink' },
-    { label: 'Visitez notre boutique', color: 'blue' },
+    { labelKey: 'home.hero.discoverTales', color: 'yellow' },
+    { labelKey: 'home.hero.createTales', color: 'turquoise' },
+    { labelKey: 'home.hero.explore', color: 'pink' },
+    { labelKey: 'home.hero.shop', color: 'blue' },
   ];
 }

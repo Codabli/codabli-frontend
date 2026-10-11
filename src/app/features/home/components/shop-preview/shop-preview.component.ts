@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Button } from '../../../../shared/components/button/button.component';
 import {
   getCenteredItemIndex,
@@ -12,7 +13,7 @@ import {
 } from '../../../../shared/utils/centered-carousel';
 
 @Component({
-  imports: [Button],
+  imports: [Button, TranslatePipe],
   selector: 'app-shop-preview',
   styleUrl: './shop-preview.component.scss',
   templateUrl: './shop-preview.component.html',
@@ -25,28 +26,28 @@ export class ShopPreviewComponent implements AfterViewInit, OnDestroy {
 
   private readonly products = [
     {
-      name: 'Marque-page Esperanta',
+      nameKey: 'home.shop.productName',
       price: 5,
       image: '/assets/images/shop/bookmark_1.png',
-      imageAlt: 'Collection de marque-pages illustrés',
+      imageAltKey: 'home.shop.imageAlt.first',
     },
     {
-      name: 'Marque-page Esperanta',
+      nameKey: 'home.shop.productName',
       price: 5,
       image: '/assets/images/shop/bookmark_2.png',
-      imageAlt: 'Marque-page en papier plié dans un livre',
+      imageAltKey: 'home.shop.imageAlt.second',
     },
     {
-      name: 'Marque-page Esperanta',
+      nameKey: 'home.shop.productName',
       price: 5,
       image: '/assets/images/shop/bookmark_3.png',
-      imageAlt: 'Livre ouvert avec un marque-page illustré',
+      imageAltKey: 'home.shop.imageAlt.third',
     },
     {
-      name: 'Marque-page Esperanta',
+      nameKey: 'home.shop.productName',
       price: 5,
       image: '/assets/images/shop/bookmark_4.png',
-      imageAlt: 'Marque-page illustré posé sur un livre',
+      imageAltKey: 'home.shop.imageAlt.fourth',
     },
   ];
 

@@ -154,12 +154,12 @@
     }
   },
 
-    "login": {
+  "login": {
     "title": "Connexion",
     "description": "Connectez-vous à votre compte",
     "breadcrumb": {
-    "label": "Fil d'Ariane",
-    "home": "Accueil"
+      "label": "Fil d'Ariane",
+      "home": "Accueil"
     },
     "form": {
       "email": {
@@ -177,7 +177,7 @@
       "teacher": "Compte enseignant",
       "family": "Compte famille"
     },
-      "errors": {
+    "errors": {
       "invalidCredentials": "Adresse mail ou mot de passe incorrect.",
       "unavailable": "Le service de connexion est momentanément indisponible. Réessayez dans quelques instants."
     }
@@ -192,6 +192,134 @@
     "shop": "Boutique",
     "partners": "Partenaires",
     "subscriptions": "Nos abonnements"
+  },
+  "home": {
+    "hero": {
+      "ariaLabel": "Bienvenue dans l’univers de Codabli",
+      "imageAlt": "Des enfants dansent autour d’un livre ouvert, d’un château et d’un arc-en-ciel",
+      "actionsLabel": "Découvrir Codabli",
+      "discoverTales": "Découvrez nos contes dansés",
+      "createTales": "Créez vos propres contes dansés",
+      "explore": "Explorez notre univers",
+      "shop": "Visitez notre boutique"
+    },
+    "universe": {
+      "title": "Plongez-vous dans l’univers de Codabli",
+      "imageAlt": "Une enfant découvre une histoire en lisant un livre",
+      "question": "Qu’est-ce qu’un conte dansé ?",
+      "descriptionFirst": "C’est un conte qui ne se contente pas d’être lu : il se découvre aussi avec le corps. Les mots inspirent des gestes, les gestes racontent à leur tour, et chacun peut entrer dans l’histoire à sa façon.",
+      "descriptionSecond": "Codabli invite petits et grands à écouter, bouger et laisser parler leur créativité, seuls ou ensemble.",
+      "discover": "Découvrir nos contes dansés"
+    },
+    "audience": {
+      "title": "À qui s’adresse-t-on ?",
+      "action": "Découvrir nos solutions pour vous",
+      "children": {
+        "title": "Les enfants",
+        "description": "Lire, bouger, imaginer : les enfants deviennent les héros de leurs histoires."
+      },
+      "educators": {
+        "title": "Les professionnels de l’éducation",
+        "description": "Des ressources créatives pour faire vivre les histoires et accompagner les apprentissages."
+      },
+      "parents": {
+        "title": "Les parents",
+        "description": "Un moment complice pour lire, danser et créer de beaux souvenirs ensemble."
+      }
+    },
+    "news": {
+      "title": "Notre actualité",
+      "all": "Voir toutes les actualités",
+      "regionLabel": "Articles d’actualité",
+      "navigationLabel": "Navigation des actualités",
+      "readMore": "En savoir plus",
+      "previous": "Actualité précédente",
+      "next": "Actualité suivante",
+      "items": {
+        "first": {
+          "title": "Les histoires prennent vie avec le Conte Dansé",
+          "date": "Publiée le 10 septembre 2026"
+        },
+        "second": {
+          "title": "Place à l’imagination : inventez votre propre conte",
+          "date": "Publiée le 25 janvier 2026"
+        },
+        "third": {
+          "title": "Des œuvres et des histoires à regarder autrement",
+          "date": "Publiée le 23 mars 2026"
+        },
+        "fourth": {
+          "title": "Des idées pour faire vivre les histoires au quotidien",
+          "date": "Publiée le 05 octobre 2026"
+        }
+      }
+    },
+    "subscriptions": {
+      "title": "Nos abonnements",
+      "perMonth": "/ mois",
+      "subscribe": "M’abonner",
+      "plans": {
+        "first": {
+          "name": "Formule Famille 1",
+          "description": "Une première formule pour découvrir les contes dansés en famille."
+        },
+        "second": {
+          "name": "Formule Famille 2",
+          "description": "Encore plus d’histoires et d’idées pour faire vivre l’imagination."
+        },
+        "third": {
+          "name": "Formule Famille 3",
+          "description": "Toute la créativité de Codabli pour accompagner petits et grands."
+        },
+        "benefits": {
+          "selectedTales": "Accès à une sélection de contes",
+          "allTales": "Accès à tous les contes",
+          "newStories": "De nouvelles histoires régulièrement",
+          "exclusiveContent": "Des contenus exclusifs",
+          "activities": "Des activités à partager",
+          "familySpace": "Un espace adapté aux familles",
+          "noCommitment": "Sans engagement"
+        }
+      }
+    },
+    "shop": {
+      "title": "Visitez également notre boutique",
+      "subtitle": "Vous pouvez acheter sans vous abonner",
+      "regionLabel": "Articles de la boutique",
+      "navigationLabel": "Navigation des articles de la boutique",
+      "productName": "Marque-page Esperanta",
+      "view": "Consulter",
+      "adopt": "Adopter ce conte",
+      "previous": "Article précédent",
+      "next": "Article suivant",
+      "imageAlt": {
+        "first": "Collection de marque-pages illustrés",
+        "second": "Marque-page en papier plié dans un livre",
+        "third": "Livre ouvert avec un marque-page illustré",
+        "fourth": "Marque-page illustré posé sur un livre"
+      }
+    }
+  },
+  "footer": {
+    "logoAlt": "Logo Codabli",
+    "contactTitle": "Contactez-nous",
+    "phone": "Tél.",
+    "contactUs": "Contactez l'asso",
+    "followUs": "Suivez-nous",
+    "partners": "Nos partenaires",
+    "partnerName": "Fondation AG2R La Mondiale",
+    "backToTop": "Retour en haut de page",
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "linkedin": "LinkedIn"
+    },
+    "legal": {
+      "accessibility": "Accessibilité",
+      "legalNotice": "Mentions légales",
+      "privacy": "Politique de confidentialité"
+    }
   },
   "teacherAccount": {
     "breadcrumb": {

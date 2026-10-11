@@ -46,13 +46,18 @@ describe('HomeComponent', () => {
     );
     expect(content).toContain('Notre actualité');
     expect(content).toContain('Voir toutes les actualités');
-    expect(home.querySelectorAll('.news-card')).toHaveLength(4);
+    expect(content).toContain('Nos abonnements');
+    expect(home.querySelectorAll('.plan-card')).toHaveLength(3);
+    expect(home.querySelectorAll('.plan-card__button')).toHaveLength(3);
+    expect(home.querySelectorAll('.news-card')).toHaveLength(12);
+    expect(
+      home.querySelectorAll('.news-card[aria-hidden="true"]'),
+    ).toHaveLength(8);
     expect(home.querySelectorAll('a[href]')).toHaveLength(0);
     expect(
       home.querySelectorAll('button[type="button"]').length,
     ).toBeGreaterThan(0);
     expect(content).not.toContain('Bienvenue dans l’univers Codabli');
-    expect(content).not.toContain('Nos abonnements');
     expect(content).not.toContain('Visitez également notre boutique');
   });
 });

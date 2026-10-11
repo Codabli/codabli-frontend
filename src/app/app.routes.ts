@@ -7,6 +7,7 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
+      ...HOME_ROUTES,
       {
         path: 'creer-un-compte/enseignant',
         loadComponent: () =>

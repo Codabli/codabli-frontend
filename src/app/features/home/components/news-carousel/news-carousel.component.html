@@ -11,9 +11,22 @@
     role="region"
     aria-label="Articles d’actualité"
     tabindex="0"
+    (scroll)="onNewsScroll()"
   >
-    @for (item of news; track item.title) {
-      <article class="news-card">
+    @for (item of carouselNews; track $index) {
+      <article
+        class="news-card"
+        [attr.aria-hidden]="
+          $index < originalNewsCount || $index >= originalNewsCount * 2
+            ? 'true'
+            : null
+        "
+        [attr.inert]="
+          $index < originalNewsCount || $index >= originalNewsCount * 2
+            ? ''
+            : null
+        "
+      >
         <img
           class="news-card__image"
           [src]="item.image"

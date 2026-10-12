@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
+import { provideRouter, Router } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 
@@ -15,6 +16,7 @@ describe('HeaderComponent', () => {
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
@@ -28,5 +30,23 @@ describe('HeaderComponent', () => {
     ) as HTMLAnchorElement;
 
     expect(brandLink.getAttribute('href')).toBe('/');
+  });
+
+  it('should scroll to the top when the brand is clicked', () => {
+    const router = TestBed.inject(Router);
+    vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+    const viewportScroller = TestBed.inject(ViewportScroller);
+    const scrollToPosition = vi
+      .spyOn(viewportScroller, 'scrollToPosition')
+      .mockImplementation(() => {});
+    const brandLink = fixture.nativeElement.querySelector(
+      '.header__brand',
+    ) as HTMLAnchorElement;
+
+    brandLink.click();
+
+    expect(scrollToPosition).toHaveBeenCalledWith([0, 0], {
+      behavior: 'smooth',
+    });
   });
 });

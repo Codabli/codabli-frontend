@@ -2,7 +2,7 @@ import { Component, ElementRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import {
   ImageResizeError,
@@ -34,7 +34,7 @@ const SECTION_ICONS: Record<UniverseSection, string> = {
 const ROLE_SUGGESTION_KEYS = ['hero', 'ally', 'opponent', 'mentor', 'secondary'] as const;
 
 @Component({
-  imports: [ReactiveFormsModule, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, TranslatePipe, ButtonComponent],
   selector: 'app-tale-universe',
   styleUrl: './tale-universe.component.scss',
   templateUrl: './tale-universe.component.html',

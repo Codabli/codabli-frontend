@@ -63,7 +63,7 @@ export class TaleWritingComponent {
   }
 
   protected characterNamesOf(step: StoryStep): string[] {
-    return step.characterIds
+    return (step.characterIds ?? [])
       .map((id) => this.characterNames.get(id))
       .filter((name): name is string => !!name);
   }

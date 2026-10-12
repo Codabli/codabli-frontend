@@ -115,7 +115,9 @@ export class TaleUniverseForm extends FormGroup<Record<UniverseSection, FormArra
     for (const section of Object.keys(this.controls) as UniverseSection[]) {
       const cards = this.controls[section];
       cards.clear();
-      universe[section].forEach((card) => cards.push(new UniverseCardForm(section, card)));
+      // Le brouillon vient du localStorage sans vérification : une section absente
+      // (ex. ajoutée dans une version plus récente du formulaire) démarre vide.
+      (universe[section] ?? []).forEach((card) => cards.push(new UniverseCardForm(section, card)));
     }
   }
 

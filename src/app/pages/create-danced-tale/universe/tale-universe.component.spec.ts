@@ -88,6 +88,16 @@ describe('TaleUniverseComponent', () => {
     }
   });
 
+  it('reprend un brouillon auquel il manque une section : elle démarre vide', async () => {
+    // Brouillon d'une version antérieure du formulaire, sans la section « objects ».
+    const { objects: _objects, ...withoutObjects } = UNIVERSE;
+    await setup(withoutObjects as TaleUniverse);
+
+    expect(cardsOf('places')).toHaveLength(1);
+    expect(cardsOf('places')[0].querySelector<HTMLInputElement>('input')!.value).toBe('La forêt');
+    expect(cardsOf('objects')).toHaveLength(1);
+  });
+
   it('ajoute une carte et place le focus sur son nom', async () => {
     await setup();
 

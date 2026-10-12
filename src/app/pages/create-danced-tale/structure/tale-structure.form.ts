@@ -81,11 +81,12 @@ export class TaleStructureForm extends FormGroup<{ steps: FormArray<StoryStepFor
   /** Les personnages supprimés depuis à l'écran 5 sont retirés des étapes. */
   fromTaleStructure(structure: TaleStructure, knownCharacterIds: string[]): void {
     this.controls.steps.clear();
-    structure.steps.forEach((step) =>
+    // Brouillon non vérifié (localStorage) : champs absents traités comme vides.
+    (structure.steps ?? []).forEach((step) =>
       this.controls.steps.push(
         new StoryStepForm({
           ...step,
-          characterIds: step.characterIds.filter((id) => knownCharacterIds.includes(id)),
+          characterIds: (step.characterIds ?? []).filter((id) => knownCharacterIds.includes(id)),
         }),
       ),
     );

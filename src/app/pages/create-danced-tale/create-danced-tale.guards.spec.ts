@@ -58,6 +58,16 @@ describe('gardes du parcours', () => {
     expect(TestBed.inject(Router).url).toBe('/create-danced-tale/structure');
   });
 
+  it('renvoie vers la trame si le brouillon contient une trame sans étapes', async () => {
+    saveContext();
+    TestBed.inject(CreateDancedTaleDraftService).saveStructure({} as never);
+    const harness = await RouterTestingHarness.create();
+
+    await harness.navigateByUrl('/create-danced-tale/writing');
+
+    expect(TestBed.inject(Router).url).toBe('/create-danced-tale/structure');
+  });
+
   it('ouvre l\'écriture quand une trame est enregistrée', async () => {
     saveContext();
     TestBed.inject(CreateDancedTaleDraftService).saveStructure({

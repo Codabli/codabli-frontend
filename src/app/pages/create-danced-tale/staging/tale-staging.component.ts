@@ -244,7 +244,7 @@ export class TaleStagingComponent {
     return Object.fromEntries(
       this.steps.map((step) => {
         const scene: SceneStaging = saved[step.id] ?? {
-          characters: step.characterIds.map((characterId) => ({
+          characters: (step.characterIds ?? []).map((characterId) => ({
             characterId,
             entrance: 'onStage',
             exit: 'stays',
@@ -255,9 +255,12 @@ export class TaleStagingComponent {
 
         return [
           step.id,
+          // Brouillon non vérifié (localStorage) : champs absents traités comme vides.
           migrateScene({
             ...scene,
-            characters: scene.characters.filter((character) => knownIds.has(character.characterId)),
+            characters: (scene.characters ?? []).filter((character) => knownIds.has(character.characterId)),
+            intention: scene.intention ?? '',
+            props: scene.props ?? [],
           }),
         ];
       }),

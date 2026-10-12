@@ -25,7 +25,7 @@ export const requireTaleStructure: CanActivateFn = (route) => {
     return inject(Router).createUrlTree(siblingPath(route, 'context'));
   }
 
-  if (draft.structure()?.steps.length) {
+  if (draft.structure()?.steps?.length) {
     return true;
   }
 

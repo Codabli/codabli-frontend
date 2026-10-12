@@ -227,6 +227,15 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     expect(setup_.querySelector('app-scene-sounds')).not.toBeNull();
   });
 
+  it('reprend une scène enregistrée incomplète : les champs absents sont vides', async () => {
+    await setup({ scenes: { s1: { intention: 'Mystère' } as never } });
+
+    expect(scenes()).toHaveLength(2);
+    expect(checkboxes(scenes()[0]).map((box) => box.checked)).toEqual([false, false]);
+    expect(scenes()[0].querySelector('textarea')!.value).toBe('Mystère');
+    expect(scenes()[0].querySelectorAll('.chip')).toHaveLength(0);
+  });
+
   it('migre un ancien brouillon : la musique associée à une danse passe dans la danse', async () => {
     const sound = (id: string, danceId: string | null) => ({
       id,

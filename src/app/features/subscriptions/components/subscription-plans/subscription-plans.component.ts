@@ -9,6 +9,12 @@ type SubscriptionPlan = {
   accent: 'yellow' | 'pink' | 'blue';
 };
 
+const COMMON_BENEFITS = [
+  'home.subscriptions.plans.benefits.activities',
+  'home.subscriptions.plans.benefits.familySpace',
+  'home.subscriptions.plans.benefits.noCommitment',
+];
+
 @Component({
   imports: [TranslatePipe],
   selector: 'app-subscription-plans',
@@ -24,9 +30,7 @@ export class SubscriptionPlansComponent {
       benefits: [
         'home.subscriptions.plans.benefits.selectedTales',
         'home.subscriptions.plans.benefits.newStories',
-        'home.subscriptions.plans.benefits.activities',
-        'home.subscriptions.plans.benefits.familySpace',
-        'home.subscriptions.plans.benefits.noCommitment',
+        ...COMMON_BENEFITS,
       ],
       accent: 'yellow',
     },
@@ -37,9 +41,7 @@ export class SubscriptionPlansComponent {
       benefits: [
         'home.subscriptions.plans.benefits.allTales',
         'home.subscriptions.plans.benefits.newStories',
-        'home.subscriptions.plans.benefits.activities',
-        'home.subscriptions.plans.benefits.familySpace',
-        'home.subscriptions.plans.benefits.noCommitment',
+        ...COMMON_BENEFITS,
       ],
       accent: 'pink',
     },
@@ -50,9 +52,7 @@ export class SubscriptionPlansComponent {
       benefits: [
         'home.subscriptions.plans.benefits.allTales',
         'home.subscriptions.plans.benefits.exclusiveContent',
-        'home.subscriptions.plans.benefits.activities',
-        'home.subscriptions.plans.benefits.familySpace',
-        'home.subscriptions.plans.benefits.noCommitment',
+        ...COMMON_BENEFITS,
       ],
       accent: 'blue',
     },

@@ -9,11 +9,14 @@
     @for (plan of plans; track plan.nameKey) {
       <article
         class="plan-card"
+        [attr.aria-labelledby]="'subscription-plan-title-' + $index"
         [class.plan-card--yellow]="plan.accent === 'yellow'"
         [class.plan-card--pink]="plan.accent === 'pink'"
         [class.plan-card--blue]="plan.accent === 'blue'"
       >
-        <h3>{{ plan.nameKey | translate }}</h3>
+        <h3 [id]="'subscription-plan-title-' + $index">
+          {{ plan.nameKey | translate }}
+        </h3>
         <span class="plan-card__accent" aria-hidden="true"></span>
         <p class="plan-card__price">
           <span class="plan-card__amount">{{ plan.price }} €</span>
@@ -27,7 +30,17 @@
             <li>{{ benefit | translate }}</li>
           }
         </ul>
-        <button class="plan-card__button" type="button">
+        <button
+          [id]="'subscription-plan-button-' + $index"
+          class="plan-card__button"
+          type="button"
+          [attr.aria-labelledby]="
+            'subscription-plan-title-' +
+            $index +
+            ' subscription-plan-button-' +
+            $index
+          "
+        >
           {{ "home.subscriptions.subscribe" | translate }}
         </button>
       </article>

@@ -1,6 +1,6 @@
 .subscriptions {
   padding: var(--spacing-3xl) var(--spacing-4xl);
-  background: #fbf8f6;
+  background: var(--color-bg-warm-surface);
 
   > h2 {
     margin: 0 0 var(--spacing-2xl);
@@ -78,7 +78,7 @@
 }
 
 .plan-card__description {
-  min-height: 5.1em;
+  min-height: 3lh;
   margin: var(--spacing-md) 0 var(--spacing-xl);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);

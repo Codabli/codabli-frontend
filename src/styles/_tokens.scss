@@ -79,6 +79,10 @@
   --color-bg-warm-surface: #fbf8f6;
   --color-bg-navigation: rgba(235, 230, 250, 0.4);
   --color-bg-page: #1356a0;
+  --color-bg-header: #fff;
+  --color-background-filters: #b7e7f3;
+
+  --color-bg-select-filters: #fff;
 
   // ======================================================
   // COLORS - Text
@@ -121,11 +125,11 @@
   --color-border-outline-hover: #5b0ebf;
 
   --color-border-light: #eaeaea;
-  --color-border-search: #ffcf9f;
+  --color-border-search: rgb(217, 204, 254);
   --color-border-select-filters: #E0E0E0;
 
-  --shadow-search: 0 0 20px 0 rgb(255 207 159 / 50%);
-  --shadow-search-focus: 0 0px 50px 0 rgb(255 207 159 / 70%);
+  --shadow-search: 0 0 20px 0 rgb(17, 204, 254 / 0.5);
+  --shadow-search-focus: 0 0px 50px 0 rgb(17, 204, 254 / 0.7);
 
   --radius-button: 100px;
   --radius-card: 32px;

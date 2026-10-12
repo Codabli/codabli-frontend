@@ -8,6 +8,7 @@ import { LibraryCarouselComponent } from './components/library-carousel/library-
 import { LibraryFiltersComponent } from './components/library-filters/library-filters.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { Router } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   imports: [
@@ -24,10 +25,12 @@ import { Router } from '@angular/router';
 })
 export class LibraryComponent {
   protected readonly isGridView = signal(true);
-  // protected readonly isAuthenticated = this.authService.isAuthenticated;
-  protected readonly isAuthenticated = signal(true);
   private readonly resultsStep = 8;
+
   private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+
+  protected readonly isAuthenticated = this.authService.isLoggedIn;
 
   protected readonly visibleResultsCount = signal(this.resultsStep);
 

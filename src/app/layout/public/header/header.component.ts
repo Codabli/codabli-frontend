@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { Component, ElementRef, inject, signal, viewChild, HostListener } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SearchInputComponent } from '@shared/ui/search-input/search-input.component';
@@ -6,7 +7,7 @@ import { AppLanguage } from '@models/types/app-language.type';
 import { LanguageService } from '@core/services/language.service';
 
 @Component({
-  imports: [NavbarComponent, SearchInputComponent, IconComponent],
+  imports: [RouterLink, NavbarComponent, SearchInputComponent, IconComponent],
   selector: 'app-header',
   styleUrl: './header.component.scss',
   templateUrl: './header.component.html',
@@ -20,7 +21,7 @@ export class HeaderComponent {
   viewChild<ElementRef>('languageSelector');
 
   toggleLanguageMenu(): void {
-    this.isLanguageMenuOpen.update((isOpen) => !isOpen);  
+    this.isLanguageMenuOpen.update((isOpen) => !isOpen);
   }
 
   selectLanguage(language: AppLanguage): void {

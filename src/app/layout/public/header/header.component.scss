@@ -9,6 +9,13 @@
 .header {
   width: 100%;
   background-color: var(--color-bg-surface);
+
+  // La page est limitée à 1440px (.app-shell) : la marge de 300px du palier 1920px
+  // ne laissait que 640px à la navigation (libellés sur 3 ou 4 lignes).
+  // Le header et la navbar gardent la marge du palier 1440px.
+  @media (min-width: 1920px) {
+    --grid-margin: 96px;
+  }
 }
 
 .header__grid {

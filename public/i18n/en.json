@@ -53,6 +53,7 @@
     "title": "Create your own dance tale",
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
     "next": "Next step",
+    "previous": "Previous step",
 
     "steps": {
       "label": "Dance tale creation steps",
@@ -68,8 +69,99 @@
     },
 
     "comingSoon": {
-      "message": "Your project context has been saved. This step will be available soon.",
-      "back": "Back to the project context"
+      "message": "Your answers are saved. This step will be available soon.",
+      "back": "Back to the “{{step}}” step",
+      "next": "Continue to the “{{step}}” step"
+    },
+
+    "universe": {
+      "title": "Build the world of your tale",
+      "theme": "Theme:",
+      "description": "Briefly describe the places, characters, time period and important objects of your story.",
+      "requiredHint": "Fields marked with an asterisk (*) are required. Cards left empty are ignored.",
+      "storageFull": "The draft could not be saved on this device: the images take up too much space. Remove one or more images and try again.",
+      "sections": {
+        "places": {
+          "title": "Places",
+          "question": "Where does the story take place?",
+          "add": "Add a place",
+          "card": "Place {{number}}",
+          "name": "Place name",
+          "namePlaceholder": "E.g. The Whispering Forest",
+          "descriptionPlaceholder": "E.g. A forest where the trees whisper secrets…",
+          "empty": "No places yet."
+        },
+        "characters": {
+          "title": "Characters",
+          "question": "Who lives this story?",
+          "add": "Add a character",
+          "card": "Character {{number}}",
+          "name": "Character name",
+          "namePlaceholder": "E.g. King Arthur",
+          "descriptionPlaceholder": "E.g. A king loved by his court…",
+          "empty": "No characters yet."
+        },
+        "periods": {
+          "title": "Time period",
+          "question": "When does the story take place?",
+          "add": "Add a time period",
+          "card": "Time period {{number}}",
+          "name": "Time period",
+          "namePlaceholder": "E.g. The Middle Ages",
+          "descriptionPlaceholder": "E.g. In those days, knights roamed the kingdom…",
+          "empty": "No time period yet."
+        },
+        "objects": {
+          "title": "Important objects",
+          "question": "Which objects matter in the story?",
+          "add": "Add an object",
+          "card": "Object {{number}}",
+          "name": "Object name",
+          "namePlaceholder": "E.g. The sword Excalibur",
+          "descriptionPlaceholder": "E.g. A sword stuck in a stone that only the future king can pull out…",
+          "empty": "No objects yet."
+        }
+      },
+      "card": {
+        "remove": "Delete: {{card}}",
+        "ideas": {
+          "label": "Generate ideas",
+          "soon": "(coming soon)"
+        },
+        "nameError": "Enter a name.",
+        "description": {
+          "label": "Description",
+          "error": "Describe this character."
+        },
+        "role": {
+          "label": "Role",
+          "placeholder": "E.g. Hero",
+          "error": "Enter this character's role.",
+          "suggestions": {
+            "hero": "Hero or heroine",
+            "ally": "Ally",
+            "opponent": "Opponent",
+            "mentor": "Mentor",
+            "secondary": "Secondary character"
+          }
+        },
+        "goal": {
+          "label": "What does this character want?",
+          "placeholder": "E.g. Find the lost sword",
+          "error": "Enter what this character wants."
+        },
+        "image": {
+          "add": "Add an image (optional)",
+          "change": "Change image",
+          "remove": "Remove image",
+          "alt": "Image: {{name}}",
+          "errors": {
+            "not-an-image": "This file is not an image.",
+            "too-large": "This image is too large (10 MB maximum).",
+            "unreadable": "This image could not be read. Try another file."
+          }
+        }
+      }
     },
 
     "context": {

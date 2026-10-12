@@ -4,6 +4,7 @@ import {
   CreateDancedTaleDraftService,
 } from './create-danced-tale-draft.service';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
+import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',
@@ -13,6 +14,15 @@ const CONTEXT: ProjectContext = {
   theme: 'Fantastique',
   secretIngredients: ['dragons'],
   performanceSpace: 'salle_spectacle',
+};
+
+const UNIVERSE: TaleUniverse = {
+  places: [{ id: 'p1', name: 'La forêt', description: '', image: null }],
+  characters: [
+    { id: 'c1', name: 'Arthur', description: 'Un roi', image: null, role: 'Héros', goal: 'Trouver l\'épée' },
+  ],
+  periods: [],
+  objects: [],
 };
 
 describe('CreateDancedTaleDraftService', () => {
@@ -35,7 +45,42 @@ describe('CreateDancedTaleDraftService', () => {
     service.saveContext(CONTEXT);
 
     expect(service.context()).toEqual(CONTEXT);
-    expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({ context: CONTEXT });
+    expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({
+      context: CONTEXT,
+      universe: null,
+    });
+  });
+
+  it('lit un brouillon enregistré avant l\'écran 5 (sans univers)', () => {
+    localStorage.setItem(CREATE_DANCED_TALE_DRAFT_KEY, JSON.stringify({ context: CONTEXT }));
+
+    const service = createService();
+
+    expect(service.context()).toEqual(CONTEXT);
+    expect(service.universe()).toBeNull();
+  });
+
+  it('enregistre l\'univers sans perdre le contexte', () => {
+    createService().saveContext(CONTEXT);
+    const service = createService();
+
+    expect(service.saveUniverse(UNIVERSE)).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.universe()).toEqual(UNIVERSE);
+  });
+
+  it('signale un univers qui n\'a pas pu être écrit (stockage plein) et le garde en mémoire', () => {
+    const service = createService();
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new DOMException('quota', 'QuotaExceededError');
+    });
+
+    expect(service.saveUniverse(UNIVERSE)).toBe(false);
+    expect(service.universe()).toEqual(UNIVERSE);
+
+    vi.restoreAllMocks();
   });
 
   it('restaure le brouillon enregistré', () => {

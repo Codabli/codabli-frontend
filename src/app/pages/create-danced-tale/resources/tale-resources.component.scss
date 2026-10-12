@@ -1,0 +1,131 @@
+// Onglets par catégorie, comme la maquette : ils passent à la ligne sur petit écran.
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+
+  &__tab {
+    display: inline-flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    min-height: 48px;
+    padding: 8px 16px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary-default);
+
+    cursor: pointer;
+    background-color: var(--color-bg-navigation);
+    border: 2px solid transparent;
+    border-radius: var(--radius-button);
+
+    &:hover {
+      border-color: var(--color-border-outline-default);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-border-primary-focus);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%, transparent);
+    }
+
+    &[aria-selected='true'] {
+      font-weight: var(--font-weight-bold);
+      background-color: var(--color-bg-secondary-default);
+      border-color: var(--color-bg-secondary-hover);
+    }
+
+    &--nearby {
+      border-style: dashed;
+      border-color: var(--color-border-outline-default);
+    }
+  }
+
+  &__count {
+    min-width: 28px;
+    padding: 0 8px;
+
+    font-size: var(--font-size-body);
+    text-align: center;
+
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-button);
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+
+  &__hint,
+  &__empty {
+    margin: 0;
+  }
+
+  &__empty {
+    padding: var(--spacing-xl);
+    text-align: center;
+    background-color: var(--color-bg-navigation);
+    border-radius: 16px;
+  }
+}
+
+// RG-CMC-05 : badge d'origine, une couleur et une icône par provenance (contraste AA).
+.provenance {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  padding: 2px 10px;
+
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+
+  border-radius: var(--radius-button);
+
+  &--codabli {
+    color: var(--color-text-primary-default);
+    background-color: var(--color-bg-primary-default);
+  }
+
+  &--localHeritage {
+    color: #065f46;
+    background-color: #d1fae5;
+  }
+
+  &--ai {
+    color: #4c1d95;
+    background-color: #ede9fe;
+  }
+}
+
+.card__nearby {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+}
+
+.card__category {
+  margin: auto 0 0;
+
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-outline-default);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.detail__reasons {
+  margin: var(--spacing-sm) 0 0;
+  padding-left: var(--spacing-lg);
+}

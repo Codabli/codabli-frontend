@@ -48,6 +48,7 @@ describe('CreateDancedTaleDraftService', () => {
     expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({
       context: CONTEXT,
       discovery: null,
+      resources: null,
       universe: null,
       structure: null,
       writing: null,
@@ -63,6 +64,17 @@ describe('CreateDancedTaleDraftService', () => {
     expect(service.context()).toEqual(CONTEXT);
     expect(service.universe()).toBeNull();
     expect(service.discovery()).toBeNull();
+    expect(service.resources()).toBeNull();
+  });
+
+  it('enregistre les ressources culturelles ajoutées au projet', () => {
+    createService().saveContext(CONTEXT);
+
+    expect(createService().saveResources({ added: ['chambord'] })).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.resources()).toEqual({ added: ['chambord'] });
   });
 
   it('enregistre la découverte artistique sans perdre le contexte', () => {

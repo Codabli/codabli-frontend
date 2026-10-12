@@ -216,6 +216,127 @@
     "credit": "{{author}}, {{date}} · {{licence}}",
     "creditSource": "View source",
 
+    "resources": {
+      "title": "Your recommended cultural resources",
+      "theme": "Suggestions for your tale on the theme",
+      "description": "Artworks, heritage sites and characters to feed the class's imagination. Each resource shows where it comes from and why it is suggested.",
+      "tabsLabel": "Resource categories",
+      "tabs": {
+        "places": "Places",
+        "characters": "Characters",
+        "events": "Events",
+        "artworks": "Artworks",
+        "tales": "Tales",
+        "nearby": "To discover near your school"
+      },
+      "categories": {
+        "places": "Place",
+        "characters": "Character",
+        "events": "Event",
+        "artworks": "Artwork",
+        "tales": "Tale"
+      },
+      "provenances": {
+        "codabli": "Codabli® source",
+        "localHeritage": "Local heritage",
+        "ai": "AI suggestion"
+      },
+      "nearbyBadge": "Near you",
+      "nearbyHint": "Resources located near your school ({{place}}).",
+      "empty": "No resources in this category yet.",
+      "emptyNearby": "No resources listed near your school yet. The other tabs are still available.",
+      "addedCount": "{{count}} cultural resource(s) added to the project",
+      "actions": {
+        "details": "View details",
+        "detailsLabel": "View details of \"{{title}}\"",
+        "add": "Add to project",
+        "addedState": "Added to project",
+        "addLabel": "Add \"{{title}}\" to the project"
+      },
+      "announce": {
+        "added": "\"{{title}}\" was added to the project.",
+        "removed": "\"{{title}}\" was removed from the project."
+      },
+      "detail": {
+        "why": "Why this recommendation?",
+        "themeMatch": "It echoes your theme \"{{theme}}\".",
+        "nearbyMatch": "It is near your school ({{place}}): a class trip may be possible.",
+        "aiWarning": "Automatically suggested: check that it suits your project before using it."
+      },
+      "catalog": {
+        "chambord": {
+          "title": "Château de Chambord",
+          "description": "A majestic Renaissance castle, ideal as the setting for a king's palace.",
+          "reason": "Its famous double-helix staircase and village-like rooftops inspire movements and encounters on stage."
+        },
+        "montSaintMichel": {
+          "title": "Mont-Saint-Michel",
+          "description": "An abbey perched on a rock, surrounded by the sea at high tide.",
+          "reason": "A place between land and sea, perfect for imagining a crossing or a quest, and for dancing the movement of the tides."
+        },
+        "broceliande": {
+          "title": "Brocéliande Forest",
+          "description": "The Paimpont forest, linked in legend to Merlin, the fairy Viviane and the Knights of the Round Table.",
+          "reason": "A legendary forest for mysterious encounters: trees and ferns become characters to dance."
+        },
+        "kingArthur": {
+          "title": "King Arthur",
+          "description": "The legendary king who pulled the sword from the stone and gathered the Knights of the Round Table.",
+          "reason": "A central hero of medieval legends, who can be a fair king, a mentor or a hero on a quest."
+        },
+        "joanOfArc": {
+          "title": "Joan of Arc",
+          "description": "A young girl from Lorraine who became a war leader and freed Orléans in 1429.",
+          "reason": "A brave historical figure, to talk about determination and dance the momentum of a group."
+        },
+        "morganLeFay": {
+          "title": "Morgan le Fay",
+          "description": "A powerful sorceress of the Arthurian legends, sometimes an ally, sometimes an enemy.",
+          "reason": "A magical, ambiguous character who opens a discussion about allies and antagonists."
+        },
+        "moulinGalette": {
+          "title": "Dance at the Moulin de la Galette",
+          "description": "A popular dance in Montmartre painted by Renoir: people dance in the sun with friends.",
+          "reason": "A neighbourhood party full of movement, to imagine the ball or the final celebration of the tale."
+        },
+        "federationFestival": {
+          "title": "The Festival of the Federation",
+          "description": "On 14 July 1790, a huge celebration brought crowds together on the Champ-de-Mars in Paris.",
+          "reason": "A great historical gathering to work on crowd movements and group scenes."
+        },
+        "degasDanceClass": {
+          "title": "The Dance Class",
+          "description": "Edgar Degas paints the young dancers of the Opéra during a lesson.",
+          "reason": "To observe classical dance postures and compare them with the class's own movements."
+        },
+        "bayeuxTapestry": {
+          "title": "The Bayeux Tapestry",
+          "description": "An embroidery nearly 70 metres long that tells a story in pictures, scene after scene.",
+          "reason": "It splits a story into successive scenes, just like the danced tale: a model for your plot."
+        },
+        "pierrotWatteau": {
+          "title": "Pierrot, by Watteau",
+          "description": "Pierrot, a character from Italian comedy, standing before the audience in his white costume.",
+          "reason": "A silent, expressive theatre character, to work on mime and wordless emotions."
+        },
+        "redRidingHood": {
+          "title": "Little Red Riding Hood",
+          "description": "Charles Perrault's tale, illustrated by Gustave Doré.",
+          "reason": "A tale everyone knows, to spot the structure of a story and reinvent the meeting with the wolf."
+        },
+        "pussInBoots": {
+          "title": "Puss in Boots",
+          "description": "A cunning cat helps his master become a marquis, in Perrault's tale illustrated by Doré.",
+          "reason": "A clever, energetic character, with a castle and an ogre: plenty to invent lively scenes."
+        },
+        "cinderella": {
+          "title": "Cinderella",
+          "description": "Perrault's tale, from the palace ball to the glass slipper, illustrated by Doré.",
+          "reason": "A tale where dance is at the heart of the story: the ball scene can become a highlight of the show."
+        }
+      }
+    },
+
     "comingSoon": {
       "message": "Your answers are saved. This step will be available soon.",
       "back": "Back to the “{{step}}” step",

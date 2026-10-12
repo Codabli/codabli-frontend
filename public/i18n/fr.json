@@ -216,6 +216,127 @@
     "credit": "{{author}}, {{date}} · {{licence}}",
     "creditSource": "Voir la source",
 
+    "resources": {
+      "title": "Vos ressources culturelles recommandées",
+      "theme": "Suggestions pour votre conte sur le thème",
+      "description": "Œuvres, lieux du patrimoine et personnages pour nourrir l'imaginaire de la classe. Chaque ressource indique son origine et pourquoi elle vous est proposée.",
+      "tabsLabel": "Catégories de ressources",
+      "tabs": {
+        "places": "Lieux",
+        "characters": "Personnages",
+        "events": "Événements",
+        "artworks": "Œuvres d'art",
+        "tales": "Contes",
+        "nearby": "À découvrir près de votre école"
+      },
+      "categories": {
+        "places": "Lieu",
+        "characters": "Personnage",
+        "events": "Événement",
+        "artworks": "Œuvre d'art",
+        "tales": "Conte"
+      },
+      "provenances": {
+        "codabli": "Source Codabli®",
+        "localHeritage": "Patrimoine local",
+        "ai": "Suggestion IA"
+      },
+      "nearbyBadge": "Près de chez vous",
+      "nearbyHint": "Ressources situées près de votre école ({{place}}).",
+      "empty": "Aucune ressource dans cette catégorie pour l'instant.",
+      "emptyNearby": "Pas encore de ressource répertoriée près de votre école. Les autres onglets restent disponibles.",
+      "addedCount": "{{count}} ressource(s) culturelle(s) ajoutée(s) au projet",
+      "actions": {
+        "details": "Voir les détails",
+        "detailsLabel": "Voir les détails de « {{title}} »",
+        "add": "Ajouter au projet",
+        "addedState": "Ajoutée au projet",
+        "addLabel": "Ajouter « {{title}} » au projet"
+      },
+      "announce": {
+        "added": "« {{title}} » est ajoutée au projet.",
+        "removed": "« {{title}} » est retirée du projet."
+      },
+      "detail": {
+        "why": "Pourquoi cette recommandation ?",
+        "themeMatch": "Elle fait écho à votre thème « {{theme}} ».",
+        "nearbyMatch": "Elle se trouve près de votre école ({{place}}) : une sortie est peut-être possible.",
+        "aiWarning": "Suggestion proposée automatiquement : vérifiez qu'elle convient à votre projet avant de l'utiliser."
+      },
+      "catalog": {
+        "chambord": {
+          "title": "Château de Chambord",
+          "description": "Un château majestueux de la Renaissance, idéal comme décor pour le palais d'un roi.",
+          "reason": "Son célèbre escalier à double révolution et ses toits en forme de village inspirent des déplacements et des rencontres sur scène."
+        },
+        "montSaintMichel": {
+          "title": "Le Mont-Saint-Michel",
+          "description": "Une abbaye perchée sur un rocher, entourée par la mer à marée haute.",
+          "reason": "Un lieu entre terre et mer, parfait pour imaginer une traversée ou une quête, et pour danser le mouvement des marées."
+        },
+        "broceliande": {
+          "title": "Forêt de Brocéliande",
+          "description": "La forêt de Paimpont, que la légende associe à Merlin, à la fée Viviane et aux chevaliers de la Table ronde.",
+          "reason": "Une forêt de légendes pour des rencontres mystérieuses : les arbres et les fougères deviennent des personnages à danser."
+        },
+        "kingArthur": {
+          "title": "Le roi Arthur",
+          "description": "Le roi légendaire qui retira l'épée du rocher et réunit les chevaliers de la Table ronde.",
+          "reason": "Un héros central des légendes médiévales, qui peut servir de roi juste, de mentor ou de héros en quête."
+        },
+        "joanOfArc": {
+          "title": "Jeanne d'Arc",
+          "description": "Jeune fille de Lorraine devenue cheffe de guerre, elle libère Orléans en 1429.",
+          "reason": "Un personnage historique courageux, pour parler de détermination et danser l'élan d'un groupe."
+        },
+        "morganLeFay": {
+          "title": "La fée Morgane",
+          "description": "Magicienne puissante des légendes arthuriennes, tantôt alliée, tantôt adversaire.",
+          "reason": "Un personnage magique et ambigu, qui ouvre la discussion sur les rôles d'allié et d'antagoniste."
+        },
+        "moulinGalette": {
+          "title": "Le bal du moulin de la Galette",
+          "description": "Un bal populaire à Montmartre peint par Renoir : on y danse au soleil, entre amis.",
+          "reason": "Une fête de quartier pleine de mouvement, pour imaginer la scène de bal ou de fête finale du conte."
+        },
+        "federationFestival": {
+          "title": "La fête de la Fédération",
+          "description": "Le 14 juillet 1790, une immense fête réunit la foule au Champ-de-Mars à Paris.",
+          "reason": "Un grand rassemblement historique pour travailler les déplacements de foule et les scènes collectives."
+        },
+        "degasDanceClass": {
+          "title": "La Classe de danse",
+          "description": "Edgar Degas peint les jeunes danseuses de l'Opéra pendant un cours.",
+          "reason": "Pour observer les postures de la danse classique et comparer avec les mouvements de la classe."
+        },
+        "bayeuxTapestry": {
+          "title": "La tapisserie de Bayeux",
+          "description": "Une broderie de près de 70 mètres qui raconte une histoire en images, scène après scène.",
+          "reason": "Elle découpe un récit en scènes successives, comme le conte dansé : un modèle pour la trame de votre histoire."
+        },
+        "pierrotWatteau": {
+          "title": "Pierrot, de Watteau",
+          "description": "Pierrot, personnage de la comédie italienne, debout face au public dans son costume blanc.",
+          "reason": "Un personnage de théâtre muet et expressif, pour travailler le mime et les émotions sans paroles."
+        },
+        "redRidingHood": {
+          "title": "Le Petit Chaperon rouge",
+          "description": "Le conte de Charles Perrault, illustré par Gustave Doré.",
+          "reason": "Un conte connu de tous, pour repérer la structure d'un récit et réinventer la rencontre avec le loup."
+        },
+        "pussInBoots": {
+          "title": "Le Chat botté",
+          "description": "Un chat rusé aide son maître à devenir marquis, dans le conte de Perrault illustré par Doré.",
+          "reason": "Un personnage malin et plein d'énergie, avec un château et un ogre : de quoi inventer des scènes rythmées."
+        },
+        "cinderella": {
+          "title": "Cendrillon",
+          "description": "Le conte de Perrault, du bal au château à la pantoufle de verre, illustré par Doré.",
+          "reason": "Un conte où la danse est au cœur du récit : la scène du bal peut devenir un moment fort du spectacle."
+        }
+      }
+    },
+
     "comingSoon": {
       "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
       "back": "Revenir à l'étape « {{step}} »",

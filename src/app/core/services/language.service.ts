@@ -1,8 +1,8 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { AppLanguage } from '../../models/types/app-language.type';
-import type { LanguageOption } from '../../models/interfaces/language-option.interface';
+import { AppLanguage } from '@models/types/app-language.type';
+import type { LanguageOption } from '@models/interfaces/language-option.interface';
 
 @Injectable({
   providedIn: 'root',

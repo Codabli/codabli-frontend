@@ -1,0 +1,92 @@
+<section class="library-filters">
+  <div class="library-filters__visual">
+    <img
+      src="assets/images/filter-shape-purple.svg"
+      alt=""
+      class="library-filters__shape library-filters__shape--purple"
+    />
+
+    <img
+      src="assets/images/filter-shape-yellow.svg"
+      alt=""
+      class="library-filters__shape library-filters__shape--yellow"
+    />
+
+    <img
+      src="assets/images/filter-shape-img.svg"
+      alt=""
+      class="library-filters__shape library-filters__shape--image"
+    />
+
+    <img
+      src="assets/images/filter-shape-pink.svg"
+      alt=""
+      class="library-filters__shape library-filters__shape--pink"
+    />
+  </div>
+
+  <div class="library-filters__content">
+    <div class="library-filters__search">
+      <label
+        class="library-filters__label"
+        for="tale-search"
+      >
+        {{ 'library.search.title' | translate }}
+      </label>
+
+      <div class="library-filters__search-controls">
+        <input
+          id="tale-search"
+          type="search"
+          class="library-filters__input"
+          [value]="search()"
+          [placeholder]="'library.search.placeholder' | translate"
+          (input)="onSearch($any($event.target).value)"
+        />
+
+        <app-button
+          variant="primary"
+          (click)="applyFilters()"
+        >
+          {{ 'library.search.button' | translate }}
+        </app-button>
+      </div>
+    </div>
+
+    <div class="library-filters__advanced">
+      <p class="library-filters__label">
+        {{ 'library.filters.title' | translate }}
+      </p>
+
+      <div class="library-filters__controls">
+        <app-filter-select
+          [placeholder]="'library.filters.themes.placeholder' | translate"
+          [options]="themeOptions()"
+        />
+
+        <app-filter-select
+          [placeholder]="'library.filters.age.placeholder' | translate"
+          [options]="ageOptions()"
+        />
+
+        <app-filter-select
+          [placeholder]="'library.filters.languages.placeholder' | translate"
+          [options]="languageOptions()"
+        />
+      </div>
+
+      <button
+        type="button"
+        class="library-filters__reset"
+        (click)="resetFilters()"
+      >
+        <app-icon
+          name="reset"
+          [size]="16"
+        />
+
+        {{ 'library.filters.reset' | translate }}
+      </button>
+    </div>
+  </div>
+</section>

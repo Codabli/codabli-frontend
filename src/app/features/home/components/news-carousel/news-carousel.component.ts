@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import {
   getCenteredItemIndex,
   scrollToCenteredItem,
 } from '../../../../shared/utils/centered-carousel';
 
 @Component({
-  imports: [Button, TranslatePipe],
+  imports: [ButtonComponent, TranslatePipe],
   selector: 'app-news-carousel',
   styleUrl: './news-carousel.component.scss',
   templateUrl: './news-carousel.component.html',

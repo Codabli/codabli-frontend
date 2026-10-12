@@ -285,6 +285,44 @@
     "partners": "Partenaires",
     "subscriptions": "Nos abonnements"
   },
+
+  "library": {
+    "title": "Bibliothèque des contes dansés",
+    "subtitle": "Découvrez nos contes dansés",
+    "viewList": "Vue liste",
+    "viewGrid": "Vue grille",
+    "talesFound": "contes trouvés",
+    "showLessResults": "Moins de résultats",
+    "showMoreResults": "Plus de résultats",
+    "viewToggle": "Afficher tous les contes",
+    "search": {
+      "title": "Recherche",
+      "placeholder": "Veuillez saisir les mots-clés",
+      "button": "Rechercher"
+    },
+    "filters": {
+      "title": "Filtres avancés",
+      "reset": "Réinitialiser les filtres",
+      "themes": {
+        "placeholder": "Sélectionnez vos thématiques"
+      },
+      "age": {
+        "placeholder": "Sélectionnez un âge"
+      },
+      "languages": {
+        "placeholder": "Sélectionnez une ou des langue(s)"
+      }
+    },
+    "card": {
+      "consult": "Consulter",
+      "adopt": "Adopter ce conte",
+      "loginRequired": "Connectez-vous pour consulter ce conte"
+    },
+    "carousel": {
+      "previous": "Conte précédent",
+      "next": "Conte suivant"
+    }
+  },
   "home": {
     "hero": {
       "ariaLabel": "Bienvenue dans l’univers de Codabli",
@@ -412,6 +450,10 @@
       "legalNotice": "Mentions légales",
       "privacy": "Politique de confidentialité"
     }
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "Créer un compte"
   },
   "teacherAccount": {
     "breadcrumb": {

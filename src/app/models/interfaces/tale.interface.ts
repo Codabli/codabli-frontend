@@ -1,7 +1,7 @@
 import type { LanguageCode } from '../types/language-code.type';
 
 export interface Tale {
-  id: number;
+  id: string;
   title: string;
   description: string;
   coverUrl: string;

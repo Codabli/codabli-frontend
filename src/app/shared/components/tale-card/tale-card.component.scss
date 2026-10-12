@@ -1,9 +1,13 @@
 :host {
   display: block;
+
+  --card-cover-width: 145px;
+
+  --card-border-width: 0;
+  --card-border-color: transparent;
 }
 
 .card {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 
@@ -12,34 +16,31 @@
   padding: 24px;
 
   background: var(--color-background-primary, #fff);
-  border-radius: 48px;
+  border: var(--card-border-width) solid var(--card-border-color);
+  border-radius: 40px;
 
-  box-shadow: var(
-    --shadow-card,
-    0 4px 16px rgb(0 0 0 / 8%)
-  );
+  box-shadow: var(--shadow-card);
 }
 
 .card__languages {
   display: flex;
   align-items: center;
   gap: 8px;
-
-  min-height: 24px;
 }
 
 .card__cover {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 14px;
-  height: 223px;
+  justify-content: center;
+
+  width: 100%;
+  margin: 4px 0 8px;
 
   img {
     display: block;
-    width: 145px;
-    height: 223px;
+    width: var(--card-cover-width);
+    max-width: 100%;
+    height: auto;
     object-fit: contain;
   }
 }
@@ -55,6 +56,7 @@
 .card__like-container {
   display: flex;
   align-items: center;
+
   color: var(--color-text-card);
   font-weight: var(--font-weight-bold);
 }
@@ -65,8 +67,8 @@
   align-items: center;
   justify-content: center;
 
-  min-width: 44px;
-  min-height: 44px;
+  width: 36px;
+  height: 36px;
   padding: 0;
 
   color: var(--color-text-card);
@@ -81,20 +83,15 @@
   }
 }
 
-.card__social-icon {
-  width: 24px;
-  height: 24px;
-}
-
 .card__likes {
   font-size: 14px;
   font-weight: 600;
 }
 
 .card__themes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
   gap: 8px;
+
   color: var(--color-bg-tertiary-default);
 }
 
@@ -102,15 +99,14 @@
   box-sizing: border-box;
   overflow: hidden;
 
-  padding: 4px 12px;
+  padding: 3px 12px;
 
   background: var(--color-bg-theme-default);
   border-radius: 999px;
 
   font-size: 12px;
   font-weight: var(--font-weight-semibold);
-  line-height: 130%;
-  letter-spacing: 0;
+  line-height: 1.3;
 
   text-align: center;
   text-overflow: ellipsis;
@@ -120,10 +116,6 @@
 .card__title {
   margin: 0;
 
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
-
   color: var(--color-text-primary, #111);
 }
 
@@ -131,24 +123,23 @@
   display: block;
 
   width: 40px;
-  height: 5px;
-
-  margin-top: 6px;
+  height: 4px;
+  margin-top: 4px;
 
   background: var(--color-accent, #f6be2c);
 }
 
 .card__description {
-  margin: 16px 0 0;
+  margin: 8px 0 0;
 
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
 
   color: var(--color-text-primary, #111);
 }
 
 .card__available-languages {
-  margin: 14px 0 0;
+  margin: 6px 0 0;
 
   font-size: 14px;
   line-height: 1.4;
@@ -160,9 +151,28 @@
   }
 }
 
+
 .card__footer {
   display: flex;
   align-items: center;
-  align-self: flex-start;
   gap: 10px;
+  width: 100%;
+}
+
+.card__locked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.card__locked-message {
+  margin: 0;
+  color: var(--color-text-alert);
+  font-weight: var(--font-weight-bold);
+
+  app-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-right: var(--spacing-sm);
+  }
 }

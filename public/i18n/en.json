@@ -293,6 +293,7 @@
     "talesFound": "tales found",
     "showMoreResults": "Show more results",
     "showLessResults": "Show less results",
+    "viewToggle": "Show all tales",
     "search": {
       "title": "Search",
       "placeholder": "Please enter keywords",
@@ -315,6 +316,10 @@
       "consult": "Consult",
       "adopt": "Adopt this tale",
       "loginRequired": "Log in to consult this tale"
+    },
+    "carousel": {
+      "previous": "Previous tale",
+      "next": "Next tale"
     }
   },
   "home": {

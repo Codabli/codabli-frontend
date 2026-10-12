@@ -2,7 +2,7 @@
   <button
     class="library-carousel__navigation library-carousel__navigation--previous"
     type="button"
-    aria-label="Conte précédent"
+    [attr.aria-label]="'carousel.previous' | translate"
     (click)="previous()"
   >
     <app-icon
@@ -35,7 +35,7 @@
   <button
     class="library-carousel__navigation library-carousel__navigation--next"
     type="button"
-    aria-label="Conte suivant"
+    [attr.aria-label]="'carousel.next' | translate"
     (click)="next()"
   >
     <app-icon

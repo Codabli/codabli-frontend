@@ -294,6 +294,7 @@
     "talesFound": "contes trouvés",
     "showLessResults": "Moins de résultats",
     "showMoreResults": "Plus de résultats",
+    "viewToggle": "Afficher tous les contes",
     "search": {
       "title": "Recherche",
       "placeholder": "Veuillez saisir les mots-clés",
@@ -316,6 +317,10 @@
       "consult": "Consulter",
       "adopt": "Adopter ce conte",
       "loginRequired": "Connectez-vous pour consulter ce conte"
+    },
+    "carousel": {
+      "previous": "Conte précédent",
+      "next": "Conte suivant"
     }
   },
   "home": {

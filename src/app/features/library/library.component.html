@@ -45,7 +45,7 @@
             class="library__view-switch"
             role="switch"
             [attr.aria-checked]="isGridView()"
-            aria-label="Afficher tous les contes"
+            [attr.aria-label]="'library.viewToggle' | translate"
             (click)="toggleResultsView()"
           >
             <app-icon

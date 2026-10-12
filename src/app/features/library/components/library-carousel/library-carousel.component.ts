@@ -11,9 +11,10 @@ import { Tale } from '@models/interfaces/tale.interface';
 import { TaleCardComponent } from '../../../../shared/components/tale-card/tale-card.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
 import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  imports: [TaleCardComponent, IconComponent],
+  imports: [TaleCardComponent, IconComponent, TranslatePipe],
   selector: 'app-library-carousel',
   styleUrl: './library-carousel.component.scss',
   templateUrl: './library-carousel.component.html',

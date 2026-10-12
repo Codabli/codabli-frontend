@@ -2,6 +2,7 @@ import { computed, inject, signal } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { LanguageService } from '../../core/services/language.service';
 import { PASSWORD_RULE_ERRORS } from '../validators/password.validators';
+import { NAME_MAX_LENGTH } from '../validators/text.validators';
 
 export interface FieldError {
   key: string;
@@ -43,6 +44,9 @@ export abstract class AccountFormPage {
   protected readonly languageService = inject(LanguageService);
 
   protected abstract readonly errorMessages: ErrorMessages;
+
+  /** Limite de saisie des champs nom / prénom, alignée sur leurs validateurs. */
+  readonly nameMaxLength = NAME_MAX_LENGTH;
 
   readonly submitAttempted = signal(false);
 

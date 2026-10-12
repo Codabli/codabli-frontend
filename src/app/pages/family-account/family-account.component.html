@@ -49,6 +49,8 @@
 
             <div class="form-section__fields">
               <div class="form-field">
+                @let childLastNameError = fieldError(child.controls.lastName);
+
                 <label [for]="'child-' + i + '-lastName'">
                   {{ 'familyAccount.form.child.lastName.label' | translate }}
                 </label>
@@ -58,16 +60,16 @@
                   type="text"
                   formControlName="lastName"
                   autocomplete="off"
-                  maxlength="50"
+                  [attr.maxlength]="nameMaxLength"
                   [placeholder]="'familyAccount.form.child.lastName.placeholder' | translate"
                   [attr.aria-invalid]="hasError(child.controls.lastName)"
                   [attr.aria-describedby]="
-                    fieldError(child.controls.lastName) ? 'child-' + i + '-lastName-error' : null
+                    childLastNameError ? 'child-' + i + '-lastName-error' : null
                   "
                   required
                 />
 
-                @if (fieldError(child.controls.lastName); as error) {
+                @if (childLastNameError; as error) {
                   <p [id]="'child-' + i + '-lastName-error'" class="form-field__error">
                     {{ error.key | translate: error.params }}
                   </p>
@@ -75,6 +77,8 @@
               </div>
 
               <div class="form-field">
+                @let childFirstNameError = fieldError(child.controls.firstName);
+
                 <label [for]="'child-' + i + '-firstName'">
                   {{ 'familyAccount.form.child.firstName.label' | translate }}
                 </label>
@@ -84,16 +88,16 @@
                   type="text"
                   formControlName="firstName"
                   autocomplete="off"
-                  maxlength="50"
+                  [attr.maxlength]="nameMaxLength"
                   [placeholder]="'familyAccount.form.child.firstName.placeholder' | translate"
                   [attr.aria-invalid]="hasError(child.controls.firstName)"
                   [attr.aria-describedby]="
-                    fieldError(child.controls.firstName) ? 'child-' + i + '-firstName-error' : null
+                    childFirstNameError ? 'child-' + i + '-firstName-error' : null
                   "
                   required
                 />
 
-                @if (fieldError(child.controls.firstName); as error) {
+                @if (childFirstNameError; as error) {
                   <p [id]="'child-' + i + '-firstName-error'" class="form-field__error">
                     {{ error.key | translate: error.params }}
                   </p>
@@ -101,6 +105,8 @@
               </div>
 
               <div class="form-field form-field--narrow">
+                @let childBirthDateError = fieldError(child.controls.birthDate);
+
                 <label [for]="'child-' + i + '-birthDate'">
                   {{ 'familyAccount.form.child.birthDate.label' | translate }}
                 </label>
@@ -113,12 +119,12 @@
                   formControlName="birthDate"
                   [attr.aria-invalid]="hasError(child.controls.birthDate)"
                   [attr.aria-describedby]="
-                    fieldError(child.controls.birthDate) ? 'child-' + i + '-birthDate-error' : null
+                    childBirthDateError ? 'child-' + i + '-birthDate-error' : null
                   "
                   required
                 />
 
-                @if (fieldError(child.controls.birthDate); as error) {
+                @if (childBirthDateError; as error) {
                   <p [id]="'child-' + i + '-birthDate-error'" class="form-field__error">
                     {{ error.key | translate: error.params }}
                   </p>
@@ -130,7 +136,7 @@
       </div>
 
       <div>
-        <app-button variant="outline" (click)="addChild()">
+        <app-button class="add-child" variant="outline" (click)="addChild()">
           {{ 'familyAccount.form.child.add' | translate }}
         </app-button>
       </div>
@@ -144,6 +150,8 @@
 
       <div class="form-section__fields">
         <div class="form-field">
+          @let lastNameError = fieldError(f.lastName);
+
           <label for="lastName">{{ 'familyAccount.form.lastName.label' | translate }}</label>
 
           <input
@@ -151,14 +159,14 @@
             type="text"
             formControlName="lastName"
             autocomplete="family-name"
-            maxlength="50"
+            [attr.maxlength]="nameMaxLength"
             [placeholder]="'familyAccount.form.lastName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.lastName)"
-            [attr.aria-describedby]="fieldError(f.lastName) ? 'lastName-error' : null"
+            [attr.aria-describedby]="lastNameError ? 'lastName-error' : null"
             required
           />
 
-          @if (fieldError(f.lastName); as error) {
+          @if (lastNameError; as error) {
             <p id="lastName-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -166,6 +174,8 @@
         </div>
 
         <div class="form-field">
+          @let firstNameError = fieldError(f.firstName);
+
           <label for="firstName">{{ 'familyAccount.form.firstName.label' | translate }}</label>
 
           <input
@@ -173,14 +183,14 @@
             type="text"
             formControlName="firstName"
             autocomplete="given-name"
-            maxlength="50"
+            [attr.maxlength]="nameMaxLength"
             [placeholder]="'familyAccount.form.firstName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.firstName)"
-            [attr.aria-describedby]="fieldError(f.firstName) ? 'firstName-error' : null"
+            [attr.aria-describedby]="firstNameError ? 'firstName-error' : null"
             required
           />
 
-          @if (fieldError(f.firstName); as error) {
+          @if (firstNameError; as error) {
             <p id="firstName-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -188,6 +198,8 @@
         </div>
 
         <div class="form-field">
+          @let addressError = fieldError(f.address);
+
           <label for="address">{{ 'familyAccount.form.address.label' | translate }}</label>
 
           <input
@@ -195,14 +207,14 @@
             type="text"
             formControlName="address"
             autocomplete="street-address"
-            maxlength="150"
+            [attr.maxlength]="addressMaxLength"
             [placeholder]="'familyAccount.form.address.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.address)"
-            [attr.aria-describedby]="fieldError(f.address) ? 'address-error' : null"
+            [attr.aria-describedby]="addressError ? 'address-error' : null"
             required
           />
 
-          @if (fieldError(f.address); as error) {
+          @if (addressError; as error) {
             <p id="address-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -210,6 +222,8 @@
         </div>
 
         <div class="form-field">
+          @let postalCodeCityError = fieldError(f.postalCodeCity);
+
           <label for="postalCodeCity">
             {{ 'familyAccount.form.postalCodeCity.label' | translate }}
           </label>
@@ -218,14 +232,14 @@
             id="postalCodeCity"
             type="text"
             formControlName="postalCodeCity"
-            maxlength="100"
+            [attr.maxlength]="postalCodeCityMaxLength"
             [placeholder]="'familyAccount.form.postalCodeCity.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.postalCodeCity)"
-            [attr.aria-describedby]="fieldError(f.postalCodeCity) ? 'postalCodeCity-error' : null"
+            [attr.aria-describedby]="postalCodeCityError ? 'postalCodeCity-error' : null"
             required
           />
 
-          @if (fieldError(f.postalCodeCity); as error) {
+          @if (postalCodeCityError; as error) {
             <p id="postalCodeCity-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -233,6 +247,8 @@
         </div>
 
         <div class="form-field">
+          @let phoneError = fieldError(f.phone);
+
           <label for="phone">{{ 'familyAccount.form.phone.label' | translate }}</label>
 
           <input
@@ -242,10 +258,10 @@
             autocomplete="tel"
             [placeholder]="'familyAccount.form.phone.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.phone)"
-            [attr.aria-describedby]="fieldError(f.phone) ? 'phone-error' : null"
+            [attr.aria-describedby]="phoneError ? 'phone-error' : null"
           />
 
-          @if (fieldError(f.phone); as error) {
+          @if (phoneError; as error) {
             <p id="phone-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -271,6 +287,8 @@
         </div>
 
         <div class="form-field">
+          @let emailError = fieldError(f.email);
+
           <label for="email">{{ 'familyAccount.form.email.label' | translate }}</label>
 
           <input
@@ -280,11 +298,11 @@
             autocomplete="email"
             [placeholder]="'familyAccount.form.email.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.email)"
-            [attr.aria-describedby]="fieldError(f.email) ? 'email-error' : null"
+            [attr.aria-describedby]="emailError ? 'email-error' : null"
             required
           />
 
-          @if (fieldError(f.email); as error) {
+          @if (emailError; as error) {
             <p id="email-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -301,6 +319,8 @@
 
       <div class="form-section__fields">
         <div class="form-field">
+          @let passwordError = fieldError(f.password);
+
           <label for="password">{{ 'familyAccount.form.password.label' | translate }}</label>
 
           <input
@@ -310,11 +330,11 @@
             autocomplete="new-password"
             [placeholder]="'familyAccount.form.password.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.password)"
-            [attr.aria-describedby]="fieldError(f.password) ? 'password-error' : null"
+            [attr.aria-describedby]="passwordError ? 'password-error' : null"
             required
           />
 
-          @if (fieldError(f.password); as error) {
+          @if (passwordError; as error) {
             <p id="password-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -322,6 +342,8 @@
         </div>
 
         <div class="form-field">
+          @let passwordConfirmationError = fieldError(f.passwordConfirmation);
+
           <label for="passwordConfirmation">
             {{ 'familyAccount.form.passwordConfirmation.label' | translate }}
           </label>
@@ -334,14 +356,14 @@
             [placeholder]="'familyAccount.form.passwordConfirmation.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.passwordConfirmation) || hasPasswordMismatch()"
             [attr.aria-describedby]="
-              fieldError(f.passwordConfirmation) || hasPasswordMismatch()
+              passwordConfirmationError || hasPasswordMismatch()
                 ? 'passwordConfirmation-error'
                 : null
             "
             required
           />
 
-          @if (fieldError(f.passwordConfirmation); as error) {
+          @if (passwordConfirmationError; as error) {
             <p id="passwordConfirmation-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>

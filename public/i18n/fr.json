@@ -408,7 +408,7 @@
       "required": "Ce champ est obligatoire.",
       "email": "L'adresse mail n'est pas valide.",
       "emailTaken": "Cet e-mail est déjà utilisé.",
-      "phone": "Le numéro de téléphone n'est pas valide.",
+      "phone": "Le numéro de téléphone n'est pas valide. Exemples : 06 12 34 56 78 ou, depuis l'étranger, +44 20 7946 0958.",
       "futureDate": "La date de naissance ne peut pas être dans le futur.",
       "childTooOld": "L'enfant doit avoir moins de {{maxAge}} ans.",
       "minLength": "Ce champ doit contenir au moins {{min}} caractères.",

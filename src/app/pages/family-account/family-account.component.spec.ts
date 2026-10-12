@@ -3,6 +3,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../core/services/language.service';
 import { SubscriptionOffer } from '../../models/interfaces/subscription-offer.interface';
 import { FamilyAccountComponent } from './family-account.component';
 
@@ -201,5 +202,22 @@ describe('FamilyAccountComponent', () => {
     expect(component.familyAccountForm.valid).toBe(true);
     expect(log).not.toHaveBeenCalled();
     log.mockRestore();
+  });
+
+  it('should follow the interface language until the user picks one', async () => {
+    await respond();
+    const languageService = TestBed.inject(LanguageService);
+    const preferredLanguage = component.familyAccountForm.controls.preferredLanguage;
+
+    languageService.changeLanguage('en');
+    await fixture.whenStable();
+    expect(preferredLanguage.value).toBe('en');
+
+    // Choix explicite de l'utilisateur : la langue de l'interface ne l'écrase plus.
+    preferredLanguage.setValue('fr');
+    preferredLanguage.markAsDirty();
+    languageService.changeLanguage('en');
+    await fixture.whenStable();
+    expect(preferredLanguage.value).toBe('fr');
   });
 });

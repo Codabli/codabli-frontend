@@ -1,4 +1,4 @@
-import { afterNextRender, Component, ElementRef, inject, Injector } from '@angular/core';
+import { afterNextRender, Component, effect, ElementRef, inject, Injector } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -7,7 +7,12 @@ import { catchError, map, of } from 'rxjs';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
 import { Button } from '../../shared/components/button/button.component';
 import { AccountFormPage, accountErrorMessages } from '../../shared/forms/account-form-page';
-import { childBirthDateBounds, FamilyAccountForm } from './family-account.form';
+import {
+  ADDRESS_MAX_LENGTH,
+  childBirthDateBounds,
+  FamilyAccountForm,
+  POSTAL_CODE_CITY_MAX_LENGTH,
+} from './family-account.form';
 import { FAMILY_PLATFORM_GOALS, NOTIFICATION_PREFERENCES } from './family-account.options';
 
 @Component({
@@ -36,6 +41,8 @@ export class FamilyAccountComponent extends AccountFormPage {
   readonly platformGoals = FAMILY_PLATFORM_GOALS;
   readonly notificationPreferences = NOTIFICATION_PREFERENCES;
   readonly birthDateBounds = childBirthDateBounds();
+  readonly addressMaxLength = ADDRESS_MAX_LENGTH;
+  readonly postalCodeCityMaxLength = POSTAL_CODE_CITY_MAX_LENGTH;
 
   // En cas d'erreur, la zone propose seulement « Je choisirai plus tard ».
   subscriptionOffers = toSignal(
@@ -47,6 +54,20 @@ export class FamilyAccountComponent extends AccountFormPage {
   );
 
   familyAccountForm = new FamilyAccountForm(this.languageService.currentLanguage());
+
+  constructor() {
+    super();
+
+    // Tant que l'utilisateur ne l'a pas choisie, la langue préférée suit celle de l'interface.
+    effect(() => {
+      const language = this.languageService.currentLanguage();
+      const preferredLanguage = this.familyAccountForm.controls.preferredLanguage;
+
+      if (!preferredLanguage.dirty) {
+        preferredLanguage.setValue(language);
+      }
+    });
+  }
 
   hasPasswordMismatch(): boolean {
     return this.hasGroupError(

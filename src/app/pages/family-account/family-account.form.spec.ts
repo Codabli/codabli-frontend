@@ -188,19 +188,30 @@ describe('FamilyAccountForm', () => {
 });
 
 describe('phoneValidator', () => {
-  it.each(['', '06 12 34 56 78', '0612345678', '06.12.34.56.78', '+33 6 12 34 56 78'])(
-    'should accept "%s"',
-    (phone) => {
-      expect(phoneValidator()(new FormControl(phone))).toBeNull();
-    },
-  );
+  it.each([
+    '',
+    '06 12 34 56 78',
+    '0612345678',
+    '06.12.34.56.78',
+    '+33 6 12 34 56 78',
+    '0033 6 12 34 56 78',
+    '+44 20 7946 0958',
+    '+1 (514) 555-0199',
+  ])('should accept "%s"', (phone) => {
+    expect(phoneValidator()(new FormControl(phone))).toBeNull();
+  });
 
-  it.each(['12345', '06 12 34 56', '00 12 34 56 78', 'abcdefghij'])(
-    'should reject "%s"',
-    (phone) => {
-      expect(phoneValidator()(new FormControl(phone))).toEqual({ phone: true });
-    },
-  );
+  it.each([
+    '12345',
+    '06 12 34 56',
+    '+33 6 12 34',
+    '0033 0 12 34 56 78',
+    '+1 23',
+    '+0 12 34 56 78',
+    'abcdefghij',
+  ])('should reject "%s"', (phone) => {
+    expect(phoneValidator()(new FormControl(phone))).toEqual({ phone: true });
+  });
 });
 
 describe('childBirthDateValidator', () => {

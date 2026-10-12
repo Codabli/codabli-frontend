@@ -8,6 +8,11 @@
   gap: var(--spacing-xl);
 }
 
+// Maquette : « Ajouter un enfant » est un bouton outline bordé.
+.add-child {
+  --button-outline-border-width: 1px;
+}
+
 .child-card {
   position: relative;
 

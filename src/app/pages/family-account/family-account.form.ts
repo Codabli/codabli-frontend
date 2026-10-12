@@ -30,15 +30,33 @@ export const POSTAL_CODE_CITY_MAX_LENGTH = 100;
 /** Les profils enfants concernent les moins de 18 ans. */
 export const CHILD_MAX_AGE = 18;
 
-// 10 chiffres commençant par 0, ou indicatif +33 ; espaces, points et tirets tolérés.
-const FRENCH_PHONE_PATTERN = /^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/;
+// Motifs appliqués après suppression des espaces, points, tirets et parenthèses,
+// avec le préfixe « 00 » remplacé par « + ».
+const FRENCH_NATIONAL_PATTERN = /^0[1-9]\d{8}$/;
+const FRENCH_INTERNATIONAL_PATTERN = /^\+33[1-9]\d{8}$/;
+// Format international E.164 : indicatif pays compris, 8 à 15 chiffres.
+const INTERNATIONAL_PATTERN = /^\+[1-9]\d{7,14}$/;
 
-/** Numéro de téléphone français, optionnel. */
+/**
+ * Numéro de téléphone, optionnel : français (06 12 34 56 78, +33 6…, 0033 6…)
+ * ou étranger avec son indicatif (+44 20 7946 0958).
+ */
 export function phoneValidator(): ValidatorFn {
   return (control: AbstractControl<string>): ValidationErrors | null => {
     const value = control.value?.trim();
 
-    return !value || FRENCH_PHONE_PATTERN.test(value) ? null : { phone: true };
+    if (!value) {
+      return null;
+    }
+
+    const phone = value.replace(/[\s.()-]/g, '').replace(/^00/, '+');
+    const pattern = phone.startsWith('+33')
+      ? FRENCH_INTERNATIONAL_PATTERN
+      : phone.startsWith('+')
+        ? INTERNATIONAL_PATTERN
+        : FRENCH_NATIONAL_PATTERN;
+
+    return pattern.test(phone) ? null : { phone: true };
   };
 }
 

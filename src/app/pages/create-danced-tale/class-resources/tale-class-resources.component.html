@@ -105,7 +105,11 @@
           class="dropzone__formats"
         >
           @for (format of formats; track format.kind; let last = $last) {
-            {{ 'createDancedTale.classResources.upload.format' | translate: { extensions: format.extensions.join(', ').toUpperCase(), size: maxSizeMb(format.maxSize) } }}{{ last ? '' : ' · ' }}
+            {{
+              'createDancedTale.classResources.upload.format'
+                | translate
+                  : { extensions: format.extensions.join(', ').toUpperCase(), size: maxSizeMb(format.maxSize) }
+            }}{{ last ? '' : ' · ' }}
           }
         </p>
       </div>
@@ -121,7 +125,9 @@
                 class="fa-solid fa-triangle-exclamation"
                 aria-hidden="true"
               ></i>
-              {{ 'createDancedTale.classResources.upload.errors.' + file.reason | translate: { fileName: file.fileName } }}
+              {{
+                'createDancedTale.classResources.upload.errors.' + file.reason | translate: { fileName: file.fileName }
+              }}
             </li>
           }
         </ul>
@@ -263,7 +269,9 @@
             <div class="card__body">
               @if (renamingId() === item.id) {
                 <div class="filter">
-                  <label [for]="'rename-' + item.id">{{ 'createDancedTale.classResources.list.newName' | translate }}</label>
+                  <label [for]="'rename-' + item.id">{{
+                    'createDancedTale.classResources.list.newName' | translate
+                  }}</label>
                   <input
                     type="text"
                     autocomplete="off"

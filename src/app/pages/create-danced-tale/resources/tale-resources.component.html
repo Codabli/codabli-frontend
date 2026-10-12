@@ -278,7 +278,9 @@
 
         <p class="detail__credit">
           {{
-            'createDancedTale.credit' | translate: { author: resource.credit.author, date: resource.credit.date, licence: resource.credit.licence }
+            'createDancedTale.credit'
+              | translate
+                : { author: resource.credit.author, date: resource.credit.date, licence: resource.credit.licence }
           }}
           @if (resource.credit.sourceUrl) {
             ·

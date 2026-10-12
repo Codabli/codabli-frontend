@@ -49,6 +49,7 @@ describe('CreateDancedTaleDraftService', () => {
       context: CONTEXT,
       discovery: null,
       resources: null,
+      classResources: null,
       universe: null,
       structure: null,
       writing: null,
@@ -65,6 +66,27 @@ describe('CreateDancedTaleDraftService', () => {
     expect(service.universe()).toBeNull();
     expect(service.discovery()).toBeNull();
     expect(service.resources()).toBeNull();
+    expect(service.classResources()).toBeNull();
+  });
+
+  it('enregistre les ressources de la classe', () => {
+    createService().saveContext(CONTEXT);
+    const classResources = {
+      items: [
+        {
+          id: 'r1',
+          kind: 'link' as const,
+          name: 'Vidéo',
+          addedAt: '2026-10-12T10:00:00.000Z',
+          visibility: 'private' as const,
+          url: 'https://example.org',
+        },
+      ],
+    };
+
+    expect(createService().saveClassResources(classResources)).toBe(true);
+
+    expect(createService().classResources()).toEqual(classResources);
   });
 
   it('enregistre les ressources culturelles ajoutées au projet', () => {

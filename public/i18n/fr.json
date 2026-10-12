@@ -337,10 +337,74 @@
       }
     },
 
-    "comingSoon": {
-      "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
-      "back": "Revenir à l'étape « {{step}} »",
-      "next": "Continuer vers l'étape « {{step}} »"
+    "classResources": {
+      "title": "Les ressources de votre classe",
+      "description": "Ajoutez à la base de travail du projet les créations et documents de la classe : dessins scannés, textes, photos, enregistrements, ou des liens vers des ressources externes.",
+      "privateNote": "Vos dépôts sont privés : ils ne sont visibles que par vous.",
+      "storageFull": "Le stockage de ce navigateur est plein : vos dernières modifications ne sont pas enregistrées. Supprimez des documents pour libérer de la place.",
+      "upload": {
+        "title": "Déposer des fichiers",
+        "rights": "J'atteste disposer des droits d'utilisation pédagogique des fichiers déposés (créations des élèves avec l'accord des familles, documents libres de droits ou dont je suis l'auteur).",
+        "required": "(obligatoire)",
+        "rightsError": "Cochez l'attestation des droits d'utilisation avant de déposer des fichiers.",
+        "drop": "Glissez vos fichiers ici, ou",
+        "choose": "Choisir des fichiers",
+        "format": "{{extensions}} jusqu'à {{size}} Mo",
+        "errors": {
+          "format": "« {{fileName}} » n'est pas dans un format accepté (PDF, PNG, JPEG, MP3 ou MP4).",
+          "tooLarge": "« {{fileName}} » dépasse la taille maximale autorisée pour ce format.",
+          "storage": "« {{fileName}} » n'a pas pu être enregistré : le stockage de ce navigateur est indisponible ou plein."
+        }
+      },
+      "link": {
+        "title": "Ajouter un lien",
+        "url": "Lien",
+        "urlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "error": "Saisissez une adresse web complète, commençant par https://",
+        "name": "Nom (facultatif)",
+        "namePlaceholder": "Ex. : Vidéo sur les châteaux forts",
+        "add": "Ajouter le lien"
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "image": "Image",
+        "audio": "Audio",
+        "video": "Vidéo",
+        "link": "Lien"
+      },
+      "size": {
+        "kb": "{{value}} Ko",
+        "mb": "{{value}} Mo"
+      },
+      "list": {
+        "title": "Documents déposés",
+        "count": "{{files}} fichier(s), {{links}} lien(s)",
+        "empty": "Aucun document pour l'instant. Les ressources de la classe sont facultatives : vous pouvez passer à l'étape suivante.",
+        "private": "Privé",
+        "preview": "Aperçu",
+        "previewLabel": "Aperçu de « {{name}} »",
+        "rename": "Renommer",
+        "renameLabel": "Renommer « {{name}} »",
+        "newName": "Nouveau nom (Entrée pour valider, Échap pour annuler)",
+        "deleteLabel": "Supprimer « {{name}} »",
+        "missing": "Fichier absent de cet appareil : il a été déposé depuis un autre navigateur ou les données du site ont été effacées."
+      },
+      "preview": {
+        "openFile": "Ouvrir dans un nouvel onglet",
+        "openLink": "Ouvrir le lien"
+      },
+      "delete": {
+        "title": "Supprimer le document ?",
+        "message": "« {{name}} » sera supprimé du projet. Cette action est définitive.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer"
+      },
+      "announce": {
+        "filesAdded": "{{count}} fichier(s) ajouté(s).",
+        "linkAdded": "Le lien « {{name}} » est ajouté.",
+        "renamed": "Document renommé en « {{name}} ».",
+        "deleted": "« {{name}} » est supprimé."
+      }
     },
 
     "autosave": {

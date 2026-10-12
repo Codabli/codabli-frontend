@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { CreateDancedTaleComponent } from './create-danced-tale.component';
 import { ProjectContextComponent } from './context/project-context.component';
-import { StepComingSoonComponent } from './coming-soon/step-coming-soon.component';
+import { TaleClassResourcesComponent } from './class-resources/tale-class-resources.component';
 import { TaleDiscoveryComponent } from './discovery/tale-discovery.component';
 import { TaleResourcesComponent } from './resources/tale-resources.component';
 import { TaleStagingComponent } from './staging/tale-staging.component';
@@ -19,12 +19,7 @@ export const CREATE_DANCED_TALE_ROUTES: Routes = [
       { path: 'context', component: ProjectContextComponent },
       { path: 'discovery', component: TaleDiscoveryComponent, canActivate: [requireProjectContext] },
       { path: 'resources', component: TaleResourcesComponent, canActivate: [requireProjectContext] },
-      // Écran 4 pas encore développé : on peut passer directement à l'univers du conte.
-      {
-        path: 'class-resources',
-        component: StepComingSoonComponent,
-        data: { previousStep: 'resources', nextStep: 'universe' },
-      },
+      { path: 'class-resources', component: TaleClassResourcesComponent, canActivate: [requireProjectContext] },
       { path: 'universe', component: TaleUniverseComponent, canActivate: [requireProjectContext] },
       { path: 'structure', component: TaleStructureComponent, canActivate: [requireProjectContext] },
       { path: 'writing', component: TaleWritingComponent, canActivate: [requireTaleStructure] },

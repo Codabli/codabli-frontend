@@ -172,7 +172,7 @@ describe('TaleUniverseComponent', () => {
     click('.tale-universe__actions app-button:first-child');
 
     expect(draftService.universe()!.objects).toHaveLength(1);
-    expect(router.navigate).toHaveBeenCalledWith(['../discovery'], expect.anything());
+    expect(router.navigate).toHaveBeenCalledWith(['../class-resources'], expect.anything());
   });
 
   it('n\'enregistre rien en revenant en arrière si rien n\'a été saisi', async () => {

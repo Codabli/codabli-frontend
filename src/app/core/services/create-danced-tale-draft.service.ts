@@ -1,5 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { ProjectContext } from '../../models/interfaces/project-context.interface';
+import { TaleClassResources } from '../../models/interfaces/tale-class-resources.interface';
 import { TaleDiscovery } from '../../models/interfaces/tale-discovery.interface';
 import { TaleResources } from '../../models/interfaces/tale-resources.interface';
 import { TaleStaging } from '../../models/interfaces/tale-staging.interface';
@@ -11,6 +12,7 @@ export interface CreateDancedTaleDraft {
   context: ProjectContext | null;
   discovery: TaleDiscovery | null;
   resources: TaleResources | null;
+  classResources: TaleClassResources | null;
   universe: TaleUniverse | null;
   structure: TaleStructure | null;
   writing: TaleWriting | null;
@@ -23,6 +25,7 @@ const EMPTY_DRAFT: CreateDancedTaleDraft = {
   context: null,
   discovery: null,
   resources: null,
+  classResources: null,
   universe: null,
   structure: null,
   writing: null,
@@ -42,6 +45,7 @@ export class CreateDancedTaleDraftService {
   readonly context = computed(() => this.draft().context);
   readonly discovery = computed(() => this.draft().discovery);
   readonly resources = computed(() => this.draft().resources);
+  readonly classResources = computed(() => this.draft().classResources);
   readonly universe = computed(() => this.draft().universe);
   readonly structure = computed(() => this.draft().structure);
   readonly writing = computed(() => this.draft().writing);
@@ -59,6 +63,11 @@ export class CreateDancedTaleDraftService {
 
   saveResources(resources: TaleResources): boolean {
     this.draft.update((draft) => ({ ...draft, resources }));
+    return this.persist();
+  }
+
+  saveClassResources(classResources: TaleClassResources): boolean {
+    this.draft.update((draft) => ({ ...draft, classResources }));
     return this.persist();
   }
 
@@ -117,6 +126,7 @@ export class CreateDancedTaleDraftService {
           context: parsed.context ?? null,
           discovery: parsed.discovery ?? null,
           resources: parsed.resources ?? null,
+          classResources: parsed.classResources ?? null,
           universe: parsed.universe ?? null,
           structure: parsed.structure ?? null,
           writing: parsed.writing ?? null,

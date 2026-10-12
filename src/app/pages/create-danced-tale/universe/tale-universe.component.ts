@@ -138,7 +138,7 @@ export class TaleUniverseComponent {
       this.draftService.saveUniverse(universe);
     }
 
-    this.router.navigate(['../discovery'], { relativeTo: this.route });
+    this.router.navigate(['../class-resources'], { relativeTo: this.route });
   }
 
   protected onNext(): void {

@@ -1,0 +1,490 @@
+<div class="resource-screen tale-class-resources">
+  <header class="resource-screen__intro">
+    <h2 class="resource-screen__title">
+      {{ 'createDancedTale.classResources.title' | translate }}
+    </h2>
+
+    <p>{{ 'createDancedTale.classResources.description' | translate }}</p>
+
+    <p class="private-note">
+      <i
+        class="fa-solid fa-lock"
+        aria-hidden="true"
+      ></i>
+      {{ 'createDancedTale.classResources.privateNote' | translate }}
+    </p>
+  </header>
+
+  @if (storageFull()) {
+    <p
+      class="alert"
+      role="alert"
+    >
+      {{ 'createDancedTale.classResources.storageFull' | translate }}
+    </p>
+  }
+
+  <div class="add-zones">
+    <!-- 1. Dépôt de fichiers : attestation des droits obligatoire avant tout téléversement -->
+    <section
+      class="zone"
+      aria-labelledby="upload-title"
+    >
+      <h3
+        id="upload-title"
+        class="zone__title"
+      >
+        <i
+          class="fa-solid fa-cloud-arrow-up"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.classResources.upload.title' | translate }}
+      </h3>
+
+      <label
+        class="rights"
+        [class.rights--error]="rightsError()"
+      >
+        <input
+          id="class-resources-rights"
+          type="checkbox"
+          [formControl]="rightsConfirmed"
+          [attr.aria-invalid]="rightsError()"
+          [attr.aria-describedby]="rightsError() ? 'rights-error' : null"
+        />
+        <span>
+          {{ 'createDancedTale.classResources.upload.rights' | translate }}
+          <span class="required">{{ 'createDancedTale.classResources.upload.required' | translate }}</span>
+        </span>
+      </label>
+
+      @if (rightsError()) {
+        <p
+          id="rights-error"
+          class="form-error"
+          role="alert"
+        >
+          {{ 'createDancedTale.classResources.upload.rightsError' | translate }}
+        </p>
+      }
+
+      <div
+        class="dropzone"
+        [class.dropzone--disabled]="!rightsConfirmed.value"
+        [class.dropzone--dragging]="dragging()"
+        (dragover)="onDragOver($event)"
+        (dragleave)="dragging.set(false)"
+        (drop)="onDrop($event)"
+      >
+        <i
+          class="fa-solid fa-file-arrow-up dropzone__icon"
+          aria-hidden="true"
+        ></i>
+        <p class="dropzone__text">{{ 'createDancedTale.classResources.upload.drop' | translate }}</p>
+
+        <!-- Le champ reste actif : sans attestation, le dépôt est refusé avec un message explicite. -->
+        <label class="file-button">
+          <input
+            id="class-resources-file"
+            class="sr-only"
+            type="file"
+            multiple
+            [accept]="accept"
+            [attr.aria-describedby]="'upload-formats'"
+            (change)="onFileSelected($event)"
+          />
+          <i
+            class="fa-solid fa-folder-open"
+            aria-hidden="true"
+          ></i>
+          {{ 'createDancedTale.classResources.upload.choose' | translate }}
+        </label>
+
+        <p
+          id="upload-formats"
+          class="dropzone__formats"
+        >
+          @for (format of formats; track format.kind; let last = $last) {
+            {{ 'createDancedTale.classResources.upload.format' | translate: { extensions: format.extensions.join(', ').toUpperCase(), size: maxSizeMb(format.maxSize) } }}{{ last ? '' : ' · ' }}
+          }
+        </p>
+      </div>
+
+      @if (rejected().length) {
+        <ul
+          class="rejected"
+          role="alert"
+        >
+          @for (file of rejected(); track $index) {
+            <li>
+              <i
+                class="fa-solid fa-triangle-exclamation"
+                aria-hidden="true"
+              ></i>
+              {{ 'createDancedTale.classResources.upload.errors.' + file.reason | translate: { fileName: file.fileName } }}
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <!-- 2. Ajout d'un lien (vidéo éducative, site...) -->
+    <section
+      class="zone"
+      aria-labelledby="link-title"
+    >
+      <h3
+        id="link-title"
+        class="zone__title"
+      >
+        <i
+          class="fa-solid fa-link"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.classResources.link.title' | translate }}
+      </h3>
+
+      <form
+        class="link-form"
+        novalidate
+        [formGroup]="linkForm"
+        (ngSubmit)="addLink()"
+      >
+        <div class="filter">
+          <label for="class-resources-link-url">{{ 'createDancedTale.classResources.link.url' | translate }}</label>
+          <input
+            id="class-resources-link-url"
+            type="url"
+            inputmode="url"
+            autocomplete="off"
+            formControlName="url"
+            [placeholder]="'createDancedTale.classResources.link.urlPlaceholder' | translate"
+            [attr.aria-invalid]="linkError()"
+            [attr.aria-describedby]="linkError() ? 'link-error' : null"
+          />
+          @if (linkError()) {
+            <p
+              id="link-error"
+              class="form-error"
+            >
+              {{ 'createDancedTale.classResources.link.error' | translate }}
+            </p>
+          }
+        </div>
+
+        <div class="filter">
+          <label for="class-resources-link-name">{{ 'createDancedTale.classResources.link.name' | translate }}</label>
+          <input
+            id="class-resources-link-name"
+            type="text"
+            autocomplete="off"
+            formControlName="name"
+            [maxlength]="nameMaxLength"
+            [placeholder]="'createDancedTale.classResources.link.namePlaceholder' | translate"
+          />
+        </div>
+
+        <app-button
+          type="submit"
+          variant="secondary"
+          navigationIcon="circle-plus"
+        >
+          {{ 'createDancedTale.classResources.link.add' | translate }}
+        </app-button>
+      </form>
+    </section>
+  </div>
+
+  <!-- 3. Documents déposés : vignettes homogènes, aperçu, renommage, suppression -->
+  <section
+    class="documents"
+    aria-labelledby="documents-title"
+  >
+    <h3
+      id="documents-title"
+      class="documents__title"
+    >
+      {{ 'createDancedTale.classResources.list.title' | translate }}
+      <span class="documents__count">
+        {{ 'createDancedTale.classResources.list.count' | translate: { files: fileCount(), links: linkCount() } }}
+      </span>
+    </h3>
+
+    @if (items().length) {
+      <ul class="cards">
+        @for (item of items(); track item.id) {
+          <li class="card">
+            <div
+              class="card__media"
+              [class]="'card__media--' + item.kind"
+            >
+              @if (item.fileId && urls()[item.fileId]; as url) {
+                @if (item.kind === 'image') {
+                  <img
+                    alt=""
+                    [src]="url"
+                  />
+                } @else if (item.kind === 'video') {
+                  <!-- Première image de la vidéo comme vignette. -->
+                  <video
+                    muted
+                    preload="metadata"
+                    aria-hidden="true"
+                    tabindex="-1"
+                    [src]="url"
+                  ></video>
+                } @else {
+                  <span class="card__icon">
+                    <i
+                      [class]="kindIcon(item)"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                }
+              } @else {
+                <span class="card__icon">
+                  <i
+                    [class]="kindIcon(item)"
+                    aria-hidden="true"
+                  ></i>
+                </span>
+              }
+
+              <span class="card__format">{{ 'createDancedTale.classResources.kinds.' + item.kind | translate }}</span>
+              <span class="card__private">
+                <i
+                  class="fa-solid fa-lock"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.classResources.list.private' | translate }}
+              </span>
+            </div>
+
+            <div class="card__body">
+              @if (renamingId() === item.id) {
+                <div class="filter">
+                  <label [for]="'rename-' + item.id">{{ 'createDancedTale.classResources.list.newName' | translate }}</label>
+                  <input
+                    type="text"
+                    autocomplete="off"
+                    [id]="'rename-' + item.id"
+                    [value]="item.name"
+                    [attr.maxlength]="nameMaxLength"
+                    (keydown.enter)="confirmRename(item, $any($event.target).value)"
+                    (keydown.escape)="cancelRename(item)"
+                    (blur)="confirmRename(item, $any($event.target).value)"
+                  />
+                </div>
+              } @else {
+                <h4 class="card__title">{{ item.name }}</h4>
+              }
+
+              <p class="card__details">
+                @if (item.kind === 'link') {
+                  {{ hostOf(item.url) }}
+                } @else {
+                  {{ item.fileName }} · {{ formatSize(item.size) }}
+                }
+              </p>
+
+              @if (item.fileId && missing().has(item.fileId)) {
+                <p class="card__missing">
+                  <i
+                    class="fa-solid fa-triangle-exclamation"
+                    aria-hidden="true"
+                  ></i>
+                  {{ 'createDancedTale.classResources.list.missing' | translate }}
+                </p>
+              }
+            </div>
+
+            <div class="card__actions">
+              <button
+                type="button"
+                class="action action--main"
+                [attr.aria-label]="'createDancedTale.classResources.list.previewLabel' | translate: { name: item.name }"
+                (click)="previewed.set(item)"
+              >
+                <i
+                  class="fa-solid fa-eye"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.classResources.list.preview' | translate }}
+              </button>
+
+              <button
+                type="button"
+                class="action"
+                [id]="'rename-button-' + item.id"
+                [attr.aria-label]="'createDancedTale.classResources.list.renameLabel' | translate: { name: item.name }"
+                (click)="startRename(item)"
+              >
+                <i
+                  class="fa-solid fa-pen"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.classResources.list.rename' | translate }}
+              </button>
+
+              <button
+                type="button"
+                class="action action--danger"
+                [attr.aria-label]="'createDancedTale.classResources.list.deleteLabel' | translate: { name: item.name }"
+                (click)="deleting.set(item)"
+              >
+                <i
+                  class="fa-solid fa-trash-can"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="documents__empty">{{ 'createDancedTale.classResources.list.empty' | translate }}</p>
+    }
+  </section>
+
+  <div class="resource-screen__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+
+  @if (previewed(); as item) {
+    <app-modal
+      [heading]="item.name"
+      (closed)="previewed.set(null)"
+    >
+      <div class="detail">
+        @if (item.kind === 'link') {
+          <p>{{ item.url }}</p>
+          <a
+            class="open-link"
+            target="_blank"
+            rel="noopener"
+            [href]="item.url"
+          >
+            <i
+              [class]="kindIcon(item)"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.classResources.preview.openLink' | translate }}
+            <span class="sr-only">{{ 'createDancedTale.discovery.detail.newTab' | translate }}</span>
+          </a>
+        } @else if (item.fileId && urls()[item.fileId]; as url) {
+          @switch (item.kind) {
+            @case ('image') {
+              <img
+                class="detail__media"
+                [src]="url"
+                [alt]="item.name"
+              />
+            }
+            @case ('video') {
+              <video
+                class="detail__media"
+                controls
+                preload="metadata"
+                [src]="url"
+                [attr.aria-label]="item.name"
+              ></video>
+            }
+            @case ('audio') {
+              <audio
+                class="detail__audio"
+                controls
+                preload="metadata"
+                [src]="url"
+                [attr.aria-label]="item.name"
+              ></audio>
+            }
+            @case ('pdf') {
+              <iframe
+                class="detail__pdf"
+                [src]="pdfUrl(item)"
+                [title]="item.name"
+              ></iframe>
+            }
+          }
+          <a
+            class="open-link"
+            target="_blank"
+            rel="noopener"
+            [href]="url"
+          >
+            <i
+              class="fa-solid fa-up-right-from-square"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.classResources.preview.openFile' | translate }}
+            <span class="sr-only">{{ 'createDancedTale.discovery.detail.newTab' | translate }}</span>
+          </a>
+        } @else {
+          <p>{{ 'createDancedTale.classResources.list.missing' | translate }}</p>
+        }
+
+        <p class="detail__note">
+          <i
+            class="fa-solid fa-lock"
+            aria-hidden="true"
+          ></i>
+          {{ 'createDancedTale.classResources.privateNote' | translate }}
+        </p>
+      </div>
+    </app-modal>
+  }
+
+  @if (deleting(); as item) {
+    <app-modal
+      [heading]="'createDancedTale.classResources.delete.title' | translate"
+      (closed)="deleting.set(null)"
+    >
+      <div class="detail">
+        <p>{{ 'createDancedTale.classResources.delete.message' | translate: { name: item.name } }}</p>
+
+        <div class="detail__actions">
+          <button
+            type="button"
+            class="action"
+            (click)="deleting.set(null)"
+          >
+            {{ 'createDancedTale.classResources.delete.cancel' | translate }}
+          </button>
+          <button
+            type="button"
+            class="action action--confirm-delete"
+            (click)="confirmDelete()"
+          >
+            <i
+              class="fa-solid fa-trash-can"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.classResources.delete.confirm' | translate }}
+          </button>
+        </div>
+      </div>
+    </app-modal>
+  }
+</div>

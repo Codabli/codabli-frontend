@@ -337,10 +337,74 @@
       }
     },
 
-    "comingSoon": {
-      "message": "Your answers are saved. This step will be available soon.",
-      "back": "Back to the “{{step}}” step",
-      "next": "Continue to the “{{step}}” step"
+    "classResources": {
+      "title": "Your class's resources",
+      "description": "Add the class's own creations and documents to the project: scanned drawings, texts, photos, recordings, or links to external resources.",
+      "privateNote": "Your uploads are private: only you can see them.",
+      "storageFull": "This browser's storage is full: your latest changes are not saved. Delete some documents to free up space.",
+      "upload": {
+        "title": "Upload files",
+        "rights": "I confirm I hold the rights to use the uploaded files for teaching (pupils' work with their families' consent, royalty-free documents or documents I created).",
+        "required": "(required)",
+        "rightsError": "Tick the usage rights statement before uploading files.",
+        "drop": "Drag your files here, or",
+        "choose": "Choose files",
+        "format": "{{extensions}} up to {{size}} MB",
+        "errors": {
+          "format": "\"{{fileName}}\" is not in an accepted format (PDF, PNG, JPEG, MP3 or MP4).",
+          "tooLarge": "\"{{fileName}}\" is larger than the maximum size allowed for this format.",
+          "storage": "\"{{fileName}}\" could not be saved: this browser's storage is unavailable or full."
+        }
+      },
+      "link": {
+        "title": "Add a link",
+        "url": "Link",
+        "urlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "error": "Enter a full web address, starting with https://",
+        "name": "Name (optional)",
+        "namePlaceholder": "E.g. Video about castles",
+        "add": "Add link"
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "image": "Image",
+        "audio": "Audio",
+        "video": "Video",
+        "link": "Link"
+      },
+      "size": {
+        "kb": "{{value}} KB",
+        "mb": "{{value}} MB"
+      },
+      "list": {
+        "title": "Uploaded documents",
+        "count": "{{files}} file(s), {{links}} link(s)",
+        "empty": "No documents yet. Class resources are optional: you can go on to the next step.",
+        "private": "Private",
+        "preview": "Preview",
+        "previewLabel": "Preview \"{{name}}\"",
+        "rename": "Rename",
+        "renameLabel": "Rename \"{{name}}\"",
+        "newName": "New name (Enter to confirm, Escape to cancel)",
+        "deleteLabel": "Delete \"{{name}}\"",
+        "missing": "File not on this device: it was uploaded from another browser or the site data was cleared."
+      },
+      "preview": {
+        "openFile": "Open in a new tab",
+        "openLink": "Open link"
+      },
+      "delete": {
+        "title": "Delete this document?",
+        "message": "\"{{name}}\" will be removed from the project. This cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete"
+      },
+      "announce": {
+        "filesAdded": "{{count}} file(s) added.",
+        "linkAdded": "The link \"{{name}}\" was added.",
+        "renamed": "Document renamed to \"{{name}}\".",
+        "deleted": "\"{{name}}\" was deleted."
+      }
     },
 
     "autosave": {

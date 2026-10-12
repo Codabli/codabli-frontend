@@ -225,7 +225,8 @@ $tag-colors: (
         flex: 1 1 auto;
       }
 
-      .action--add {
+      .action--add,
+      .action--main {
         flex-basis: 100%;
         order: -1;
       }
@@ -293,6 +294,18 @@ $tag-colors: (
     &--danger:hover {
       color: #9f1239;
       border-color: #9f1239;
+    }
+
+    &--confirm-delete {
+      color: var(--color-white);
+      background-color: #9f1239;
+      border-color: #9f1239;
+
+      &:hover {
+        color: var(--color-white);
+        background-color: #881337;
+        border-color: #881337;
+      }
     }
   }
 

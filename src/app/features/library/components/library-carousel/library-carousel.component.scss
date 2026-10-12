@@ -1,0 +1,73 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.library-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+  width: 100%;
+}
+
+.library-carousel__viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding-top: var(--spacing-3xl);
+  padding-bottom: var(--spacing-3xl);
+}
+
+.library-carousel__track {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xl);
+  touch-action: pan-y pinch-zoom;
+}
+
+.library-carousel__item {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 calc((100% - (2 * var(--spacing-lg))) / 3);
+  min-width: 0;
+
+  app-tale-card {
+    flex: 0 0 321px;
+    width: 321px;
+  }
+}
+
+.library-carousel__item--active {
+  position: relative;
+  z-index: 1;
+
+  app-tale-card {
+    flex-basis: 462px;
+    width: 462px;
+
+    --card-cover-width: 289px;
+    --card-border-width: 3px;
+    --card-border-color: var(--color-border-outline-default);
+  }
+}
+
+.library-carousel__navigation {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  color: var(--font-color-primary);
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+}

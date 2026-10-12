@@ -9,6 +9,20 @@ export const routes: Routes = [
     children: [
       ...HOME_ROUTES,
       {
+        path: 'library/tales',
+        loadComponent: () =>
+          import('./features/library/library.component').then(
+            (m) => m.LibraryComponent
+          ),
+      },
+      {
+        path: 'library/tales/:id',
+        loadComponent: () =>
+          import('./features/library/tale-detail/tale-detail.component').then(
+            (m) => m.TaleDetailComponent
+          ),
+      },
+      {
         path: 'creer-un-compte/enseignant',
         loadComponent: () =>
           import('./pages/teacher-account/teacher-account.component').then(

@@ -7,7 +7,7 @@ import { catchError, map, of } from 'rxjs';
 import { LanguageService } from '../../core/services/language.service';
 import { SchoolService } from '../../core/services/school.service';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
-import { Button } from '../../shared/components/button/button.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TeacherAccountForm } from './teacher-account.form';
 import {
   ACADEMIES,
@@ -43,7 +43,7 @@ const ERROR_MESSAGES: Record<string, (error: any) => FieldError> = {
 };
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, ButtonComponent],
   selector: 'app-teacher-account',
   styleUrl: './teacher-account.component.scss',
   templateUrl: './teacher-account.component.html',

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactForm } from './contact.form';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../shared/components/button/button.component';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 @Component({
-  imports: [ReactiveFormsModule, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, TranslatePipe, ButtonComponent],
   selector: 'app-contact',
   styleUrl: './contact.component.scss',
   templateUrl: './contact.component.html',

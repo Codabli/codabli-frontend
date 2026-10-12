@@ -7,6 +7,7 @@
   --grid-columns: 4;
   --grid-gutter: 16px;
   --grid-margin: 24px;
+  --grid-max-width: none;
 
   // ======================================================
   // TYPOGRAPHY
@@ -23,10 +24,10 @@
   --font-size-small: 14px;
   --font-size-large: 12px;
 
-  --font-family-primary: "Baloo";
-  --font-family-secondary: "Baloo 2";
-  --font-family-body: "Lato";
-  --font-family-price: "Satoshi";
+  --font-family-primary: 'Baloo';
+  --font-family-secondary: 'Baloo 2';
+  --font-family-body: 'Lato';
+  --font-family-price: 'Satoshi';
   --font-family-arial: Arial;
 
   --font-weight-regular: 400;
@@ -78,6 +79,10 @@
   --color-bg-warm-surface: #fbf8f6;
   --color-bg-navigation: rgba(235, 230, 250, 0.4);
   --color-bg-page: #1356a0;
+  --color-bg-header: #fff;
+  --color-background-filters: #b7e7f3;
+
+  --color-bg-select-filters: #fff;
 
   // ======================================================
   // COLORS - Text
@@ -107,6 +112,7 @@
   --color-text-card: #00368c;
 
   --color-text-muted: #333333;
+  --color-text-alert: #fd8072;
 
   // ======================================================
   // COLORS - Border
@@ -119,6 +125,10 @@
   --color-border-outline-hover: #5b0ebf;
 
   --color-border-light: #eaeaea;
+  --color-border-search: rgb(217, 204, 254);
+  --color-border-select-filters: #e0e0e0;
+  
+  --shadow-card: 0 0 30px 0 rgb(0 0 0 / 15%);
 
   --radius-button: 100px;
   --radius-card: 32px;

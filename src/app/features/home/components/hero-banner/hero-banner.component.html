@@ -1,0 +1,28 @@
+<section class="hero" [attr.aria-label]="'home.hero.ariaLabel' | translate">
+  <img
+    class="hero__image"
+    src="/assets/images/storyteller/hero-banner.jpg"
+    [alt]="'home.hero.imageAlt' | translate"
+    width="1440"
+    height="474"
+    fetchpriority="high"
+  />
+  <div
+    class="hero__actions"
+    role="group"
+    [attr.aria-label]="'home.hero.actionsLabel' | translate"
+  >
+    @for (action of actions; track action.labelKey) {
+      <button
+        class="hero__action"
+        [class.hero__action--pink]="action.color === 'pink'"
+        [class.hero__action--blue]="action.color === 'blue'"
+        [class.hero__action--yellow]="action.color === 'yellow'"
+        [class.hero__action--turquoise]="action.color === 'turquoise'"
+        type="button"
+      >
+        {{ action.labelKey | translate }}
+      </button>
+    }
+  </div>
+</section>

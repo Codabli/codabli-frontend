@@ -18,4 +18,22 @@ describe('Button', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render a labelled circular carousel chevron', () => {
+    fixture.componentRef.setInput('carouselIcon', 'left');
+    fixture.componentRef.setInput('ariaLabel', 'Actualité précédente');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.classList).toContain('button--carousel-icon');
+    expect(button.getAttribute('aria-label')).toBe('Actualité précédente');
+    expect(
+      button.querySelector(
+        '.button__carousel-icon--circle-chevron .fa-chevron-left',
+      ),
+    ).toBeTruthy();
+  });
 });

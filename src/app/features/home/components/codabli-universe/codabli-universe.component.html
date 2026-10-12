@@ -1,0 +1,29 @@
+<section class="universe" id="concept" aria-labelledby="universe-title">
+  <h1 class="universe__title" id="universe-title">
+    {{ "home.universe.title" | translate }}
+  </h1>
+  <div class="universe__content">
+    <div class="universe__visual">
+      <img
+        src="/assets/images/Video.png"
+        [alt]="'home.universe.imageAlt' | translate"
+        width="608"
+        height="342"
+        loading="lazy"
+      />
+    </div>
+    <div class="universe__copy">
+      <h3>{{ "home.universe.question" | translate }}</h3>
+      <p>
+        {{ "home.universe.descriptionFirst" | translate }}
+      </p>
+      <p>
+        {{ "home.universe.descriptionSecond" | translate }}
+      </p>
+      <button class="universe__link" type="button">
+        {{ "home.universe.discover" | translate }}
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</section>

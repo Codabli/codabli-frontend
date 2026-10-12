@@ -1,0 +1,81 @@
+<section class="shop" id="boutique" aria-labelledby="shop-title">
+  <div class="shop__heading">
+    <h2 id="shop-title">{{ "home.shop.title" | translate }}</h2>
+    <p>{{ "home.shop.subtitle" | translate }}</p>
+  </div>
+
+  <div
+    #shopTrack
+    class="shop__track"
+    role="region"
+    [attr.aria-label]="'home.shop.regionLabel' | translate"
+    tabindex="0"
+    (scroll)="onProductsScroll()"
+    (scrollend)="onProductsScrollEnd()"
+  >
+    @for (product of carouselProducts; track $index) {
+      <article
+        class="shop-card"
+        [class.shop-card--side]="isSideProduct($index)"
+        [attr.aria-hidden]="
+          $index < originalProductCount || $index >= originalProductCount * 2
+            ? 'true'
+            : null
+        "
+        [attr.inert]="
+          $index < originalProductCount || $index >= originalProductCount * 2
+            ? ''
+            : null
+        "
+      >
+        <img
+          class="shop-card__image"
+          [src]="product.image"
+          [alt]="product.imageAltKey | translate"
+          width="288"
+          height="219"
+          loading="lazy"
+        />
+        <div class="shop-card__details">
+          <h3>{{ product.nameKey | translate }}</h3>
+          <p class="shop-card__price">{{ product.price }} €</p>
+          <div class="shop-card__actions">
+            <button
+              class="shop-card__action shop-card__action--view"
+              type="button"
+            >
+              {{ "home.shop.view" | translate }}
+            </button>
+            <button
+              class="shop-card__action shop-card__action--adopt"
+              type="button"
+            >
+              {{ "home.shop.adopt" | translate }}
+            </button>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+
+  <div
+    class="shop__controls"
+    role="group"
+    [attr.aria-label]="'home.shop.navigationLabel' | translate"
+  >
+    <app-button
+      class="shop__control"
+      variant="tertiary"
+      carouselIcon="left"
+      [ariaLabel]="'home.shop.previous' | translate"
+      (click)="scrollProducts(-1)"
+    />
+    <app-button
+      class="shop__control"
+      variant="tertiary"
+      carouselIcon="right"
+      [ariaLabel]="'home.shop.next' | translate"
+      (click)="scrollProducts(1)"
+    />
+  </div>
+</section>

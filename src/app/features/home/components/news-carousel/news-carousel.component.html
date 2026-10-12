@@ -1,0 +1,72 @@
+<section class="news" id="actualite" aria-labelledby="news-title">
+  <div class="section-heading">
+    <h2 id="news-title">{{ "home.news.title" | translate }}</h2>
+    <button class="news__all-link" type="button">
+      {{ "home.news.all" | translate }}
+    </button>
+  </div>
+  <div class="news__track-container">
+    <div
+      #newsTrack
+      class="news__track"
+      role="region"
+      [attr.aria-label]="'home.news.regionLabel' | translate"
+      tabindex="0"
+      (scroll)="onNewsScroll()"
+    >
+      @for (item of carouselNews; track $index) {
+        <article
+          class="news-card"
+          [attr.aria-hidden]="
+            $index < originalNewsCount || $index >= originalNewsCount * 2
+              ? 'true'
+              : null
+          "
+          [attr.inert]="
+            $index < originalNewsCount || $index >= originalNewsCount * 2
+              ? ''
+              : null
+          "
+        >
+          <div class="news-card__media">
+            <img
+              class="news-card__image"
+              [src]="item.image"
+              alt=""
+              [width]="item.imageWidth"
+              [height]="item.imageHeight"
+              loading="lazy"
+            />
+          </div>
+          <div class="news-card__body">
+            <p class="news-card__date">{{ item.dateKey | translate }}</p>
+            <h3>{{ item.titleKey | translate }}</h3>
+            <button class="news-card__link" type="button">
+              {{ "home.news.readMore" | translate }}
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+  <div
+    class="news__controls"
+    role="group"
+    [attr.aria-label]="'home.news.navigationLabel' | translate"
+  >
+    <app-button
+      class="news__control"
+      variant="tertiary"
+      carouselIcon="left"
+      [ariaLabel]="'home.news.previous' | translate"
+      (click)="scrollNews(-1)"
+    />
+    <app-button
+      class="news__control"
+      variant="tertiary"
+      carouselIcon="right"
+      [ariaLabel]="'home.news.next' | translate"
+      (click)="scrollNews(1)"
+    />
+  </div>
+</section>

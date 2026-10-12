@@ -19,7 +19,8 @@
   box-shadow: var(--shadow-search);
 
   &:focus-within {
-    box-shadow: var(--shadow-search-focus);
+    outline: 2px solid var(--color-border-primary-focus);
+    outline-offset: 2px;
   }
 }
 

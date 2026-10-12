@@ -24,10 +24,10 @@
   --font-size-small: 14px;
   --font-size-large: 12px;
 
-  --font-family-primary: "Baloo";
-  --font-family-secondary: "Baloo 2";
-  --font-family-body: "Lato";
-  --font-family-price: "Satoshi";
+  --font-family-primary: 'Baloo';
+  --font-family-secondary: 'Baloo 2';
+  --font-family-body: 'Lato';
+  --font-family-price: 'Satoshi';
   --font-family-arial: Arial;
 
   --font-weight-regular: 400;
@@ -126,10 +126,9 @@
 
   --color-border-light: #eaeaea;
   --color-border-search: rgb(217, 204, 254);
-  --color-border-select-filters: #E0E0E0;
-
-  --shadow-search: 0 0 20px 0 rgb(17, 204, 254 / 0.5);
-  --shadow-search-focus: 0 0px 50px 0 rgb(17, 204, 254 / 0.7);
+  --color-border-select-filters: #e0e0e0;
+  
+  --shadow-card: 0 0 30px 0 rgb(0 0 0 / 15%);
 
   --radius-button: 100px;
   --radius-card: 32px;
@@ -170,14 +169,14 @@
   }
 }
 
-  /* Desktop large - 1440px */
-  @media (min-width: 1440px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 96px;
-    }
+/* Desktop large - 1440px */
+@media (min-width: 1440px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 96px;
   }
+}
 
 /* Desktop extra large - 1920px */
 @media (min-width: 1920px) {

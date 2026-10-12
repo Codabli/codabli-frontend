@@ -28,6 +28,11 @@ export const routes: Routes = [
             (m) => m.CREATE_DANCED_TALE_ROUTES,
           ),
       },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./pages/login/login.component').then((m) => m.LoginComponent),
+      },
     ],
   },
 ];

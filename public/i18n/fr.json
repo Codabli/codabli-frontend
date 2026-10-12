@@ -153,6 +153,36 @@
       }
     }
   },
+
+    "login": {
+    "title": "Connexion",
+    "description": "Connectez-vous à votre compte",
+    "breadcrumb": {
+    "label": "Fil d'Ariane",
+    "home": "Accueil"
+    },
+    "form": {
+      "email": {
+        "label": "Adresse mail",
+        "placeholder": "Renseignez votre adresse mail"
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Renseignez votre mot de passe"
+      },
+      "submit": "Me connecter"
+    },
+    "register": {
+      "title": "Ou créez un nouveau compte",
+      "teacher": "Compte enseignant",
+      "family": "Compte famille"
+    },
+      "errors": {
+      "invalidCredentials": "Adresse mail ou mot de passe incorrect.",
+      "unavailable": "Le service de connexion est momentanément indisponible. Réessayez dans quelques instants."
+    }
+  },
+
   "navbar": {
     "dancedTales": "Bibliothèque - Contes dansés",
     "interactiveGame": "Jeu Lecture Créative",

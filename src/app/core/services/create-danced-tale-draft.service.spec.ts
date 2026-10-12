@@ -47,6 +47,7 @@ describe('CreateDancedTaleDraftService', () => {
     expect(service.context()).toEqual(CONTEXT);
     expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({
       context: CONTEXT,
+      discovery: null,
       universe: null,
       structure: null,
       writing: null,
@@ -61,6 +62,18 @@ describe('CreateDancedTaleDraftService', () => {
 
     expect(service.context()).toEqual(CONTEXT);
     expect(service.universe()).toBeNull();
+    expect(service.discovery()).toBeNull();
+  });
+
+  it('enregistre la découverte artistique sans perdre le contexte', () => {
+    createService().saveContext(CONTEXT);
+    const discovery = { added: ['mirror'], done: ['mirror'], favorites: [] };
+
+    expect(createService().saveDiscovery(discovery)).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.discovery()).toEqual(discovery);
   });
 
   it('enregistre l\'univers sans perdre le contexte', () => {

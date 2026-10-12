@@ -2,6 +2,7 @@ import { CdkDrag, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop
 import { Component, computed, inject, model, signal } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { DanceFormat, DanceIntensity } from '../../../../models/interfaces/tale-staging.interface';
+import { normalizeText } from '../../normalize-text';
 import { CatalogDance, DANCE_CATALOG } from './dance-catalog';
 
 const FORMATS: DanceFormat[] = ['solo', 'duo', 'group'];
@@ -34,15 +35,15 @@ export class DanceLibrary {
   protected readonly intensity = signal<DanceIntensity | null>(null);
 
   protected readonly dances = computed(() => {
-    const search = normalize(this.search());
+    const search = normalizeText(this.search());
 
     return DANCE_CATALOG.filter(
       (dance) =>
         (!this.format() || dance.format === this.format()) &&
         (!this.intensity() || dance.intensity === this.intensity()) &&
         (!search ||
-          normalize(this.translate.instant(`createDancedTale.dances.catalog.${dance.id}.name`)).includes(search) ||
-          normalize(this.translate.instant(`createDancedTale.dances.catalog.${dance.id}.description`)).includes(search)),
+          normalizeText(this.translate.instant(`createDancedTale.dances.catalog.${dance.id}.name`)).includes(search) ||
+          normalizeText(this.translate.instant(`createDancedTale.dances.catalog.${dance.id}.description`)).includes(search)),
     );
   });
 
@@ -60,13 +61,4 @@ export class DanceLibrary {
   protected trackDance(dance: CatalogDance): string {
     return dance.id;
   }
-}
-
-/** Recherche insensible à la casse et aux accents. */
-function normalize(text: string): string {
-  return text
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .trim();
 }

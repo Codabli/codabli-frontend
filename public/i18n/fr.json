@@ -49,6 +49,10 @@
       "submit": "Envoyer ma demande"
     }
   },
+  "modal": {
+    "close": "Fermer"
+  },
+
   "richTextEditor": {
     "title": "Titre",
     "subtitle": "Sous-titre",
@@ -80,6 +84,137 @@
       "writing": "Écriture de l'histoire",
       "staging": "Adaptation et scénographie"
     },
+
+    "discovery": {
+      "title": "Découverte de la danse et du théâtre",
+      "description": "Avant d'écrire, faites vivre le thème avec le corps : vidéos, musiques, fiches et images pour s'initier au mouvement, à l'improvisation et à la scénographie.",
+      "ageNote": "Ressources adaptées aux {{range}} ans, la tranche d'âge choisie à l'étape 1.",
+      "disciplines": {
+        "title": "Catégories",
+        "all": "Toutes",
+        "dance": "Danse",
+        "theatre": "Théâtre",
+        "music": "Musique",
+        "scenography": "Scénographie"
+      },
+      "benefits": {
+        "title": "Pourquoi intégrer ?",
+        "emotions": "Favorise l'expression des émotions et l'empathie.",
+        "group": "Renforce la cohésion du groupe et l'écoute.",
+        "imagination": "Stimule l'imagination par le corps."
+      },
+      "catalogTitle": "Ressources recommandées",
+      "filters": {
+        "search": "Rechercher une ressource",
+        "searchPlaceholder": "Ex. : improvisation",
+        "format": "Format",
+        "allFormats": "Tous les formats",
+        "duration": "Durée de l'activité",
+        "allDurations": "Toutes les durées",
+        "reset": "Effacer les filtres"
+      },
+      "formats": {
+        "video": "Vidéo",
+        "audio": "Audio",
+        "pdf": "Fiche PDF",
+        "image": "Image"
+      },
+      "durations": {
+        "short": "10 min ou moins",
+        "medium": "De 11 à 20 min",
+        "long": "Plus de 20 min"
+      },
+      "minutes": "{{count}} min",
+      "ages": "{{ranges}} ans",
+      "count": "{{count}} ressource(s)",
+      "empty": "Aucune ressource ne correspond à ces filtres.",
+      "addedCount": "{{count}} ressource(s) de découverte ajoutée(s) au projet",
+      "actions": {
+        "view": "Voir",
+        "viewLabel": "Voir « {{title}} »",
+        "add": "Ajouter au projet",
+        "addedState": "Ajoutée au projet",
+        "addLabel": "Ajouter « {{title}} » au projet",
+        "done": "Réalisée",
+        "doneState": "Réalisée",
+        "favorite": "Favori",
+        "favoriteLabel": "Ajouter « {{title}} » aux favoris"
+      },
+      "announce": {
+        "added": {
+          "on": "« {{title}} » est ajoutée au projet.",
+          "off": "« {{title}} » est retirée du projet."
+        },
+        "done": {
+          "on": "« {{title}} » est marquée comme réalisée.",
+          "off": "« {{title}} » n'est plus marquée comme réalisée."
+        },
+        "favorites": {
+          "on": "« {{title}} » est ajoutée aux favoris.",
+          "off": "« {{title}} » est retirée des favoris."
+        }
+      },
+      "detail": {
+        "activity": "Proposition d'activité",
+        "instrumental": "Musique instrumentale, sans paroles.",
+        "openPdf": "Ouvrir la fiche PDF",
+        "newTab": "(s'ouvre dans un nouvel onglet)"
+      },
+      "catalog": {
+        "serpentineAnnabelle": {
+          "title": "La danse serpentine d'Annabelle",
+          "description": "Un des tout premiers films de danse (1894) : la danseuse fait tourner sa robe comme des ailes.",
+          "activity": "Regardez le film, puis chaque enfant prend un foulard et invente sa propre danse serpentine : tourner, onduler, s'envoler."
+        },
+        "serpentineLumiere": {
+          "title": "La danse des voiles",
+          "description": "Une danseuse filmée par les frères Lumière fait naître des formes avec de grands voiles.",
+          "activity": "Par deux, l'un fait bouger un tissu, l'autre l'imite avec tout son corps. Puis on échange les rôles."
+        },
+        "animalWakeUp": {
+          "title": "L'éveil corporel des animaux",
+          "description": "Une fiche pas à pas pour échauffer la classe en se déplaçant comme différents animaux.",
+          "activity": "Suivez les six étapes de la fiche, du chat qui s'étire à la tortue qui se repose."
+        },
+        "blueDancers": {
+          "title": "Les poses des danseuses",
+          "description": "Les Danseuses bleues d'Edgar Degas : observer les gestes et les postures des danseuses.",
+          "activity": "Chaque enfant choisit une danseuse du tableau et reproduit sa pose. Les autres devinent laquelle."
+        },
+        "pierrotMime": {
+          "title": "Le mime de Pierrot",
+          "description": "Pierrot, personnage de théâtre peint par Watteau : raconter une histoire sans un mot.",
+          "activity": "En silence, mimez une émotion de Pierrot (joie, surprise, tristesse) : la classe doit la reconnaître."
+        },
+        "livingStatues": {
+          "title": "Les statues qui s'éveillent",
+          "description": "Une musique lente (Gymnopédie n° 1 d'Erik Satie) pour un exercice d'improvisation théâtrale.",
+          "activity": "Les enfants sont des statues. Quand la musique joue, elles s'éveillent très lentement ; quand elle s'arrête, elles se figent."
+        },
+        "swanImprovisation": {
+          "title": "Danser comme un cygne",
+          "description": "Le Cygne de Camille Saint-Saëns, extrait du Carnaval des animaux.",
+          "activity": "Écoutez la musique les yeux fermés, puis dansez le cygne qui glisse sur l'eau, en gestes amples et doux."
+        },
+        "operaOrchestra": {
+          "title": "Les musiciens de l'orchestre",
+          "description": "L'Orchestre de l'Opéra d'Edgar Degas : les musiciens qui accompagnent la danse.",
+          "activity": "Repérez les instruments du tableau, puis inventez un rythme en percussions corporelles pour accompagner une danse."
+        },
+        "setDesign": {
+          "title": "Dessiner un décor de théâtre",
+          "description": "Un projet de décor de Philippe Chaperon pour l'opéra : colonnes, lumière et profondeur.",
+          "activity": "Dessinez le décor d'une scène de votre conte en pensant à ce qui est devant, au milieu et au fond du plateau."
+        },
+        "lightAndVeils": {
+          "title": "Lumière et costumes",
+          "description": "Comment un simple tissu et la lumière transforment le corps du danseur en paysage.",
+          "activity": "Avec une lampe de poche et des tissus, cherchez des ombres et des formes à intégrer à la mise en scène."
+        }
+      }
+    },
+    "credit": "{{author}}, {{date}} · {{licence}}",
+    "creditSource": "Voir la source",
 
     "comingSoon": {
       "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",

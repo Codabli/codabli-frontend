@@ -49,6 +49,10 @@
       "submit": "Send my request"
     }
   },
+  "modal": {
+    "close": "Close"
+  },
+
   "richTextEditor": {
     "title": "Heading",
     "subtitle": "Subheading",
@@ -80,6 +84,137 @@
       "writing": "Story writing",
       "staging": "Adaptation and staging"
     },
+
+    "discovery": {
+      "title": "Discovering dance and theatre",
+      "description": "Before writing, bring the theme to life with the body: videos, music, worksheets and pictures to explore movement, improvisation and stage design.",
+      "ageNote": "Resources suited to {{range}} year-olds, the age range chosen in step 1.",
+      "disciplines": {
+        "title": "Categories",
+        "all": "All",
+        "dance": "Dance",
+        "theatre": "Theatre",
+        "music": "Music",
+        "scenography": "Stage design"
+      },
+      "benefits": {
+        "title": "Why include it?",
+        "emotions": "Encourages expressing emotions and empathy.",
+        "group": "Strengthens group cohesion and listening.",
+        "imagination": "Sparks imagination through the body."
+      },
+      "catalogTitle": "Recommended resources",
+      "filters": {
+        "search": "Search for a resource",
+        "searchPlaceholder": "E.g. improvisation",
+        "format": "Format",
+        "allFormats": "All formats",
+        "duration": "Activity length",
+        "allDurations": "Any length",
+        "reset": "Clear filters"
+      },
+      "formats": {
+        "video": "Video",
+        "audio": "Audio",
+        "pdf": "PDF worksheet",
+        "image": "Image"
+      },
+      "durations": {
+        "short": "10 min or less",
+        "medium": "11 to 20 min",
+        "long": "Over 20 min"
+      },
+      "minutes": "{{count}} min",
+      "ages": "{{ranges}} years old",
+      "count": "{{count}} resource(s)",
+      "empty": "No resource matches these filters.",
+      "addedCount": "{{count}} discovery resource(s) added to the project",
+      "actions": {
+        "view": "View",
+        "viewLabel": "View \"{{title}}\"",
+        "add": "Add to project",
+        "addedState": "Added to project",
+        "addLabel": "Add \"{{title}}\" to the project",
+        "done": "Done",
+        "doneState": "Done",
+        "favorite": "Favourite",
+        "favoriteLabel": "Add \"{{title}}\" to favourites"
+      },
+      "announce": {
+        "added": {
+          "on": "\"{{title}}\" was added to the project.",
+          "off": "\"{{title}}\" was removed from the project."
+        },
+        "done": {
+          "on": "\"{{title}}\" is marked as done.",
+          "off": "\"{{title}}\" is no longer marked as done."
+        },
+        "favorites": {
+          "on": "\"{{title}}\" was added to favourites.",
+          "off": "\"{{title}}\" was removed from favourites."
+        }
+      },
+      "detail": {
+        "activity": "Suggested activity",
+        "instrumental": "Instrumental music, no lyrics.",
+        "openPdf": "Open the PDF worksheet",
+        "newTab": "(opens in a new tab)"
+      },
+      "catalog": {
+        "serpentineAnnabelle": {
+          "title": "Annabelle's serpentine dance",
+          "description": "One of the very first dance films (1894): the dancer swirls her dress like wings.",
+          "activity": "Watch the film, then each child takes a scarf and invents their own serpentine dance: spin, ripple, take flight."
+        },
+        "serpentineLumiere": {
+          "title": "The dance of the veils",
+          "description": "A dancer filmed by the Lumière brothers creates shapes with large veils.",
+          "activity": "In pairs, one moves a piece of fabric and the other mirrors it with their whole body. Then swap roles."
+        },
+        "animalWakeUp": {
+          "title": "Animal body warm-up",
+          "description": "A step-by-step worksheet to warm up the class by moving like different animals.",
+          "activity": "Follow the six steps of the worksheet, from the stretching cat to the resting tortoise."
+        },
+        "blueDancers": {
+          "title": "Dancers' poses",
+          "description": "Edgar Degas' Blue Dancers: observe the dancers' gestures and postures.",
+          "activity": "Each child picks a dancer from the painting and copies her pose. The others guess which one."
+        },
+        "pierrotMime": {
+          "title": "Pierrot's mime",
+          "description": "Pierrot, a theatre character painted by Watteau: telling a story without a word.",
+          "activity": "In silence, mime one of Pierrot's emotions (joy, surprise, sadness): the class has to recognise it."
+        },
+        "livingStatues": {
+          "title": "Statues coming to life",
+          "description": "Slow music (Erik Satie's Gymnopédie No. 1) for a drama improvisation exercise.",
+          "activity": "The children are statues. While the music plays, they slowly come to life; when it stops, they freeze."
+        },
+        "swanImprovisation": {
+          "title": "Dancing like a swan",
+          "description": "The Swan by Camille Saint-Saëns, from The Carnival of the Animals.",
+          "activity": "Listen to the music with your eyes closed, then dance the swan gliding on the water, with wide, gentle movements."
+        },
+        "operaOrchestra": {
+          "title": "The orchestra musicians",
+          "description": "Edgar Degas' The Orchestra at the Opera: the musicians who accompany the dance.",
+          "activity": "Spot the instruments in the painting, then invent a body percussion rhythm to accompany a dance."
+        },
+        "setDesign": {
+          "title": "Drawing a stage set",
+          "description": "A set design by Philippe Chaperon for the opera: columns, light and depth.",
+          "activity": "Draw the set for a scene of your tale, thinking about what is at the front, middle and back of the stage."
+        },
+        "lightAndVeils": {
+          "title": "Light and costumes",
+          "description": "How a simple piece of fabric and light turn the dancer's body into a landscape.",
+          "activity": "With a torch and some fabric, look for shadows and shapes to use in your staging."
+        }
+      }
+    },
+    "credit": "{{author}}, {{date}} · {{licence}}",
+    "creditSource": "View source",
 
     "comingSoon": {
       "message": "Your answers are saved. This step will be available soon.",

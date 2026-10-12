@@ -1,46 +1,14 @@
-import { afterNextRender, Component, ElementRef, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, Component, ElementRef, inject, Injector } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
-import { LanguageService } from '../../core/services/language.service';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
 import { Button } from '../../shared/components/button/button.component';
-import { FamilyAccountForm } from './family-account.form';
+import { AccountFormPage, accountErrorMessages } from '../../shared/forms/account-form-page';
+import { childBirthDateBounds, FamilyAccountForm } from './family-account.form';
 import { FAMILY_PLATFORM_GOALS, NOTIFICATION_PREFERENCES } from './family-account.options';
-
-export interface FieldError {
-  key: string;
-  params?: Record<string, unknown>;
-}
-
-const PASSWORD_RULES_ERROR: FieldError = {
-  key: 'familyAccount.errors.passwordRules',
-};
-
-// Ordre de priorité : on n'affiche qu'un message à la fois par champ.
-const ERROR_MESSAGES: Record<string, (error: any) => FieldError> = {
-  required: () => ({ key: 'familyAccount.errors.required' }),
-  email: () => ({ key: 'familyAccount.errors.email' }),
-  // Posée par le backend à la soumission (unicité de l'adresse en base).
-  emailTaken: () => ({ key: 'familyAccount.errors.emailTaken' }),
-  phone: () => ({ key: 'familyAccount.errors.phone' }),
-  futureDate: () => ({ key: 'familyAccount.errors.futureDate' }),
-  minlength: (error) => ({
-    key: 'familyAccount.errors.minLength',
-    params: { min: error.requiredLength },
-  }),
-  maxlength: (error) => ({
-    key: 'familyAccount.errors.maxLength',
-    params: { max: error.requiredLength },
-  }),
-  // Message unique pour toutes les règles du mot de passe.
-  missingUppercase: () => PASSWORD_RULES_ERROR,
-  missingLowercase: () => PASSWORD_RULES_ERROR,
-  missingDigit: () => PASSWORD_RULES_ERROR,
-  missingSpecialChar: () => PASSWORD_RULES_ERROR,
-};
 
 @Component({
   imports: [ReactiveFormsModule, RouterLink, TranslatePipe, Button],
@@ -48,15 +16,26 @@ const ERROR_MESSAGES: Record<string, (error: any) => FieldError> = {
   styleUrl: './family-account.component.scss',
   templateUrl: './family-account.component.html',
 })
-export class FamilyAccountComponent {
+export class FamilyAccountComponent extends AccountFormPage {
   private readonly subscriptionOfferService = inject(SubscriptionOfferService);
-  private readonly languageService = inject(LanguageService);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
+
+  protected readonly errorMessages = accountErrorMessages('familyAccount', {
+    // Posée par le backend à la soumission (unicité de l'adresse en base).
+    emailTaken: () => ({ key: 'familyAccount.errors.emailTaken' }),
+    phone: () => ({ key: 'familyAccount.errors.phone' }),
+    futureDate: () => ({ key: 'familyAccount.errors.futureDate' }),
+    childTooOld: (error) => ({
+      key: 'familyAccount.errors.childTooOld',
+      params: { maxAge: error.maxAge },
+    }),
+  });
 
   readonly languages = this.languageService.languages;
   readonly platformGoals = FAMILY_PLATFORM_GOALS;
   readonly notificationPreferences = NOTIFICATION_PREFERENCES;
+  readonly birthDateBounds = childBirthDateBounds();
 
   // En cas d'erreur, la zone propose seulement « Je choisirai plus tard ».
   subscriptionOffers = toSignal(
@@ -69,59 +48,25 @@ export class FamilyAccountComponent {
 
   familyAccountForm = new FamilyAccountForm(this.languageService.currentLanguage());
 
-  submitAttempted = signal(false);
-
-  formatPrice(amount: number): string {
-    return new Intl.NumberFormat(this.languageService.currentLanguage(), {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(amount);
-  }
-
-  hasError(control: AbstractControl): boolean {
-    return control.invalid && (control.touched || this.submitAttempted());
-  }
-
-  fieldError(control: AbstractControl): FieldError | null {
-    if (!this.hasError(control) || !control.errors) {
-      return null;
-    }
-
-    if (control === this.familyAccountForm.controls.password && control.hasError('minlength')) {
-      return PASSWORD_RULES_ERROR;
-    }
-
-    const errorName = Object.keys(ERROR_MESSAGES).find((name) => control.errors![name]);
-
-    return errorName ? ERROR_MESSAGES[errorName](control.errors[errorName]) : null;
-  }
-
   hasPasswordMismatch(): boolean {
-    const confirmation = this.familyAccountForm.controls.passwordConfirmation;
-
-    return (
-      this.familyAccountForm.hasError('passwordMismatch') &&
-      (confirmation.touched || this.submitAttempted())
+    return this.hasGroupError(
+      this.familyAccountForm,
+      'passwordMismatch',
+      this.familyAccountForm.controls.passwordConfirmation,
     );
   }
 
   addChild(): void {
     this.familyAccountForm.addChild();
-
-    const index = this.familyAccountForm.children.length - 1;
-
-    // Amène le focus sur le nouveau bloc pour les utilisateurs clavier / lecteur d'écran.
-    afterNextRender(
-      () =>
-        this.elementRef.nativeElement
-          .querySelector<HTMLElement>(`#child-${index}-lastName`)
-          ?.focus(),
-      { injector: this.injector },
-    );
+    this.focusChildField(this.familyAccountForm.children.length - 1);
   }
 
   removeChild(index: number): void {
     this.familyAccountForm.removeChild(index);
+
+    // Le bouton supprimé avait le focus : on le place sur l'enfant précédent
+    // (le premier bloc ne se supprime pas, index - 1 existe toujours).
+    this.focusChildField(index - 1);
   }
 
   onSubmit(): void {
@@ -133,11 +78,20 @@ export class FamilyAccountComponent {
       return;
     }
 
-    const familyAccount = this.familyAccountForm.toFamilyAccount();
+    // TODO: envoyer this.familyAccountForm.toFamilyAccount() à POST /api/auth/register (rôle
+    // parent) quand le DTO backend acceptera adresse, téléphone, consentements, préférences et
+    // profils enfants. Si l'e-mail est déjà utilisé : controls.email.setErrors({ emailTaken: true }).
+    // Ne pas journaliser le payload : il contient le mot de passe et des données de mineurs.
+  }
 
-    // TODO: brancher sur POST /api/auth/register (rôle parent) quand le DTO backend acceptera
-    // adresse, téléphone, consentements, préférences et profils enfants. En cas d'e-mail déjà
-    // utilisé, poser l'erreur sur le champ : controls.email.setErrors({ emailTaken: true }).
-    console.log(familyAccount);
+  /** Après le rendu, pour les utilisateurs clavier / lecteur d'écran. */
+  private focusChildField(index: number): void {
+    afterNextRender(
+      () =>
+        this.elementRef.nativeElement
+          .querySelector<HTMLElement>(`#child-${index}-lastName`)
+          ?.focus(),
+      { injector: this.injector },
+    );
   }
 }

@@ -2,9 +2,18 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export const PASSWORD_MIN_LENGTH = 12;
 
+/** Clés d'erreur posées par passwordStrengthValidator, affichées avec un message unique. */
+export const PASSWORD_RULE_ERRORS = [
+  'passwordTooShort',
+  'missingUppercase',
+  'missingLowercase',
+  'missingDigit',
+  'missingSpecialChar',
+] as const;
+
 /**
- * Au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.
- * Chaque règle manquante produit sa propre clé d'erreur pour un message précis.
+ * Au moins 12 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.
+ * Chaque règle manquante produit sa propre clé d'erreur (voir PASSWORD_RULE_ERRORS).
  */
 export function passwordStrengthValidator(): ValidatorFn {
   return (control: AbstractControl<string>): ValidationErrors | null => {
@@ -15,6 +24,10 @@ export function passwordStrengthValidator(): ValidatorFn {
     }
 
     const errors: ValidationErrors = {};
+
+    if (value.length < PASSWORD_MIN_LENGTH) {
+      errors['passwordTooShort'] = { requiredLength: PASSWORD_MIN_LENGTH };
+    }
 
     if (!/[A-Z]/.test(value)) {
       errors['missingUppercase'] = true;

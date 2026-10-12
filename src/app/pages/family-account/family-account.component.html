@@ -61,7 +61,9 @@
                   maxlength="50"
                   [placeholder]="'familyAccount.form.child.lastName.placeholder' | translate"
                   [attr.aria-invalid]="hasError(child.controls.lastName)"
-                  [attr.aria-describedby]="'child-' + i + '-lastName-error'"
+                  [attr.aria-describedby]="
+                    fieldError(child.controls.lastName) ? 'child-' + i + '-lastName-error' : null
+                  "
                   required
                 />
 
@@ -85,7 +87,9 @@
                   maxlength="50"
                   [placeholder]="'familyAccount.form.child.firstName.placeholder' | translate"
                   [attr.aria-invalid]="hasError(child.controls.firstName)"
-                  [attr.aria-describedby]="'child-' + i + '-firstName-error'"
+                  [attr.aria-describedby]="
+                    fieldError(child.controls.firstName) ? 'child-' + i + '-firstName-error' : null
+                  "
                   required
                 />
 
@@ -104,9 +108,13 @@
                 <input
                   [id]="'child-' + i + '-birthDate'"
                   type="date"
+                  [attr.min]="birthDateBounds.min"
+                  [attr.max]="birthDateBounds.max"
                   formControlName="birthDate"
                   [attr.aria-invalid]="hasError(child.controls.birthDate)"
-                  [attr.aria-describedby]="'child-' + i + '-birthDate-error'"
+                  [attr.aria-describedby]="
+                    fieldError(child.controls.birthDate) ? 'child-' + i + '-birthDate-error' : null
+                  "
                   required
                 />
 
@@ -146,7 +154,7 @@
             maxlength="50"
             [placeholder]="'familyAccount.form.lastName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.lastName)"
-            aria-describedby="lastName-error"
+            [attr.aria-describedby]="fieldError(f.lastName) ? 'lastName-error' : null"
             required
           />
 
@@ -168,7 +176,7 @@
             maxlength="50"
             [placeholder]="'familyAccount.form.firstName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.firstName)"
-            aria-describedby="firstName-error"
+            [attr.aria-describedby]="fieldError(f.firstName) ? 'firstName-error' : null"
             required
           />
 
@@ -190,7 +198,7 @@
             maxlength="150"
             [placeholder]="'familyAccount.form.address.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.address)"
-            aria-describedby="address-error"
+            [attr.aria-describedby]="fieldError(f.address) ? 'address-error' : null"
             required
           />
 
@@ -213,7 +221,7 @@
             maxlength="100"
             [placeholder]="'familyAccount.form.postalCodeCity.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.postalCodeCity)"
-            aria-describedby="postalCodeCity-error"
+            [attr.aria-describedby]="fieldError(f.postalCodeCity) ? 'postalCodeCity-error' : null"
             required
           />
 
@@ -234,7 +242,7 @@
             autocomplete="tel"
             [placeholder]="'familyAccount.form.phone.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.phone)"
-            aria-describedby="phone-error"
+            [attr.aria-describedby]="fieldError(f.phone) ? 'phone-error' : null"
           />
 
           @if (fieldError(f.phone); as error) {
@@ -272,7 +280,7 @@
             autocomplete="email"
             [placeholder]="'familyAccount.form.email.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.email)"
-            aria-describedby="email-error"
+            [attr.aria-describedby]="fieldError(f.email) ? 'email-error' : null"
             required
           />
 
@@ -302,7 +310,7 @@
             autocomplete="new-password"
             [placeholder]="'familyAccount.form.password.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.password)"
-            aria-describedby="password-error"
+            [attr.aria-describedby]="fieldError(f.password) ? 'password-error' : null"
             required
           />
 
@@ -325,7 +333,11 @@
             autocomplete="new-password"
             [placeholder]="'familyAccount.form.passwordConfirmation.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.passwordConfirmation) || hasPasswordMismatch()"
-            aria-describedby="passwordConfirmation-error"
+            [attr.aria-describedby]="
+              fieldError(f.passwordConfirmation) || hasPasswordMismatch()
+                ? 'passwordConfirmation-error'
+                : null
+            "
             required
           />
 
@@ -452,7 +464,7 @@
               type="checkbox"
               formControlName="termsAccepted"
               [attr.aria-invalid]="hasError(f.termsAccepted)"
-              aria-describedby="termsAccepted-error"
+              [attr.aria-describedby]="hasError(f.termsAccepted) ? 'termsAccepted-error' : null"
               required
             />
 
@@ -475,7 +487,9 @@
               type="checkbox"
               formControlName="salesTermsAccepted"
               [attr.aria-invalid]="hasError(f.salesTermsAccepted)"
-              aria-describedby="salesTermsAccepted-error"
+              [attr.aria-describedby]="
+                hasError(f.salesTermsAccepted) ? 'salesTermsAccepted-error' : null
+              "
               required
             />
 

@@ -1,5 +1,10 @@
 import { FormControl } from '@angular/forms';
-import { FamilyAccountForm, notInFutureValidator, phoneValidator } from './family-account.form';
+import {
+  childBirthDateBounds,
+  childBirthDateValidator,
+  FamilyAccountForm,
+  phoneValidator,
+} from './family-account.form';
 
 const VALID_PASSWORD = 'Codabli#2026ok';
 
@@ -72,6 +77,21 @@ describe('FamilyAccountForm', () => {
     expect(form.controls[field].valid).toBe(false);
   });
 
+  it.each(['lastName', 'firstName', 'address', 'postalCodeCity'] as const)(
+    'should reject %s made of spaces only',
+    (field) => {
+      form.controls[field].setValue('   ');
+
+      expect(form.controls[field].hasError('required')).toBe(true);
+    },
+  );
+
+  it('should measure name lengths without surrounding spaces', () => {
+    form.controls.lastName.setValue(' A ');
+
+    expect(form.controls.lastName.hasError('minlength')).toBe(true);
+  });
+
   it('should reject an invalid email', () => {
     form.controls.email.setValue('pas-un-email');
 
@@ -79,7 +99,7 @@ describe('FamilyAccountForm', () => {
   });
 
   it.each([
-    ['Court#1a', 'minlength'],
+    ['Court#1a', 'passwordTooShort'],
     ['codabli#2026ok', 'missingUppercase'],
     ['CODABLI#2026OK', 'missingLowercase'],
     ['Codabli#Deux!', 'missingDigit'],
@@ -183,16 +203,26 @@ describe('phoneValidator', () => {
   );
 });
 
-describe('notInFutureValidator', () => {
-  const validator = notInFutureValidator(() => new Date(2026, 9, 7));
+describe('childBirthDateValidator', () => {
+  const today = new Date(2026, 9, 7);
+  const validator = childBirthDateValidator(() => today);
 
-  it.each(['', '2026-10-07', '2019-01-31'])('should accept "%s"', (date) => {
+  it('should allow dates from 18 years ago up to today', () => {
+    expect(childBirthDateBounds(today)).toEqual({ min: '2008-10-07', max: '2026-10-07' });
+  });
+
+  it.each(['', '2026-10-07', '2019-01-31', '2008-10-07'])('should accept "%s"', (date) => {
     expect(validator(new FormControl(date))).toBeNull();
   });
 
   it('should reject a date after today', () => {
-    expect(validator(new FormControl('2026-10-08'))).toEqual({
-      futureDate: true,
-    });
+    expect(validator(new FormControl('2026-10-08'))).toEqual({ futureDate: true });
   });
+
+  it.each(['2008-10-06', '1900-01-01', '0202-05-14'])(
+    'should reject "%s" (18 or older)',
+    (date) => {
+      expect(validator(new FormControl(date))).toEqual({ childTooOld: { maxAge: 18 } });
+    },
+  );
 });

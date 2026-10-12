@@ -298,7 +298,7 @@
       "max": "The value must be less than or equal to {{max}}.",
       "minLength": "This field must contain at least {{min}} characters.",
       "maxLength": "This field must contain at most {{max}} characters.",
-      "passwordStrength": "The password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",
+      "passwordRules": "The password must contain at least 12 characters, including 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",
       "passwordMismatch": "Passwords do not match.",
       "termsRequired": "You must accept the terms to create your account."
     }
@@ -410,6 +410,7 @@
       "emailTaken": "This email is already in use.",
       "phone": "The phone number is not valid.",
       "futureDate": "The date of birth cannot be in the future.",
+      "childTooOld": "The child must be under {{maxAge}} years old.",
       "minLength": "This field must contain at least {{min}} characters.",
       "maxLength": "This field must contain at most {{max}} characters.",
       "passwordRules": "The password must contain at least 12 characters, including 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character.",

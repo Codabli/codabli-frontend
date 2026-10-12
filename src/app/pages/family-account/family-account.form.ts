@@ -9,30 +9,29 @@ import {
 } from '@angular/forms';
 import { AppLanguage } from '../../models/types/app-language.type';
 import {
-  PASSWORD_MIN_LENGTH,
   passwordMatchValidator,
   passwordStrengthValidator,
 } from '../../shared/validators/password.validators';
+import {
+  EMAIL_MAX_LENGTH,
+  NAME_VALIDATORS,
+  requiredTrimmedValidator,
+  trimmedLengthValidator,
+} from '../../shared/validators/text.validators';
 import {
   FamilyPlatformGoal,
   NOTIFICATION_PREFERENCES,
   NotificationPreference,
 } from './family-account.options';
 
-export const NAME_MIN_LENGTH = 2;
-export const NAME_MAX_LENGTH = 50;
-export const EMAIL_MAX_LENGTH = 254;
 export const ADDRESS_MAX_LENGTH = 150;
 export const POSTAL_CODE_CITY_MAX_LENGTH = 100;
 
+/** Les profils enfants concernent les moins de 18 ans. */
+export const CHILD_MAX_AGE = 18;
+
 // 10 chiffres commençant par 0, ou indicatif +33 ; espaces, points et tirets tolérés.
 const FRENCH_PHONE_PATTERN = /^(?:\+33\s?|0)[1-9](?:[\s.-]?\d{2}){4}$/;
-
-const nameValidators = [
-  Validators.required,
-  Validators.minLength(NAME_MIN_LENGTH),
-  Validators.maxLength(NAME_MAX_LENGTH),
-];
 
 /** Numéro de téléphone français, optionnel. */
 export function phoneValidator(): ValidatorFn {
@@ -43,19 +42,43 @@ export function phoneValidator(): ValidatorFn {
   };
 }
 
-/** Date au format AAAA-MM-JJ (valeur d'un input date) qui ne doit pas être dans le futur. */
-export function notInFutureValidator(today: () => Date = () => new Date()): ValidatorFn {
+/** Date locale au format AAAA-MM-JJ, celui des inputs de type date. */
+export function toIsoDate(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+/** Bornes de la date de naissance d'un enfant : il y a CHILD_MAX_AGE ans → aujourd'hui. */
+export function childBirthDateBounds(today: Date = new Date()): { min: string; max: string } {
+  const oldest = new Date(today);
+  oldest.setFullYear(today.getFullYear() - CHILD_MAX_AGE);
+
+  return { min: toIsoDate(oldest), max: toIsoDate(today) };
+}
+
+/**
+ * Date de naissance d'un enfant (valeur AAAA-MM-JJ d'un input date) :
+ * ni dans le futur, ni il y a plus de CHILD_MAX_AGE ans (écarte aussi les années mal saisies).
+ */
+export function childBirthDateValidator(today: () => Date = () => new Date()): ValidatorFn {
   return (control: AbstractControl<string>): ValidationErrors | null => {
     if (!control.value) {
       return null;
     }
 
-    const now = today();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const todayIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const { min, max } = childBirthDateBounds(today());
 
     // Les dates ISO se comparent correctement en tant que chaînes.
-    return control.value > todayIso ? { futureDate: true } : null;
+    if (control.value > max) {
+      return { futureDate: true };
+    }
+
+    if (control.value < min) {
+      return { childTooOld: { maxAge: CHILD_MAX_AGE } };
+    }
+
+    return null;
   };
 }
 
@@ -94,15 +117,15 @@ export function createChildForm(): ChildForm {
   return new FormGroup({
     lastName: new FormControl('', {
       nonNullable: true,
-      validators: nameValidators,
+      validators: NAME_VALIDATORS,
     }),
     firstName: new FormControl('', {
       nonNullable: true,
-      validators: nameValidators,
+      validators: NAME_VALIDATORS,
     }),
     birthDate: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, notInFutureValidator()],
+      validators: [Validators.required, childBirthDateValidator()],
     }),
   });
 }
@@ -132,23 +155,26 @@ export class FamilyAccountForm extends FormGroup<{
 
         lastName: new FormControl('', {
           nonNullable: true,
-          validators: nameValidators,
+          validators: NAME_VALIDATORS,
         }),
 
         firstName: new FormControl('', {
           nonNullable: true,
-          validators: nameValidators,
+          validators: NAME_VALIDATORS,
         }),
 
         // Adresse requise pour la facturation et les livraisons de la boutique.
         address: new FormControl('', {
           nonNullable: true,
-          validators: [Validators.required, Validators.maxLength(ADDRESS_MAX_LENGTH)],
+          validators: [requiredTrimmedValidator(), trimmedLengthValidator(0, ADDRESS_MAX_LENGTH)],
         }),
 
         postalCodeCity: new FormControl('', {
           nonNullable: true,
-          validators: [Validators.required, Validators.maxLength(POSTAL_CODE_CITY_MAX_LENGTH)],
+          validators: [
+            requiredTrimmedValidator(),
+            trimmedLengthValidator(0, POSTAL_CODE_CITY_MAX_LENGTH),
+          ],
         }),
 
         phone: new FormControl('', {
@@ -169,11 +195,7 @@ export class FamilyAccountForm extends FormGroup<{
 
         password: new FormControl('', {
           nonNullable: true,
-          validators: [
-            Validators.required,
-            Validators.minLength(PASSWORD_MIN_LENGTH),
-            passwordStrengthValidator(),
-          ],
+          validators: [Validators.required, passwordStrengthValidator()],
         }),
 
         passwordConfirmation: new FormControl('', {

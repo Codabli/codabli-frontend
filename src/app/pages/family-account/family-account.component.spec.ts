@@ -113,6 +113,8 @@ describe('FamilyAccountComponent', () => {
 
     expect(element.querySelectorAll('.child-card').length).toBe(1);
     expect(component.familyAccountForm.children.length).toBe(1);
+    // Le bouton supprimé avait le focus : il passe sur l'enfant précédent.
+    expect(document.activeElement?.id).toBe('child-0-lastName');
   });
 
   it('should list only the active family subscription offers', async () => {
@@ -132,9 +134,15 @@ describe('FamilyAccountComponent', () => {
     await respond();
 
     expect(element.querySelectorAll('.form-field__error').length).toBe(0);
+    // Pas de référence vers un message d'erreur qui n'est pas rendu.
+    expect(element.querySelectorAll('[aria-describedby]').length).toBe(0);
 
     await submit();
 
+    expect(element.querySelector('#lastName')!.getAttribute('aria-describedby')).toBe(
+      'lastName-error',
+    );
+    expect(errorText('lastName')).toBe('familyAccount.errors.required');
     expect(errorText('child-0-firstName')).toBe('familyAccount.errors.required');
     expect(errorText('termsAccepted')).toBe('familyAccount.errors.termsRequired');
     expect(errorText('salesTermsAccepted')).toBe('familyAccount.errors.salesTermsRequired');
@@ -162,12 +170,36 @@ describe('FamilyAccountComponent', () => {
     expect(errorText('email')).toBe('familyAccount.errors.emailTaken');
   });
 
-  it('should not send the account when the form is invalid', async () => {
+  it('should bound the child birth date to the last 18 years', async () => {
     await respond();
-    const toFamilyAccount = vi.spyOn(component.familyAccountForm, 'toFamilyAccount');
 
+    const birthDate = element.querySelector<HTMLInputElement>('#child-0-birthDate')!;
+
+    expect(birthDate.min).toBe(component.birthDateBounds.min);
+    expect(birthDate.max).toBe(component.birthDateBounds.max);
+  });
+
+  it('should never log the account, which holds the password and children data', async () => {
+    await respond();
+    const log = vi.spyOn(console, 'log');
+    const password = 'Codabli#2026ok';
+
+    component.familyAccountForm.patchValue({
+      children: [{ lastName: 'Martin', firstName: 'Zoé', birthDate: '2018-04-12' }],
+      lastName: 'Martin',
+      firstName: 'Léa',
+      address: '12 rue des Lilas',
+      postalCodeCity: '37000 Tours',
+      email: 'lea.martin@example.fr',
+      password,
+      passwordConfirmation: password,
+      termsAccepted: true,
+      salesTermsAccepted: true,
+    });
     await submit();
 
-    expect(toFamilyAccount).not.toHaveBeenCalled();
+    expect(component.familyAccountForm.valid).toBe(true);
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
   });
 });

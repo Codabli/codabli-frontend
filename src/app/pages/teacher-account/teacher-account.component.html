@@ -32,7 +32,7 @@
             id="schoolId"
             formControlName="schoolId"
             [attr.aria-invalid]="hasError(f.schoolId)"
-            aria-describedby="schoolId-error"
+            [attr.aria-describedby]="fieldError(f.schoolId) || schoolsUnavailable() ? 'schoolId-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
@@ -64,7 +64,7 @@
             id="academy"
             formControlName="academy"
             [attr.aria-invalid]="hasError(f.academy)"
-            aria-describedby="academy-error"
+            [attr.aria-describedby]="fieldError(f.academy) ? 'academy-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
@@ -90,7 +90,7 @@
             id="ageRange"
             formControlName="ageRange"
             [attr.aria-invalid]="hasError(f.ageRange)"
-            aria-describedby="ageRange-error"
+            [attr.aria-describedby]="fieldError(f.ageRange) ? 'ageRange-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
@@ -124,7 +124,7 @@
             formControlName="girlsCount"
             [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.girlsCount)"
-            aria-describedby="girlsCount-error"
+            [attr.aria-describedby]="fieldError(f.girlsCount) ? 'girlsCount-error' : null"
             required
           />
 
@@ -148,7 +148,7 @@
             formControlName="boysCount"
             [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.boysCount)"
-            aria-describedby="boysCount-error"
+            [attr.aria-describedby]="fieldError(f.boysCount) ? 'boysCount-error' : null"
             required
           />
 
@@ -195,7 +195,7 @@
             maxlength="50"
             [placeholder]="'teacherAccount.form.lastName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.lastName)"
-            aria-describedby="lastName-error"
+            [attr.aria-describedby]="fieldError(f.lastName) ? 'lastName-error' : null"
             required
           />
 
@@ -217,7 +217,7 @@
             maxlength="50"
             [placeholder]="'teacherAccount.form.firstName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.firstName)"
-            aria-describedby="firstName-error"
+            [attr.aria-describedby]="fieldError(f.firstName) ? 'firstName-error' : null"
             required
           />
 
@@ -238,7 +238,7 @@
             autocomplete="email"
             [placeholder]="'teacherAccount.form.email.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.email)"
-            aria-describedby="email-error"
+            [attr.aria-describedby]="fieldError(f.email) ? 'email-error' : null"
             required
           />
 
@@ -268,7 +268,7 @@
             autocomplete="new-password"
             [placeholder]="'teacherAccount.form.password.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.password)"
-            aria-describedby="password-error"
+            [attr.aria-describedby]="fieldError(f.password) ? 'password-error' : null"
             required
           />
 
@@ -291,7 +291,7 @@
             autocomplete="new-password"
             [placeholder]="'teacherAccount.form.passwordConfirmation.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.passwordConfirmation) || hasPasswordMismatch()"
-            aria-describedby="passwordConfirmation-error"
+            [attr.aria-describedby]="fieldError(f.passwordConfirmation) || hasPasswordMismatch() ? 'passwordConfirmation-error' : null"
             required
           />
 
@@ -399,7 +399,7 @@
             type="checkbox"
             formControlName="termsAccepted"
             [attr.aria-invalid]="hasError(f.termsAccepted)"
-            aria-describedby="termsAccepted-error"
+            [attr.aria-describedby]="hasError(f.termsAccepted) ? 'termsAccepted-error' : null"
             required
           />
 

@@ -298,7 +298,7 @@
       "max": "La valeur doit être inférieure ou égale à {{max}}.",
       "minLength": "Ce champ doit contenir au moins {{min}} caractères.",
       "maxLength": "Ce champ doit contenir au maximum {{max}} caractères.",
-      "passwordStrength": "Le mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",
+      "passwordRules": "Le mot de passe doit contenir au moins 12 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",
       "passwordMismatch": "Les mots de passe ne correspondent pas.",
       "termsRequired": "Vous devez accepter les conditions pour créer votre compte."
     }
@@ -410,6 +410,7 @@
       "emailTaken": "Cet e-mail est déjà utilisé.",
       "phone": "Le numéro de téléphone n'est pas valide.",
       "futureDate": "La date de naissance ne peut pas être dans le futur.",
+      "childTooOld": "L'enfant doit avoir moins de {{maxAge}} ans.",
       "minLength": "Ce champ doit contenir au moins {{min}} caractères.",
       "maxLength": "Ce champ doit contenir au maximum {{max}} caractères.",
       "passwordRules": "Le mot de passe doit contenir au moins 12 caractères, dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.",

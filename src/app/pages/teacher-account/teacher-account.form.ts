@@ -1,9 +1,9 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
-  PASSWORD_MIN_LENGTH,
   passwordMatchValidator,
   passwordStrengthValidator,
 } from '../../shared/validators/password.validators';
+import { EMAIL_MAX_LENGTH, NAME_VALIDATORS } from '../../shared/validators/text.validators';
 import {
   Academy,
   ACCESSIBILITY_NEEDS,
@@ -12,16 +12,7 @@ import {
   PlatformGoal,
 } from './teacher-account.options';
 
-export const NAME_MIN_LENGTH = 2;
-export const NAME_MAX_LENGTH = 50;
-export const EMAIL_MAX_LENGTH = 254;
 export const STUDENT_COUNT_MAX = 99;
-
-const nameValidators = [
-  Validators.required,
-  Validators.minLength(NAME_MIN_LENGTH),
-  Validators.maxLength(NAME_MAX_LENGTH),
-];
 
 const studentCountValidators = [
   Validators.required,
@@ -79,9 +70,9 @@ export class TeacherAccountForm extends FormGroup<{
 
         platformGoal: new FormControl<PlatformGoal | null>(null),
 
-        lastName: new FormControl('', { nonNullable: true, validators: nameValidators }),
+        lastName: new FormControl('', { nonNullable: true, validators: NAME_VALIDATORS }),
 
-        firstName: new FormControl('', { nonNullable: true, validators: nameValidators }),
+        firstName: new FormControl('', { nonNullable: true, validators: NAME_VALIDATORS }),
 
         email: new FormControl('', {
           nonNullable: true,
@@ -94,11 +85,7 @@ export class TeacherAccountForm extends FormGroup<{
 
         password: new FormControl('', {
           nonNullable: true,
-          validators: [
-            Validators.required,
-            Validators.minLength(PASSWORD_MIN_LENGTH),
-            passwordStrengthValidator(),
-          ],
+          validators: [Validators.required, passwordStrengthValidator()],
         }),
 
         passwordConfirmation: new FormControl('', {
@@ -108,7 +95,10 @@ export class TeacherAccountForm extends FormGroup<{
 
         accessibility: new FormGroup(
           Object.fromEntries(
-            ACCESSIBILITY_NEEDS.map((need) => [need, new FormControl(false, { nonNullable: true })]),
+            ACCESSIBILITY_NEEDS.map((need) => [
+              need,
+              new FormControl(false, { nonNullable: true }),
+            ]),
           ) as AccessibilityControls,
         ),
 

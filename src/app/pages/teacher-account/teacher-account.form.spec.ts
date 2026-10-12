@@ -76,6 +76,7 @@ describe('TeacherAccountForm', () => {
     ['firstName', ''],
     ['firstName', 'B'],
     ['firstName', 'B'.repeat(51)],
+    ['lastName', '   '],
   ] as const)('should reject %s = "%s"', (field, value) => {
     form.controls[field].setValue(value);
 
@@ -89,7 +90,7 @@ describe('TeacherAccountForm', () => {
   });
 
   it.each([
-    ['Court#1a', 'minlength'],
+    ['Court#1a', 'passwordTooShort'],
     ['codabli#2026ok', 'missingUppercase'],
     ['CODABLI#2026OK', 'missingLowercase'],
     ['Codabli#Deux!', 'missingDigit'],

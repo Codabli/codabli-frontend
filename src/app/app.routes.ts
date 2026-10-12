@@ -20,8 +20,7 @@ export const routes: Routes = [
             (m) => m.FamilyAccountComponent,
           ),
       },
-    ],
-  }
+      {
         path: 'create-danced-tale',
         loadChildren: () =>
           import('./pages/create-danced-tale/create-danced-tale.routes').then(

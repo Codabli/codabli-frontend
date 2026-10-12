@@ -1,5 +1,13 @@
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Component, ElementRef, inject, signal, viewChild, HostListener } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SearchInputComponent } from '@shared/ui/search-input/search-input.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
@@ -14,11 +22,16 @@ import { LanguageService } from '@core/services/language.service';
 })
 export class HeaderComponent {
   readonly languageService = inject(LanguageService);
+  private readonly viewportScroller = inject(ViewportScroller);
 
   readonly isLanguageMenuOpen = signal(false);
 
   private readonly languageSelector =
-  viewChild<ElementRef>('languageSelector');
+    viewChild<ElementRef<HTMLElement>>('languageSelector');
+
+  scrollToTop(): void {
+    this.viewportScroller.scrollToPosition([0, 0], { behavior: 'smooth' });
+  }
 
   toggleLanguageMenu(): void {
     this.isLanguageMenuOpen.update((isOpen) => !isOpen);

@@ -6,7 +6,7 @@ import { ProjectContext } from '../../../models/interfaces/project-context.inter
 export const SECRET_INGREDIENT_MAX_LENGTH = 40;
 
 // Validators.required accepte une chaîne composée d'espaces.
-function requiredText(control: AbstractControl<string>): ValidationErrors | null {
+export function requiredText(control: AbstractControl<string>): ValidationErrors | null {
   return control.value?.trim() ? null : { required: true };
 }
 

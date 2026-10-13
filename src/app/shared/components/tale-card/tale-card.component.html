@@ -16,17 +16,17 @@
 
   <div class="card__social">
     <div class="card__like-container">
-    <button
-      type="button"
-      class="card__like"
-      aria-label="J’aime"
-    >
-      <app-icon
-        name="heart"
-        [size]="24"
-      />
-    </button>
-    <span>{{ tale().likes }}</span>
+      <button
+        type="button"
+        class="card__like"
+        aria-label="J’aime"
+      >
+        <app-icon
+          name="heart"
+          [size]="24"
+        />
+      </button>
+      <span>{{ tale().likes }}</span>
     </div>
 
     <button
@@ -50,9 +50,9 @@
   </div>
 
   <div class="card__content">
-    <h3 class="card__title">
+    <h5 class="card__title">
       {{ tale().title }}
-    </h3>
+    </h5>
 
     <span class="card__title-decoration"></span>
 
@@ -67,8 +67,39 @@
   </div>
 
   <footer class="card__footer">
-    <app-button variant="primary">Consulter</app-button>
+    @if (locked()) {
+      <div class="card__locked">
+        <p class="card__locked-message">
+          <app-icon
+            name="lock"
+            [size]="24"
+          />
+          {{ 'library.card.loginRequired' | translate }}
+        </p>
 
-    <app-button variant="secondary">Adopter ce conte</app-button>
+        <div class="card__locked-actions">
+          <app-button
+            variant="tertiary"
+            (click)="login.emit()"
+          >
+            {{ 'auth.login' | translate }}
+          </app-button>
+        </div>
+      </div>
+    } @else {
+      <app-button
+        variant="primary"
+        (click)="consult.emit()"
+      >
+        {{ 'library.card.consult' | translate }}
+      </app-button>
+
+      <app-button
+        variant="secondary"
+        (click)="adopt.emit()"
+      >
+        {{ 'library.card.adopt' | translate }}
+      </app-button>
+    }
   </footer>
 </article>

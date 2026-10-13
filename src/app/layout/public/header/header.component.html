@@ -16,6 +16,7 @@
         class="header__brand"
         routerLink="/"
         aria-label="Retour à l'accueil"
+        (click)="scrollToTop()"
       >
         <img
           class="header__logo"
@@ -29,7 +30,10 @@
       </div>
 
       <div class="header__actions">
-        <div class="header__language">
+        <div
+          #languageSelector
+          class="header__language"
+        >
           <span class="header__language-code">
             {{ languageService.currentLanguage() }}
           </span>
@@ -58,8 +62,12 @@
                   class="header__language-option"
                   type="button"
                   role="menuitemradio"
-                  [attr.aria-checked]="languageService.currentLanguage() === item.code"
-                  [class.header__language-option--active]="languageService.currentLanguage() === item.code"
+                  [attr.aria-checked]="
+                    languageService.currentLanguage() === item.code
+                  "
+                  [class.header__language-option--active]="
+                    languageService.currentLanguage() === item.code
+                  "
                   (click)="selectLanguage(item.code)"
                 >
                   {{ item.label }}
@@ -68,29 +76,28 @@
             </div>
           }
         </div>
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir le panier"
+        >
+          <app-icon
+            name="shop"
+            [size]="24"
+          />
+        </button>
+
+        <button
+          class="header__action"
+          type="button"
+          aria-label="Ouvrir mon profil"
+        >
+          <app-icon
+            name="profile"
+            [size]="24"
+          />
+        </button>
       </div>
-
-      <button
-        class="header__action"
-        type="button"
-        aria-label="Ouvrir le panier"
-      >
-        <app-icon
-          name="shop"
-          [size]="24"
-        />
-      </button>
-
-      <button
-        class="header__action"
-        type="button"
-        aria-label="Ouvrir mon profil"
-      >
-        <app-icon
-          name="profile"
-          [size]="24"
-        />
-      </button>
     </div>
   </div>
   <app-navbar />

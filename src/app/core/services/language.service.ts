@@ -1,15 +1,17 @@
 import { Injectable, inject, signal } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { AppLanguage } from '../../models/types/app-language.type';
-import type { LanguageOption } from '../../models/interfaces/language-option.interface';
+import { AppLanguage } from '@models/types/app-language.type';
+import type { LanguageOption } from '@models/interfaces/language-option.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
   private readonly translate = inject(TranslateService);
+  private readonly document = inject(DOCUMENT);
 
-   readonly languages: readonly LanguageOption[] = [
+  readonly languages: readonly LanguageOption[] = [
     { code: 'fr', label: 'Français' },
     { code: 'en', label: 'English' },
   ];
@@ -19,5 +21,6 @@ export class LanguageService {
   changeLanguage(language: AppLanguage): void {
     this.translate.use(language);
     this.currentLanguage.set(language);
+    this.document.documentElement.lang = language;
   }
 }

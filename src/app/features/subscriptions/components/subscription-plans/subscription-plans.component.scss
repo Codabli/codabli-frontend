@@ -1,0 +1,153 @@
+.subscriptions {
+  padding: var(--spacing-3xl) var(--spacing-4xl);
+  background: var(--color-bg-warm-surface);
+
+  > h2 {
+    margin: 0 0 var(--spacing-2xl);
+    color: var(--font-color-primary);
+    font-family: var(--font-family-primary), sans-serif;
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-h1);
+    text-align: center;
+  }
+}
+
+.subscriptions__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--grid-gutter);
+  max-width: 1248px;
+  margin-inline: auto;
+}
+
+.plan-card {
+  --plan-accent: var(--color-bg-primary-default);
+
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 48px;
+  padding: var(--spacing-xl) clamp(20px, 3vw, 40px);
+  background: var(--color-bg-surface);
+  color: var(--font-color-text-anthracite);
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-body);
+  text-align: center;
+
+  h3 {
+    margin: 0;
+    color: var(--font-color-primary);
+    font-family: var(--font-family-secondary), sans-serif;
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h4);
+  }
+}
+
+.plan-card--pink {
+  --plan-accent: var(--color-bg-subscription-pink);
+}
+
+.plan-card--blue {
+  --plan-accent: var(--color-bg-tertiary-hover);
+}
+
+.plan-card__accent {
+  width: 40px;
+  height: 8px;
+  margin-top: var(--spacing-sm);
+  background: var(--plan-accent);
+}
+
+.plan-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 0;
+  color: var(--font-color-primary);
+  font-family: var(--font-family-price), sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+}
+
+.plan-card__amount {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+}
+
+.plan-card__description {
+  min-height: 3lh;
+  margin: var(--spacing-md) 0 var(--spacing-xl);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.plan-card__benefits {
+  width: fit-content;
+  margin: 0 auto var(--spacing-xl);
+  padding-left: 1.25em;
+  text-align: left;
+
+  li {
+    padding-left: var(--spacing-xs);
+    line-height: var(--line-height-body);
+  }
+}
+
+.plan-card__button {
+  min-height: 52px;
+  margin-top: auto;
+  border: 0;
+  border-radius: var(--radius-button);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--plan-accent);
+  color: var(--color-text-primary-default);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: var(--spacing-xs);
+  }
+}
+
+@media (max-width: 900px) {
+  .subscriptions {
+    padding-inline: var(--grid-margin);
+  }
+
+  .subscriptions__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 700px;
+    gap: var(--spacing-lg);
+  }
+
+  .plan-card:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - var(--spacing-md));
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .subscriptions > h2 {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .subscriptions__grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 420px;
+  }
+
+  .plan-card:last-child {
+    grid-column: auto;
+    width: auto;
+  }
+
+  .plan-card__description {
+    min-height: 0;
+  }
+}

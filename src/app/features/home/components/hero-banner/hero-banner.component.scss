@@ -1,0 +1,117 @@
+.hero {
+  position: relative;
+  margin-bottom: 92px;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  height: clamp(300px, 32vw, 460px);
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero__actions {
+  position: absolute;
+  right: 0;
+  bottom: 30px;
+  left: 0;
+  display: grid;
+  box-sizing: border-box;
+  width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  padding-inline: clamp(24px, 5vw, 80px);
+  margin: 0 auto;
+}
+
+.hero__action {
+  --hero-action-offset: 18px;
+
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 30px;
+  color: var(--color-text-primary-default);
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  text-align: center;
+  cursor: pointer;
+  transform: translateY(var(--hero-action-offset));
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: 3px;
+  }
+}
+
+.hero__action:first-child,
+.hero__action:last-child {
+  --hero-action-offset: -18px;
+}
+
+.hero__action--pink {
+  background: var(--color-bg-subscription-pink);
+}
+
+.hero__action--blue {
+  background: var(--color-bg-tertiary-hover);
+}
+
+.hero__action--yellow {
+  background: var(--color-bg-primary-default);
+}
+
+.hero__action--turquoise {
+  background: var(--color-bg-secondary-default);
+}
+
+@media (max-width: 1100px) {
+  .hero__actions {
+    right: var(--grid-margin);
+    bottom: 20px;
+    left: var(--grid-margin);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(760px, calc(100% - 2 * var(--grid-margin)));
+    gap: 12px;
+    padding: 0;
+  }
+
+  .hero {
+    margin-bottom: 24px;
+  }
+
+  .hero__action {
+    --hero-action-offset: 0px;
+
+    min-height: 64px;
+    padding: 10px 16px;
+    font-size: clamp(15px, 2vw, 18px);
+  }
+}
+
+@media (max-width: 520px) {
+  .hero__image {
+    height: 270px;
+    object-position: center;
+  }
+
+  .hero__actions {
+    right: 16px;
+    bottom: 12px;
+    left: 16px;
+    width: auto;
+    gap: 8px;
+  }
+
+  .hero__action {
+    min-height: 56px;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}

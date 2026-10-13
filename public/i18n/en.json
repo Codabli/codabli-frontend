@@ -53,6 +53,7 @@
     "title": "Create your own dance tale",
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
     "next": "Next step",
+    "previous": "Previous step",
 
     "steps": {
       "label": "Dance tale creation steps",
@@ -68,8 +69,99 @@
     },
 
     "comingSoon": {
-      "message": "Your project context has been saved. This step will be available soon.",
-      "back": "Back to the project context"
+      "message": "Your answers are saved. This step will be available soon.",
+      "back": "Back to the “{{step}}” step",
+      "next": "Continue to the “{{step}}” step"
+    },
+
+    "universe": {
+      "title": "Build the world of your tale",
+      "theme": "Theme:",
+      "description": "Briefly describe the places, characters, time period and important objects of your story.",
+      "requiredHint": "Fields marked with an asterisk (*) are required. Cards left empty are ignored.",
+      "storageFull": "The draft could not be saved on this device: the images take up too much space. Remove one or more images and try again.",
+      "sections": {
+        "places": {
+          "title": "Places",
+          "question": "Where does the story take place?",
+          "add": "Add a place",
+          "card": "Place {{number}}",
+          "name": "Place name",
+          "namePlaceholder": "E.g. The Whispering Forest",
+          "descriptionPlaceholder": "E.g. A forest where the trees whisper secrets…",
+          "empty": "No places yet."
+        },
+        "characters": {
+          "title": "Characters",
+          "question": "Who lives this story?",
+          "add": "Add a character",
+          "card": "Character {{number}}",
+          "name": "Character name",
+          "namePlaceholder": "E.g. King Arthur",
+          "descriptionPlaceholder": "E.g. A king loved by his court…",
+          "empty": "No characters yet."
+        },
+        "periods": {
+          "title": "Time period",
+          "question": "When does the story take place?",
+          "add": "Add a time period",
+          "card": "Time period {{number}}",
+          "name": "Time period",
+          "namePlaceholder": "E.g. The Middle Ages",
+          "descriptionPlaceholder": "E.g. In those days, knights roamed the kingdom…",
+          "empty": "No time period yet."
+        },
+        "objects": {
+          "title": "Important objects",
+          "question": "Which objects matter in the story?",
+          "add": "Add an object",
+          "card": "Object {{number}}",
+          "name": "Object name",
+          "namePlaceholder": "E.g. The sword Excalibur",
+          "descriptionPlaceholder": "E.g. A sword stuck in a stone that only the future king can pull out…",
+          "empty": "No objects yet."
+        }
+      },
+      "card": {
+        "remove": "Delete: {{card}}",
+        "ideas": {
+          "label": "Generate ideas",
+          "soon": "(coming soon)"
+        },
+        "nameError": "Enter a name.",
+        "description": {
+          "label": "Description",
+          "error": "Describe this character."
+        },
+        "role": {
+          "label": "Role",
+          "placeholder": "E.g. Hero",
+          "error": "Enter this character's role.",
+          "suggestions": {
+            "hero": "Hero or heroine",
+            "ally": "Ally",
+            "opponent": "Opponent",
+            "mentor": "Mentor",
+            "secondary": "Secondary character"
+          }
+        },
+        "goal": {
+          "label": "What does this character want?",
+          "placeholder": "E.g. Find the lost sword",
+          "error": "Enter what this character wants."
+        },
+        "image": {
+          "add": "Add an image (optional)",
+          "change": "Change image",
+          "remove": "Remove image",
+          "alt": "Image: {{name}}",
+          "errors": {
+            "not-an-image": "This file is not an image.",
+            "too-large": "This image is too large (10 MB maximum).",
+            "unreadable": "This image could not be read. Try another file."
+          }
+        }
+      }
     },
 
     "context": {
@@ -154,12 +246,12 @@
     }
   },
 
-    "login": {
+  "login": {
     "title": "Log in",
     "description": "Log in to your account",
     "breadcrumb": {
-    "label": "Breadcrumb",
-    "home": "Home"
+      "label": "Breadcrumb",
+      "home": "Home"
     },
     "form": {
       "email": {
@@ -177,7 +269,7 @@
       "teacher": "Teacher account",
       "family": "Family account"
     },
-      "errors": {
+    "errors": {
       "invalidCredentials": "Incorrect email address or password.",
       "unavailable": "The login service is temporarily unavailable. Please try again in a few moments."
     }
@@ -192,6 +284,175 @@
     "shop": "Shop",
     "partners": "Partners",
     "subscriptions": "Our Subscriptions"
+  },
+  "library": {
+    "title": "Dance Tales Library",
+    "subtitle": "Discover our dance tales",
+    "viewList": "List view",
+    "viewGrid": "Grid view",
+    "talesFound": "tales found",
+    "showMoreResults": "Show more results",
+    "showLessResults": "Show less results",
+    "viewToggle": "Show all tales",
+    "search": {
+      "title": "Search",
+      "placeholder": "Please enter keywords",
+      "button": "Search"
+    },
+    "filters": {
+      "title": "Advanced filters",
+      "reset": "Reset filters",
+      "themes": {
+        "placeholder": "Select your themes"
+      },
+      "age": {
+        "placeholder": "Select an age"
+      },
+      "languages": {
+        "placeholder": "Select one or more languages"
+      }
+    },
+    "card": {
+      "consult": "Consult",
+      "adopt": "Adopt this tale",
+      "loginRequired": "Log in to consult this tale"
+    },
+    "carousel": {
+      "previous": "Previous tale",
+      "next": "Next tale"
+    }
+  },
+  "home": {
+    "hero": {
+      "ariaLabel": "Welcome to the world of Codabli",
+      "imageAlt": "Children dancing around an open book, a castle and a rainbow",
+      "actionsLabel": "Discover Codabli",
+      "discoverTales": "Discover our dance tales",
+      "createTales": "Create your own dance tales",
+      "explore": "Explore our world",
+      "shop": "Visit our shop"
+    },
+    "universe": {
+      "title": "Step into the world of Codabli",
+      "imageAlt": "A child discovers a story while reading a book",
+      "question": "What is a dance tale?",
+      "descriptionFirst": "A tale is more than something to read: it can also be discovered through movement. Words inspire gestures, gestures tell the story in turn, and everyone can enter the story in their own way.",
+      "descriptionSecond": "Codabli invites children and adults to listen, move and express their creativity, alone or together.",
+      "discover": "Discover our dance tales"
+    },
+    "audience": {
+      "title": "Who is Codabli for?",
+      "action": "Discover the right solutions for you",
+      "children": {
+        "title": "Children",
+        "description": "Read, move and imagine: children become the heroes of their own stories."
+      },
+      "educators": {
+        "title": "Education professionals",
+        "description": "Creative resources to bring stories to life and support learning."
+      },
+      "parents": {
+        "title": "Parents",
+        "description": "A special time to read, dance and create wonderful memories together."
+      }
+    },
+    "news": {
+      "title": "Latest news",
+      "all": "See all news",
+      "regionLabel": "News articles",
+      "navigationLabel": "News navigation",
+      "readMore": "Read more",
+      "previous": "Previous article",
+      "next": "Next article",
+      "items": {
+        "first": {
+          "title": "Stories come to life with dance tales",
+          "date": "Published on September 10, 2026"
+        },
+        "second": {
+          "title": "Let your imagination run wild: create your own tale",
+          "date": "Published on January 25, 2026"
+        },
+        "third": {
+          "title": "Discover art and stories from a different perspective",
+          "date": "Published on March 23, 2026"
+        },
+        "fourth": {
+          "title": "Ideas to bring stories to life every day",
+          "date": "Published on October 5, 2026"
+        }
+      }
+    },
+    "subscriptions": {
+      "title": "Our subscriptions",
+      "perMonth": "/ month",
+      "subscribe": "Subscribe",
+      "plans": {
+        "first": {
+          "name": "Family Plan 1",
+          "description": "A first plan to discover dance tales together as a family."
+        },
+        "second": {
+          "name": "Family Plan 2",
+          "description": "Even more stories and ideas to spark the imagination."
+        },
+        "third": {
+          "name": "Family Plan 3",
+          "description": "All the creativity of Codabli to inspire children and adults alike."
+        },
+        "benefits": {
+          "selectedTales": "Access to a selection of tales",
+          "allTales": "Access to all tales",
+          "newStories": "New stories added regularly",
+          "exclusiveContent": "Exclusive content",
+          "activities": "Activities to enjoy together",
+          "familySpace": "A space designed for families",
+          "noCommitment": "No commitment"
+        }
+      }
+    },
+    "shop": {
+      "title": "Visit our shop too",
+      "subtitle": "You can shop without a subscription",
+      "regionLabel": "Shop items",
+      "navigationLabel": "Shop item navigation",
+      "productName": "Esperanta Bookmark",
+      "view": "View",
+      "adopt": "Adopt this tale",
+      "previous": "Previous item",
+      "next": "Next item",
+      "imageAlt": {
+        "first": "Collection of illustrated bookmarks",
+        "second": "A folded paper bookmark inside a book",
+        "third": "An open book with an illustrated bookmark",
+        "fourth": "An illustrated bookmark resting on a book"
+      }
+    }
+  },
+  "footer": {
+    "logoAlt": "Codabli logo",
+    "contactTitle": "Contact us",
+    "phone": "Phone",
+    "contactUs": "Contact the association",
+    "followUs": "Follow us",
+    "partners": "Our partners",
+    "partnerName": "AG2R La Mondiale Foundation",
+    "backToTop": "Back to top",
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "linkedin": "LinkedIn"
+    },
+    "legal": {
+      "accessibility": "Accessibility",
+      "legalNotice": "Legal notice",
+      "privacy": "Privacy policy"
+    }
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Create an account"
   },
   "teacherAccount": {
     "breadcrumb": {

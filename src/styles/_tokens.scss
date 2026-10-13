@@ -7,6 +7,7 @@
   --grid-columns: 4;
   --grid-gutter: 16px;
   --grid-margin: 24px;
+  --grid-max-width: none;
 
   // ======================================================
   // TYPOGRAPHY
@@ -22,6 +23,12 @@
   --font-size-body: 16px;
   --font-size-small: 14px;
   --font-size-large: 12px;
+
+  --font-family-primary: 'Baloo';
+  --font-family-secondary: 'Baloo 2';
+  --font-family-body: 'Lato';
+  --font-family-price: 'Satoshi';
+  --font-family-arial: Arial;
 
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
@@ -65,11 +72,17 @@
 
   --color-bg-tertiary-default-ico: #c9b7ff;
   --color-bg-tertiary-hover-ico: #b69eff;
+  --color-bg-subscription-pink: #f5b4d4;
 
   --color-bg-theme-default: rgba(201, 183, 255, 0.6);
   --color-bg-surface: #fff;
+  --color-bg-warm-surface: #fbf8f6;
   --color-bg-navigation: rgba(235, 230, 250, 0.4);
   --color-bg-page: #1356a0;
+  --color-bg-header: #fff;
+  --color-background-filters: #b7e7f3;
+
+  --color-bg-select-filters: #fff;
 
   // ======================================================
   // COLORS - Text
@@ -99,6 +112,7 @@
   --color-text-card: #00368c;
 
   --color-text-muted: #333333;
+  --color-text-alert: #fd8072;
 
   // ======================================================
   // COLORS - Border
@@ -111,8 +125,13 @@
   --color-border-outline-hover: #5b0ebf;
 
   --color-border-light: #eaeaea;
+  --color-border-search: rgb(217, 204, 254);
+  --color-border-select-filters: #e0e0e0;
+  
+  --shadow-card: 0 0 30px 0 rgb(0 0 0 / 15%);
 
   --radius-button: 100px;
+  --radius-card: 32px;
 
   // ======================================================
   // SPACING
@@ -125,44 +144,45 @@
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
   --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
 }
 
-  // ======================================================
-  // GRID - Responsive
-  // ======================================================
+// ======================================================
+// GRID - Responsive
+// ======================================================
 
-  /* Tablette portrait - 832px */
-  @media (min-width: 832px) {
-    :root {
-      --grid-columns: 8;
-      --grid-gutter: 24px;
-      --grid-margin: 32px;
-    }
+/* Tablette portrait - 832px */
+@media (min-width: 832px) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
   }
+}
 
-  /* Desktop small - 1024px */
-  @media (min-width: 1024px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 16px;
-    }
+/* Desktop small - 1024px */
+@media (min-width: 1024px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 16px;
   }
+}
 
-  /* Desktop large - 1440px */
-  @media (min-width: 1440px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 96px;
-    }
+/* Desktop large - 1440px */
+@media (min-width: 1440px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 96px;
   }
+}
 
-  /* Desktop extra large - 1920px */
-  @media (min-width: 1920px) {
-    :root {
-      --grid-columns: 12;
-      --grid-gutter: 32px;
-      --grid-margin: 300px;
-    }
+/* Desktop extra large - 1920px */
+@media (min-width: 1920px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 32px;
+    --grid-margin: 300px;
   }
+}

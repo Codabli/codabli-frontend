@@ -1,21 +1,39 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Button } from './button.component';
+import { ButtonComponent } from './button.component';
 
 describe('Button', () => {
-  let component: Button;
-  let fixture: ComponentFixture<Button>;
+  let component: ButtonComponent;
+  let fixture: ComponentFixture<ButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Button],
+      imports: [ButtonComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Button);
+    fixture = TestBed.createComponent(ButtonComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render a labelled circular carousel chevron', () => {
+    fixture.componentRef.setInput('carouselIcon', 'left');
+    fixture.componentRef.setInput('ariaLabel', 'Actualité précédente');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.classList).toContain('button--carousel-icon');
+    expect(button.getAttribute('aria-label')).toBe('Actualité précédente');
+    expect(
+      button.querySelector(
+        '.button__carousel-icon--circle-chevron .fa-chevron-left',
+      ),
+    ).toBeTruthy();
   });
 });

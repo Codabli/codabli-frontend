@@ -1,0 +1,24 @@
+<section class="audience" id="publics" aria-labelledby="audience-title">
+  <div class="section-heading">
+    <h2 id="audience-title">{{ "home.audience.title" | translate }}</h2>
+  </div>
+  <div class="audience__grid">
+    @for (audience of audiences; track audience.titleKey) {
+      <article class="audience-card">
+        <img
+          class="audience-card__image"
+          [src]="audience.image"
+          alt=""
+          width="184"
+          height="189"
+          loading="lazy"
+        />
+        <h3>{{ audience.titleKey | translate }}</h3>
+        <p>{{ audience.descriptionKey | translate }}</p>
+        <button class="audience-card__link" type="button">
+          {{ "home.audience.action" | translate }}
+        </button>
+      </article>
+    }
+  </div>
+</section>

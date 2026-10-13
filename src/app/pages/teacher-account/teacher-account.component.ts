@@ -6,8 +6,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
 import { SchoolService } from '../../core/services/school.service';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
-import { Button } from '../../shared/components/button/button.component';
 import { AccountFormPage, accountErrorMessages } from '../../shared/forms/account-form-page';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TeacherAccountForm } from './teacher-account.form';
 import {
   ACADEMIES,
@@ -17,7 +17,7 @@ import {
 } from './teacher-account.options';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, ButtonComponent],
   selector: 'app-teacher-account',
   styleUrl: './teacher-account.component.scss',
   templateUrl: './teacher-account.component.html',

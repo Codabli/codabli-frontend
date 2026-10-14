@@ -1,4 +1,6 @@
 import { Component, signal, computed, inject } from '@angular/core';
+import { forkJoin, map, switchMap, of } from 'rxjs';
+import type { LanguageCode } from '@models/types/language-code.type';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TaleFilters } from '@models/interfaces/tale-filters.interface';
 import { Tale } from '@models/interfaces/tale.interface';
@@ -9,6 +11,10 @@ import { LibraryFiltersComponent } from './components/library-filters/library-fi
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { OnInit } from '@angular/core';
+import { ConteDanseService } from '@core/services/conte-danse.service';
+import { mapConteDanseToTale } from '@models/mappers/conte-danse.mapper';
+import type { FilterSelectOption } from '@models/interfaces/filter-select-option.interface';
 
 @Component({
   imports: [
@@ -23,22 +29,122 @@ import { AuthService } from '@core/services/auth.service';
   styleUrl: './library.component.scss',
   templateUrl: './library.component.html',
 })
-export class LibraryComponent {
+export class LibraryComponent implements OnInit {
   protected readonly isGridView = signal(true);
   private readonly resultsStep = 8;
 
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+  private readonly conteDanseService = inject(ConteDanseService);
 
   protected readonly isAuthenticated = this.authService.isLoggedIn;
 
   protected readonly visibleResultsCount = signal(this.resultsStep);
 
+  protected readonly allTales = signal<Tale[]>([]);
+
   protected readonly filters = signal<TaleFilters>({
     search: '',
     languages: [],
     themes: [],
+    age: null,
   });
+
+  protected readonly themeOptions = computed<FilterSelectOption[]>(() =>
+    [...new Set(this.allTales().flatMap((tale) => tale.themes))]
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b, 'fr'))
+      .map((theme) => ({
+        value: theme,
+        label: theme,
+      })),
+  );
+
+  protected readonly ageOptions = computed<FilterSelectOption[]>(() => {
+    const tales = this.allTales();
+
+    const agesMin = tales
+      .map((tale) => tale.ageMin)
+      .filter((age): age is number => age != null);
+
+    const agesMax = tales
+      .map((tale) => tale.ageMax)
+      .filter((age): age is number => age != null);
+
+    if (agesMin.length === 0 || agesMax.length === 0) {
+      return [];
+    }
+
+    const min = Math.min(...agesMin);
+    const max = Math.max(...agesMax);
+
+    return Array.from({ length: max - min + 1 }, (_, index) => {
+      const age = min + index;
+
+      return {
+        value: age.toString(),
+        label: `${age} ans`,
+      };
+    });
+  });
+
+  protected readonly languageOptions = computed<FilterSelectOption[]>(() => {
+    const displayNames = new Intl.DisplayNames(['fr'], {
+      type: 'language',
+    });
+
+    return [...new Set(this.allTales().flatMap((tale) => tale.languages))]
+      .map((langue) => ({
+        value: langue,
+        label: displayNames.of(langue) ?? langue,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
+  });
+
+  ngOnInit(): void {
+    this.chargerContes();
+  }
+
+  private chargerContes(): void {
+    this.conteDanseService
+      .listerTous()
+      .pipe(
+        switchMap((contes) => {
+          if (contes.length === 0) {
+            return of([] as Tale[]);
+          }
+
+          return forkJoin(
+            contes.map((conte) =>
+              this.conteDanseService.listerTraductionsPubliees(conte.id).pipe(
+                map((traductions) => {
+                  const tale = mapConteDanseToTale(conte);
+
+                  return {
+                    ...tale,
+                    ageMin: conte.ageMin,
+                    ageMax: conte.ageMax,
+                    languages: [
+                      ...new Set([
+                        tale.originalLanguage,
+                        ...traductions.map((t) => t.langue as LanguageCode),
+                      ]),
+                    ],
+                  };
+                }),
+              ),
+            ),
+          );
+        }),
+      )
+      .subscribe({
+        next: (tales) => {
+          this.allTales.set(tales);
+        },
+        error: (error) =>
+          console.error('Erreur lors du chargement des contes :', error),
+      });
+  }
 
   protected onFiltersChange(filters: TaleFilters): void {
     this.filters.set(filters);
@@ -46,17 +152,37 @@ export class LibraryComponent {
   }
 
   protected readonly filteredTales = computed(() => {
-    const search = this.filters().search.toLowerCase();
+    const { search, themes, languages, age } = this.filters();
 
-    if (!search) {
-      return this.tales();
-    }
+    const thematique = themes[0]?.toLowerCase();
+    const langue = languages[0];
+    const recherche = search.trim().toLowerCase();
 
-    return this.tales().filter(
-      (tale) =>
-        tale.title.toLowerCase().includes(search) ||
-        tale.description.toLowerCase().includes(search),
-    );
+    return this.allTales().filter((tale) => {
+      const correspondThematique =
+        !thematique ||
+        tale.themes.some((theme) => theme.toLowerCase().includes(thematique));
+
+      const correspondAge =
+        age == null ||
+        ((tale.ageMin == null || tale.ageMin <= age) &&
+          (tale.ageMax == null || tale.ageMax >= age));
+
+      const correspondLangue =
+        !langue || tale.languages.includes(langue as LanguageCode);
+
+      const correspondRecherche =
+        !recherche ||
+        tale.title.toLowerCase().includes(recherche) ||
+        tale.description.toLowerCase().includes(recherche);
+
+      return (
+        correspondThematique &&
+        correspondAge &&
+        correspondLangue &&
+        correspondRecherche
+      );
+    });
   });
 
   protected readonly visibleTales = computed(() =>
@@ -65,6 +191,10 @@ export class LibraryComponent {
 
   protected readonly canShowMore = computed(
     () => this.visibleResultsCount() < this.filteredTales().length,
+  );
+
+  protected readonly canShowLess = computed(
+    () => this.visibleResultsCount() > this.resultsStep,
   );
 
   protected showMoreResults(): void {
@@ -91,101 +221,5 @@ export class LibraryComponent {
 
   protected adoptTale(taleId: string): void {
     // Redirection vers la boutique ??
-  }
-
-  tales(): Tale[] {
-    return [
-      {
-        id: '1',
-        title: 'Tale 1',
-        description: 'Description 1',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 10,
-        isFavorite: true,
-        languages: ['en'],
-        themes: ['adventure'],
-      },
-
-      {
-        id: '2',
-        title: 'Tale 2',
-        description: 'Description 2',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 5,
-        isFavorite: false,
-        languages: ['fr'],
-        themes: ['fantasy'],
-      },
-      {
-        id: '3',
-        title: 'Tale 3',
-        description: 'Description 3',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 8,
-        isFavorite: true,
-        languages: ['es'],
-        themes: ['mystery'],
-      },
-      {
-        id: '4',
-        title: 'Tale 4',
-        description: 'Description 4',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 12,
-        isFavorite: false,
-        languages: ['de'],
-        themes: ['horror'],
-      },
-      {
-        id: '5',
-        title: 'Tale 5',
-        description: 'Description 5',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 7,
-        isFavorite: true,
-        languages: ['it'],
-        themes: ['romance'],
-      },
-      {
-        id: '6',
-        title: 'Tale 6',
-        description: 'Description 6',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 9,
-        isFavorite: false,
-        languages: ['fr'],
-        themes: ['historical'],
-      },
-      {
-        id: '7',
-        title: 'Tale 7',
-        description: 'Description 7',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 11,
-        isFavorite: true,
-        languages: ['en'],
-        themes: ['adventure'],
-      },
-      {
-        id: '8',
-        title: 'Tale 8',
-        description: 'Description 8',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 6,
-        isFavorite: false,
-        languages: ['es'],
-        themes: ['fantasy'],
-      },
-      {
-        id: '9',
-        title: 'Tale 9',
-        description: 'Description 9',
-        coverUrl: 'assets/images/tales-test.png',
-        likes: 4,
-        isFavorite: true,
-        languages: ['de'],
-        themes: ['horror'],
-      },
-    ];
   }
 }

@@ -8,5 +8,8 @@ export interface Tale {
   likes: number;
   isFavorite: boolean;
   languages: LanguageCode[];
+  originalLanguage: LanguageCode;
   themes: string[];
+  ageMin?: number | null;
+  ageMax?: number | null;
 }

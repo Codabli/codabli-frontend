@@ -1,10 +1,10 @@
 <article class="card">
   <div class="card__languages">
-    @for (language of tale().languages; track language) {
-      <span class="card__flag">
-        <app-language-flag [language]="language"></app-language-flag>
-      </span>
-    }
+    <span class="card__flag">
+      <app-language-flag
+        [language]="tale().originalLanguage"
+      ></app-language-flag>
+    </span>
   </div>
 
   <div class="card__cover">
@@ -62,7 +62,9 @@
 
     <p class="card__available-languages">
       <strong>Langues disponibles :</strong>
-      {{ tale().languages.join(', ') }}
+      @for (language of tale().languages; track language; let last = $last) {
+        {{ getLanguageName(language) }}{{ last ? '' : ', ' }}
+      }
     </p>
   </div>
 

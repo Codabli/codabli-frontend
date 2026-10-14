@@ -1,7 +1,10 @@
 @let f = teacherAccountForm.controls;
 
-<section class="teacher-account grid">
-  <nav class="teacher-account__breadcrumb" [attr.aria-label]="'teacherAccount.breadcrumb.label' | translate">
+<section class="account-page grid">
+  <nav
+    class="account-page__breadcrumb"
+    [attr.aria-label]="'teacherAccount.breadcrumb.label' | translate"
+  >
     <ol>
       <li>
         <a routerLink="/">{{ 'teacherAccount.breadcrumb.home' | translate }}</a>
@@ -10,10 +13,10 @@
     </ol>
   </nav>
 
-  <h1 class="teacher-account__title">{{ 'teacherAccount.title' | translate }}</h1>
+  <h1 class="account-page__title">{{ 'teacherAccount.title' | translate }}</h1>
 
   <form
-    class="teacher-account__form"
+    class="account-page__form"
     [formGroup]="teacherAccountForm"
     (ngSubmit)="onSubmit()"
     novalidate
@@ -26,13 +29,17 @@
 
       <div class="form-section__fields">
         <div class="form-field">
+          @let schoolIdError = fieldError(f.schoolId);
+
           <label for="schoolId">{{ 'teacherAccount.form.school.label' | translate }}</label>
 
           <select
             id="schoolId"
             formControlName="schoolId"
             [attr.aria-invalid]="hasError(f.schoolId)"
-            aria-describedby="schoolId-error"
+            [attr.aria-describedby]="
+              schoolIdError || schoolsUnavailable() ? 'schoolId-error' : null
+            "
             required
           >
             <option [ngValue]="null" disabled>
@@ -46,7 +53,7 @@
             }
           </select>
 
-          @if (fieldError(f.schoolId); as error) {
+          @if (schoolIdError; as error) {
             <p id="schoolId-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -58,13 +65,15 @@
         </div>
 
         <div class="form-field">
+          @let academyError = fieldError(f.academy);
+
           <label for="academy">{{ 'teacherAccount.form.academy.label' | translate }}</label>
 
           <select
             id="academy"
             formControlName="academy"
             [attr.aria-invalid]="hasError(f.academy)"
-            aria-describedby="academy-error"
+            [attr.aria-describedby]="academyError ? 'academy-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
@@ -76,7 +85,7 @@
             }
           </select>
 
-          @if (fieldError(f.academy); as error) {
+          @if (academyError; as error) {
             <p id="academy-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -84,13 +93,15 @@
         </div>
 
         <div class="form-field">
+          @let ageRangeError = fieldError(f.ageRange);
+
           <label for="ageRange">{{ 'teacherAccount.form.ageRange.label' | translate }}</label>
 
           <select
             id="ageRange"
             formControlName="ageRange"
             [attr.aria-invalid]="hasError(f.ageRange)"
-            aria-describedby="ageRange-error"
+            [attr.aria-describedby]="ageRangeError ? 'ageRange-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
@@ -104,7 +115,7 @@
             }
           </select>
 
-          @if (fieldError(f.ageRange); as error) {
+          @if (ageRangeError; as error) {
             <p id="ageRange-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -112,6 +123,8 @@
         </div>
 
         <div class="form-field">
+          @let girlsCountError = fieldError(f.girlsCount);
+
           <label for="girlsCount">{{ 'teacherAccount.form.girlsCount.label' | translate }}</label>
 
           <input
@@ -124,11 +137,11 @@
             formControlName="girlsCount"
             [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.girlsCount)"
-            aria-describedby="girlsCount-error"
+            [attr.aria-describedby]="girlsCountError ? 'girlsCount-error' : null"
             required
           />
 
-          @if (fieldError(f.girlsCount); as error) {
+          @if (girlsCountError; as error) {
             <p id="girlsCount-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -136,6 +149,8 @@
         </div>
 
         <div class="form-field">
+          @let boysCountError = fieldError(f.boysCount);
+
           <label for="boysCount">{{ 'teacherAccount.form.boysCount.label' | translate }}</label>
 
           <input
@@ -148,11 +163,11 @@
             formControlName="boysCount"
             [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.boysCount)"
-            aria-describedby="boysCount-error"
+            [attr.aria-describedby]="boysCountError ? 'boysCount-error' : null"
             required
           />
 
-          @if (fieldError(f.boysCount); as error) {
+          @if (boysCountError; as error) {
             <p id="boysCount-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -160,7 +175,9 @@
         </div>
 
         <div class="form-field">
-          <label for="platformGoal">{{ 'teacherAccount.form.platformGoal.label' | translate }}</label>
+          <label for="platformGoal">{{
+            'teacherAccount.form.platformGoal.label' | translate
+          }}</label>
 
           <select id="platformGoal" formControlName="platformGoal">
             <option [ngValue]="null">
@@ -185,6 +202,8 @@
 
       <div class="form-section__fields">
         <div class="form-field">
+          @let lastNameError = fieldError(f.lastName);
+
           <label for="lastName">{{ 'teacherAccount.form.lastName.label' | translate }}</label>
 
           <input
@@ -192,14 +211,14 @@
             type="text"
             formControlName="lastName"
             autocomplete="family-name"
-            maxlength="50"
+            [attr.maxlength]="nameMaxLength"
             [placeholder]="'teacherAccount.form.lastName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.lastName)"
-            aria-describedby="lastName-error"
+            [attr.aria-describedby]="lastNameError ? 'lastName-error' : null"
             required
           />
 
-          @if (fieldError(f.lastName); as error) {
+          @if (lastNameError; as error) {
             <p id="lastName-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -207,6 +226,8 @@
         </div>
 
         <div class="form-field">
+          @let firstNameError = fieldError(f.firstName);
+
           <label for="firstName">{{ 'teacherAccount.form.firstName.label' | translate }}</label>
 
           <input
@@ -214,14 +235,14 @@
             type="text"
             formControlName="firstName"
             autocomplete="given-name"
-            maxlength="50"
+            [attr.maxlength]="nameMaxLength"
             [placeholder]="'teacherAccount.form.firstName.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.firstName)"
-            aria-describedby="firstName-error"
+            [attr.aria-describedby]="firstNameError ? 'firstName-error' : null"
             required
           />
 
-          @if (fieldError(f.firstName); as error) {
+          @if (firstNameError; as error) {
             <p id="firstName-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -229,6 +250,8 @@
         </div>
 
         <div class="form-field">
+          @let emailError = fieldError(f.email);
+
           <label for="email">{{ 'teacherAccount.form.email.label' | translate }}</label>
 
           <input
@@ -238,11 +261,11 @@
             autocomplete="email"
             [placeholder]="'teacherAccount.form.email.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.email)"
-            aria-describedby="email-error"
+            [attr.aria-describedby]="emailError ? 'email-error' : null"
             required
           />
 
-          @if (fieldError(f.email); as error) {
+          @if (emailError; as error) {
             <p id="email-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -259,6 +282,8 @@
 
       <div class="form-section__fields">
         <div class="form-field">
+          @let passwordError = fieldError(f.password);
+
           <label for="password">{{ 'teacherAccount.form.password.label' | translate }}</label>
 
           <input
@@ -268,11 +293,11 @@
             autocomplete="new-password"
             [placeholder]="'teacherAccount.form.password.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.password)"
-            aria-describedby="password-error"
+            [attr.aria-describedby]="passwordError ? 'password-error' : null"
             required
           />
 
-          @if (fieldError(f.password); as error) {
+          @if (passwordError; as error) {
             <p id="password-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -280,6 +305,8 @@
         </div>
 
         <div class="form-field">
+          @let passwordConfirmationError = fieldError(f.passwordConfirmation);
+
           <label for="passwordConfirmation">
             {{ 'teacherAccount.form.passwordConfirmation.label' | translate }}
           </label>
@@ -291,11 +318,15 @@
             autocomplete="new-password"
             [placeholder]="'teacherAccount.form.passwordConfirmation.placeholder' | translate"
             [attr.aria-invalid]="hasError(f.passwordConfirmation) || hasPasswordMismatch()"
-            aria-describedby="passwordConfirmation-error"
+            [attr.aria-describedby]="
+              passwordConfirmationError || hasPasswordMismatch()
+                ? 'passwordConfirmation-error'
+                : null
+            "
             required
           />
 
-          @if (fieldError(f.passwordConfirmation); as error) {
+          @if (passwordConfirmationError; as error) {
             <p id="passwordConfirmation-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
@@ -390,16 +421,16 @@
       </fieldset>
     </section>
 
-    <div class="teacher-account__footer">
+    <div class="account-page__footer">
       <!-- Consentements RGPD & CGU -->
-      <div class="teacher-account__consent">
+      <div class="account-page__consent">
         <div class="form-checkbox">
           <input
             id="termsAccepted"
             type="checkbox"
             formControlName="termsAccepted"
             [attr.aria-invalid]="hasError(f.termsAccepted)"
-            aria-describedby="termsAccepted-error"
+            [attr.aria-describedby]="hasError(f.termsAccepted) ? 'termsAccepted-error' : null"
             required
           />
 
@@ -415,7 +446,7 @@
         }
       </div>
 
-      <div class="teacher-account__actions">
+      <div class="account-page__actions">
         <app-button variant="tertiary" type="submit">
           {{ 'teacherAccount.form.submit' | translate }}
         </app-button>

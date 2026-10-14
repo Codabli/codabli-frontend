@@ -12,10 +12,10 @@
   height: 312px;
   margin-inline: auto;
 
-  gap: var(--spacing-3xl);
+  gap: var(--spacing-xl);
   padding-inline: var(--spacing-2xl);
 
-  background-color: var(--color-background-filters);
+  background-color: var(--color-bg-filters);
   border-radius: 50px;
 }
 
@@ -164,6 +164,22 @@
 
   width: 100%;
   gap: var(--spacing-lg);
+
+  app-filter-select {
+    min-width: 0;
+  }
+
+  app-filter-select:nth-child(1) {
+    flex: 1.25 1 0;
+  }
+
+  app-filter-select:nth-child(2) {
+    flex: 0.9 1 0;
+  }
+
+  app-filter-select:nth-child(3) {
+    flex: 1.4 1 0;
+  }
 }
 
 /* Reset */
@@ -247,5 +263,16 @@
 
   .library-filters__advanced > .library-filters__label {
     height: auto;
+  }
+
+  .library-filters__controls {
+    flex-direction: column;
+    align-items: stretch;
+
+    app-filter-select {
+      flex: none;
+      width: 100%;
+      min-width: 0;
+    }
   }
 }

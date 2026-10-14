@@ -16,7 +16,12 @@
       </p>
     </header>
 
-    <app-library-filters (filtersChange)="onFiltersChange($event)" />
+    <app-library-filters
+      [themeOptions]="themeOptions()"
+      [languageOptions]="languageOptions()"
+      [ageOptions]="ageOptions()"
+      (filtersChange)="onFiltersChange($event)"
+    />
   </div>
 
   <section class="library__results">
@@ -79,7 +84,7 @@
             >
               {{ 'library.showMoreResults' | translate }}
             </app-button>
-          } @else {
+          } @else if (canShowLess()) {
             <app-button
               variant="tertiary"
               iconPosition="left"

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HOME_ROUTES } from './features/home/home.routes';
 import { MainLayoutComponent } from './layout/public/main-layout/main-layout.component';
-import {ArtGalleryComponent} from './art-gallery-component/art-gallery-component';
+import {ArtGalleryComponent} from './art-gallery/art-gallery-component/art-gallery-component';
 
 export const routes: Routes = [
   {

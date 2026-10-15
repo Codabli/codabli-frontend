@@ -9,6 +9,14 @@
   width: 100%;
   padding-inline: 96px;
   box-sizing: border-box;
+
+  @media (max-width: 1023px) {
+    padding-inline: var(--spacing-4xl);
+  }
+
+  @media (max-width: 599px) {
+    padding-inline: var(--spacing-2xl);
+  }
 }
 
 .library__intro,

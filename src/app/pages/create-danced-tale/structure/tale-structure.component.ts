@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
-import { Button } from '../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import {
   DEFAULT_STORY_STEPS,
@@ -26,7 +26,7 @@ const kindKey = (kind: StoryStepKind) => `createDancedTale.structure.kinds.${kin
     ReactiveFormsModule,
     RouterLink,
     TranslatePipe,
-    Button,
+    ButtonComponent,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,

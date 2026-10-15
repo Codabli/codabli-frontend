@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { RichTextEditor } from '../../../shared/components/rich-text-editor/rich-text-editor.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
@@ -21,7 +21,7 @@ function hasText(html: string | undefined): boolean {
 }
 
 @Component({
-  imports: [ReactiveFormsModule, TranslatePipe, Button, RichTextEditor, AutosaveStatus],
+  imports: [ReactiveFormsModule, TranslatePipe, ButtonComponent, RichTextEditor, AutosaveStatus],
   selector: 'app-tale-writing',
   styleUrl: './tale-writing.component.scss',
   templateUrl: './tale-writing.component.html',

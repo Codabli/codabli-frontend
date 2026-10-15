@@ -2,7 +2,7 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Button } from '../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
 import {
   CHARACTER_ENTRANCES,
@@ -70,7 +70,7 @@ function hasText(html: string | undefined): boolean {
   imports: [
     RouterLink,
     TranslatePipe,
-    Button,
+    ButtonComponent,
     AutosaveStatus,
     CdkDropListGroup,
     DanceLibrary,

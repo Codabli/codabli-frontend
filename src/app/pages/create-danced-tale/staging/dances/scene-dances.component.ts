@@ -1,7 +1,7 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Button } from '../../../../shared/components/button/button.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import {
   DANCE_MOMENTS,
   DANCE_STYLES,
@@ -23,7 +23,7 @@ export const DANCE_NAME_MAX_LENGTH = 60;
  * Dépôt depuis la bibliothèque, ajout sans glisser-déposer, réordonnancement dans la scène.
  */
 @Component({
-  imports: [TranslatePipe, Button, CdkDropList, CdkDrag, CdkDragHandle, SceneStage, SceneSounds],
+  imports: [TranslatePipe, ButtonComponent, CdkDropList, CdkDrag, CdkDragHandle, SceneStage, SceneSounds],
   selector: 'app-scene-dances',
   styleUrl: './scene-dances.component.scss',
   templateUrl: './scene-dances.component.html',

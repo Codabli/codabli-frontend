@@ -1,7 +1,8 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
 import {
   DANCE_MOMENTS,
   DANCE_STYLES,
@@ -15,6 +16,11 @@ import { SceneStage, StageElement } from '../stage/scene-stage.component';
 import { CatalogDance, DANCE_CATALOG, findCatalogDance, isCatalogDance } from './dance-catalog';
 
 export const DANCE_NAME_MAX_LENGTH = 60;
+
+/** Fichiers audio utilisés par une danse. */
+function fileIdsOf(dance: SceneDance | null | undefined): Set<string> {
+  return new Set((dance?.sounds ?? []).map((sound) => sound.fileId));
+}
 
 /**
  * Danses d'une scène (écrans 8.2 à 8.4), composées comme la maquette : chaque danse est un
@@ -30,6 +36,7 @@ export const DANCE_NAME_MAX_LENGTH = 60;
 })
 export class SceneDances {
   private readonly translate = inject(TranslateService);
+  private readonly store = inject(AudioFileStore);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly addPanel = viewChild<ElementRef<HTMLDetailsElement>>('addPanel');
 
@@ -55,6 +62,16 @@ export class SceneDances {
 
   /** État de la danse à l'ouverture du module, rétabli par « Annuler ». */
   private snapshot: SceneDance | null = null;
+
+  constructor() {
+    // Écran quitté module ouvert : les réglages restent dans le brouillon, comme une validation.
+    inject(DestroyRef).onDestroy(() => {
+      const open = this.dances().find((dance) => dance.id === this.openId());
+      if (open) {
+        this.deleteUnused(this.snapshot, open);
+      }
+    });
+  }
 
   /** Une scène accepte les danses de la bibliothèque, et les siennes (réordonnancement). */
   protected readonly canEnter = (drag: CdkDrag, drop: CdkDropList): boolean =>
@@ -104,17 +121,25 @@ export class SceneDances {
     this.focus(`#${this.fieldId(dance, 'name')}`);
   }
 
-  /** « Valider ce module » : les réglages sont déjà enregistrés, le module se replie. */
+  /**
+   * « Valider ce module » (ou « Replier ») : les réglages sont déjà enregistrés, le module se replie.
+   * Les fichiers retirés ou remplacés pendant l'édition sont alors effacés.
+   */
   protected validate(dance: SceneDance): void {
+    this.deleteUnused(this.snapshot, dance);
     this.close(dance);
   }
 
-  /** « Annuler » : rétablit la danse telle qu'à l'ouverture du module. */
+  /**
+   * « Annuler » : rétablit la danse telle qu'à l'ouverture du module, fichiers compris.
+   * Seuls les fichiers importés pendant l'édition sont effacés.
+   */
   protected cancel(dance: SceneDance): void {
     const snapshot = this.snapshot;
 
     if (snapshot) {
       this.dancesChange.emit(this.dances().map((d) => (d.id === dance.id ? snapshot : d)));
+      this.deleteUnused(dance, snapshot);
     }
 
     this.close(dance);
@@ -125,7 +150,10 @@ export class SceneDances {
     this.dancesChange.emit(this.dances().filter((_, i) => i !== index));
     this.announce('createDancedTale.dances.scene.announce.removed', { name: removed.name });
 
+    // Les fichiers de la danse ne servent plus, y compris ceux retirés pendant l'édition.
+    this.deleteUnused(removed, null);
     if (this.openId() === removed.id) {
+      this.deleteUnused(this.snapshot, null);
       this.openId.set(null);
       this.snapshot = null;
     }
@@ -172,6 +200,17 @@ export class SceneDances {
     this.announce('createDancedTale.dances.scene.announce.added', { name, scene: this.sceneNumber() });
     // Une danse ajoutée s'ouvre directement, pour la régler.
     this.open(dance);
+  }
+
+  /** Efface les fichiers de `before` que `after` n'utilise plus. */
+  private deleteUnused(before: SceneDance | null, after: SceneDance | null): void {
+    const kept = fileIdsOf(after);
+
+    for (const fileId of fileIdsOf(before)) {
+      if (!kept.has(fileId)) {
+        void this.store.delete(fileId).catch(() => undefined);
+      }
+    }
   }
 
   private close(dance: SceneDance): void {

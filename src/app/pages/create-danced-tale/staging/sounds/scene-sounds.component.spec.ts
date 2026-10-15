@@ -174,4 +174,17 @@ describe('SceneSounds', () => {
     expect(store.delete).toHaveBeenCalledWith('f1');
     expect(document.activeElement).toBe(element.querySelector('#scene-scene1-sound-file'));
   });
+
+  it('dans le module d\'une danse, laisse le module effacer les fichiers (« Annuler » les rétablit)', async () => {
+    await setup([SOUND]);
+    fixture.componentRef.setInput('deferFileDeletion', true);
+    fixture.detectChanges();
+
+    element.querySelector<HTMLButtonElement>('.sound__remove')!.click();
+    fixture.detectChanges();
+    await flush();
+
+    expect(last()).toEqual([]);
+    expect(store.delete).not.toHaveBeenCalled();
+  });
 });

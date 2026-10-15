@@ -131,6 +131,7 @@
               <div class="dance-module__column">
                 <app-scene-sounds
                   [sceneId]="dance.id"
+                  [deferFileDeletion]="true"
                   [sounds]="dance.sounds ?? []"
                   (soundsChange)="update(i, { sounds: $event })"
                 />

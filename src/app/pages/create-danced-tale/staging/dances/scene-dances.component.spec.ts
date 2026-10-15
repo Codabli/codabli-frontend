@@ -1,25 +1,42 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
 import { SceneDances } from './scene-dances.component';
 import { findCatalogDance } from './dance-catalog';
-import { SceneDance } from '../../../../models/interfaces/tale-staging.interface';
+import { SceneDance, SceneSound } from '../../../../models/interfaces/tale-staging.interface';
+import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
+import { SceneSounds } from '../sounds/scene-sounds.component';
 
 const ROUND: SceneDance = { id: 'd1', danceId: 'festiveRound', name: 'Ronde', moment: 'beginning', style: 'traditional' };
 const DUEL: SceneDance = { id: 'd2', danceId: 'rhythmicDuel', name: 'Duel', moment: 'end', style: 'contemporary' };
 
 const afterRender = () => new Promise((resolve) => setTimeout(resolve));
 
+const sound = (id: string): SceneSound => ({
+  id,
+  title: id,
+  kind: 'music',
+  moment: null,
+  danceId: null,
+  fileId: `file-${id}`,
+  fileName: `${id}.mp3`,
+});
+
 describe('SceneDances', () => {
   let fixture: ComponentFixture<SceneDances>;
   let component: SceneDances;
   let element: HTMLElement;
   let emitted: SceneDance[][];
+  let store: { put: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
 
   async function setup(dances: SceneDance[] = []): Promise<void> {
+    // jsdom n'a pas IndexedDB : faux stockage des fichiers audio.
+    store = { put: vi.fn(async () => undefined), get: vi.fn(async () => undefined), delete: vi.fn(async () => undefined) };
+
     await TestBed.configureTestingModule({
       imports: [SceneDances],
-      providers: [provideTranslateService()],
+      providers: [provideTranslateService(), { provide: AudioFileStore, useValue: store }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SceneDances);
@@ -228,5 +245,47 @@ describe('SceneDances', () => {
     expect(canEnter({ data: findCatalogDance('storm'), dropContainer: {} }, ownList)).toBe(true);
     expect(canEnter({ data: ROUND, dropContainer: ownList }, ownList)).toBe(true);
     expect(canEnter({ data: ROUND, dropContainer: {} }, ownList)).toBe(false);
+  });
+
+  /** Le module édite les sons de la danse ouverte, comme le ferait l'ambiance musicale. */
+  function editSounds(sounds: SceneSound[]): void {
+    fixture.debugElement.query(By.directive(SceneSounds)).componentInstance.soundsChange.emit(sounds);
+    fixture.detectChanges();
+  }
+
+  it('« Annuler » rétablit les sons et leurs fichiers, et efface ceux importés pendant l\'édition', async () => {
+    await setup([{ ...ROUND, sounds: [sound('luth')] }]);
+    openModule();
+
+    // Le son d'origine est retiré, un autre est importé.
+    editSounds([sound('orage')]);
+    element.querySelector<HTMLButtonElement>('.dance-module__cancel')!.click();
+    fixture.detectChanges();
+
+    expect(last()).toEqual([{ ...ROUND, sounds: [sound('luth')] }]);
+    expect(store.delete).toHaveBeenCalledWith('file-orage');
+    expect(store.delete).not.toHaveBeenCalledWith('file-luth');
+  });
+
+  it('« Valider ce module » efface les fichiers retirés ou remplacés pendant l\'édition', async () => {
+    await setup([{ ...ROUND, sounds: [sound('luth'), sound('cor')] }]);
+    openModule();
+
+    editSounds([sound('cor'), sound('orage')]);
+    element.querySelector<HTMLElement>('.dance-module__footer app-button')!.click();
+    fixture.detectChanges();
+
+    expect(store.delete).toHaveBeenCalledTimes(1);
+    expect(store.delete).toHaveBeenCalledWith('file-luth');
+  });
+
+  it('supprimer une danse efface les fichiers de ses sons', async () => {
+    await setup([{ ...ROUND, sounds: [sound('luth')] }, DUEL]);
+
+    element.querySelector<HTMLButtonElement>('.dance__remove')!.click();
+    fixture.detectChanges();
+
+    expect(last()).toEqual([DUEL]);
+    expect(store.delete).toHaveBeenCalledWith('file-luth');
   });
 });

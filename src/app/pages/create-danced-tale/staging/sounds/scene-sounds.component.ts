@@ -46,6 +46,11 @@ export class SceneSounds {
   readonly sounds = input<SceneSound[]>([]);
   /** Danses de la scène, pour indiquer celle qu'un son accompagne. */
   readonly dances = input<SceneDance[]>([]);
+  /**
+   * Dans le module d'une danse, les fichiers retirés ou remplacés ne sont pas effacés ici :
+   * « Annuler » doit pouvoir les rétablir. Le module les efface à sa fermeture.
+   */
+  readonly deferFileDeletion = input(false);
 
   readonly soundsChange = output<SceneSound[]>();
 
@@ -121,7 +126,7 @@ export class SceneSounds {
 
     if (replaced) {
       this.update(replaced, { fileId, fileName: file.name });
-      void this.store.delete(replaced.fileId).catch(() => undefined);
+      this.release(replaced.fileId);
       return;
     }
 
@@ -142,7 +147,7 @@ export class SceneSounds {
 
   protected remove(sound: SceneSound): void {
     this.soundsChange.emit(this.sounds().filter((s) => s.id !== sound.id));
-    void this.store.delete(sound.fileId).catch(() => undefined);
+    this.release(sound.fileId);
     this.announcement.set(this.translate.instant('createDancedTale.sounds.announce.removed', { title: sound.title }));
     // Le bouton supprimé disparaît : le focus revient sur l'import.
     this.focus(`#scene-${this.sceneId()}-sound-file`);
@@ -163,6 +168,13 @@ export class SceneSounds {
 
   protected setDance(sound: SceneSound, danceId: string): void {
     this.update(sound, { danceId: danceId || null });
+  }
+
+  /** Efface un fichier qui n'est plus utilisé, sauf si le module de la danse s'en charge. */
+  private release(fileId: string): void {
+    if (!this.deferFileDeletion()) {
+      void this.store.delete(fileId).catch(() => undefined);
+    }
   }
 
   private update(sound: SceneSound, changes: Partial<SceneSound>): void {

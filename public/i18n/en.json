@@ -429,6 +429,19 @@
       }
     }
   },
+  "artGallery": {
+    "explore": "Explore fresco",
+    "next": "Go to next room",
+    "country": {
+      "LEBANON": "Lebanon",
+      "AUSTRALIA": "Australia",
+      "ITALY": "Italy",
+      "FRANCE": "France",
+      "TOGO": "Togo",
+      "BRAZIL": "Brazil",
+      "VIETNAM": "Vietnam"
+    }
+  },
   "footer": {
     "logoAlt": "Codabli logo",
     "contactTitle": "Contact us",

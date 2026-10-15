@@ -430,6 +430,19 @@
       }
     }
   },
+  "artGallery": {
+    "explore": "Explorer la fresque",
+    "next": "Salle suivante",
+    "country": {
+      "LEBANON": "Liban",
+      "AUSTRALIA": "Australie",
+      "ITALY": "Italie",
+      "FRANCE": "France",
+      "TOGO": "Togo",
+      "BRAZIL": "Brésil",
+      "VIETNAM": "Vietnam"
+    }
+  },
   "footer": {
     "logoAlt": "Logo Codabli",
     "contactTitle": "Contactez-nous",

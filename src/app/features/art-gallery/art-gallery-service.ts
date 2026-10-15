@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {ArtGalleryCountryEnum} from './art-gallery-country-enum'
+import {EnumHelper} from '../../shared/utils/enum-helper'
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +22,7 @@ export class ArtGalleryService {
     }
 
     public GoNextCountry(): void {
-        if (this.currentCountry !== ArtGalleryCountryEnum.VIETNAM) {
+        if (this.currentCountry !== EnumHelper.GetLastDeclaredValue(ArtGalleryCountryEnum)) {
             this.currentCountry++;
             this.currentCountrySubject.next(this.currentCountry);
         }

@@ -49,6 +49,19 @@
       "submit": "Envoyer ma demande"
     }
   },
+  "richTextEditor": {
+    "title": "Titre",
+    "subtitle": "Sous-titre",
+    "toolbar": "Mise en forme du texte",
+    "bold": "Gras",
+    "italic": "Italique",
+    "bulletList": "Liste à puces",
+    "undo": "Annuler",
+    "redo": "Rétablir",
+    "undoShortcut": "Annuler (Ctrl+Z)",
+    "redoShortcut": "Rétablir (Ctrl+Y)"
+  },
+
   "createDancedTale": {
     "title": "Créez votre conte dansé sur-mesure",
     "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
@@ -72,6 +85,336 @@
       "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
       "back": "Revenir à l'étape « {{step}} »",
       "next": "Continuer vers l'étape « {{step}} »"
+    },
+
+    "autosave": {
+      "saved": "Sauvegardé à {{hours}}h{{minutes}}",
+      "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
+    },
+
+    "sounds": {
+      "title": "Musiques et bruitages",
+      "import": "Importer une musique ou un bruitage",
+      "titleLabel": "Titre",
+      "player": "Écouter : {{title}}",
+      "kind": "Type",
+      "kinds": {
+        "music": "Musique",
+        "effect": "Bruitage"
+      },
+      "moment": "Moment",
+      "dance": "Accompagne la danse",
+      "noDance": "Aucune danse en particulier",
+      "remove": "Supprimer : {{title}}",
+      "missing": "Fichier « {{fileName}} » introuvable sur cet appareil.",
+      "replace": "Importer à nouveau",
+      "errors": {
+        "notAudio": "Ce fichier n'est pas un fichier audio.",
+        "tooLarge": "Ce fichier dépasse 20 Mo.",
+        "storage": "Le fichier n'a pas pu être enregistré dans le navigateur."
+      },
+      "announce": {
+        "added": "« {{title}} » ajouté à la scène.",
+        "removed": "« {{title}} » supprimé."
+      },
+      "danceTitle": "Ambiance musicale",
+      "sceneTitle": "Bruitages et ambiance de la scène",
+      "importDance": "Importer ma propre musique"
+    },
+
+    "stage": {
+      "title": "Espace scénique",
+      "hint": "Glissez-déposez les éléments pour définir le placement initial, ou utilisez les flèches du clavier.",
+      "noElements": "Ajoutez des personnages présents ou des décors pour les placer sur le plateau.",
+      "reset": "Réinitialiser",
+      "back": "Fond de scène",
+      "audience": "Public",
+      "left": "Côté jardin",
+      "right": "Côté cour",
+      "backstage": "Coulisses",
+      "curtain": "Rideau",
+      "apron": "Avant-scène",
+      "footlights": "Rampe",
+      "zoneLabel": "Zone : {{zone}}",
+      "toPlace": "À placer",
+      "listTitle": "Placer les éléments sans glisser-déposer",
+      "offStage": "Hors scène (à placer)",
+      "zones": {
+        "back-left": "Fond, côté jardin",
+        "back-center": "Fond, au centre",
+        "back-right": "Fond, côté cour",
+        "middle-left": "Milieu, côté jardin",
+        "middle-center": "Centre de la scène",
+        "middle-right": "Milieu, côté cour",
+        "front-left": "Avant-scène, côté jardin",
+        "front-center": "Avant-scène, au centre",
+        "front-right": "Avant-scène, côté cour"
+      }
+    },
+
+    "dances": {
+      "library": {
+        "title": "Bibliothèque de danses",
+        "hint": "Faites glisser une danse dans une scène, ou utilisez « Ajouter une danse sans glisser-déposer » dans la scène.",
+        "search": "Rechercher",
+        "searchPlaceholder": "Ex. : ronde",
+        "listLabel": "Danses disponibles",
+        "noResult": "Aucune danse ne correspond à votre recherche."
+      },
+      "format": {
+        "label": "Format",
+        "all": "Tous",
+        "solo": "Solo",
+        "duo": "Duo",
+        "group": "Groupe"
+      },
+      "intensity": {
+        "label": "Intensité",
+        "all": "Toutes",
+        "gentle": "Douce",
+        "moderate": "Modérée",
+        "intense": "Intense"
+      },
+      "styles": {
+        "traditional": "Traditionnel",
+        "classical": "Classique",
+        "contemporary": "Contemporain"
+      },
+      "moments": {
+        "hint": "Facultatif : sans choix, toute la scène.",
+        "beginning": "Début",
+        "middle": "Milieu",
+        "end": "Fin"
+      },
+      "scene": {
+        "title": "Danses de la scène",
+        "listLabel": "Danses de la scène {{number}}",
+        "dropHint": "Glisser une danse ici",
+        "number": "Danse n° {{number}}",
+        "name": "Nom de la danse",
+        "moment": "Moment du passage",
+        "style": "Typologie de danse",
+        "remove": "Supprimer : {{name}}",
+        "addWithoutDrag": "Ajouter une danse sans glisser-déposer",
+        "addLabel": "Danse à ajouter",
+        "addPlaceholder": "Choisir une danse…",
+        "add": "Ajouter",
+        "announce": {
+          "added": "« {{name}} » ajoutée à la scène {{scene}}.",
+          "removed": "« {{name}} » supprimée."
+        },
+        "validate": "Valider ce module",
+        "cancel": "Annuler",
+        "edit": "Modifier",
+        "editLabel": "Modifier : {{name}}",
+        "collapse": "Replier",
+        "collapseLabel": "Replier : {{name}}",
+        "noMusic": "Sans musique"
+      },
+      "catalog": {
+        "festiveRound": {
+          "name": "Ronde festive",
+          "description": "Danse collective en cercle, joyeuse."
+        },
+        "farandole": {
+          "name": "Farandole",
+          "description": "Une chaîne qui serpente dans l'espace."
+        },
+        "royalMarch": {
+          "name": "Marche royale",
+          "description": "Défilé lent et majestueux."
+        },
+        "courtBallet": {
+          "name": "Ballet de la cour",
+          "description": "Élégance et pas glissés."
+        },
+        "storm": {
+          "name": "Danse de la tempête",
+          "description": "Mouvements amples et rapides."
+        },
+        "musicalStatues": {
+          "name": "Statues musicales",
+          "description": "On se fige quand la musique s'arrête."
+        },
+        "animals": {
+          "name": "Danse des animaux",
+          "description": "Imiter la démarche des animaux du conte."
+        },
+        "mirror": {
+          "name": "Danse en miroir",
+          "description": "Deux danseurs se répondent."
+        },
+        "rhythmicDuel": {
+          "name": "Duel rythmé",
+          "description": "Confrontation en miroir, rythmée."
+        },
+        "stageFight": {
+          "name": "Combat chorégraphié",
+          "description": "Affrontement sans contact."
+        },
+        "heroSolo": {
+          "name": "Solo du héros",
+          "description": "Le personnage exprime ses émotions."
+        },
+        "dream": {
+          "name": "Danse du rêve",
+          "description": "Mouvements lents, comme au ralenti."
+        }
+      }
+    },
+
+    "staging": {
+      "title": "Adaptez votre conte pour la scène",
+      "description": "Pour chaque scène, précisez qui est sur scène, l'intention à transmettre au public et les décors. Les scènes suivent la trame de votre récit.",
+      "editStructure": "Modifier les scènes dans la trame du récit",
+      "scene": {
+        "title": "Scène {{number}} — {{title}}",
+        "showText": "Voir le texte de la scène"
+      },
+      "characters": {
+        "label": "Personnages présents"
+      },
+      "movements": {
+        "title": "Entrées et sorties",
+        "entrance": "Entrée",
+        "exit": "Sortie",
+        "entranceMoment": "Moment de l'entrée",
+        "entranceMomentPlaceholder": "Ex. : quand Merlin annonce le Graal",
+        "exitMoment": "Moment de la sortie",
+        "exitMomentPlaceholder": "Ex. : après la danse du banquet",
+        "entrances": {
+          "onStage": "Sur scène dès le début",
+          "enters": "Entre pendant la scène"
+        },
+        "exits": {
+          "stays": "Reste jusqu'à la fin",
+          "exits": "Sort pendant la scène"
+        }
+      },
+      "intention": {
+        "label": "Intention théâtrale",
+        "hint": "Quelle émotion, quelle ambiance voulez-vous transmettre au public ?",
+        "placeholder": "Ex. : la joie de la fête, puis l'inquiétude quand Merlin arrive"
+      },
+      "props": {
+        "label": "Décors et accessoires",
+        "placeholder": "Ex. : une table de banquet",
+        "add": "Ajouter",
+        "hint": "Appuyez sur Entrée pour ajouter un élément.",
+        "listLabel": "Décors et accessoires de la scène {{number}}",
+        "remove": "Retirer : {{prop}}"
+      },
+      "autosaveIdle": "La mise en scène est enregistrée automatiquement.",
+      "conductor": {
+        "label": "Générer le conducteur du spectacle (PDF)",
+        "soon": "(bientôt disponible)"
+      },
+      "setup": "Mise en scène de la scène",
+      "addStep": "Ajouter une étape dans la trame"
+    },
+
+    "writing": {
+      "title": "Écrivez l'histoire de votre conte",
+      "description": "Rédigez le texte de chaque étape de votre trame. Choisissez une étape à gauche : son résumé et ses personnages vous servent de repère.",
+      "taleTitle": {
+        "label": "Titre de votre conte dansé",
+        "placeholder": "Ex. : Arthur et l'épée du rocher"
+      },
+      "steps": {
+        "label": "Étapes du récit",
+        "position": "Étape {{current}} sur {{total}}",
+        "written": "Rédigée",
+        "empty": "À écrire"
+      },
+      "reminder": {
+        "summary": "Résumé de la trame",
+        "noSummary": "Pas encore de résumé pour cette étape.",
+        "characters": "Personnages"
+      },
+      "editorLabel": "Texte de l'étape « {{step}} »",
+      "placeholder": "Commencez à écrire ici…",
+      "autosave": {
+        "idle": "Votre texte est enregistré automatiquement pendant que vous écrivez."
+      },
+      "globalRecommendations": "Recommandations globales",
+      "assistant": {
+        "title": "Assistant pédagogique",
+        "warning": "L'assistant IA peut faire des erreurs. Discutez et vérifiez ensemble.",
+        "intro": "L'assistant pose des questions et donne des indices : c'est la classe qui écrit.",
+        "actions": {
+          "vocabulary": "Trouver du vocabulaire",
+          "checkSentence": "Vérifier notre phrase",
+          "askQuestion": "Poser une question",
+          "dialogueIdeas": "Idées de dialogues"
+        },
+        "soon": "L'assistant sera bientôt disponible.",
+        "soonShort": "(bientôt disponible)"
+      }
+    },
+
+    "structure": {
+      "title": "Structurez le récit de votre conte",
+      "description": "Voici une proposition de plan. Réorganisez, modifiez ou ajoutez des étapes pour créer la structure de votre histoire.",
+      "reorderHint": "Faites glisser une étape par sa poignée, ou utilisez les flèches pour la monter ou la descendre. Le titre de chaque étape est obligatoire.",
+      "listLabel": "Étapes du récit",
+      "addStep": "Ajouter une étape",
+      "regenerate": {
+        "label": "Régénérer",
+        "soon": "(bientôt disponible)"
+      },
+      "kinds": {
+        "initialSituation": {
+          "title": "La situation initiale",
+          "hint": "Présentez les personnages principaux, le lieu et le contexte de départ, avant que l'intrigue ne commence."
+        },
+        "trigger": {
+          "title": "L'élément déclencheur",
+          "hint": "Un événement inattendu vient bouleverser la situation de départ et lance l'aventure."
+        },
+        "adventures": {
+          "title": "Les péripéties",
+          "hint": "Les actions et événements que les personnages doivent affronter pour résoudre le problème."
+        },
+        "resolution": {
+          "title": "La résolution",
+          "hint": "Le problème principal trouve sa solution, souvent lors d'un moment fort ou d'une confrontation finale."
+        },
+        "finalSituation": {
+          "title": "La situation finale",
+          "hint": "Le nouvel équilibre après l'aventure : comment les personnages ont-ils changé ?"
+        }
+      },
+      "step": {
+        "number": "Étape {{number}}",
+        "drag": "Faire glisser pour déplacer",
+        "title": {
+          "label": "Titre de l'étape",
+          "placeholder": "Ex. : La rencontre avec le dragon",
+          "error": "Donnez un titre à cette étape."
+        },
+        "summary": {
+          "label": "Résumé court",
+          "placeholder": "En quelques phrases, que se passe-t-il ?",
+          "emptyWarning": "Cette étape essentielle du récit est encore vide."
+        },
+        "characters": {
+          "label": "Personnages présents",
+          "empty": "Aucun personnage n'a encore été créé.",
+          "emptyLink": "Ajouter des personnages dans l'univers du conte"
+        },
+        "moveUp": "Monter : {{step}}",
+        "moveDown": "Descendre : {{step}}",
+        "remove": "Supprimer : {{step}}"
+      },
+      "announce": {
+        "moved": "{{step}} déplacée en position {{position}} sur {{total}}.",
+        "removed": "{{step}} supprimée."
+      },
+      "emptyAlert": {
+        "message": "{{count}} étape(s) essentielle(s) sans résumé. Vous pouvez les compléter maintenant ou plus tard.",
+        "continue": "Continuer quand même"
+      },
+      "autosaveIdle": "La trame est enregistrée automatiquement."
     },
 
     "universe": {

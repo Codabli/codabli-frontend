@@ -1,6 +1,8 @@
 export interface CreateDancedTaleStep {
   path: string;
   labelKey: string;
+  /** Écran à plusieurs panneaux : toute la largeur de la grille, marge réduite sur très grand écran. */
+  wide?: boolean;
 }
 
 /**
@@ -14,6 +16,6 @@ export const CREATE_DANCED_TALE_STEPS: CreateDancedTaleStep[] = [
   { path: 'class-resources', labelKey: 'createDancedTale.steps.classResources' },
   { path: 'universe', labelKey: 'createDancedTale.steps.universe' },
   { path: 'structure', labelKey: 'createDancedTale.steps.structure' },
-  { path: 'writing', labelKey: 'createDancedTale.steps.writing' },
-  { path: 'staging', labelKey: 'createDancedTale.steps.staging' },
+  { path: 'writing', labelKey: 'createDancedTale.steps.writing', wide: true },
+  { path: 'staging', labelKey: 'createDancedTale.steps.staging', wide: true },
 ];

@@ -1,0 +1,114 @@
+<div class="rich-text">
+  <div
+    class="rich-text__toolbar"
+    role="toolbar"
+    [attr.aria-label]="'richTextEditor.toolbar' | translate"
+  >
+    <button
+      type="button"
+      class="rich-text__button rich-text__button--labelled"
+      [attr.aria-pressed]="state().title"
+      (click)="toggleTitle()"
+    >
+      <i
+        class="fa-solid fa-heading"
+        aria-hidden="true"
+      ></i>
+      {{ 'richTextEditor.title' | translate }}
+    </button>
+
+    <button
+      type="button"
+      class="rich-text__button rich-text__button--labelled"
+      [attr.aria-pressed]="state().subtitle"
+      (click)="toggleSubtitle()"
+    >
+      {{ 'richTextEditor.subtitle' | translate }}
+    </button>
+
+    <span
+      class="rich-text__separator"
+      aria-hidden="true"
+    ></span>
+
+    <button
+      type="button"
+      class="rich-text__button"
+      [attr.aria-pressed]="state().bold"
+      [attr.aria-label]="'richTextEditor.bold' | translate"
+      [title]="'richTextEditor.bold' | translate"
+      (click)="toggleBold()"
+    >
+      <i
+        class="fa-solid fa-bold"
+        aria-hidden="true"
+      ></i>
+    </button>
+
+    <button
+      type="button"
+      class="rich-text__button"
+      [attr.aria-pressed]="state().italic"
+      [attr.aria-label]="'richTextEditor.italic' | translate"
+      [title]="'richTextEditor.italic' | translate"
+      (click)="toggleItalic()"
+    >
+      <i
+        class="fa-solid fa-italic"
+        aria-hidden="true"
+      ></i>
+    </button>
+
+    <button
+      type="button"
+      class="rich-text__button"
+      [attr.aria-pressed]="state().bulletList"
+      [attr.aria-label]="'richTextEditor.bulletList' | translate"
+      [title]="'richTextEditor.bulletList' | translate"
+      (click)="toggleBulletList()"
+    >
+      <i
+        class="fa-solid fa-list-ul"
+        aria-hidden="true"
+      ></i>
+    </button>
+
+    <span
+      class="rich-text__separator"
+      aria-hidden="true"
+    ></span>
+
+    <button
+      type="button"
+      class="rich-text__button rich-text__button--labelled"
+      [disabled]="!state().canUndo"
+      [title]="'richTextEditor.undoShortcut' | translate"
+      (click)="undo()"
+    >
+      <i
+        class="fa-solid fa-rotate-left"
+        aria-hidden="true"
+      ></i>
+      {{ 'richTextEditor.undo' | translate }}
+    </button>
+
+    <button
+      type="button"
+      class="rich-text__button rich-text__button--labelled"
+      [disabled]="!state().canRedo"
+      [title]="'richTextEditor.redoShortcut' | translate"
+      (click)="redo()"
+    >
+      <i
+        class="fa-solid fa-rotate-right"
+        aria-hidden="true"
+      ></i>
+      {{ 'richTextEditor.redo' | translate }}
+    </button>
+  </div>
+
+  <div
+    #editorHost
+    class="rich-text__editor"
+  ></div>
+</div>

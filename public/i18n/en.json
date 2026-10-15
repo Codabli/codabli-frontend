@@ -49,6 +49,19 @@
       "submit": "Send my request"
     }
   },
+  "richTextEditor": {
+    "title": "Heading",
+    "subtitle": "Subheading",
+    "toolbar": "Text formatting",
+    "bold": "Bold",
+    "italic": "Italic",
+    "bulletList": "Bulleted list",
+    "undo": "Undo",
+    "redo": "Redo",
+    "undoShortcut": "Undo (Ctrl+Z)",
+    "redoShortcut": "Redo (Ctrl+Y)"
+  },
+
   "createDancedTale": {
     "title": "Create your own dance tale",
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
@@ -72,6 +85,336 @@
       "message": "Your answers are saved. This step will be available soon.",
       "back": "Back to the “{{step}}” step",
       "next": "Continue to the “{{step}}” step"
+    },
+
+    "autosave": {
+      "saved": "Saved at {{hours}}:{{minutes}}",
+      "error": "Saving is not possible on this device: the browser's storage is full."
+    },
+
+    "sounds": {
+      "title": "Music and sound effects",
+      "import": "Import music or a sound effect",
+      "titleLabel": "Title",
+      "player": "Listen: {{title}}",
+      "kind": "Type",
+      "kinds": {
+        "music": "Music",
+        "effect": "Sound effect"
+      },
+      "moment": "When",
+      "dance": "Goes with the dance",
+      "noDance": "No particular dance",
+      "remove": "Delete: {{title}}",
+      "missing": "File “{{fileName}}” not found on this device.",
+      "replace": "Import again",
+      "errors": {
+        "notAudio": "This file is not an audio file.",
+        "tooLarge": "This file is larger than 20 MB.",
+        "storage": "The file could not be saved in the browser."
+      },
+      "announce": {
+        "added": "“{{title}}” added to the scene.",
+        "removed": "“{{title}}” deleted."
+      },
+      "danceTitle": "Music",
+      "sceneTitle": "Sound effects and atmosphere of the scene",
+      "importDance": "Import my own music"
+    },
+
+    "stage": {
+      "title": "Stage space",
+      "hint": "Drag and drop the items to set the starting positions, or use the arrow keys.",
+      "noElements": "Add characters on stage or set items to place them on the stage.",
+      "reset": "Reset",
+      "back": "Upstage",
+      "audience": "Audience",
+      "left": "Stage left",
+      "right": "Stage right",
+      "backstage": "Backstage",
+      "curtain": "Curtain",
+      "apron": "Apron",
+      "footlights": "Footlights",
+      "zoneLabel": "Area: {{zone}}",
+      "toPlace": "To place",
+      "listTitle": "Place items without drag and drop",
+      "offStage": "Off stage (to place)",
+      "zones": {
+        "back-left": "Upstage left",
+        "back-center": "Upstage centre",
+        "back-right": "Upstage right",
+        "middle-left": "Centre stage left",
+        "middle-center": "Centre stage",
+        "middle-right": "Centre stage right",
+        "front-left": "Downstage left",
+        "front-center": "Downstage centre",
+        "front-right": "Downstage right"
+      }
+    },
+
+    "dances": {
+      "library": {
+        "title": "Dance library",
+        "hint": "Drag a dance into a scene, or use “Add a dance without drag and drop” in the scene.",
+        "search": "Search",
+        "searchPlaceholder": "E.g. circle",
+        "listLabel": "Available dances",
+        "noResult": "No dance matches your search."
+      },
+      "format": {
+        "label": "Format",
+        "all": "All",
+        "solo": "Solo",
+        "duo": "Duet",
+        "group": "Group"
+      },
+      "intensity": {
+        "label": "Intensity",
+        "all": "All",
+        "gentle": "Gentle",
+        "moderate": "Moderate",
+        "intense": "Intense"
+      },
+      "styles": {
+        "traditional": "Traditional",
+        "classical": "Classical",
+        "contemporary": "Contemporary"
+      },
+      "moments": {
+        "hint": "Optional: with no choice, the whole scene.",
+        "beginning": "Beginning",
+        "middle": "Middle",
+        "end": "End"
+      },
+      "scene": {
+        "title": "Dances in the scene",
+        "listLabel": "Dances in scene {{number}}",
+        "dropHint": "Drag a dance here",
+        "number": "Dance no. {{number}}",
+        "name": "Dance name",
+        "moment": "When in the scene",
+        "style": "Dance type",
+        "remove": "Delete: {{name}}",
+        "addWithoutDrag": "Add a dance without drag and drop",
+        "addLabel": "Dance to add",
+        "addPlaceholder": "Choose a dance…",
+        "add": "Add",
+        "announce": {
+          "added": "“{{name}}” added to scene {{scene}}.",
+          "removed": "“{{name}}” deleted."
+        },
+        "validate": "Confirm this module",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "editLabel": "Edit: {{name}}",
+        "collapse": "Collapse",
+        "collapseLabel": "Collapse: {{name}}",
+        "noMusic": "No music"
+      },
+      "catalog": {
+        "festiveRound": {
+          "name": "Festive round",
+          "description": "A joyful group dance in a circle."
+        },
+        "farandole": {
+          "name": "Farandole",
+          "description": "A chain winding through the space."
+        },
+        "royalMarch": {
+          "name": "Royal march",
+          "description": "A slow and majestic procession."
+        },
+        "courtBallet": {
+          "name": "Court ballet",
+          "description": "Elegance and gliding steps."
+        },
+        "storm": {
+          "name": "Storm dance",
+          "description": "Wide and fast movements."
+        },
+        "musicalStatues": {
+          "name": "Musical statues",
+          "description": "Freeze when the music stops."
+        },
+        "animals": {
+          "name": "Animal dance",
+          "description": "Imitate the gait of the animals in the tale."
+        },
+        "mirror": {
+          "name": "Mirror dance",
+          "description": "Two dancers answer each other."
+        },
+        "rhythmicDuel": {
+          "name": "Rhythmic duel",
+          "description": "A rhythmic mirrored confrontation."
+        },
+        "stageFight": {
+          "name": "Stage fight",
+          "description": "A confrontation without contact."
+        },
+        "heroSolo": {
+          "name": "Hero solo",
+          "description": "The character expresses their emotions."
+        },
+        "dream": {
+          "name": "Dream dance",
+          "description": "Slow movements, as if in slow motion."
+        }
+      }
+    },
+
+    "staging": {
+      "title": "Adapt your tale for the stage",
+      "description": "For each scene, specify who is on stage, the intention to convey to the audience and the set. The scenes follow the outline of your story.",
+      "editStructure": "Edit the scenes in the story outline",
+      "scene": {
+        "title": "Scene {{number}} — {{title}}",
+        "showText": "Show the text of the scene"
+      },
+      "characters": {
+        "label": "Characters on stage"
+      },
+      "movements": {
+        "title": "Entrances and exits",
+        "entrance": "Entrance",
+        "exit": "Exit",
+        "entranceMoment": "When does the character enter?",
+        "entranceMomentPlaceholder": "E.g. when Merlin announces the Grail",
+        "exitMoment": "When does the character exit?",
+        "exitMomentPlaceholder": "E.g. after the banquet dance",
+        "entrances": {
+          "onStage": "On stage from the start",
+          "enters": "Enters during the scene"
+        },
+        "exits": {
+          "stays": "Stays until the end",
+          "exits": "Exits during the scene"
+        }
+      },
+      "intention": {
+        "label": "Theatrical intention",
+        "hint": "What emotion, what atmosphere do you want to convey to the audience?",
+        "placeholder": "E.g. the joy of the feast, then worry when Merlin arrives"
+      },
+      "props": {
+        "label": "Set and props",
+        "placeholder": "E.g. a banquet table",
+        "add": "Add",
+        "hint": "Press Enter to add an item.",
+        "listLabel": "Set and props of scene {{number}}",
+        "remove": "Remove: {{prop}}"
+      },
+      "autosaveIdle": "The staging is saved automatically.",
+      "conductor": {
+        "label": "Generate the show run sheet (PDF)",
+        "soon": "(coming soon)"
+      },
+      "setup": "Staging of the scene",
+      "addStep": "Add a step in the outline"
+    },
+
+    "writing": {
+      "title": "Write the story of your tale",
+      "description": "Write the text of each step of your outline. Choose a step on the left: its summary and characters guide you.",
+      "taleTitle": {
+        "label": "Title of your danced tale",
+        "placeholder": "E.g. Arthur and the sword in the stone"
+      },
+      "steps": {
+        "label": "Story steps",
+        "position": "Step {{current}} of {{total}}",
+        "written": "Written",
+        "empty": "To write"
+      },
+      "reminder": {
+        "summary": "Outline summary",
+        "noSummary": "No summary for this step yet.",
+        "characters": "Characters"
+      },
+      "editorLabel": "Text of the “{{step}}” step",
+      "placeholder": "Start writing here…",
+      "autosave": {
+        "idle": "Your text is saved automatically as you write."
+      },
+      "globalRecommendations": "Overall recommendations",
+      "assistant": {
+        "title": "Learning assistant",
+        "warning": "The AI assistant can make mistakes. Discuss and check together.",
+        "intro": "The assistant asks questions and gives hints: the class does the writing.",
+        "actions": {
+          "vocabulary": "Find vocabulary",
+          "checkSentence": "Check our sentence",
+          "askQuestion": "Ask a question",
+          "dialogueIdeas": "Dialogue ideas"
+        },
+        "soon": "The assistant will be available soon.",
+        "soonShort": "(coming soon)"
+      }
+    },
+
+    "structure": {
+      "title": "Structure the story of your tale",
+      "description": "Here is a suggested outline. Reorder, edit or add steps to build the structure of your story.",
+      "reorderHint": "Drag a step by its handle, or use the arrows to move it up or down. Each step needs a title.",
+      "listLabel": "Story steps",
+      "addStep": "Add a step",
+      "regenerate": {
+        "label": "Regenerate",
+        "soon": "(coming soon)"
+      },
+      "kinds": {
+        "initialSituation": {
+          "title": "The initial situation",
+          "hint": "Introduce the main characters, the place and the starting point, before the plot begins."
+        },
+        "trigger": {
+          "title": "The inciting incident",
+          "hint": "An unexpected event upsets the starting situation and launches the adventure."
+        },
+        "adventures": {
+          "title": "The twists and turns",
+          "hint": "The actions and events the characters must face to solve the problem."
+        },
+        "resolution": {
+          "title": "The resolution",
+          "hint": "The main problem is solved, often during a climax or a final confrontation."
+        },
+        "finalSituation": {
+          "title": "The final situation",
+          "hint": "The new balance after the adventure: how have the characters changed?"
+        }
+      },
+      "step": {
+        "number": "Step {{number}}",
+        "drag": "Drag to move",
+        "title": {
+          "label": "Step title",
+          "placeholder": "E.g. Meeting the dragon",
+          "error": "Give this step a title."
+        },
+        "summary": {
+          "label": "Short summary",
+          "placeholder": "In a few sentences, what happens?",
+          "emptyWarning": "This essential step of the story is still empty."
+        },
+        "characters": {
+          "label": "Characters in this step",
+          "empty": "No characters have been created yet.",
+          "emptyLink": "Add characters in the world of the tale"
+        },
+        "moveUp": "Move up: {{step}}",
+        "moveDown": "Move down: {{step}}",
+        "remove": "Delete: {{step}}"
+      },
+      "announce": {
+        "moved": "{{step}} moved to position {{position}} of {{total}}.",
+        "removed": "{{step}} deleted."
+      },
+      "emptyAlert": {
+        "message": "{{count}} essential step(s) without a summary. You can fill them in now or later.",
+        "continue": "Continue anyway"
+      },
+      "autosaveIdle": "The outline is saved automatically."
     },
 
     "universe": {

@@ -1,0 +1,456 @@
+// Écran pensé pour être projeté en classe (RG-ACC) : textes d'au moins 18px,
+// zones cliquables larges et focus très visible.
+
+$focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%, transparent);
+
+.tale-staging {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+
+  font-size: 18px;
+  color: var(--color-text-primary-default);
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    margin: 0;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h4);
+    color: var(--font-color-primary);
+  }
+
+  &__link,
+  .field-group__empty a {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary-default);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+}
+
+// ---------- Bibliothèque de danses + scènes (écran 8.2) ----------
+
+.staging-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 300px minmax(0, 1fr);
+
+    &--library-collapsed {
+      grid-template-columns: 64px minmax(0, 1fr);
+    }
+
+    // La bibliothèque reste visible pendant qu'on fait défiler les scènes (sous le header collant).
+    &__library {
+      position: sticky;
+      top: 200px;
+      max-height: calc(100vh - 220px);
+      overflow-y: auto;
+    }
+  }
+}
+
+// ---------- Scènes ----------
+
+.scenes {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // « Ajouter une étape » sous la frise : renvoie à la trame (écran 6).
+  &__add-step {
+    justify-self: center;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary-default);
+
+    @media (min-width: 1200px) {
+      grid-column: 2;
+    }
+  }
+}
+
+// Frise verticale, comme la maquette : numéro de la scène relié par un trait à la suivante.
+.scene-item {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  column-gap: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+
+  background: linear-gradient(var(--color-border-outline-default), var(--color-border-outline-default)) 19px 0 / 2px
+    100% no-repeat;
+
+  &:last-child {
+    background-size: 2px 40px;
+  }
+
+  &__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+
+    background-color: var(--color-bg-primary-default);
+    border: 2px solid var(--color-bg-surface);
+    border-radius: 50%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    min-width: 0;
+  }
+
+  // Danses en retrait de la scène, reliées au trait de la frise (centre à 20px,
+  // contenu à 40px + 16px d'écart, plus le retrait).
+  app-scene-dances {
+    --dance-indent: 40px;
+    --dance-connector: calc(36px + var(--dance-indent));
+
+    margin-left: var(--dance-indent);
+
+    @media (max-width: 599px) {
+      --dance-indent: 12px;
+    }
+  }
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-outline-default);
+  border-radius: 16px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  // Bloc replié « Mise en scène de la scène » (personnages, intention, décors, bruitages).
+  &__setup-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-md);
+  }
+
+  &__title {
+    margin: 0;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h6);
+    color: var(--font-color-primary);
+  }
+
+  &__summary {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  &__text,
+  &__setup {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-bg-navigation);
+    border-radius: 12px;
+
+    summary {
+      font-weight: var(--font-weight-bold);
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--color-border-primary-focus);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // Texte HTML de l'écran 7, injecté par innerHTML : hors encapsulation, d'où ::ng-deep.
+  &__text-content {
+    padding-top: var(--spacing-sm);
+    line-height: 1.6;
+
+    ::ng-deep {
+      h4,
+      h5,
+      p,
+      ul {
+        margin: 0 0 var(--spacing-sm);
+      }
+
+      h4,
+      h5 {
+        font-family: 'Baloo 2', sans-serif;
+        line-height: 1.2;
+        color: var(--font-color-primary);
+      }
+
+      h4 {
+        font-size: var(--font-size-h5);
+      }
+
+      h5 {
+        font-size: var(--font-size-h6);
+      }
+    }
+  }
+}
+
+// ---------- Champs ----------
+
+.field-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  &__legend {
+    padding: 0;
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  &__empty {
+    margin: 0;
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+
+  label {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  input,
+  textarea,
+  select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 16px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: var(--font-color-text-anthracite);
+
+    background-color: var(--color-bg-surface);
+    border: 2px solid var(--color-border-outline-default);
+    border-radius: 12px;
+
+    &::placeholder {
+      color: var(--color-text-muted);
+      opacity: 0.7;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-border-primary-focus);
+      box-shadow: $focus-ring;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.form-hint {
+  margin: 0;
+  font-size: var(--font-size-body);
+  color: var(--color-text-muted);
+}
+
+// ---------- Entrées et sorties ----------
+
+.moment-label {
+  margin-top: var(--spacing-xs);
+}
+
+.movements {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+.movement {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-sm) var(--spacing-md);
+  min-width: 0;
+  margin: 0;
+  padding: var(--spacing-md);
+
+  background-color: var(--color-bg-navigation);
+  border: 0;
+  border-radius: 12px;
+
+  // Desktop : nom, entrée et sortie sur une seule ligne.
+  @media (min-width: 720px) {
+    grid-template-columns: minmax(120px, 1fr) minmax(0, 2fr) minmax(0, 2fr);
+    align-items: start;
+  }
+
+  &__name {
+    float: left; // Légende dans le flux de la grille plutôt que sur la bordure.
+    align-self: center;
+    padding: 0;
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+// ---------- Pastilles et décors ----------
+
+.pill-group,
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill {
+  position: relative;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 6px 18px;
+
+    font-weight: var(--font-weight-semibold);
+
+    border: 2px solid var(--color-border-outline-default);
+    border-radius: var(--radius-button);
+  }
+
+  input:checked + .pill__label {
+    background-color: var(--color-bg-secondary-default);
+    border-color: var(--color-bg-tertiary-default);
+  }
+
+  input:focus-visible + .pill__label {
+    box-shadow: $focus-ring;
+    border-color: var(--color-border-primary-focus);
+  }
+}
+
+.prop-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+
+  input {
+    flex: 1 1 240px;
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 4px 4px 4px 16px;
+
+  font-weight: var(--font-weight-semibold);
+
+  background-color: var(--color-bg-secondary-default);
+  border-radius: var(--radius-button);
+
+  &__remove {
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+    color: var(--color-text-primary-default);
+
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-border-primary-focus);
+    }
+  }
+}
+
+// ---------- Conducteur (pas encore disponible) ----------
+
+.conductor-button {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs) var(--spacing-sm);
+  min-height: 52px;
+  padding: 8px 24px;
+
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary-disabled);
+
+  background-color: var(--color-bg-secondary-disabled);
+  border: 0;
+  border-radius: var(--radius-button);
+  cursor: not-allowed;
+
+  em {
+    font-size: var(--font-size-body);
+    font-weight: 400;
+  }
+}

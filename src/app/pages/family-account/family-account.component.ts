@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
-import { Button } from '../../shared/components/button/button.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
 import { AccountFormPage, accountErrorMessages } from '../../shared/forms/account-form-page';
 import {
   ADDRESS_MAX_LENGTH,
@@ -16,7 +16,7 @@ import {
 import { FAMILY_PLATFORM_GOALS, NOTIFICATION_PREFERENCES } from './family-account.options';
 
 @Component({
-  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, Button],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, ButtonComponent],
   selector: 'app-family-account',
   styleUrl: './family-account.component.scss',
   templateUrl: './family-account.component.html',

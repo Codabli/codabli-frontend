@@ -15,6 +15,10 @@ export class ArtGalleryService {
         this.currentCountrySubject = new BehaviorSubject<ArtGalleryCountryEnum>(this.currentCountry);
         this.currentCountryObservable = this.currentCountrySubject.asObservable();
     }
+    
+    public GetCurrentCountry(): ArtGalleryCountryEnum {
+        return this.currentCountry;
+    }
 
     public GoNextCountry(): void {
         if (this.currentCountry !== ArtGalleryCountryEnum.VIETNAM) {

@@ -7,6 +7,6 @@ import {ArtGalleryCountryEnum} from './art-gallery-country-enum'
 })
 export class CountryEnumToTextPipe implements PipeTransform {
   transform(value: ArtGalleryCountryEnum | null): string {
-    return (value !== null) ? ArtGalleryCountryEnum[value] : '';
+    return (value !== null && value !== ArtGalleryCountryEnum.UNDEFINED) ? `artGallery.country.${ArtGalleryCountryEnum[value]}` : '';
   }
 }

@@ -1,5 +1,5 @@
 export enum ArtGalleryCountryEnum {
-    UNDEFINED = -1,
+    UNDEFINED = 0,
     LEBANON,
     AUSTRALIA,
     ITALY,

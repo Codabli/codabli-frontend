@@ -274,7 +274,7 @@
 
       <app-button
         variant="outline"
-        (click)="saveAndContinue()"
+        (click)="continueAnyway()"
       >
         {{ 'createDancedTale.structure.emptyAlert.continue' | translate }}
       </app-button>
@@ -291,6 +291,11 @@
       {{ 'createDancedTale.universe.storageFull' | translate }}
     </p>
   }
+
+  <app-autosave-status
+    idleKey="createDancedTale.structure.autosaveIdle"
+    [autosave]="autosave"
+  />
 
   <div class="tale-structure__actions">
     <app-button

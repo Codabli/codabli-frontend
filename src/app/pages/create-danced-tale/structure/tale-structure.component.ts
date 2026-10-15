@@ -1,12 +1,14 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { take } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
+import { Autosave } from '../autosave/autosave';
+import { AutosaveStatus } from '../autosave/autosave-status.component';
 import {
   DEFAULT_STORY_STEPS,
   StoryStepKind,
@@ -27,6 +29,7 @@ const kindKey = (kind: StoryStepKind) => `createDancedTale.structure.kinds.${kin
     RouterLink,
     TranslatePipe,
     ButtonComponent,
+    AutosaveStatus,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
@@ -59,7 +62,23 @@ export class TaleStructureComponent {
   /** Message lu par les lecteurs d'écran après un déplacement ou une suppression. */
   protected readonly announcement = signal('');
 
+  // RG-CMC-12 : la trame est enregistrée automatiquement, même incomplète.
+  protected readonly autosave = new Autosave(() => this.draftService.saveStructure(this.form.toTaleStructure()));
+
   constructor() {
+    // Seules les modifications de l'enseignant déclenchent l'enregistrement, pas le chargement
+    // de la trame (sinon une simple visite créerait une trame par défaut dans le brouillon).
+    this.form.valueChanges
+      .pipe(
+        filter(() => this.ready()),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.autosave.schedule());
+
+    // Une saisie en attente n'est jamais perdue, quelle que soit la façon de quitter l'écran
+    // (lien vers l'univers, menu, retour du navigateur).
+    inject(DestroyRef).onDestroy(() => this.autosave.flush());
+
     const savedStructure = this.draftService.structure();
 
     if (savedStructure) {
@@ -149,16 +168,13 @@ export class TaleStructureComponent {
 
   protected onPrevious(): void {
     // Le brouillon garde une saisie incomplète : rien n'est perdu en revenant en arrière.
+    this.autosave.flush();
     this.draftService.saveStructure(this.form.toTaleStructure());
     this.router.navigate(['../universe'], { relativeTo: this.route });
   }
 
   protected onNext(): void {
-    this.submitted.set(true);
-
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      this.focus('input.ng-invalid');
+    if (!this.checkTitles()) {
       return;
     }
 
@@ -172,7 +188,28 @@ export class TaleStructureComponent {
     this.saveAndContinue();
   }
 
-  protected saveAndContinue(): void {
+  /** « Continuer quand même » : les titres ont pu être vidés pendant que l'alerte était affichée. */
+  protected continueAnyway(): void {
+    if (this.checkTitles()) {
+      this.saveAndContinue();
+    }
+  }
+
+  /** Titres obligatoires : sinon, erreurs affichées et focus sur le premier champ invalide. */
+  private checkTitles(): boolean {
+    this.submitted.set(true);
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.focus('input.ng-invalid');
+      return false;
+    }
+
+    return true;
+  }
+
+  private saveAndContinue(): void {
+    this.autosave.flush();
     if (!this.draftService.saveStructure(this.form.toTaleStructure())) {
       this.storageFull.set(true);
       this.focus('#storage-error');

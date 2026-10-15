@@ -6,6 +6,7 @@ import { CreateDancedTaleDraftService } from '../../../core/services/create-danc
 import { ProjectContext } from '../../../models/interfaces/project-context.interface';
 import { TaleStructure } from '../../../models/interfaces/tale-structure.interface';
 import { TaleUniverse } from '../../../models/interfaces/tale-universe.interface';
+import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',
@@ -229,6 +230,45 @@ describe('TaleStructureComponent', () => {
     expect(steps()[0].querySelector<HTMLInputElement>('input[type="checkbox"]')!.checked).toBe(true);
     // Une seule étape : elle ne peut pas être supprimée.
     expect(actionButtons(steps()[0])[2].disabled).toBe(true);
+  });
+
+  it('« Continuer quand même » vérifie à nouveau les titres', async () => {
+    await setup();
+    clickNext();
+    // Titre vidé pendant que l'alerte est affichée.
+    type(titleInput(steps()[1]), '');
+
+    click(element.querySelector<HTMLElement>('#empty-steps-alert app-button')!);
+
+    expect(router.navigate).not.toHaveBeenCalled();
+    expect(draftService.structure()).toBeNull();
+    const errorId = titleInput(steps()[1]).getAttribute('aria-describedby');
+    expect(element.querySelector(`#${errorId}`)).not.toBeNull();
+  });
+
+  it('enregistre automatiquement la trame, sans en créer une par simple visite', async () => {
+    await setup();
+    vi.useFakeTimers();
+
+    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    expect(draftService.structure()).toBeNull();
+
+    type(steps()[0].querySelector('textarea')!, 'Au début…');
+    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    fixture.detectChanges();
+
+    expect(draftService.structure()!.steps[0].summary).toBe('Au début…');
+    expect(element.querySelector('.autosave')!.textContent).toContain('createDancedTale.autosave.saved');
+    vi.useRealTimers();
+  });
+
+  it('enregistre la saisie en attente quand on quitte l\'écran autrement (lien, menu, retour)', async () => {
+    await setup();
+    type(titleInput(steps()[0]), 'Le banquet');
+
+    fixture.destroy();
+
+    expect(draftService.structure()!.steps[0].title).toBe('Le banquet');
   });
 
   it('garde la saisie en revenant à l\'univers', async () => {

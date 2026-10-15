@@ -413,7 +413,8 @@
       "emptyAlert": {
         "message": "{{count}} essential step(s) without a summary. You can fill them in now or later.",
         "continue": "Continue anyway"
-      }
+      },
+      "autosaveIdle": "The outline is saved automatically."
     },
 
     "universe": {

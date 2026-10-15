@@ -413,7 +413,8 @@
       "emptyAlert": {
         "message": "{{count}} étape(s) essentielle(s) sans résumé. Vous pouvez les compléter maintenant ou plus tard.",
         "continue": "Continuer quand même"
-      }
+      },
+      "autosaveIdle": "La trame est enregistrée automatiquement."
     },
 
     "universe": {

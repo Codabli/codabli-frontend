@@ -44,6 +44,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'art-gallery',
+        loadComponent: () =>
+          import('./features/art-gallery/art-gallery-component/art-gallery-component').then(
+            (m) => m.ArtGalleryComponent
+          ),
+      },
+      {
         path: 'login',
         loadComponent: () =>
           import('./pages/login/login.component').then((m) => m.LoginComponent),

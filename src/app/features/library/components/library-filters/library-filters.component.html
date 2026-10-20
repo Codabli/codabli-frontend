@@ -62,16 +62,24 @@
         <app-filter-select
           [placeholder]="'library.filters.themes.placeholder' | translate"
           [options]="themeOptions()"
+          [value]="selectedTheme()"
+          (selectionChange)="selectedTheme.set($event); applySelectedFilters()"
         />
 
         <app-filter-select
           [placeholder]="'library.filters.age.placeholder' | translate"
           [options]="ageOptions()"
+          [value]="selectedAge()?.toString() ?? null"
+          (selectionChange)="selectedAge.set(+$event); applySelectedFilters()"
         />
 
         <app-filter-select
           [placeholder]="'library.filters.languages.placeholder' | translate"
           [options]="languageOptions()"
+          [value]="selectedLanguage()"
+          (selectionChange)="
+            selectedLanguage.set($event); applySelectedFilters()
+          "
         />
       </div>
 

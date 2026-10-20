@@ -1,4 +1,4 @@
-import { Component, signal, output } from '@angular/core';
+import { Component, signal, output, input } from '@angular/core';
 import type { FilterSelectOption } from '@models/interfaces/filter-select-option.interface';
 import type { TaleFilters } from '@models/interfaces/tale-filters.interface';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,28 +22,41 @@ export class LibraryFiltersComponent {
 
   readonly filtersChange = output<TaleFilters>();
 
-  protected readonly themeOptions = signal<FilterSelectOption[]>([]);
-  protected readonly languageOptions = signal<FilterSelectOption[]>([]);
-  protected readonly ageOptions = signal<FilterSelectOption[]>([]);
+  readonly themeOptions = input<FilterSelectOption[]>([]);
+  readonly languageOptions = input<FilterSelectOption[]>([]);
+  readonly ageOptions = input<FilterSelectOption[]>([]);
+
+  protected readonly selectedTheme = signal<string | null>(null);
+  protected readonly selectedLanguage = signal<string | null>(null);
+  protected readonly selectedAge = signal<number | null>(null);
 
   protected onSearch(value: string): void {
     this.search.set(value);
   }
 
-  protected applyFilters(): void {
+  protected applySelectedFilters(): void {
     this.filtersChange.emit({
       search: this.search(),
-      themes: [],
-      languages: [],
+      themes: this.selectedTheme() ? [this.selectedTheme()!] : [],
+      languages: this.selectedLanguage() ? [this.selectedLanguage()!] : [],
+      age: this.selectedAge(),
     });
+  }
+
+  protected applyFilters(): void {
+    this.applySelectedFilters();
   }
 
   protected resetFilters(): void {
     this.search.set('');
+    this.selectedTheme.set(null);
+    this.selectedLanguage.set(null);
+    this.selectedAge.set(null);
     this.filtersChange.emit({
       search: '',
       themes: [],
       languages: [],
+      age: null,
     });
   }
 }

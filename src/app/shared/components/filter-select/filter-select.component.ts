@@ -1,7 +1,9 @@
 import {
   Component,
   input,
+  output,
   signal,
+  computed,
   inject,
   ElementRef,
   HostListener,
@@ -19,12 +21,31 @@ export class FilterSelectComponent {
   private readonly elementRef = inject(ElementRef);
 
   readonly placeholder = input.required<string>();
+  readonly value = input.required<string | null>();
   readonly options = input.required<FilterSelectOption[]>();
 
   protected readonly isOpen = signal(false);
 
+  readonly selectionChange = output<string>();
+
+  protected readonly selectedValue = signal<string | null>(null);
+
+  protected readonly selectedLabel = computed(() => {
+    const option = this.options().find(
+      (option) => option.value === this.value(),
+    );
+
+    return option?.label ?? this.placeholder();
+  });
+
   protected toggle(): void {
     this.isOpen.update((value) => !value);
+  }
+
+  protected selectOption(value: string): void {
+    this.selectedValue.set(value);
+    this.selectionChange.emit(value);
+    this.isOpen.set(false);
   }
 
   @HostListener('document:click', ['$event'])

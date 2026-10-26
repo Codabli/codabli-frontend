@@ -63,12 +63,45 @@
     // Les étapes se partagent la largeur (88px minimum) : la liste ne défile que sur mobile.
     flex: 1 1 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-xs);
     min-width: 88px;
 
     color: var(--color-text-primary-disabled);
+  }
+
+  // Lien (étape accessible) ou simple libellé (étape en cours ou verrouillée).
+  &__step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+
+    color: inherit;
+    text-decoration: none;
+    border-radius: 12px;
+  }
+
+  a.stepper__step {
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-bg-navigation);
+
+      .stepper__label {
+        text-decoration: underline;
+      }
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--color-border-primary-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  // Étape pas encore faite mais déjà accessible (contexte ou trame enregistrés).
+  &__item--reachable {
+    color: var(--color-text-primary-default);
   }
 
   &__number {

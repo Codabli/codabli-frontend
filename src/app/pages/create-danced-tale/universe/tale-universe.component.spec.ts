@@ -165,6 +165,15 @@ describe('TaleUniverseComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['../structure'], expect.anything());
   });
 
+  it('garde une saisie incomplète quand on quitte l\'écran par la frise', async () => {
+    await setup();
+    type(cardsOf('places')[0].querySelector('input')!, 'La forêt');
+
+    fixture.destroy();
+
+    expect(draftService.universe()!.places.map((place) => place.name)).toEqual(['La forêt']);
+  });
+
   it('garde une saisie incomplète en revenant à l\'étape précédente', async () => {
     await setup();
     type(cardsOf('objects')[0].querySelector('textarea')!, 'Une épée');

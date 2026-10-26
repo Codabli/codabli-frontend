@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -58,6 +58,13 @@ export class ProjectContextComponent {
     if (savedContext) {
       this.form.fromProjectContext(savedContext);
     }
+
+    // Quitter l'écran par la frise enregistre un contexte valide ; sinon l'ancien est conservé.
+    inject(DestroyRef).onDestroy(() => {
+      if (this.form.valid) {
+        this.draftService.saveContext(this.form.toProjectContext());
+      }
+    });
   }
 
   protected hasError(field: ProjectContextField): boolean {

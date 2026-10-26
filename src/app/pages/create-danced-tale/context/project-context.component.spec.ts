@@ -108,6 +108,40 @@ describe('ProjectContextComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['../discovery'], expect.anything());
   });
 
+  it('enregistre un contexte valide quand on quitte l\'écran par la frise', async () => {
+    await setup({
+      ageRange: '12-14',
+      country: 'Belgique',
+      region: 'Wallonie',
+      city: '',
+      theme: 'Les émotions',
+      secretIngredients: [],
+      performanceSpace: null,
+    });
+    type('theme', 'Les saisons');
+
+    fixture.destroy();
+
+    expect(draftService.context()?.theme).toBe('Les saisons');
+  });
+
+  it('garde l\'ancien contexte si la saisie est invalide en quittant l\'écran', async () => {
+    await setup({
+      ageRange: '12-14',
+      country: 'Belgique',
+      region: 'Wallonie',
+      city: '',
+      theme: 'Les émotions',
+      secretIngredients: [],
+      performanceSpace: null,
+    });
+    type('region', '');
+
+    fixture.destroy();
+
+    expect(draftService.context()?.region).toBe('Wallonie');
+  });
+
   it('pré-remplit le formulaire avec le brouillon enregistré', async () => {
     await setup({
       ageRange: '12-14',

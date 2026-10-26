@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -69,6 +69,9 @@ export class TaleUniverseComponent {
     }
 
     this.form.addDefaultCards();
+
+    // Quitter l'écran par la frise garde la saisie, même incomplète, comme « Étape précédente ».
+    inject(DestroyRef).onDestroy(() => this.saveIncomplete());
   }
 
   protected cards(section: UniverseSection): UniverseCardForm[] {
@@ -129,15 +132,7 @@ export class TaleUniverseComponent {
   }
 
   protected onPrevious(): void {
-    // Le brouillon garde une saisie incomplète : rien n'est perdu en revenant en arrière.
-    // Si rien n'a été saisi, on n'enregistre pas : les cartes par défaut reviendront.
-    const universe = this.form.toTaleUniverse();
-    const hasCards = Object.values(universe).some((cards) => cards.length);
-
-    if (hasCards || this.draftService.universe()) {
-      this.draftService.saveUniverse(universe);
-    }
-
+    this.saveIncomplete();
     this.router.navigate(['../class-resources'], { relativeTo: this.route });
   }
 
@@ -161,6 +156,19 @@ export class TaleUniverseComponent {
 
     this.storageFull.set(false);
     this.router.navigate(['../structure'], { relativeTo: this.route });
+  }
+
+  /**
+   * Le brouillon garde une saisie incomplète : rien n'est perdu en quittant l'écran.
+   * Si rien n'a été saisi, on n'enregistre pas : les cartes par défaut reviendront.
+   */
+  private saveIncomplete(): void {
+    const universe = this.form.toTaleUniverse();
+    const hasCards = Object.values(universe).some((cards) => cards.length);
+
+    if (hasCards || this.draftService.universe()) {
+      this.draftService.saveUniverse(universe);
+    }
   }
 
   private focus(selector: string): void {

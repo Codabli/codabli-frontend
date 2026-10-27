@@ -479,7 +479,8 @@
         "search": "Search",
         "searchPlaceholder": "E.g. circle",
         "listLabel": "Available dances",
-        "noResult": "No dance matches your search."
+        "noResult": "No dance matches your search.",
+        "fromDiscovery": "Your discovery (step 2)"
       },
       "format": {
         "label": "Format",

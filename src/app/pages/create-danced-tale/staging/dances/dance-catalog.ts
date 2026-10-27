@@ -1,8 +1,9 @@
 import { DanceFormat, DanceIntensity, DanceStyle } from '../../../../models/interfaces/tale-staging.interface';
+import { DISCOVERY_CATALOG } from '../../discovery/discovery-catalog';
 
 /**
- * Danse de la bibliothèque. Nom et description sont traduits :
- * `createDancedTale.dances.catalog.<id>.name` et `.description`.
+ * Danse de la bibliothèque. Nom et description sont traduits (voir `danceNameKey`) :
+ * `createDancedTale.dances.catalog.<id>.name` et `.description` pour une danse du catalogue.
  */
 export interface CatalogDance {
   id: string;
@@ -11,6 +12,8 @@ export interface CatalogDance {
   style: DanceStyle;
   /** Icône Font Awesome (sans le préfixe fa-solid). */
   icon: string;
+  /** Ressource de danse ajoutée au projet à l'écran 2 (découverte artistique), et non danse du catalogue. */
+  discoveryId?: string;
 }
 
 /**
@@ -32,8 +35,30 @@ export const DANCE_CATALOG: CatalogDance[] = [
   { id: 'dream', format: 'solo', intensity: 'gentle', style: 'contemporary', icon: 'fa-cloud-moon' },
 ];
 
-export function findCatalogDance(id: string): CatalogDance | undefined {
-  return DANCE_CATALOG.find((dance) => dance.id === id);
+/**
+ * Ressources de danse ajoutées au projet à l'écran 2 : elles rejoignent la bibliothèque de l'écran 8.2.
+ * Leur identifiant est préfixé pour ne jamais se confondre avec une danse du catalogue.
+ */
+export function discoveryDances(addedIds: readonly string[]): CatalogDance[] {
+  return DISCOVERY_CATALOG.filter((resource) => resource.dance && addedIds.includes(resource.id)).map(
+    (resource) => ({ id: `discovery-${resource.id}`, discoveryId: resource.id, ...resource.dance! }),
+  );
+}
+
+export function danceNameKey(dance: CatalogDance): string {
+  return dance.discoveryId
+    ? `createDancedTale.discovery.catalog.${dance.discoveryId}.title`
+    : `createDancedTale.dances.catalog.${dance.id}.name`;
+}
+
+export function danceDescriptionKey(dance: CatalogDance): string {
+  return dance.discoveryId
+    ? `createDancedTale.discovery.catalog.${dance.discoveryId}.description`
+    : `createDancedTale.dances.catalog.${dance.id}.description`;
+}
+
+export function findCatalogDance(id: string, dances: readonly CatalogDance[] = DANCE_CATALOG): CatalogDance | undefined {
+  return dances.find((dance) => dance.id === id);
 }
 
 /** Les éléments glissés depuis la bibliothèque portent la danse du catalogue. */

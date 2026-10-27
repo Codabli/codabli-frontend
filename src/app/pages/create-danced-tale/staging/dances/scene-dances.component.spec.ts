@@ -5,6 +5,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { SceneDances } from './scene-dances.component';
 import { findCatalogDance } from './dance-catalog';
 import { SceneDance, SceneSound } from '../../../../models/interfaces/tale-staging.interface';
+import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
 import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
 import { SceneSounds } from '../sounds/scene-sounds.component';
 
@@ -30,7 +31,8 @@ describe('SceneDances', () => {
   let emitted: SceneDance[][];
   let store: { put: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
 
-  async function setup(dances: SceneDance[] = []): Promise<void> {
+  async function setup(dances: SceneDance[] = [], discoveryAdded: string[] = []): Promise<void> {
+    localStorage.clear();
     // jsdom n'a pas IndexedDB : faux stockage des fichiers audio.
     store = { put: vi.fn(async () => undefined), get: vi.fn(async () => undefined), delete: vi.fn(async () => undefined) };
 
@@ -38,6 +40,10 @@ describe('SceneDances', () => {
       imports: [SceneDances],
       providers: [provideTranslateService(), { provide: AudioFileStore, useValue: store }],
     }).compileComponents();
+
+    if (discoveryAdded.length) {
+      TestBed.inject(CreateDancedTaleDraftService).saveDiscovery({ added: discoveryAdded, done: [], favorites: [] });
+    }
 
     fixture = TestBed.createComponent(SceneDances);
     component = fixture.componentInstance;
@@ -85,6 +91,32 @@ describe('SceneDances', () => {
     ]);
     expect(document.activeElement).toBe(element.querySelector('.dance input[type="text"]'));
     expect(select.value).toBe('');
+  });
+
+  it('propose aussi les danses retenues à la découverte (écran 2) et les ajoute avec leur style', async () => {
+    await setup([], ['blueDancers', 'pierrotMime']);
+    const select = element.querySelector<HTMLSelectElement>('#scene-s1-add-dance')!;
+    const values = Array.from(select.options).map((option) => option.value);
+
+    // Seules les ressources de danse : Pierrot (théâtre) n'est pas une danse.
+    expect(values.slice(0, 2)).toEqual(['', 'discovery-blueDancers']);
+    expect(values).not.toContain('discovery-pierrotMime');
+
+    select.value = 'discovery-blueDancers';
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    element.querySelector<HTMLElement>('.scene-dances__add app-button')!.click();
+    fixture.detectChanges();
+
+    expect(last()).toEqual([
+      {
+        id: expect.any(String),
+        danceId: 'discovery-blueDancers',
+        name: 'createDancedTale.discovery.catalog.blueDancers.title',
+        moment: null,
+        style: 'classical',
+      },
+    ]);
   });
 
   it('ajoute une danse déposée depuis la bibliothèque, à l\'endroit du dépôt', async () => {

@@ -13,7 +13,15 @@ import {
 import { newId } from '../../new-id';
 import { SceneSounds } from '../sounds/scene-sounds.component';
 import { SceneStage, StageElement } from '../stage/scene-stage.component';
-import { CatalogDance, DANCE_CATALOG, findCatalogDance, isCatalogDance } from './dance-catalog';
+import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
+import {
+  CatalogDance,
+  DANCE_CATALOG,
+  danceNameKey,
+  discoveryDances,
+  findCatalogDance,
+  isCatalogDance,
+} from './dance-catalog';
 
 export const DANCE_NAME_MAX_LENGTH = 60;
 
@@ -49,7 +57,12 @@ export class SceneDances {
 
   readonly dancesChange = output<SceneDance[]>();
 
-  protected readonly catalog = DANCE_CATALOG;
+  /** Danses retenues à la découverte (écran 2), puis le catalogue : mêmes choix que la bibliothèque. */
+  protected readonly catalog = [
+    ...discoveryDances(inject(CreateDancedTaleDraftService).discovery()?.added ?? []),
+    ...DANCE_CATALOG,
+  ];
+  protected readonly nameKey = danceNameKey;
   protected readonly moments = DANCE_MOMENTS;
   protected readonly styles = DANCE_STYLES;
   protected readonly nameMaxLength = DANCE_NAME_MAX_LENGTH;
@@ -107,7 +120,7 @@ export class SceneDances {
 
   /** Alternative au glisser-déposer, au clavier et au tactile. */
   protected addSelected(): void {
-    const dance = findCatalogDance(this.selectedDanceId());
+    const dance = findCatalogDance(this.selectedDanceId(), this.catalog);
 
     if (dance) {
       this.add(dance, this.dances().length);
@@ -185,7 +198,7 @@ export class SceneDances {
   }
 
   private add(catalogDance: CatalogDance, index: number): void {
-    const name = this.translate.instant(`createDancedTale.dances.catalog.${catalogDance.id}.name`);
+    const name = this.translate.instant(danceNameKey(catalogDance));
     const dance: SceneDance = {
       id: newId(),
       danceId: catalogDance.id,

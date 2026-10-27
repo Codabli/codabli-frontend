@@ -113,11 +113,20 @@
           </span>
 
           <span class="dance-card__body">
+            @if (dance.discoveryId) {
+              <span class="dance-card__origin">
+                <i
+                  class="fa-solid fa-compass"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.dances.library.fromDiscovery' | translate }}
+              </span>
+            }
             <span class="dance-card__name">
-              {{ 'createDancedTale.dances.catalog.' + dance.id + '.name' | translate }}
+              {{ nameKey(dance) | translate }}
             </span>
             <span class="dance-card__description">
-              {{ 'createDancedTale.dances.catalog.' + dance.id + '.description' | translate }}
+              {{ descriptionKey(dance) | translate }}
             </span>
             <span class="dance-card__tags">
               {{ 'createDancedTale.dances.format.' + dance.format | translate }}

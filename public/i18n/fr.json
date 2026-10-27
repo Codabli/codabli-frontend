@@ -479,7 +479,8 @@
         "search": "Rechercher",
         "searchPlaceholder": "Ex. : ronde",
         "listLabel": "Danses disponibles",
-        "noResult": "Aucune danse ne correspond à votre recherche."
+        "noResult": "Aucune danse ne correspond à votre recherche.",
+        "fromDiscovery": "Votre découverte (étape 2)"
       },
       "format": {
         "label": "Format",

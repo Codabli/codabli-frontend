@@ -1,5 +1,6 @@
 import { AGE_RANGES, AgeRange } from '../../../models/types/age-range.type';
 import { DiscoveryDiscipline, DiscoveryFormat } from '../../../models/interfaces/tale-discovery.interface';
+import { DanceFormat, DanceIntensity, DanceStyle } from '../../../models/interfaces/tale-staging.interface';
 import { MediaCredit } from '../media-credit';
 
 const ASSETS = 'assets/create-danced-tale/discovery';
@@ -23,6 +24,11 @@ export interface DiscoveryResource {
   /** Sous-titres WebVTT des vidéos, par langue (`<fichier>.<langue>.vtt`). */
   subtitles?: string;
   credit: MediaCredit;
+  /**
+   * Ressource de danse : une fois ajoutée au projet, elle est proposée dans la bibliothèque
+   * de danses de l'écran 8.2, avec ces caractéristiques (icône Font Awesome sans fa-solid).
+   */
+  dance?: { format: DanceFormat; intensity: DanceIntensity; style: DanceStyle; icon: string };
 }
 
 const ALL_AGES = AGE_RANGES;
@@ -37,6 +43,7 @@ export const DISCOVERY_CATALOG: DiscoveryResource[] = [
   {
     id: 'serpentineAnnabelle',
     discipline: 'dance',
+    dance: { format: 'solo', intensity: 'moderate', style: 'contemporary', icon: 'fa-wind' },
     format: 'video',
     durationMinutes: 10,
     ageRanges: ALL_AGES,
@@ -53,6 +60,7 @@ export const DISCOVERY_CATALOG: DiscoveryResource[] = [
   {
     id: 'serpentineLumiere',
     discipline: 'dance',
+    dance: { format: 'solo', intensity: 'gentle', style: 'contemporary', icon: 'fa-feather' },
     format: 'video',
     durationMinutes: 15,
     ageRanges: FROM_6,
@@ -70,6 +78,7 @@ export const DISCOVERY_CATALOG: DiscoveryResource[] = [
   {
     id: 'animalWakeUp',
     discipline: 'dance',
+    dance: { format: 'group', intensity: 'moderate', style: 'contemporary', icon: 'fa-paw' },
     format: 'pdf',
     durationMinutes: 35,
     ageRanges: ['3-5', '6-8'],
@@ -79,6 +88,7 @@ export const DISCOVERY_CATALOG: DiscoveryResource[] = [
   {
     id: 'blueDancers',
     discipline: 'dance',
+    dance: { format: 'group', intensity: 'gentle', style: 'classical', icon: 'fa-person-dress' },
     format: 'image',
     durationMinutes: 10,
     ageRanges: ALL_AGES,

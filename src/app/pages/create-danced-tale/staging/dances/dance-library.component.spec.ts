@@ -2,12 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { DanceLibrary } from './dance-library.component';
 import { DANCE_CATALOG } from './dance-catalog';
+import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
 
 describe('DanceLibrary', () => {
   let fixture: ComponentFixture<DanceLibrary>;
   let element: HTMLElement;
 
   beforeEach(async () => {
+    localStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [DanceLibrary],
       providers: [provideTranslateService()],
@@ -40,6 +43,23 @@ describe('DanceLibrary', () => {
     select.dispatchEvent(new Event('change'));
     fixture.detectChanges();
   }
+
+  it('propose en tête les danses retenues à la découverte (écran 2), avec leur origine', async () => {
+    TestBed.inject(CreateDancedTaleDraftService).saveDiscovery({
+      added: ['blueDancers', 'pierrotMime'],
+      done: [],
+      favorites: [],
+    });
+    fixture = TestBed.createComponent(DanceLibrary);
+    element = fixture.nativeElement;
+    await fixture.whenStable();
+
+    // Pierrot (théâtre) n'est pas une danse : seule la ressource de danse rejoint la bibliothèque.
+    expect(cards()).toHaveLength(DANCE_CATALOG.length + 1);
+    expect(cards()[0].querySelector('.dance-card__origin')).not.toBeNull();
+    expect(cards()[0].textContent).toContain('createDancedTale.discovery.catalog.blueDancers.title');
+    expect(cards()[1].querySelector('.dance-card__origin')).toBeNull();
+  });
 
   it('se replie et se déplie depuis son titre', () => {
     const toggle = element.querySelector<HTMLButtonElement>('h3 .library__toggle')!;

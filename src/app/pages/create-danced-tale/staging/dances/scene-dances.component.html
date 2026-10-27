@@ -265,7 +265,7 @@
               [value]="dance.id"
               [selected]="selectedDanceId() === dance.id"
             >
-              {{ 'createDancedTale.dances.catalog.' + dance.id + '.name' | translate }}
+              {{ nameKey(dance) | translate }}
             </option>
           }
         </select>

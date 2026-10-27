@@ -46,10 +46,11 @@ describe('ProjectContextComponent', () => {
     fixture.detectChanges();
   }
 
-  it('affiche les 5 tranches d\'âge et les 4 espaces de représentation', async () => {
+  it('affiche les 4 tranches d\'âge (sans 15-18 ans) et les 4 espaces de représentation', async () => {
     await setup();
 
-    expect(element.querySelectorAll('input[name="ageRange"]')).toHaveLength(5);
+    expect(element.querySelectorAll('input[name="ageRange"]')).toHaveLength(4);
+    expect(input('ageRange-15-18')).toBeNull();
     expect(element.querySelectorAll('input[name="performanceSpace"]')).toHaveLength(4);
   });
 

@@ -102,6 +102,15 @@ describe('ProjectContextForm', () => {
       expect(form.valid).toBe(true);
     });
 
+    it('fait choisir de nouveau une tranche d\'âge qui n\'est plus proposée (15-18 ans)', () => {
+      const ancienBrouillon = { ageRange: '15-18', country: 'France', region: 'Bretagne', theme: 'Nature' };
+
+      form.fromProjectContext(ancienBrouillon as unknown as Partial<ProjectContext>);
+
+      expect(form.controls.ageRange.value).toBeNull();
+      expect(form.valid).toBe(false);
+    });
+
     it('ne plante pas sur un contexte vide', () => {
       expect(() => form.fromProjectContext({})).not.toThrow();
       expect(form.valid).toBe(false);

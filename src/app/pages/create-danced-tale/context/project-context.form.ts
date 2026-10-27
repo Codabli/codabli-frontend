@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AgeRange } from '../../../models/types/age-range.type';
+import { AGE_RANGES, AgeRange } from '../../../models/types/age-range.type';
 import { PerformanceSpace } from '../../../models/types/performance-space.type';
 import { ProjectContext } from '../../../models/interfaces/project-context.interface';
 
@@ -66,6 +66,8 @@ export class ProjectContextForm extends FormGroup<{
   fromProjectContext(context: Partial<ProjectContext>): void {
     this.patchValue({
       ...context,
+      // Une tranche d'âge qui n'est plus proposée (ex. 15-18 ans) est à choisir de nouveau.
+      ageRange: AGE_RANGES.includes(context.ageRange as AgeRange) ? context.ageRange : null,
       secretIngredients: Array.isArray(context.secretIngredients) ? [...context.secretIngredients] : [],
     });
   }

@@ -3,10 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { RichTextEditor } from '../../../shared/components/rich-text-editor/rich-text-editor.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { RichTextEditor } from '@shared/components/rich-text-editor/rich-text-editor.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { StoryStep } from '@models/interfaces/tale-structure.interface';
 import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
 

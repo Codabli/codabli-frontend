@@ -17,26 +17,52 @@
           class="stepper__item"
           [class.stepper__item--done]="i < currentIndex()"
           [class.stepper__item--current]="i === currentIndex()"
-          [attr.aria-current]="i === currentIndex() ? 'step' : null"
+          [class.stepper__item--reachable]="i !== currentIndex() && isReachable(step)"
         >
-          <span class="stepper__number" aria-hidden="true">
-            @if (i < currentIndex()) {
-              <i class="fa-solid fa-check"></i>
-            } @else {
-              {{ i + 1 }}
-            }
-          </span>
-
-          <span class="stepper__label">
-            <span class="visually-hidden">
-              {{ 'createDancedTale.steps.position' | translate: { current: i + 1, total: steps.length } }}
+          <!-- Une étape accessible s'ouvre d'un clic ; l'étape en cours et les étapes verrouillées ne sont pas des liens. -->
+          @if (i !== currentIndex() && isReachable(step)) {
+            <a
+              class="stepper__step"
+              [routerLink]="step.path"
+            >
+              <ng-container *ngTemplateOutlet="stepContent; context: { $implicit: step, index: i }" />
+            </a>
+          } @else {
+            <span
+              class="stepper__step"
+              [attr.aria-current]="i === currentIndex() ? 'step' : null"
+            >
+              <ng-container *ngTemplateOutlet="stepContent; context: { $implicit: step, index: i }" />
             </span>
-            {{ step.labelKey | translate }}
-          </span>
+          }
         </li>
       }
     </ol>
   </nav>
+
+  <ng-template
+    #stepContent
+    let-step
+    let-i="index"
+  >
+    <span
+      class="stepper__number"
+      aria-hidden="true"
+    >
+      @if (i < currentIndex()) {
+        <i class="fa-solid fa-check"></i>
+      } @else {
+        {{ i + 1 }}
+      }
+    </span>
+
+    <span class="stepper__label">
+      <span class="visually-hidden">
+        {{ 'createDancedTale.steps.position' | translate: { current: i + 1, total: steps.length } }}
+      </span>
+      {{ step.labelKey | translate }}
+    </span>
+  </ng-template>
 
   <div class="create-danced-tale__content">
     <router-outlet />

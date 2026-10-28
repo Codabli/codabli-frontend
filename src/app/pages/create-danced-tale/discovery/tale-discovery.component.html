@@ -1,0 +1,490 @@
+<div class="resource-screen tale-discovery">
+  <header class="resource-screen__intro">
+    <h2 class="resource-screen__title">
+      {{ 'createDancedTale.discovery.title' | translate }}
+    </h2>
+
+    <p>{{ 'createDancedTale.discovery.description' | translate }}</p>
+
+    @if (ageRange) {
+      <p class="resource-screen__age">
+        <i
+          class="fa-solid fa-child-reaching"
+          aria-hidden="true"
+        ></i>
+        {{ 'createDancedTale.discovery.ageNote' | translate: { range: ageRange } }}
+      </p>
+    }
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <!-- Catégories par discipline, avec le nombre de ressources de la tranche d'âge -->
+      <nav
+        class="panel disciplines"
+        aria-labelledby="disciplines-title"
+      >
+        <h3
+          id="disciplines-title"
+          class="panel__title"
+        >
+          {{ 'createDancedTale.discovery.disciplines.title' | translate }}
+        </h3>
+
+        <ul class="disciplines__list">
+          <li>
+            <button
+              type="button"
+              class="disciplines__item"
+              [attr.aria-pressed]="discipline() === null"
+              (click)="discipline.set(null)"
+            >
+              <i
+                class="fa-solid fa-layer-group"
+                aria-hidden="true"
+              ></i>
+              <span class="disciplines__name">{{ 'createDancedTale.discovery.disciplines.all' | translate }}</span>
+              <span class="disciplines__count">{{ countOf(null) }}</span>
+            </button>
+          </li>
+
+          @for (item of disciplines; track item) {
+            <li>
+              <button
+                type="button"
+                class="disciplines__item"
+                [attr.aria-pressed]="discipline() === item"
+                (click)="discipline.set(item)"
+              >
+                <i
+                  class="fa-solid"
+                  [class]="disciplineIcons[item]"
+                  aria-hidden="true"
+                ></i>
+                <span class="disciplines__name">{{
+                  'createDancedTale.discovery.disciplines.' + item | translate
+                }}</span>
+                <span class="disciplines__count">{{ countOf(item) }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+      </nav>
+
+      <section
+        class="panel benefits"
+        aria-labelledby="benefits-title"
+      >
+        <h3
+          id="benefits-title"
+          class="panel__title"
+        >
+          <i
+            class="fa-solid fa-lightbulb"
+            aria-hidden="true"
+          ></i>
+          {{ 'createDancedTale.discovery.benefits.title' | translate }}
+        </h3>
+
+        <ul class="benefits__list">
+          @for (key of benefitKeys; track key) {
+            <li>{{ 'createDancedTale.discovery.benefits.' + key | translate }}</li>
+          }
+        </ul>
+      </section>
+    </aside>
+
+    <section
+      class="catalog"
+      aria-labelledby="catalog-title"
+    >
+      <h3
+        id="catalog-title"
+        class="catalog__title"
+      >
+        {{ 'createDancedTale.discovery.catalogTitle' | translate }}
+      </h3>
+
+      <div class="filters">
+        <div class="filter filter--search">
+          <label for="discovery-search">{{ 'createDancedTale.discovery.filters.search' | translate }}</label>
+          <input
+            id="discovery-search"
+            type="search"
+            autocomplete="off"
+            [value]="search()"
+            [placeholder]="'createDancedTale.discovery.filters.searchPlaceholder' | translate"
+            (input)="search.set($any($event.target).value)"
+          />
+        </div>
+
+        <div class="filter">
+          <label for="discovery-format">{{ 'createDancedTale.discovery.filters.format' | translate }}</label>
+          <select
+            id="discovery-format"
+            (change)="setFormat($any($event.target).value)"
+          >
+            <option
+              value=""
+              [selected]="!format()"
+            >
+              {{ 'createDancedTale.discovery.filters.allFormats' | translate }}
+            </option>
+            @for (item of formats; track item) {
+              <option
+                [value]="item"
+                [selected]="format() === item"
+              >
+                {{ 'createDancedTale.discovery.formats.' + item | translate }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="filter">
+          <label for="discovery-duration">{{ 'createDancedTale.discovery.filters.duration' | translate }}</label>
+          <select
+            id="discovery-duration"
+            (change)="setDuration($any($event.target).value)"
+          >
+            <option
+              value=""
+              [selected]="!duration()"
+            >
+              {{ 'createDancedTale.discovery.filters.allDurations' | translate }}
+            </option>
+            @for (item of durations; track item) {
+              <option
+                [value]="item"
+                [selected]="duration() === item"
+              >
+                {{ 'createDancedTale.discovery.durations.' + item | translate }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <p
+        class="catalog__count"
+        role="status"
+      >
+        {{ 'createDancedTale.discovery.count' | translate: { count: resources().length } }}
+      </p>
+
+      @if (resources().length) {
+        <ul class="cards">
+          @for (resource of resources(); track resource.id) {
+            @let title = text(resource, 'title');
+            <li
+              class="card"
+              [class.card--added]="isIn('added', resource)"
+            >
+              <div class="card__media">
+                @if (resource.thumbnail) {
+                  <img
+                    alt=""
+                    loading="lazy"
+                    [src]="resource.thumbnail"
+                  />
+                } @else {
+                  <span
+                    class="card__icon"
+                    [class]="'card__icon--' + resource.discipline"
+                  >
+                    <i
+                      class="fa-solid"
+                      [class]="formatIcons[resource.format]"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                }
+
+                <span class="card__format">
+                  {{ 'createDancedTale.discovery.formats.' + resource.format | translate }}
+                  · {{ 'createDancedTale.discovery.minutes' | translate: { count: resource.durationMinutes } }}
+                </span>
+              </div>
+
+              <div class="card__body">
+                <p class="card__meta">
+                  <span
+                    class="tag"
+                    [class]="'tag--' + resource.discipline"
+                  >
+                    {{ 'createDancedTale.discovery.disciplines.' + resource.discipline | translate }}
+                  </span>
+
+                  @if (isIn('done', resource)) {
+                    <span class="card__done">
+                      <i
+                        class="fa-solid fa-circle-check"
+                        aria-hidden="true"
+                      ></i>
+                      {{ 'createDancedTale.discovery.actions.doneState' | translate }}
+                    </span>
+                  }
+                </p>
+
+                <h4 class="card__title">{{ title }}</h4>
+                <p class="card__description">{{ text(resource, 'description') }}</p>
+              </div>
+
+              <div class="card__actions">
+                <button
+                  type="button"
+                  class="action action--view"
+                  [attr.aria-label]="'createDancedTale.discovery.actions.viewLabel' | translate: { title }"
+                  (click)="selected.set(resource)"
+                >
+                  <i
+                    class="fa-solid fa-circle-play"
+                    aria-hidden="true"
+                  ></i>
+                  {{ 'createDancedTale.discovery.actions.view' | translate }}
+                </button>
+
+                <button
+                  type="button"
+                  class="action action--add"
+                  [attr.aria-pressed]="isIn('added', resource)"
+                  [attr.aria-label]="'createDancedTale.discovery.actions.addLabel' | translate: { title }"
+                  (click)="toggle('added', resource)"
+                >
+                  <i
+                    class="fa-solid"
+                    [class.fa-plus]="!isIn('added', resource)"
+                    [class.fa-check]="isIn('added', resource)"
+                    aria-hidden="true"
+                  ></i>
+                  {{
+                    (isIn('added', resource)
+                      ? 'createDancedTale.discovery.actions.addedState'
+                      : 'createDancedTale.discovery.actions.add'
+                    ) | translate
+                  }}
+                </button>
+
+                <button
+                  type="button"
+                  class="action action--favorite"
+                  [attr.aria-pressed]="isIn('favorites', resource)"
+                  [attr.aria-label]="'createDancedTale.discovery.actions.favoriteLabel' | translate: { title }"
+                  (click)="toggle('favorites', resource)"
+                >
+                  <i
+                    [class]="isIn('favorites', resource) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="catalog__empty">
+          <p>{{ 'createDancedTale.discovery.empty' | translate }}</p>
+          <app-button
+            variant="secondary"
+            (click)="resetFilters()"
+          >
+            {{ 'createDancedTale.discovery.filters.reset' | translate }}
+          </app-button>
+        </div>
+      }
+    </section>
+  </div>
+
+  <p class="resource-screen__summary">
+    <i
+      class="fa-solid fa-folder-open"
+      aria-hidden="true"
+    ></i>
+    {{ 'createDancedTale.discovery.addedCount' | translate: { count: addedCount() } }}
+  </p>
+
+  <div class="resource-screen__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+
+  @if (selected(); as resource) {
+    @let title = text(resource, 'title');
+    <app-modal
+      [heading]="title"
+      (closed)="selected.set(null)"
+    >
+      <div class="detail">
+        <!-- Lecteurs natifs : contrôles accessibles au clavier, sous-titres pour les vidéos. -->
+        @switch (resource.format) {
+          @case ('video') {
+            <video
+              class="detail__media"
+              controls
+              preload="metadata"
+              [src]="resource.src"
+              [poster]="resource.thumbnail ?? ''"
+              [attr.aria-label]="title"
+            >
+              @if (resource.subtitles) {
+                <track
+                  kind="subtitles"
+                  srclang="fr"
+                  label="Français"
+                  [src]="resource.subtitles + '.fr.vtt'"
+                  [default]="language() === 'fr'"
+                />
+                <track
+                  kind="subtitles"
+                  srclang="en"
+                  label="English"
+                  [src]="resource.subtitles + '.en.vtt'"
+                  [default]="language() === 'en'"
+                />
+              }
+            </video>
+          }
+          @case ('audio') {
+            <audio
+              class="detail__audio"
+              controls
+              preload="metadata"
+              [src]="resource.src"
+              [attr.aria-label]="title"
+            ></audio>
+            <p class="detail__note">{{ 'createDancedTale.discovery.detail.instrumental' | translate }}</p>
+          }
+          @case ('image') {
+            <img
+              class="detail__media"
+              [src]="resource.src"
+              [alt]="text(resource, 'description')"
+            />
+          }
+          @case ('pdf') {
+            <a
+              class="detail__pdf"
+              target="_blank"
+              rel="noopener"
+              [href]="resource.src"
+            >
+              <i
+                class="fa-solid fa-file-pdf"
+                aria-hidden="true"
+              ></i>
+              {{ 'createDancedTale.discovery.detail.openPdf' | translate }}
+              <span class="sr-only">{{ 'createDancedTale.discovery.detail.newTab' | translate }}</span>
+            </a>
+          }
+        }
+
+        <p class="detail__meta">
+          <span
+            class="tag"
+            [class]="'tag--' + resource.discipline"
+          >
+            {{ 'createDancedTale.discovery.disciplines.' + resource.discipline | translate }}
+          </span>
+          {{ 'createDancedTale.discovery.formats.' + resource.format | translate }}
+          · {{ 'createDancedTale.discovery.minutes' | translate: { count: resource.durationMinutes } }} ·
+          {{ 'createDancedTale.discovery.ages' | translate: { ranges: resource.ageRanges.join(', ') } }}
+        </p>
+
+        <p>{{ text(resource, 'description') }}</p>
+
+        <section class="detail__section">
+          <h3>{{ 'createDancedTale.discovery.detail.activity' | translate }}</h3>
+          <p>{{ text(resource, 'activity') }}</p>
+        </section>
+
+        <div class="detail__actions">
+          <button
+            type="button"
+            class="action action--add"
+            [attr.aria-pressed]="isIn('added', resource)"
+            (click)="toggle('added', resource)"
+          >
+            <i
+              class="fa-solid"
+              [class.fa-plus]="!isIn('added', resource)"
+              [class.fa-check]="isIn('added', resource)"
+              aria-hidden="true"
+            ></i>
+            {{
+              (isIn('added', resource)
+                ? 'createDancedTale.discovery.actions.addedState'
+                : 'createDancedTale.discovery.actions.add'
+              ) | translate
+            }}
+          </button>
+
+          <button
+            type="button"
+            class="action"
+            [attr.aria-pressed]="isIn('done', resource)"
+            (click)="toggle('done', resource)"
+          >
+            <i
+              [class]="isIn('done', resource) ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle'"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.discovery.actions.done' | translate }}
+          </button>
+
+          <button
+            type="button"
+            class="action"
+            [attr.aria-pressed]="isIn('favorites', resource)"
+            (click)="toggle('favorites', resource)"
+          >
+            <i
+              [class]="isIn('favorites', resource) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.discovery.actions.favorite' | translate }}
+          </button>
+        </div>
+
+        <p class="detail__credit">
+          {{
+            'createDancedTale.credit'
+              | translate
+                : { author: resource.credit.author, date: resource.credit.date, licence: resource.credit.licence }
+          }}
+          @if (resource.credit.sourceUrl) {
+            ·
+            <a
+              target="_blank"
+              rel="noopener"
+              [href]="resource.credit.sourceUrl"
+            >
+              {{ 'createDancedTale.creditSource' | translate }}
+              <span class="sr-only">{{ 'createDancedTale.discovery.detail.newTab' | translate }}</span>
+            </a>
+          }
+        </p>
+      </div>
+    </app-modal>
+  }
+</div>

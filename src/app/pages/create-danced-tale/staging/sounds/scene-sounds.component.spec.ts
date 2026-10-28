@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideTranslateService } from '@ngx-translate/core';
 import { SOUND_MAX_FILE_SIZE, SceneSounds } from './scene-sounds.component';
-import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
-import { SceneDance, SceneSound } from '../../../../models/interfaces/tale-staging.interface';
+import { AudioFileStore } from '@core/services/audio-file-store.service';
+import { SceneDance, SceneSound } from '@models/interfaces/tale-staging.interface';
 
 const DANCE: SceneDance = { id: 'd1', danceId: 'festiveRound', name: 'Ronde', moment: 'beginning', style: 'traditional' };
 const SOUND: SceneSound = {

@@ -1,0 +1,300 @@
+<div class="resource-screen tale-resources">
+  <header class="resource-screen__intro">
+    <h2 class="resource-screen__title">
+      {{ 'createDancedTale.resources.title' | translate }}
+    </h2>
+
+    @if (context?.theme; as theme) {
+      <p>
+        {{ 'createDancedTale.resources.theme' | translate }}
+        <strong>{{ theme }}</strong>
+      </p>
+    }
+
+    <p>{{ 'createDancedTale.resources.description' | translate }}</p>
+  </header>
+
+  <!-- Onglets ARIA : un seul arrêt de tabulation, les flèches passent d'un onglet à l'autre. -->
+  <div
+    class="tabs"
+    role="tablist"
+    [attr.aria-label]="'createDancedTale.resources.tabsLabel' | translate"
+    (keydown)="onTabKeydown($event)"
+  >
+    @for (item of tabs; track item) {
+      <button
+        type="button"
+        role="tab"
+        class="tabs__tab"
+        [class.tabs__tab--nearby]="item === 'nearby'"
+        [id]="tabId(item)"
+        [attr.aria-selected]="tab() === item"
+        [attr.aria-controls]="'resources-panel'"
+        [attr.tabindex]="tab() === item ? 0 : -1"
+        (click)="selectTab(item)"
+      >
+        @if (item === 'nearby') {
+          <i
+            class="fa-solid fa-location-dot"
+            aria-hidden="true"
+          ></i>
+        }
+        {{ 'createDancedTale.resources.tabs.' + item | translate }}
+        <span class="tabs__count">{{ resourcesOf(item).length }}</span>
+      </button>
+    }
+  </div>
+
+  <section
+    id="resources-panel"
+    class="panel"
+    role="tabpanel"
+    tabindex="0"
+    [attr.aria-labelledby]="tabId(tab())"
+  >
+    @if (tab() === 'nearby' && place) {
+      <p class="panel__hint">
+        {{ 'createDancedTale.resources.nearbyHint' | translate: { place } }}
+      </p>
+    }
+
+    @if (resources().length) {
+      <ul class="cards">
+        @for (resource of resources(); track resource.id) {
+          @let title = text(resource, 'title');
+          <li
+            class="card"
+            [class.card--added]="isAdded(resource)"
+          >
+            <div class="card__media">
+              <img
+                alt=""
+                loading="lazy"
+                [src]="resource.image"
+              />
+            </div>
+
+            <div class="card__body">
+              <!-- RG-CMC-05 : badge d'origine obligatoire sur chaque carte. -->
+              <p class="card__meta">
+                <span
+                  class="provenance"
+                  [class]="'provenance--' + resource.provenance"
+                >
+                  <i
+                    class="fa-solid"
+                    [class]="provenanceIcons[resource.provenance]"
+                    aria-hidden="true"
+                  ></i>
+                  {{ 'createDancedTale.resources.provenances.' + resource.provenance | translate }}
+                </span>
+
+                @if (isNearby(resource)) {
+                  <span class="card__nearby">
+                    <i
+                      class="fa-solid fa-location-dot"
+                      aria-hidden="true"
+                    ></i>
+                    {{ 'createDancedTale.resources.nearbyBadge' | translate }}
+                  </span>
+                }
+              </p>
+
+              <h3 class="card__title">{{ title }}</h3>
+              <p class="card__description">{{ text(resource, 'description') }}</p>
+              <p class="card__category">
+                {{ 'createDancedTale.resources.categories.' + resource.category | translate }}
+              </p>
+            </div>
+
+            <div class="card__actions">
+              <button
+                type="button"
+                class="action action--view"
+                [attr.aria-label]="'createDancedTale.resources.actions.detailsLabel' | translate: { title }"
+                (click)="selected.set(resource)"
+              >
+                <i
+                  class="fa-solid fa-circle-info"
+                  aria-hidden="true"
+                ></i>
+                {{ 'createDancedTale.resources.actions.details' | translate }}
+              </button>
+
+              <button
+                type="button"
+                class="action action--add"
+                [attr.aria-pressed]="isAdded(resource)"
+                [attr.aria-label]="'createDancedTale.resources.actions.addLabel' | translate: { title }"
+                (click)="toggleAdded(resource)"
+              >
+                <i
+                  class="fa-solid"
+                  [class.fa-plus]="!isAdded(resource)"
+                  [class.fa-check]="isAdded(resource)"
+                  aria-hidden="true"
+                ></i>
+                {{
+                  (isAdded(resource)
+                    ? 'createDancedTale.resources.actions.addedState'
+                    : 'createDancedTale.resources.actions.add'
+                  ) | translate
+                }}
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="panel__empty">
+        {{
+          (tab() === 'nearby' ? 'createDancedTale.resources.emptyNearby' : 'createDancedTale.resources.empty')
+            | translate: { place }
+        }}
+      </p>
+    }
+  </section>
+
+  <p class="resource-screen__summary">
+    <i
+      class="fa-solid fa-folder-open"
+      aria-hidden="true"
+    ></i>
+    {{ 'createDancedTale.resources.addedCount' | translate: { count: added().length } }}
+  </p>
+
+  <div class="resource-screen__actions">
+    <app-button
+      variant="secondary"
+      navigationIcon="chevron-left"
+      (click)="onPrevious()"
+    >
+      {{ 'createDancedTale.previous' | translate }}
+    </app-button>
+
+    <app-button
+      variant="primary"
+      navigationIcon="chevron-right"
+      iconPosition="right"
+      (click)="onNext()"
+    >
+      {{ 'createDancedTale.next' | translate }}
+    </app-button>
+  </div>
+
+  <p
+    class="sr-only"
+    aria-live="polite"
+  >
+    {{ announcement() }}
+  </p>
+
+  @if (selected(); as resource) {
+    <app-modal
+      [heading]="text(resource, 'title')"
+      (closed)="selected.set(null)"
+    >
+      <div class="detail">
+        <img
+          class="detail__media"
+          [src]="resource.image"
+          [alt]="text(resource, 'description')"
+        />
+
+        <p class="detail__meta">
+          <span
+            class="provenance"
+            [class]="'provenance--' + resource.provenance"
+          >
+            <i
+              class="fa-solid"
+              [class]="provenanceIcons[resource.provenance]"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.resources.provenances.' + resource.provenance | translate }}
+          </span>
+          {{ 'createDancedTale.resources.categories.' + resource.category | translate }}
+          @if (resource.location; as location) {
+            · {{ location.city }} ({{ location.region }})
+          }
+        </p>
+
+        <p>{{ text(resource, 'description') }}</p>
+
+        <!-- RG-CMC-06 : explication contextuelle de la recommandation. -->
+        <section class="detail__section">
+          <h3>
+            <i
+              class="fa-solid fa-lightbulb"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.resources.detail.why' | translate }}
+          </h3>
+          <p>{{ text(resource, 'reason') }}</p>
+
+          @if (matchesOf(resource).length || isNearby(resource)) {
+            <ul class="detail__reasons">
+              @if (matchesOf(resource).length && context?.theme) {
+                <li>{{ 'createDancedTale.resources.detail.themeMatch' | translate: { theme: context?.theme } }}</li>
+              }
+              @if (isNearby(resource)) {
+                <li>{{ 'createDancedTale.resources.detail.nearbyMatch' | translate: { place } }}</li>
+              }
+            </ul>
+          }
+        </section>
+
+        @if (resource.provenance === 'ai') {
+          <p class="detail__note">
+            <i
+              class="fa-solid fa-circle-info"
+              aria-hidden="true"
+            ></i>
+            {{ 'createDancedTale.resources.detail.aiWarning' | translate }}
+          </p>
+        }
+
+        <div class="detail__actions">
+          <button
+            type="button"
+            class="action action--add"
+            [attr.aria-pressed]="isAdded(resource)"
+            (click)="toggleAdded(resource)"
+          >
+            <i
+              class="fa-solid"
+              [class.fa-plus]="!isAdded(resource)"
+              [class.fa-check]="isAdded(resource)"
+              aria-hidden="true"
+            ></i>
+            {{
+              (isAdded(resource)
+                ? 'createDancedTale.resources.actions.addedState'
+                : 'createDancedTale.resources.actions.add'
+              ) | translate
+            }}
+          </button>
+        </div>
+
+        <p class="detail__credit">
+          {{
+            'createDancedTale.credit'
+              | translate
+                : { author: resource.credit.author, date: resource.credit.date, licence: resource.credit.licence }
+          }}
+          @if (resource.credit.sourceUrl) {
+            ·
+            <a
+              target="_blank"
+              rel="noopener"
+              [href]="resource.credit.sourceUrl"
+            >
+              {{ 'createDancedTale.creditSource' | translate }}
+              <span class="sr-only">{{ 'createDancedTale.discovery.detail.newTab' | translate }}</span>
+            </a>
+          }
+        </p>
+      </div>
+    </app-modal>
+  }
+</div>

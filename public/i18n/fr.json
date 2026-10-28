@@ -49,6 +49,10 @@
       "submit": "Envoyer ma demande"
     }
   },
+  "modal": {
+    "close": "Fermer"
+  },
+
   "richTextEditor": {
     "title": "Titre",
     "subtitle": "Sous-titre",
@@ -81,10 +85,326 @@
       "staging": "Adaptation et scénographie"
     },
 
-    "comingSoon": {
-      "message": "Vos réponses sont enregistrées. Cette étape sera bientôt disponible.",
-      "back": "Revenir à l'étape « {{step}} »",
-      "next": "Continuer vers l'étape « {{step}} »"
+    "discovery": {
+      "title": "Découverte de la danse et du théâtre",
+      "description": "Avant d'écrire, faites vivre le thème avec le corps : vidéos, musiques, fiches et images pour s'initier au mouvement, à l'improvisation et à la scénographie.",
+      "ageNote": "Ressources adaptées aux {{range}} ans, la tranche d'âge choisie à l'étape 1.",
+      "disciplines": {
+        "title": "Catégories",
+        "all": "Toutes",
+        "dance": "Danse",
+        "theatre": "Théâtre",
+        "music": "Musique",
+        "scenography": "Scénographie"
+      },
+      "benefits": {
+        "title": "Pourquoi intégrer ?",
+        "emotions": "Favorise l'expression des émotions et l'empathie.",
+        "group": "Renforce la cohésion du groupe et l'écoute.",
+        "imagination": "Stimule l'imagination par le corps."
+      },
+      "catalogTitle": "Ressources recommandées",
+      "filters": {
+        "search": "Rechercher une ressource",
+        "searchPlaceholder": "Ex. : improvisation",
+        "format": "Format",
+        "allFormats": "Tous les formats",
+        "duration": "Durée de l'activité",
+        "allDurations": "Toutes les durées",
+        "reset": "Effacer les filtres"
+      },
+      "formats": {
+        "video": "Vidéo",
+        "audio": "Audio",
+        "pdf": "Fiche PDF",
+        "image": "Image"
+      },
+      "durations": {
+        "short": "10 min ou moins",
+        "medium": "De 11 à 20 min",
+        "long": "Plus de 20 min"
+      },
+      "minutes": "{{count}} min",
+      "ages": "{{ranges}} ans",
+      "count": "{{count}} ressource(s)",
+      "empty": "Aucune ressource ne correspond à ces filtres.",
+      "addedCount": "{{count}} ressource(s) de découverte ajoutée(s) au projet",
+      "actions": {
+        "view": "Voir",
+        "viewLabel": "Voir « {{title}} »",
+        "add": "Ajouter au projet",
+        "addedState": "Ajoutée au projet",
+        "addLabel": "Ajouter « {{title}} » au projet",
+        "done": "Réalisée",
+        "doneState": "Réalisée",
+        "favorite": "Favori",
+        "favoriteLabel": "Ajouter « {{title}} » aux favoris"
+      },
+      "announce": {
+        "added": {
+          "on": "« {{title}} » est ajoutée au projet.",
+          "off": "« {{title}} » est retirée du projet."
+        },
+        "done": {
+          "on": "« {{title}} » est marquée comme réalisée.",
+          "off": "« {{title}} » n'est plus marquée comme réalisée."
+        },
+        "favorites": {
+          "on": "« {{title}} » est ajoutée aux favoris.",
+          "off": "« {{title}} » est retirée des favoris."
+        }
+      },
+      "detail": {
+        "activity": "Proposition d'activité",
+        "instrumental": "Musique instrumentale, sans paroles.",
+        "openPdf": "Ouvrir la fiche PDF",
+        "newTab": "(s'ouvre dans un nouvel onglet)"
+      },
+      "catalog": {
+        "serpentineAnnabelle": {
+          "title": "La danse serpentine d'Annabelle",
+          "description": "Un des tout premiers films de danse (1894) : la danseuse fait tourner sa robe comme des ailes.",
+          "activity": "Regardez le film, puis chaque enfant prend un foulard et invente sa propre danse serpentine : tourner, onduler, s'envoler."
+        },
+        "serpentineLumiere": {
+          "title": "La danse des voiles",
+          "description": "Une danseuse filmée par les frères Lumière fait naître des formes avec de grands voiles.",
+          "activity": "Par deux, l'un fait bouger un tissu, l'autre l'imite avec tout son corps. Puis on échange les rôles."
+        },
+        "animalWakeUp": {
+          "title": "L'éveil corporel des animaux",
+          "description": "Une fiche pas à pas pour échauffer la classe en se déplaçant comme différents animaux.",
+          "activity": "Suivez les six étapes de la fiche, du chat qui s'étire à la tortue qui se repose."
+        },
+        "blueDancers": {
+          "title": "Les poses des danseuses",
+          "description": "Les Danseuses bleues d'Edgar Degas : observer les gestes et les postures des danseuses.",
+          "activity": "Chaque enfant choisit une danseuse du tableau et reproduit sa pose. Les autres devinent laquelle."
+        },
+        "pierrotMime": {
+          "title": "Le mime de Pierrot",
+          "description": "Pierrot, personnage de théâtre peint par Watteau : raconter une histoire sans un mot.",
+          "activity": "En silence, mimez une émotion de Pierrot (joie, surprise, tristesse) : la classe doit la reconnaître."
+        },
+        "livingStatues": {
+          "title": "Les statues qui s'éveillent",
+          "description": "Une musique lente (Gymnopédie n° 1 d'Erik Satie) pour un exercice d'improvisation théâtrale.",
+          "activity": "Les enfants sont des statues. Quand la musique joue, elles s'éveillent très lentement ; quand elle s'arrête, elles se figent."
+        },
+        "swanImprovisation": {
+          "title": "Danser comme un cygne",
+          "description": "Le Cygne de Camille Saint-Saëns, extrait du Carnaval des animaux.",
+          "activity": "Écoutez la musique les yeux fermés, puis dansez le cygne qui glisse sur l'eau, en gestes amples et doux."
+        },
+        "operaOrchestra": {
+          "title": "Les musiciens de l'orchestre",
+          "description": "L'Orchestre de l'Opéra d'Edgar Degas : les musiciens qui accompagnent la danse.",
+          "activity": "Repérez les instruments du tableau, puis inventez un rythme en percussions corporelles pour accompagner une danse."
+        },
+        "setDesign": {
+          "title": "Dessiner un décor de théâtre",
+          "description": "Un projet de décor de Philippe Chaperon pour l'opéra : colonnes, lumière et profondeur.",
+          "activity": "Dessinez le décor d'une scène de votre conte en pensant à ce qui est devant, au milieu et au fond du plateau."
+        },
+        "lightAndVeils": {
+          "title": "Lumière et costumes",
+          "description": "Comment un simple tissu et la lumière transforment le corps du danseur en paysage.",
+          "activity": "Avec une lampe de poche et des tissus, cherchez des ombres et des formes à intégrer à la mise en scène."
+        }
+      }
+    },
+    "credit": "{{author}}, {{date}} · {{licence}}",
+    "creditSource": "Voir la source",
+
+    "resources": {
+      "title": "Vos ressources culturelles recommandées",
+      "theme": "Suggestions pour votre conte sur le thème",
+      "description": "Œuvres, lieux du patrimoine et personnages pour nourrir l'imaginaire de la classe. Chaque ressource indique son origine et pourquoi elle vous est proposée.",
+      "tabsLabel": "Catégories de ressources",
+      "tabs": {
+        "places": "Lieux",
+        "characters": "Personnages",
+        "events": "Événements",
+        "artworks": "Œuvres d'art",
+        "tales": "Contes",
+        "nearby": "À découvrir près de votre école"
+      },
+      "categories": {
+        "places": "Lieu",
+        "characters": "Personnage",
+        "events": "Événement",
+        "artworks": "Œuvre d'art",
+        "tales": "Conte"
+      },
+      "provenances": {
+        "codabli": "Source Codabli®",
+        "localHeritage": "Patrimoine local",
+        "ai": "Suggestion IA"
+      },
+      "nearbyBadge": "Près de chez vous",
+      "nearbyHint": "Ressources situées près de votre école ({{place}}).",
+      "empty": "Aucune ressource dans cette catégorie pour l'instant.",
+      "emptyNearby": "Pas encore de ressource répertoriée près de votre école. Les autres onglets restent disponibles.",
+      "addedCount": "{{count}} ressource(s) culturelle(s) ajoutée(s) au projet",
+      "actions": {
+        "details": "Voir les détails",
+        "detailsLabel": "Voir les détails de « {{title}} »",
+        "add": "Ajouter au projet",
+        "addedState": "Ajoutée au projet",
+        "addLabel": "Ajouter « {{title}} » au projet"
+      },
+      "announce": {
+        "added": "« {{title}} » est ajoutée au projet.",
+        "removed": "« {{title}} » est retirée du projet."
+      },
+      "detail": {
+        "why": "Pourquoi cette recommandation ?",
+        "themeMatch": "Elle fait écho à votre thème « {{theme}} ».",
+        "nearbyMatch": "Elle se trouve près de votre école ({{place}}) : une sortie est peut-être possible.",
+        "aiWarning": "Suggestion proposée automatiquement : vérifiez qu'elle convient à votre projet avant de l'utiliser."
+      },
+      "catalog": {
+        "chambord": {
+          "title": "Château de Chambord",
+          "description": "Un château majestueux de la Renaissance, idéal comme décor pour le palais d'un roi.",
+          "reason": "Son célèbre escalier à double révolution et ses toits en forme de village inspirent des déplacements et des rencontres sur scène."
+        },
+        "montSaintMichel": {
+          "title": "Le Mont-Saint-Michel",
+          "description": "Une abbaye perchée sur un rocher, entourée par la mer à marée haute.",
+          "reason": "Un lieu entre terre et mer, parfait pour imaginer une traversée ou une quête, et pour danser le mouvement des marées."
+        },
+        "broceliande": {
+          "title": "Forêt de Brocéliande",
+          "description": "La forêt de Paimpont, que la légende associe à Merlin, à la fée Viviane et aux chevaliers de la Table ronde.",
+          "reason": "Une forêt de légendes pour des rencontres mystérieuses : les arbres et les fougères deviennent des personnages à danser."
+        },
+        "kingArthur": {
+          "title": "Le roi Arthur",
+          "description": "Le roi légendaire qui retira l'épée du rocher et réunit les chevaliers de la Table ronde.",
+          "reason": "Un héros central des légendes médiévales, qui peut servir de roi juste, de mentor ou de héros en quête."
+        },
+        "joanOfArc": {
+          "title": "Jeanne d'Arc",
+          "description": "Jeune fille de Lorraine devenue cheffe de guerre, elle libère Orléans en 1429.",
+          "reason": "Un personnage historique courageux, pour parler de détermination et danser l'élan d'un groupe."
+        },
+        "morganLeFay": {
+          "title": "La fée Morgane",
+          "description": "Magicienne puissante des légendes arthuriennes, tantôt alliée, tantôt adversaire.",
+          "reason": "Un personnage magique et ambigu, qui ouvre la discussion sur les rôles d'allié et d'antagoniste."
+        },
+        "moulinGalette": {
+          "title": "Le bal du moulin de la Galette",
+          "description": "Un bal populaire à Montmartre peint par Renoir : on y danse au soleil, entre amis.",
+          "reason": "Une fête de quartier pleine de mouvement, pour imaginer la scène de bal ou de fête finale du conte."
+        },
+        "federationFestival": {
+          "title": "La fête de la Fédération",
+          "description": "Le 14 juillet 1790, une immense fête réunit la foule au Champ-de-Mars à Paris.",
+          "reason": "Un grand rassemblement historique pour travailler les déplacements de foule et les scènes collectives."
+        },
+        "degasDanceClass": {
+          "title": "La Classe de danse",
+          "description": "Edgar Degas peint les jeunes danseuses de l'Opéra pendant un cours.",
+          "reason": "Pour observer les postures de la danse classique et comparer avec les mouvements de la classe."
+        },
+        "bayeuxTapestry": {
+          "title": "La tapisserie de Bayeux",
+          "description": "Une broderie de près de 70 mètres qui raconte une histoire en images, scène après scène.",
+          "reason": "Elle découpe un récit en scènes successives, comme le conte dansé : un modèle pour la trame de votre histoire."
+        },
+        "pierrotWatteau": {
+          "title": "Pierrot, de Watteau",
+          "description": "Pierrot, personnage de la comédie italienne, debout face au public dans son costume blanc.",
+          "reason": "Un personnage de théâtre muet et expressif, pour travailler le mime et les émotions sans paroles."
+        },
+        "redRidingHood": {
+          "title": "Le Petit Chaperon rouge",
+          "description": "Le conte de Charles Perrault, illustré par Gustave Doré.",
+          "reason": "Un conte connu de tous, pour repérer la structure d'un récit et réinventer la rencontre avec le loup."
+        },
+        "pussInBoots": {
+          "title": "Le Chat botté",
+          "description": "Un chat rusé aide son maître à devenir marquis, dans le conte de Perrault illustré par Doré.",
+          "reason": "Un personnage malin et plein d'énergie, avec un château et un ogre : de quoi inventer des scènes rythmées."
+        },
+        "cinderella": {
+          "title": "Cendrillon",
+          "description": "Le conte de Perrault, du bal au château à la pantoufle de verre, illustré par Doré.",
+          "reason": "Un conte où la danse est au cœur du récit : la scène du bal peut devenir un moment fort du spectacle."
+        }
+      }
+    },
+
+    "classResources": {
+      "title": "Les ressources de votre classe",
+      "description": "Ajoutez à la base de travail du projet les créations et documents de la classe : dessins scannés, textes, photos, enregistrements, ou des liens vers des ressources externes.",
+      "privateNote": "Vos dépôts sont privés : ils ne sont visibles que par vous.",
+      "storageFull": "Le stockage de ce navigateur est plein : vos dernières modifications ne sont pas enregistrées. Supprimez des documents pour libérer de la place.",
+      "upload": {
+        "title": "Déposer des fichiers",
+        "rights": "J'atteste disposer des droits d'utilisation pédagogique des fichiers déposés (créations des élèves avec l'accord des familles, documents libres de droits ou dont je suis l'auteur).",
+        "required": "(obligatoire)",
+        "rightsError": "Cochez l'attestation des droits d'utilisation avant de déposer des fichiers.",
+        "drop": "Glissez vos fichiers ici, ou",
+        "choose": "Choisir des fichiers",
+        "format": "{{extensions}} jusqu'à {{size}} Mo",
+        "errors": {
+          "format": "« {{fileName}} » n'est pas dans un format accepté (PDF, PNG, JPEG, MP3 ou MP4).",
+          "tooLarge": "« {{fileName}} » dépasse la taille maximale autorisée pour ce format.",
+          "storage": "« {{fileName}} » n'a pas pu être enregistré : le stockage de ce navigateur est indisponible ou plein."
+        }
+      },
+      "link": {
+        "title": "Ajouter un lien",
+        "url": "Lien",
+        "urlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "error": "Saisissez une adresse web complète, commençant par https://",
+        "name": "Nom (facultatif)",
+        "namePlaceholder": "Ex. : Vidéo sur les châteaux forts",
+        "add": "Ajouter le lien"
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "image": "Image",
+        "audio": "Audio",
+        "video": "Vidéo",
+        "link": "Lien"
+      },
+      "size": {
+        "kb": "{{value}} Ko",
+        "mb": "{{value}} Mo"
+      },
+      "list": {
+        "title": "Documents déposés",
+        "count": "{{files}} fichier(s), {{links}} lien(s)",
+        "empty": "Aucun document pour l'instant. Les ressources de la classe sont facultatives : vous pouvez passer à l'étape suivante.",
+        "private": "Privé",
+        "preview": "Aperçu",
+        "previewLabel": "Aperçu de « {{name}} »",
+        "rename": "Renommer",
+        "renameLabel": "Renommer « {{name}} »",
+        "newName": "Nouveau nom (Entrée pour valider, Échap pour annuler)",
+        "deleteLabel": "Supprimer « {{name}} »",
+        "missing": "Fichier absent de cet appareil : il a été déposé depuis un autre navigateur ou les données du site ont été effacées."
+      },
+      "preview": {
+        "openFile": "Ouvrir dans un nouvel onglet",
+        "openLink": "Ouvrir le lien"
+      },
+      "delete": {
+        "title": "Supprimer le document ?",
+        "message": "« {{name}} » sera supprimé du projet. Cette action est définitive.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer"
+      },
+      "announce": {
+        "filesAdded": "{{count}} fichier(s) ajouté(s).",
+        "linkAdded": "Le lien « {{name}} » est ajouté.",
+        "renamed": "Document renommé en « {{name}} ».",
+        "deleted": "« {{name}} » est supprimé."
+      }
     },
 
     "autosave": {
@@ -159,7 +479,8 @@
         "search": "Rechercher",
         "searchPlaceholder": "Ex. : ronde",
         "listLabel": "Danses disponibles",
-        "noResult": "Aucune danse ne correspond à votre recherche."
+        "noResult": "Aucune danse ne correspond à votre recherche.",
+        "fromDiscovery": "Votre découverte (étape 2)"
       },
       "format": {
         "label": "Format",

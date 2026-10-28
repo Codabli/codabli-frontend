@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleUniverseComponent } from './tale-universe.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ImageResizeError, ImageResizeService } from '../../../core/services/image-resize.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
-import { TaleUniverse } from '../../../models/interfaces/tale-universe.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ImageResizeError, ImageResizeService } from '@core/services/image-resize.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',
@@ -165,6 +165,15 @@ describe('TaleUniverseComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['../structure'], expect.anything());
   });
 
+  it('garde une saisie incomplète quand on quitte l\'écran par la frise', async () => {
+    await setup();
+    type(cardsOf('places')[0].querySelector('input')!, 'La forêt');
+
+    fixture.destroy();
+
+    expect(draftService.universe()!.places.map((place) => place.name)).toEqual(['La forêt']);
+  });
+
   it('garde une saisie incomplète en revenant à l\'étape précédente', async () => {
     await setup();
     type(cardsOf('objects')[0].querySelector('textarea')!, 'Une épée');
@@ -172,7 +181,7 @@ describe('TaleUniverseComponent', () => {
     click('.tale-universe__actions app-button:first-child');
 
     expect(draftService.universe()!.objects).toHaveLength(1);
-    expect(router.navigate).toHaveBeenCalledWith(['../discovery'], expect.anything());
+    expect(router.navigate).toHaveBeenCalledWith(['../class-resources'], expect.anything());
   });
 
   it('n\'enregistre rien en revenant en arrière si rien n\'a été saisi', async () => {

@@ -1,18 +1,21 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter, map } from 'rxjs';
-import { CREATE_DANCED_TALE_STEPS } from './create-danced-tale.steps';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { CREATE_DANCED_TALE_STEPS, CreateDancedTaleStep } from './create-danced-tale.steps';
 
 @Component({
-  imports: [RouterOutlet, TranslatePipe],
+  imports: [NgTemplateOutlet, RouterOutlet, RouterLink, TranslatePipe],
   selector: 'app-create-danced-tale',
   styleUrl: './create-danced-tale.component.scss',
   templateUrl: './create-danced-tale.component.html',
 })
 export class CreateDancedTaleComponent {
   private readonly router = inject(Router);
+  private readonly draft = inject(CreateDancedTaleDraftService);
 
   protected readonly steps = CREATE_DANCED_TALE_STEPS;
 
@@ -33,4 +36,16 @@ export class CreateDancedTaleComponent {
   });
 
   protected readonly isWide = computed(() => !!this.steps[this.currentIndex()].wide);
+
+  /** Une étape de la frise est cliquable dès que le brouillon permet de l'ouvrir. */
+  protected isReachable(step: CreateDancedTaleStep): boolean {
+    switch (step.requires) {
+      case 'context':
+        return !!this.draft.context();
+      case 'structure':
+        return !!this.draft.context() && !!this.draft.structure()?.steps?.length;
+      default:
+        return true;
+    }
+  }
 }

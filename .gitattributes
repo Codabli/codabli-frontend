@@ -1,0 +1,6 @@
+# Médias : jamais de conversion de fin de ligne (un PDF converti est corrompu).
+*.pdf binary
+*.mp3 binary
+*.mp4 binary
+*.jpg binary
+*.png binary

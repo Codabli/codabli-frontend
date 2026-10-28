@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
-import { CreateDancedTaleDraftService } from '../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 
 /** Chemin d'un écran frère de `route` dans le parcours (ex. `/create-danced-tale/context`). */
 function siblingPath(route: ActivatedRouteSnapshot, path: string): string[] {

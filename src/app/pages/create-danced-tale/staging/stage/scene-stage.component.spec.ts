@@ -2,7 +2,7 @@ import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideTranslateService } from '@ngx-translate/core';
 import { SceneStage, StageElement, zoneOf } from './scene-stage.component';
-import { StagePlacement } from '../../../../models/interfaces/tale-staging.interface';
+import { StagePlacement } from '@models/interfaces/tale-staging.interface';
 
 const ARTHUR: StageElement = { kind: 'character', ref: 'arthur', label: 'Arthur' };
 const MERLIN: StageElement = { kind: 'character', ref: 'merlin', label: 'Merlin' };

@@ -3,7 +3,7 @@ import {
   StoryStep,
   StoryStepKind,
   TaleStructure,
-} from '../../../models/interfaces/tale-structure.interface';
+} from '@models/interfaces/tale-structure.interface';
 import { requiredText } from '../context/project-context.form';
 import { newId } from '../new-id';
 

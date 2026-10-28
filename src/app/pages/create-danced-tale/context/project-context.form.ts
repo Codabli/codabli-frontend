@@ -1,7 +1,7 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { AGE_RANGES, AgeRange } from '../../../models/types/age-range.type';
-import { PerformanceSpace } from '../../../models/types/performance-space.type';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
+import { AGE_RANGES, AgeRange } from '@models/types/age-range.type';
+import { PerformanceSpace } from '@models/types/performance-space.type';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 export const SECRET_INGREDIENT_MAX_LENGTH = 40;
 

@@ -1,4 +1,4 @@
-import { DanceFormat, DanceIntensity, DanceStyle } from '../../../../models/interfaces/tale-staging.interface';
+import { DanceFormat, DanceIntensity, DanceStyle } from '@models/interfaces/tale-staging.interface';
 import { DISCOVERY_CATALOG } from '../../discovery/discovery-catalog';
 
 /**

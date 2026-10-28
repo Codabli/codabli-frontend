@@ -1,5 +1,5 @@
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
-import { ResourceCategory, ResourceProvenance } from '../../../models/interfaces/tale-resources.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { ResourceCategory, ResourceProvenance } from '@models/interfaces/tale-resources.interface';
 import { MediaCredit } from '../media-credit';
 import { normalizeText } from '../normalize-text';
 

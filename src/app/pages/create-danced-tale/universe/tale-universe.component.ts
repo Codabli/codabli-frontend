@@ -2,17 +2,17 @@ import { Component, DestroyRef, ElementRef, inject, signal } from '@angular/core
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import {
   ImageResizeError,
   ImageResizeErrorKind,
   ImageResizeService,
-} from '../../../core/services/image-resize.service';
+} from '@core/services/image-resize.service';
 import {
   UNIVERSE_SECTIONS,
   UniverseSection,
-} from '../../../models/interfaces/tale-universe.interface';
+} from '@models/interfaces/tale-universe.interface';
 import {
   CARD_NAME_MAX_LENGTH,
   CARD_ROLE_MAX_LENGTH,

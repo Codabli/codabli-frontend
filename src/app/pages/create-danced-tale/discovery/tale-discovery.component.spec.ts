@@ -3,9 +3,9 @@ import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleDiscoveryComponent } from './tale-discovery.component';
 import { DISCOVERY_CATALOG } from './discovery-catalog';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { TaleDiscovery } from '../../../models/interfaces/tale-discovery.interface';
-import { AgeRange } from '../../../models/types/age-range.type';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { TaleDiscovery } from '@models/interfaces/tale-discovery.interface';
+import { AgeRange } from '@models/types/age-range.type';
 
 describe('TaleDiscoveryComponent', () => {
   let fixture: ComponentFixture<TaleDiscoveryComponent>;

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleStructureComponent } from './tale-structure.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
-import { TaleStructure } from '../../../models/interfaces/tale-structure.interface';
-import { TaleUniverse } from '../../../models/interfaces/tale-universe.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleStructure } from '@models/interfaces/tale-structure.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 
 const CONTEXT: ProjectContext = {

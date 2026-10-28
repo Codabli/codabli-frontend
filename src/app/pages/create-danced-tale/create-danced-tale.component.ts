@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { filter, map } from 'rxjs';
-import { CreateDancedTaleDraftService } from '../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { CREATE_DANCED_TALE_STEPS, CreateDancedTaleStep } from './create-danced-tale.steps';
 
 @Component({

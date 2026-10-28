@@ -3,8 +3,8 @@ import {
   CREATE_DANCED_TALE_DRAFT_KEY,
   CreateDancedTaleDraftService,
 } from './create-danced-tale-draft.service';
-import { ProjectContext } from '../../models/interfaces/project-context.interface';
-import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',

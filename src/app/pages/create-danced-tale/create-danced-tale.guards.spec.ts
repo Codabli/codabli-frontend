@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { requireProjectContext, requireTaleStructure } from './create-danced-tale.guards';
-import { CreateDancedTaleDraftService } from '../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 
 @Component({ template: '' })
 class DummyComponent {}

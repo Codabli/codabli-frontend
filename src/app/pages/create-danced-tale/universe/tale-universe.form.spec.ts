@@ -1,4 +1,4 @@
-import { TaleUniverse } from '../../../models/interfaces/tale-universe.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 import { TaleUniverseForm, UniverseCardForm } from './tale-universe.form';
 
 const UNIVERSE: TaleUniverse = {

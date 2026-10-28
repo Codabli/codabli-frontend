@@ -6,7 +6,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { CreateDancedTaleComponent } from './create-danced-tale.component';
 import { CREATE_DANCED_TALE_STEPS } from './create-danced-tale.steps';
 import { requireProjectContext, requireTaleStructure } from './create-danced-tale.guards';
-import { CreateDancedTaleDraftService } from '../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 
 @Component({ template: '' })
 class DummyComponent {}

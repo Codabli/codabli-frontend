@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
 import { SceneDances } from './scene-dances.component';
 import { findCatalogDance } from './dance-catalog';
-import { SceneDance, SceneSound } from '../../../../models/interfaces/tale-staging.interface';
-import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
-import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
+import { SceneDance, SceneSound } from '@models/interfaces/tale-staging.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { AudioFileStore } from '@core/services/audio-file-store.service';
 import { SceneSounds } from '../sounds/scene-sounds.component';
 
 const ROUND: SceneDance = { id: 'd1', danceId: 'festiveRound', name: 'Ronde', moment: 'beginning', style: 'traditional' };

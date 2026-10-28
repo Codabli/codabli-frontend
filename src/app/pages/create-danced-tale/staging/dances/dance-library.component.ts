@@ -1,8 +1,8 @@
 import { CdkDrag, CdkDragPlaceholder, CdkDropList } from '@angular/cdk/drag-drop';
 import { Component, computed, inject, model, signal } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DanceFormat, DanceIntensity } from '../../../../models/interfaces/tale-staging.interface';
-import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
+import { DanceFormat, DanceIntensity } from '@models/interfaces/tale-staging.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { normalizeText } from '../../normalize-text';
 import {
   CatalogDance,

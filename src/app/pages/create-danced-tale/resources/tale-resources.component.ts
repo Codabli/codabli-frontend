@@ -1,14 +1,14 @@
 import { Component, ElementRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { Modal } from '../../../shared/components/modal/modal.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { Modal } from '@shared/components/modal/modal.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import {
   RESOURCE_CATEGORIES,
   ResourceCategory,
   ResourceProvenance,
-} from '../../../models/interfaces/tale-resources.interface';
+} from '@models/interfaces/tale-resources.interface';
 import { CULTURAL_RESOURCE_CATALOG, CulturalResource, isNearSchool, matchedKeywords } from './resource-catalog';
 
 /** Onglets : une catégorie, ou les ressources proches de l'école. */

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleUniverseComponent } from './tale-universe.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ImageResizeError, ImageResizeService } from '../../../core/services/image-resize.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
-import { TaleUniverse } from '../../../models/interfaces/tale-universe.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ImageResizeError, ImageResizeService } from '@core/services/image-resize.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',

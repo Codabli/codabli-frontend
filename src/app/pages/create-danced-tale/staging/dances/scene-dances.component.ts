@@ -1,19 +1,19 @@
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, DestroyRef, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { AudioFileStore } from '@core/services/audio-file-store.service';
 import {
   DANCE_MOMENTS,
   DANCE_STYLES,
   DanceMoment,
   DanceStyle,
   SceneDance,
-} from '../../../../models/interfaces/tale-staging.interface';
+} from '@models/interfaces/tale-staging.interface';
 import { newId } from '../../new-id';
 import { SceneSounds } from '../sounds/scene-sounds.component';
 import { SceneStage, StageElement } from '../stage/scene-stage.component';
-import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import {
   CatalogDance,
   DANCE_CATALOG,

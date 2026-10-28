@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleClassResourcesComponent } from './tale-class-resources.component';
-import { ClassResourceFileStore } from '../../../core/services/class-resource-file-store.service';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ClassResource } from '../../../models/interfaces/tale-class-resources.interface';
+import { ClassResourceFileStore } from '@core/services/class-resource-file-store.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ClassResource } from '@models/interfaces/tale-class-resources.interface';
 
 const flush = () => new Promise((resolve) => setTimeout(resolve));
 

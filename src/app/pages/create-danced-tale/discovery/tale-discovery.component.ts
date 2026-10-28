@@ -1,10 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { Modal } from '../../../shared/components/modal/modal.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { LanguageService } from '../../../core/services/language.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { Modal } from '@shared/components/modal/modal.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { LanguageService } from '@core/services/language.service';
 import {
   DISCOVERY_DISCIPLINES,
   DISCOVERY_FORMATS,
@@ -12,7 +12,7 @@ import {
   DiscoveryFormat,
   DiscoveryList,
   TaleDiscovery,
-} from '../../../models/interfaces/tale-discovery.interface';
+} from '@models/interfaces/tale-discovery.interface';
 import { normalizeText } from '../normalize-text';
 import {
   DISCOVERY_CATALOG,

@@ -1,6 +1,6 @@
-import { AGE_RANGES, AgeRange } from '../../../models/types/age-range.type';
-import { DiscoveryDiscipline, DiscoveryFormat } from '../../../models/interfaces/tale-discovery.interface';
-import { DanceFormat, DanceIntensity, DanceStyle } from '../../../models/interfaces/tale-staging.interface';
+import { AGE_RANGES, AgeRange } from '@models/types/age-range.type';
+import { DiscoveryDiscipline, DiscoveryFormat } from '@models/interfaces/tale-discovery.interface';
+import { DanceFormat, DanceIntensity, DanceStyle } from '@models/interfaces/tale-staging.interface';
 import { MediaCredit } from '../media-credit';
 
 const ASSETS = 'assets/create-danced-tale/discovery';

@@ -1,4 +1,4 @@
-import { ClassResourceKind } from '../../../models/interfaces/tale-class-resources.interface';
+import { ClassResourceKind } from '@models/interfaces/tale-class-resources.interface';
 
 const MB = 1024 * 1024;
 

@@ -4,12 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { Modal } from '../../../shared/components/modal/modal.component';
-import { ClassResourceFileStore } from '../../../core/services/class-resource-file-store.service';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { LanguageService } from '../../../core/services/language.service';
-import { ClassResource, ClassResourceKind } from '../../../models/interfaces/tale-class-resources.interface';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { Modal } from '@shared/components/modal/modal.component';
+import { ClassResourceFileStore } from '@core/services/class-resource-file-store.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { LanguageService } from '@core/services/language.service';
+import { ClassResource, ClassResourceKind } from '@models/interfaces/tale-class-resources.interface';
 import { newId } from '../new-id';
 import {
   ACCEPTED_FORMATS,

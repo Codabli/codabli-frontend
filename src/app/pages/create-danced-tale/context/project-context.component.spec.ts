@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { ProjectContextComponent } from './project-context.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 describe('ProjectContextComponent', () => {
   let fixture: ComponentFixture<ProjectContextComponent>;

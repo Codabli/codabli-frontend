@@ -1,5 +1,5 @@
 import { ProjectContextForm, SECRET_INGREDIENT_MAX_LENGTH } from './project-context.form';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 describe('ProjectContextForm', () => {
   let form: ProjectContextForm;

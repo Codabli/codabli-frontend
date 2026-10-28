@@ -1,12 +1,12 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { ProjectContext } from '../../models/interfaces/project-context.interface';
-import { TaleClassResources } from '../../models/interfaces/tale-class-resources.interface';
-import { TaleDiscovery } from '../../models/interfaces/tale-discovery.interface';
-import { TaleResources } from '../../models/interfaces/tale-resources.interface';
-import { TaleStaging } from '../../models/interfaces/tale-staging.interface';
-import { TaleStructure } from '../../models/interfaces/tale-structure.interface';
-import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
-import { TaleWriting } from '../../models/interfaces/tale-writing.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleClassResources } from '@models/interfaces/tale-class-resources.interface';
+import { TaleDiscovery } from '@models/interfaces/tale-discovery.interface';
+import { TaleResources } from '@models/interfaces/tale-resources.interface';
+import { TaleStaging } from '@models/interfaces/tale-staging.interface';
+import { TaleStructure } from '@models/interfaces/tale-structure.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
+import { TaleWriting } from '@models/interfaces/tale-writing.interface';
 
 export interface CreateDancedTaleDraft {
   context: ProjectContext | null;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { DanceLibrary } from './dance-library.component';
 import { DANCE_CATALOG } from './dance-catalog';
-import { CreateDancedTaleDraftService } from '../../../../core/services/create-danced-tale-draft.service';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 
 describe('DanceLibrary', () => {
   let fixture: ComponentFixture<DanceLibrary>;

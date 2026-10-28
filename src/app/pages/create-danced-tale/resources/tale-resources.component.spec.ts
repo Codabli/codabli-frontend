@@ -3,9 +3,9 @@ import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleResourcesComponent } from './tale-resources.component';
 import { CULTURAL_RESOURCE_CATALOG, isNearSchool, matchedKeywords } from './resource-catalog';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
-import { TaleResources } from '../../../models/interfaces/tale-resources.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleResources } from '@models/interfaces/tale-resources.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',

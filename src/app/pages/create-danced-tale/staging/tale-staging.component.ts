@@ -2,8 +2,8 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import {
   CHARACTER_ENTRANCES,
   CHARACTER_EXITS,
@@ -15,8 +15,8 @@ import {
   SceneDance,
   SceneSound,
   SceneStaging,
-} from '../../../models/interfaces/tale-staging.interface';
-import { StoryStep } from '../../../models/interfaces/tale-structure.interface';
+} from '@models/interfaces/tale-staging.interface';
+import { StoryStep } from '@models/interfaces/tale-structure.interface';
 import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
 import { DanceLibrary } from './dances/dance-library.component';

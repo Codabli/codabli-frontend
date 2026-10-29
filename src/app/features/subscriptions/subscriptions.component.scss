@@ -1,0 +1,75 @@
+// ── Page "Nos abonnements" ──
+.subscriptions-page {
+  padding-block: var(--spacing-xs) var(--spacing-3xl);   // fil d'Ariane collé en haut, 64px en bas
+  background: var(--color-bg-warm-surface);              // même fond que la section abonnements de l'accueil
+
+  &__breadcrumb,
+  &__header,
+  &__content {
+    grid-column: 1 / -1;
+  }
+
+  &__breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-xl);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-large);
+    line-height: var(--line-height-large);
+
+    li {
+      position: relative;
+    }
+
+    li + li::before {
+      content: '\203A';
+      position: absolute;
+      left: calc(-1 * var(--spacing-xl) / 2);
+      transform: translateX(-50%);
+      font-weight: var(--font-weight-bold);
+    }
+
+    a {
+      color: var(--font-color-text-anthracite);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    [aria-current='page'] {
+      font-weight: var(--font-weight-bold);
+    }
+  }
+
+  &__header {
+    margin: var(--spacing-2xl) 0;
+    text-align: center;
+
+    h1 {
+      margin: 0 0 var(--spacing-lg);
+    }
+
+    p {
+      margin: 0;
+      color: var(--font-color-text-anthracite);
+    }
+  }
+
+  &__message {
+    margin: 0;
+    text-align: center;
+    color: var(--font-color-text-anthracite);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+    justify-content: center;
+    gap: var(--grid-gutter);
+  }
+}

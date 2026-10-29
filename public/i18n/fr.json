@@ -798,6 +798,48 @@
     "login": "Se connecter",
     "register": "Créer un compte"
   },
+  "subscriptions": {
+    "title": "Nos abonnements",
+    "intro": "Comparez nos formules et choisissez celle qui correspond le mieux à vos besoins.",
+    "breadcrumb": {
+      "label": "Fil d'Ariane",
+      "home": "Accueil"
+    },
+    "states": {
+      "loading": "Chargement des offres…",
+      "error": "Les offres ne peuvent pas être affichées pour le moment. Réessayez dans quelques instants.",
+      "empty": "Aucune offre d'abonnement n'est disponible pour le moment."
+    },
+      "audience": {
+      "famille": "Pour les familles",
+      "enseignant": "Pour les enseignants",
+      "etablissement": "Pour les établissements",
+      "structure": "Pour les structures"
+    },
+    "duration": {
+      "mensuel": "/ mois",
+      "annuel": "/ an"
+    },
+    "benefits": {
+      "profiles": {
+        "one": "{{count}} profil enfant",
+        "other": "{{count}} profils enfants"
+      },
+      "classes": {
+        "one": "{{count}} classe",
+        "other": "{{count}} classes"
+      },
+      "storage": "{{size}} de stockage",
+      "webinars": "Accès aux webinaires",
+      "coaching": "Accompagnement (coaching)",
+      "exports": "Export de vos créations"
+    },
+    "card": {
+      "details": "Voir le détail",
+      "subscribe": "M’abonner"
+    }
+  },
+
   "teacherAccount": {
     "breadcrumb": {
       "label": "Fil d'Ariane",

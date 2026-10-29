@@ -1,0 +1,39 @@
+<article
+  [class]="'plan-card plan-card--' + accent()"
+  [attr.aria-labelledby]="'offer-title-' + offer().id"
+>
+  <p class="plan-card__audience">
+    {{ 'subscriptions.audience.' + offer().publicCible | translate }}
+  </p>
+
+  <h2 [id]="'offer-title-' + offer().id">{{ offer().nom }}</h2>
+
+  <span class="plan-card__accent" aria-hidden="true"></span>
+
+  <p class="plan-card__price">
+    <span class="plan-card__amount">{{ price() }}</span>
+    <span>{{ 'subscriptions.duration.' + offer().duree | translate }}</span>
+  </p>
+
+  @if (offer().description) {
+    <p class="plan-card__description">{{ offer().description }}</p>
+  }
+
+  @if (benefits().length > 0) {
+    <ul class="plan-card__benefits">
+      @for (benefit of benefits(); track benefit.key) {
+        <li>{{ benefit.key | translate: benefit.params }}</li>
+      }
+    </ul>
+  }
+
+  <div class="plan-card__actions">
+    <a class="plan-card__details" [routerLink]="['/subscriptions', offer().id]">
+      {{ 'subscriptions.card.details' | translate }}
+    </a>
+
+    <app-button variant="tertiary">
+      {{ 'subscriptions.card.subscribe' | translate }}
+    </app-button>
+  </div>
+</article>

@@ -1,0 +1,107 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.plan-card {
+  --plan-accent: var(--color-bg-primary-default);   // couleur d'accent par défaut : jaune
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border-radius: 48px;
+  padding: var(--spacing-xl) clamp(20px, 3vw, 40px);
+  background: var(--color-bg-surface);
+  color: var(--font-color-text-anthracite);
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-body);
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    color: var(--font-color-primary);
+    font-family: var(--font-family-secondary), sans-serif;
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h4);
+  }
+}
+
+.plan-card--blue {
+  --plan-accent: var(--color-bg-tertiary-hover);
+}
+
+.plan-card--pink {
+  --plan-accent: var(--color-bg-subscription-pink);
+}
+
+.plan-card__audience {
+  margin: 0 0 var(--spacing-xs);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.plan-card__accent {
+  width: 40px;
+  height: 8px;
+  margin-top: var(--spacing-sm);
+  background: var(--plan-accent);
+}
+
+.plan-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-sm) 0 0;
+  color: var(--font-color-primary);
+  font-family: var(--font-family-price), sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+}
+
+.plan-card__amount {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+}
+
+.plan-card__description {
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  line-height: var(--line-height-body);
+}
+
+.plan-card__benefits {
+  width: fit-content;
+  margin: 0 auto var(--spacing-xl);
+  padding-left: 1.25em;
+  text-align: left;
+
+  li {
+    padding-left: var(--spacing-xs);
+    line-height: var(--line-height-body);
+  }
+}
+
+.plan-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: auto;
+}
+
+.plan-card__details {
+  color: var(--font-color-primary);
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-primary-focus);
+    outline-offset: 2px;
+  }
+}

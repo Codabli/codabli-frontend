@@ -15,7 +15,9 @@ export type IconName =
   | 'switch-on'
   | 'switch-off'
   | 'reset'
-  | 'lock';
+  | 'lock'
+  | 'text'
+  | 'download';
 
 @Component({
   selector: 'app-icon',

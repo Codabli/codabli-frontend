@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.tale-detail {
+  width: 100%;
+  max-width: 1248px;
+  margin-inline: auto;
+  padding: var(--spacing-xl);
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tale-detail__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+
+  text-align: center;
+}
+
+.tale-detail__title {
+  margin: 0;
+}
+
+.tale-detail__favorite {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.tale-detail__archive {
+  display: inline-flex;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.tale-detail__themes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tale-detail__theme {
+  padding: var(--spacing-xs) var(--spacing-sm);
+
+  font-size: var(--font-size-small);
+  color: var(--font-color-primary);
+  font-weight: var(--font-weight-bold);
+
+  background-color: var(--color-bg-theme-default);
+  border-radius: var(--radius-button);
+}

@@ -2,11 +2,17 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-/** Réserve une route aux utilisateurs connectés ; sinon renvoie au login, qui ramènera ici. */
-export const requireAuthentication: CanActivateFn = (_route, state) => {
-  if (inject(AuthService).getAccessToken()) {
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isLoggedIn()) {
     return true;
   }
 
-  return inject(Router).createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+  return router.createUrlTree(['/login'], {
+    queryParams: {
+      returnUrl: state.url,
+    },
+  });
 };

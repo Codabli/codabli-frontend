@@ -984,6 +984,27 @@
     "carousel": {
       "previous": "Previous tale",
       "next": "Next tale"
+    },
+    "taleDetail": {
+      "video": "Video version",
+      "audio": "Audio version",
+      "text": "Text version",
+      "resources": "Professional resources",
+      "selectLanguage": "Select language",
+      "adoptTale": "Adopt this tale",
+      "createTale": "Create this tale",
+      "addToFavourites": "Add to favourites",
+      "videoNotSupported": "Your browser does not support video playback.",
+      "videoUnavailable": "The video version is not available for this tale in the selected language.",
+      "audioNotSupported": "Your browser does not support audio playback.",
+      "audioUnavailable": "The audio version is not available for this tale in the selected language.",
+      "textUnavailable": "The text version is not available for this tale in the selected language.",
+      "consultText": "Consult the text of the tale",
+      "discoverMore": "Do you want to discover more?",
+      "viewTeachingResources": "View teaching resources",
+      "downloadTeachingResources": "Download teaching resources",
+      "resourcesUnavailable": "Professional resources are not yet available.",
+      "readTale": "Read the tale"
     }
   },
   "home": {

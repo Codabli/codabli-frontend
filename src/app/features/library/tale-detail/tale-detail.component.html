@@ -1,1 +1,47 @@
-<p>tale-detail works!</p>
+<app-page-banner />
+
+@if (isLoading()) {
+  <p>Chargement du conte...</p>
+} @else if (error()) {
+  <p>{{ error() }}</p>
+} @else if (conte(); as tale) {
+  <main class="tale-detail">
+    <header class="tale-detail__header">
+      <h1 class="tale-detail__title">
+        {{ tale.titre }}
+      </h1>
+      <div class="tale-detail__favorite">
+        <button
+          type="button"
+          class="tale-detail__archive"
+          aria-label="Ajouter aux favoris"
+        >
+          <app-icon
+            name="archive"
+            [size]="24"
+          />
+        </button>
+        <span>{{ 'library.taleDetail.addToFavourites' | translate }}</span>
+      </div>
+
+      @if (tale.thematique) {
+        <div class="tale-detail__themes">
+          <span class="tale-detail__theme">
+            {{ tale.thematique }}
+          </span>
+        </div>
+      }
+    </header>
+    <app-tale-detail-info
+      [conte]="tale"
+      [availableLanguages]="availableLanguages()"
+      [selectedLanguage]="selectedLanguage()"
+      (languageChange)="selectedLanguage.set($event)"
+    />
+    <app-tale-detail-media
+      [conte]="tale"
+      [traductions]="traductions()"
+      [selectedLanguage]="selectedLanguage()"
+    />
+  </main>
+}

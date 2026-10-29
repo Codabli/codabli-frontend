@@ -4,6 +4,7 @@ import { IconComponent } from '@shared/components/icon/icon.component';
 import type { Tale } from '@models/interfaces/tale.interface';
 import { LanguageFlag } from '@shared/components/language-flag/language-flag.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { getLanguageName } from '@shared/utils/language.utils';
 
 @Component({
   imports: [ButtonComponent, IconComponent, LanguageFlag, TranslatePipe],
@@ -15,6 +16,8 @@ export class TaleCardComponent {
   @Input() title: string = '';
   @Input() description: string = '';
 
+  protected readonly getLanguageName = getLanguageName;
+
   tale = input.required<Tale>();
 
   readonly locked = input(false);
@@ -22,14 +25,4 @@ export class TaleCardComponent {
   readonly consult = output<void>();
   readonly adopt = output<void>();
   readonly login = output<void>();
-
-  protected getLanguageName(code: string): string {
-  const languageNames = new Intl.DisplayNames(['fr'], {
-    type: 'language',
-  });
-
-  const name = languageNames.of(code) ?? code;
-
-  return name.charAt(0).toUpperCase() + name.slice(1);
-}
 }

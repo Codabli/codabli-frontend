@@ -12,7 +12,7 @@
   padding: 12px 20px;
 
   font-family: var(--font-family-body), sans-serif;
-  font-size: 16px;
+  font-size: var(--button-font-size, 16px);
   font-weight: 700;
   line-height: var(--button-line-height, 170%);
   letter-spacing: 0;

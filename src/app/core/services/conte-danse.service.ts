@@ -5,10 +5,7 @@ import {
   expand,
   map,
   reduce,
-  EMPTY,
-  switchMap,
-  forkJoin,
-  of,
+  EMPTY
 } from 'rxjs';
 import { API_BASE_URL } from '../http/api.config';
 import { buildParams } from '../http/build-params';
@@ -18,7 +15,6 @@ import type {
 } from '../../models/interfaces/conte-danse.interface';
 import type { Page } from '../../models/interfaces/page.interface';
 import type { ConteDanseTraduction } from '@models/interfaces/conte-danse-traduction.model';
-import type { FilterSelectOption } from '@models/interfaces/filter-select-option.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ConteDanseService {

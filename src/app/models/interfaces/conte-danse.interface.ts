@@ -1,3 +1,4 @@
+import { ConteDanseTraduction } from './conte-danse-traduction.model';
 import type { PaginationParams } from './pagination.interface';
 
 export type AccesConte = 'gratuit' | 'payant';
@@ -34,6 +35,7 @@ export interface ConteDanse {
   createurId: string;
   createurNom: string;
   createurPrenom: string;
+  traductions: ConteDanseTraduction[];
 }
 
 export interface ConteDanseFiltres extends PaginationParams {

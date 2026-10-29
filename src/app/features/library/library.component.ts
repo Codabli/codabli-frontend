@@ -1,5 +1,5 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { forkJoin, map, switchMap, of } from 'rxjs';
+import { map } from 'rxjs';
 import type { LanguageCode } from '@models/types/language-code.type';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TaleFilters } from '@models/interfaces/tale-filters.interface';
@@ -15,6 +15,8 @@ import { OnInit } from '@angular/core';
 import { ConteDanseService } from '@core/services/conte-danse.service';
 import { mapConteDanseToTale } from '@models/mappers/conte-danse.mapper';
 import type { FilterSelectOption } from '@models/interfaces/filter-select-option.interface';
+import { PageBannerComponent } from '@shared/components/page-banner/page-banner.component';
+import { getLanguageName } from '@shared/utils/language.utils';
 
 @Component({
   imports: [
@@ -24,6 +26,7 @@ import type { FilterSelectOption } from '@models/interfaces/filter-select-option
     ButtonComponent,
     LibraryCarouselComponent,
     IconComponent,
+    PageBannerComponent,
   ],
   selector: 'app-library',
   styleUrl: './library.component.scss',
@@ -89,14 +92,10 @@ export class LibraryComponent implements OnInit {
   });
 
   protected readonly languageOptions = computed<FilterSelectOption[]>(() => {
-    const displayNames = new Intl.DisplayNames(['fr'], {
-      type: 'language',
-    });
-
     return [...new Set(this.allTales().flatMap((tale) => tale.languages))]
       .map((langue) => ({
         value: langue,
-        label: displayNames.of(langue) ?? langue,
+        label: getLanguageName(langue),
       }))
       .sort((a, b) => a.label.localeCompare(b.label, 'fr'));
   });
@@ -108,39 +107,9 @@ export class LibraryComponent implements OnInit {
   private chargerContes(): void {
     this.conteDanseService
       .listerTous()
-      .pipe(
-        switchMap((contes) => {
-          if (contes.length === 0) {
-            return of([] as Tale[]);
-          }
-
-          return forkJoin(
-            contes.map((conte) =>
-              this.conteDanseService.listerTraductionsPubliees(conte.id).pipe(
-                map((traductions) => {
-                  const tale = mapConteDanseToTale(conte);
-
-                  return {
-                    ...tale,
-                    ageMin: conte.ageMin,
-                    ageMax: conte.ageMax,
-                    languages: [
-                      ...new Set([
-                        tale.originalLanguage,
-                        ...traductions.map((t) => t.langue as LanguageCode),
-                      ]),
-                    ],
-                  };
-                }),
-              ),
-            ),
-          );
-        }),
-      )
+      .pipe(map((contes) => contes.map(mapConteDanseToTale)))
       .subscribe({
-        next: (tales) => {
-          this.allTales.set(tales);
-        },
+        next: (tales) => this.allTales.set(tales),
         error: (error) =>
           console.error('Erreur lors du chargement des contes :', error),
       });

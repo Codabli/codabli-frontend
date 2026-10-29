@@ -1,0 +1,163 @@
+<section class="tale-media">
+  <div class="media-player">
+    <!-- Navigation entre les médias -->
+    <nav
+      class="media-tabs"
+      aria-label="Formats disponibles"
+    >
+      <div class="media-tabs__left">
+        <app-button
+          [variant]="activeMedia() === 'video' ? 'tertiary-ico' : 'outline'"
+          (click)="selectMedia('video')"
+        >
+          {{ 'library.taleDetail.video' | translate }}
+        </app-button>
+
+        <app-button
+          [variant]="activeMedia() === 'audio' ? 'tertiary-ico' : 'outline'"
+          (click)="selectMedia('audio')"
+        >
+          {{ 'library.taleDetail.audio' | translate }}
+        </app-button>
+
+        <app-button
+          [variant]="activeMedia() === 'resources' ? 'tertiary-ico' : 'outline'"
+          (click)="selectMedia('resources')"
+        >
+          {{ 'library.taleDetail.resources' | translate }}
+        </app-button>
+      </div>
+
+      <app-button
+        variant="secondary"
+        (click)="selectMedia('text')"
+        icon="text"
+      >
+        {{ 'library.taleDetail.text' | translate }}
+      </app-button>
+    </nav>
+
+    <!-- Contenu du média sélectionné -->
+
+    <div class="media-content">
+      @switch (activeMedia()) {
+        @case ('video') {
+          @if (videoUrl(); as url) {
+            <video
+              class="media-video"
+              controls
+              preload="metadata"
+              [src]="url"
+            >
+              @if (subtitlesUrl(); as subtitles) {
+                <track
+                  kind="subtitles"
+                  [src]="subtitles"
+                  [attr.srclang]="currentLanguage()"
+                  [attr.label]="currentLanguage()"
+                />
+              }
+              {{ 'library.taleDetail.videoNotSupported' | translate }}
+            </video>
+          } @else {
+            <p class="media-unavailable">
+              {{ 'library.taleDetail.videoUnavailable' | translate }}
+            </p>
+          }
+        }
+
+        @case ('audio') {
+          @if (audioUrl(); as url) {
+            <div class="audio-container">
+              <div class="audio-track">
+                <h3 class="audio-track__title">Piste 1</h3>
+
+                <audio
+                  class="media-audio"
+                  controls
+                  preload="metadata"
+                  [src]="url"
+                >
+                  {{ 'library.taleDetail.audioNotSupported' | translate }}
+                </audio>
+              </div>
+
+              <div class="audio-footer">
+                <p class="audio-footer__text">
+                  {{ 'library.taleDetail.discoverMore' | translate }}
+                </p>
+
+                <app-button variant="secondary">
+                  {{ 'library.taleDetail.adoptTale' | translate }}
+                </app-button>
+              </div>
+            </div>
+          } @else {
+            <p class="media-unavailable">
+              {{ 'library.taleDetail.audioUnavailable' | translate }}
+            </p>
+          }
+        }
+
+        @case ('resources') {
+          @if (hasResources()) {
+            <div class="resources-container">
+              <p>
+                {{ 'library.taleDetail.viewTeachingResources' | translate }}
+              </p>
+
+              <app-button
+                variant="primary"
+                icon="download"
+              >
+                {{ 'library.taleDetail.downloadTeachingResources' | translate }}
+              </app-button>
+            </div>
+          } @else {
+            <p class="media-unavailable">
+              {{ 'library.taleDetail.resourcesUnavailable' | translate }}
+            </p>
+          }
+        }
+
+        @case ('text') {
+          @if (hasText()) {
+            <div class="text-container">
+              <h3>{{ 'library.taleDetail.readTale' | translate }}</h3>
+
+              @if (translatedText(); as text) {
+                <div class="tale-text">{{ text }}</div>
+              }
+              @if (textUrl(); as url) {
+                <app-button
+                  variant="primary"
+                  (click)="downloadText(url)"
+                >
+                  {{ 'library.taleDetail.consultText' | translate }}
+                </app-button>
+              }
+            </div>
+          } @else {
+            <p class="media-unavailable">
+              {{ 'library.taleDetail.textUnavailable' | translate }}
+            </p>
+          }
+        }
+      }
+    </div>
+  </div>
+  <div class="media__like-container">
+    <button
+      type="button"
+      icon="heart"
+      class="media__like"
+      aria-label="J’aime"
+    >
+      <app-icon
+        name="heart"
+        [size]="24"
+      />
+    </button>
+    <span>12</span>
+  </div>
+</section>

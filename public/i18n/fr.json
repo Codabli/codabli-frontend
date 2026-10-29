@@ -985,6 +985,27 @@
     "carousel": {
       "previous": "Conte précédent",
       "next": "Conte suivant"
+    },
+    "taleDetail": {
+      "video": "Version vidéo",
+      "audio": "Version audio",
+      "text": "Version texte",
+      "resources": "Ressources pro",
+      "selectLanguage": "Sélectionner la langue",
+      "adoptTale": "Adopter ce conte",
+      "createTale": "Créer ce conte",
+      "addToFavourites": "Ajouter aux favoris",
+      "videoNotSupported": "Votre navigateur ne prend pas en charge la lecture vidéo.",
+      "videoUnavailable": "La version vidéo n'est pas disponible pour ce conte dans la langue sélectionnée.",
+      "audioNotSupported": "Votre navigateur ne prend pas en charge la lecture audio.",
+      "audioUnavailable": "La version audio n'est pas disponible pour ce conte dans la langue sélectionnée.",
+      "textUnavailable": "La version texte n'est pas disponible pour ce conte dans la langue sélectionnée.",
+      "consultText": "Consulter le texte du conte",
+      "discoverMore": "Vous souhaitez découvrir la suite ?",
+      "viewTeachingResources": "Consulter le support pédagogique",
+      "downloadTeachingResources": "Télécharger le support pédagogique",
+      "resourcesUnavailable": "Les ressources professionnelles ne sont pas encore disponibles.",
+      "readTale": "Lire le conte"
     }
   },
   "home": {

@@ -45,8 +45,6 @@ describe('TaleResourcesComponent', () => {
   let draftService: CreateDancedTaleDraftService;
 
   async function setup(context: ProjectContext = CONTEXT, resources?: TaleResources): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [TaleResourcesComponent],
       providers: [provideRouter([]), provideTranslateService()],

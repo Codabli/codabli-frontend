@@ -34,7 +34,6 @@ describe('TaleUniverseComponent', () => {
   let resize: ReturnType<typeof vi.fn>;
 
   async function setup(savedUniverse?: TaleUniverse): Promise<void> {
-    localStorage.clear();
     resize = vi.fn().mockResolvedValue('data:image/jpeg;base64,RESIZED');
 
     await TestBed.configureTestingModule({
@@ -249,15 +248,5 @@ describe('TaleUniverseComponent', () => {
     expect(errorId).toBeTruthy();
     expect(element.querySelector(`#${errorId}`)).not.toBeNull();
     expect(cardsOf('places')[0].querySelector('img')).toBeNull();
-  });
-
-  it('prévient quand le brouillon ne peut pas être enregistré', async () => {
-    await setup();
-    vi.spyOn(draftService, 'saveUniverse').mockReturnValue(false);
-
-    clickNext();
-
-    expect(router.navigate).not.toHaveBeenCalled();
-    expect(element.querySelector('#storage-error')).not.toBeNull();
   });
 });

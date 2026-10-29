@@ -41,8 +41,6 @@ describe('TaleStructureComponent', () => {
     universe?: TaleUniverse | null;
     structure?: TaleStructure;
   } = {}): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [TaleStructureComponent],
       providers: [provideRouter([]), provideTranslateService()],
@@ -250,11 +248,11 @@ describe('TaleStructureComponent', () => {
     await setup();
     vi.useFakeTimers();
 
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
     expect(draftService.structure()).toBeNull();
 
     type(steps()[0].querySelector('textarea')!, 'Au début…');
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
     fixture.detectChanges();
 
     expect(draftService.structure()!.steps[0].summary).toBe('Au début…');

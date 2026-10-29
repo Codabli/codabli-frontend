@@ -12,8 +12,6 @@ describe('ProjectContextComponent', () => {
   let draftService: CreateDancedTaleDraftService;
 
   async function setup(savedContext?: ProjectContext): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [ProjectContextComponent],
       providers: [provideRouter([]), provideTranslateService()],
@@ -83,9 +81,7 @@ describe('ProjectContextComponent', () => {
     expect(element.querySelectorAll('.chip')).toHaveLength(0);
   });
 
-  it('sauvegarde le contexte puis passe à l\'étape suivante', async () => {
-    await setup();
-
+  function fillForm(): void {
     input('ageRange-9-11').click();
     input('performanceSpace-exterieur').click();
     type('country', 'France');
@@ -94,18 +90,54 @@ describe('ProjectContextComponent', () => {
     type('theme', 'Nature et environnement');
     // Un mot-clé saisi sans Entrée est tout de même conservé.
     type('ingredient', 'la mer');
+  }
+
+  const FILLED_CONTEXT: ProjectContext = {
+    ageRange: '9-11',
+    country: 'France',
+    region: 'Bretagne',
+    city: 'Brest',
+    theme: 'Nature et environnement',
+    secretIngredients: ['la mer'],
+    performanceSpace: 'exterieur',
+  };
+
+  it('nouveau conte : le crée puis passe à l\'étape suivante, sous son identifiant', async () => {
+    await setup();
+    const createTale = vi.spyOn(draftService, 'createTale').mockResolvedValue('t1');
+    fillForm();
+
+    clickNext();
+    await fixture.whenStable();
+
+    expect(createTale).toHaveBeenCalledWith(FILLED_CONTEXT);
+    expect(router.navigate).toHaveBeenCalledWith(['/create-danced-tale', 't1', 'discovery']);
+  });
+
+  it('nouveau conte : reste sur l\'écran et explique pourquoi s\'il n\'a pas pu être créé', async () => {
+    await setup();
+    vi.spyOn(draftService, 'createTale').mockRejectedValue({ kind: 'network', status: 0, message: 'Hors ligne' });
+    fillForm();
+
+    clickNext();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(router.navigate).not.toHaveBeenCalled();
+    expect(element.querySelector('#create-error')!.textContent).toContain('createDancedTale.context.createError');
+  });
+
+  it('conte existant : sauvegarde le contexte puis passe à l\'étape suivante', async () => {
+    await setup();
+    vi.spyOn(draftService, 'taleId').mockReturnValue('t1');
+    const saveContext = vi.spyOn(draftService, 'saveContext').mockResolvedValue(true);
+    const createTale = vi.spyOn(draftService, 'createTale');
+    fillForm();
 
     clickNext();
 
-    expect(draftService.context()).toEqual({
-      ageRange: '9-11',
-      country: 'France',
-      region: 'Bretagne',
-      city: 'Brest',
-      theme: 'Nature et environnement',
-      secretIngredients: ['la mer'],
-      performanceSpace: 'exterieur',
-    });
+    expect(saveContext).toHaveBeenCalledWith(FILLED_CONTEXT);
+    expect(createTale).not.toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['../discovery'], expect.anything());
   });
 

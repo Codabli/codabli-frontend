@@ -4,6 +4,8 @@ import { PerformanceSpace } from '@models/types/performance-space.type';
 import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 export const SECRET_INGREDIENT_MAX_LENGTH = 40;
+/** Limite du backend (`ParcoursContexteRequest`). */
+export const SECRET_INGREDIENTS_MAX_COUNT = 20;
 
 // Validators.required accepte une chaîne composée d'espaces.
 export function requiredText(control: AbstractControl<string>): ValidationErrors | null {
@@ -36,8 +38,8 @@ export class ProjectContextForm extends FormGroup<{
   }
 
   /**
-   * Ajoute une puce. Retourne false si le mot-clé est vide ou déjà présent
-   * (comparaison insensible à la casse).
+   * Ajoute une puce. Retourne false si le mot-clé est vide, déjà présent
+   * (comparaison insensible à la casse) ou si la limite de puces est atteinte.
    */
   addSecretIngredient(rawValue: string): boolean {
     const ingredient = rawValue.trim().slice(0, SECRET_INGREDIENT_MAX_LENGTH);
@@ -45,6 +47,7 @@ export class ProjectContextForm extends FormGroup<{
 
     if (
       !ingredient ||
+      ingredients.length >= SECRET_INGREDIENTS_MAX_COUNT ||
       ingredients.some((existing) => existing.toLowerCase() === ingredient.toLowerCase())
     ) {
       return false;

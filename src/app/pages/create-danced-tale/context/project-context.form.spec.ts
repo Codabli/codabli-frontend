@@ -1,4 +1,4 @@
-import { ProjectContextForm, SECRET_INGREDIENT_MAX_LENGTH } from './project-context.form';
+import { ProjectContextForm, SECRET_INGREDIENT_MAX_LENGTH, SECRET_INGREDIENTS_MAX_COUNT } from './project-context.form';
 import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 describe('ProjectContextForm', () => {
@@ -56,6 +56,15 @@ describe('ProjectContextForm', () => {
       expect(form.controls.secretIngredients.value[0]).toHaveLength(SECRET_INGREDIENT_MAX_LENGTH);
     });
 
+    it('refuse un mot-clé au-delà de la limite du backend', () => {
+      for (let i = 0; i < SECRET_INGREDIENTS_MAX_COUNT; i++) {
+        form.addSecretIngredient(`mot ${i}`);
+      }
+
+      expect(form.addSecretIngredient('un de trop')).toBe(false);
+      expect(form.controls.secretIngredients.value).toHaveLength(SECRET_INGREDIENTS_MAX_COUNT);
+    });
+
     it('retire un mot-clé par son index', () => {
       form.addSecretIngredient('châteaux forts');
       form.addSecretIngredient('dragons');
@@ -84,7 +93,7 @@ describe('ProjectContextForm', () => {
     expect(form.toProjectContext()).toEqual(context);
   });
 
-  describe('brouillon d\'une version précédente (localStorage)', () => {
+  describe('contexte incomplet (enregistré par une version précédente)', () => {
     it('reprend les champs présents et laisse les autres à leur valeur par défaut', () => {
       // Brouillon d'une version précédente : ni ingrédients, ni espace, ni ville.
       const ancienBrouillon = { ageRange: '6-8', country: 'France', region: 'Bretagne', theme: 'Nature' };

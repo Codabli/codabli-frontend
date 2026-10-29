@@ -25,8 +25,6 @@ describe('CreateDancedTaleComponent : frise des étapes', () => {
   let harness: RouterTestingHarness;
 
   async function setup(url: string, draft: { context?: boolean; structure?: boolean } = {}): Promise<void> {
-    localStorage.clear();
-
     TestBed.configureTestingModule({
       providers: [
         provideTranslateService(),
@@ -34,16 +32,21 @@ describe('CreateDancedTaleComponent : frise des étapes', () => {
           {
             path: 'create-danced-tale',
             component: CreateDancedTaleComponent,
-            children: CREATE_DANCED_TALE_STEPS.map((step) => ({
-              path: step.path,
-              component: DummyComponent,
-              canActivate:
-                step.requires === 'structure'
-                  ? [requireTaleStructure]
-                  : step.requires === 'context'
-                    ? [requireProjectContext]
-                    : [],
-            })),
+            children: [
+              {
+                path: ':taleId',
+                children: CREATE_DANCED_TALE_STEPS.map((step) => ({
+                  path: step.path,
+                  component: DummyComponent,
+                  canActivate:
+                    step.requires === 'structure'
+                      ? [requireTaleStructure]
+                      : step.requires === 'context'
+                        ? [requireProjectContext]
+                        : [],
+                })),
+              },
+            ],
           },
         ]),
       ],
@@ -58,6 +61,8 @@ describe('CreateDancedTaleComponent : frise des étapes', () => {
         steps: [{ id: 's1', kind: 'initialSituation', title: 'Départ', summary: '', characterIds: [] }],
       });
     }
+    // Conte ouvert (après l'état ci-dessus, enregistré sans backend).
+    vi.spyOn(draftService, 'taleId').mockReturnValue('t1');
 
     harness = await RouterTestingHarness.create(url);
   }
@@ -72,22 +77,22 @@ describe('CreateDancedTaleComponent : frise des étapes', () => {
   }
 
   it('sans contexte, seule l\'étape en cours est affichée, sans lien', async () => {
-    await setup('/create-danced-tale/context');
+    await setup('/create-danced-tale/t1/context');
 
     expect(links()).toEqual([null, null, null, null, null, null, null, null]);
     expect(items()[0].querySelector('[aria-current="step"]')).not.toBeNull();
   });
 
   it('avec un contexte, les écrans 1 à 6 sont accessibles depuis la frise', async () => {
-    await setup('/create-danced-tale/universe', { context: true });
+    await setup('/create-danced-tale/t1/universe', { context: true });
 
     expect(links()).toEqual([
-      '/create-danced-tale/context',
-      '/create-danced-tale/discovery',
-      '/create-danced-tale/resources',
-      '/create-danced-tale/class-resources',
+      '/create-danced-tale/t1/context',
+      '/create-danced-tale/t1/discovery',
+      '/create-danced-tale/t1/resources',
+      '/create-danced-tale/t1/class-resources',
       null,
-      '/create-danced-tale/structure',
+      '/create-danced-tale/t1/structure',
       null,
       null,
     ]);
@@ -95,18 +100,18 @@ describe('CreateDancedTaleComponent : frise des étapes', () => {
   });
 
   it('avec une trame, l\'écriture et la scénographie s\'ouvrent aussi', async () => {
-    await setup('/create-danced-tale/context', { context: true, structure: true });
+    await setup('/create-danced-tale/t1/context', { context: true, structure: true });
 
-    expect(links().slice(6)).toEqual(['/create-danced-tale/writing', '/create-danced-tale/staging']);
+    expect(links().slice(6)).toEqual(['/create-danced-tale/t1/writing', '/create-danced-tale/t1/staging']);
   });
 
   it('un clic sur une étape ouvre l\'écran correspondant', async () => {
-    await setup('/create-danced-tale/discovery', { context: true });
+    await setup('/create-danced-tale/t1/discovery', { context: true });
 
     items()[5].querySelector('a')!.click();
     await harness.fixture.whenStable();
 
-    expect(TestBed.inject(Router).url).toBe('/create-danced-tale/structure');
+    expect(TestBed.inject(Router).url).toBe('/create-danced-tale/t1/structure');
     expect(items()[5].querySelector('a')).toBeNull();
     expect(items()[1].querySelector('a')).not.toBeNull();
   });

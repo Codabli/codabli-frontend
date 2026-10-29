@@ -40,6 +40,26 @@
       grid-column: 2 / span 10;
     }
   }
+
+  // Enregistrement ou ouverture du conte en échec : visible sur tous les écrans du parcours.
+  &__alert {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-md);
+    font-size: 18px;
+    background-color: var(--color-bg-navigation);
+    border: 2px solid var(--color-text-outline-default);
+    border-radius: 12px;
+
+    p {
+      flex: 1;
+      min-width: 200px;
+      margin: 0;
+    }
+  }
 }
 
 .stepper {

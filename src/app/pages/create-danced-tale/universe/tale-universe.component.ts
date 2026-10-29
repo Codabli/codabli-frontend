@@ -56,7 +56,6 @@ export class TaleUniverseComponent {
   protected readonly theme = this.draftService.context()?.theme ?? '';
   protected readonly form = new TaleUniverseForm();
   protected readonly submitted = signal(false);
-  protected readonly storageFull = signal(false);
 
   /** Erreur d'image par identifiant de carte. */
   protected readonly imageErrors = signal<Record<string, ImageResizeErrorKind>>({});
@@ -148,13 +147,8 @@ export class TaleUniverseComponent {
       return;
     }
 
-    if (!this.draftService.saveUniverse(this.form.toTaleUniverse())) {
-      this.storageFull.set(true);
-      this.focus('#storage-error');
-      return;
-    }
-
-    this.storageFull.set(false);
+    // Un échec d'enregistrement est signalé par le parcours, qui propose de réessayer.
+    this.draftService.saveUniverse(this.form.toTaleUniverse());
     this.router.navigate(['../structure'], { relativeTo: this.route });
   }
 

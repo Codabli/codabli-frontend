@@ -9,8 +9,6 @@ describe('DanceLibrary', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [DanceLibrary],
       providers: [provideTranslateService()],

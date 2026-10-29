@@ -15,8 +15,6 @@ describe('TaleWritingComponent', () => {
   let draftService: CreateDancedTaleDraftService;
 
   async function setup(writing?: TaleWriting): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [TaleWritingComponent],
       providers: [provideRouter([]), provideTranslateService()],
@@ -108,7 +106,7 @@ describe('TaleWritingComponent', () => {
     write('<p>Il était une fois</p>');
     expect(draftService.writing()).toBeNull();
 
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
     fixture.detectChanges();
 
     expect(draftService.writing()).toEqual({ title: '', texts: { s1: '<p>Il était une fois</p>' } });
@@ -123,7 +121,7 @@ describe('TaleWritingComponent', () => {
 
     title.value = '  Arthur et l\'épée  ';
     title.dispatchEvent(new Event('input'));
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
 
     expect(draftService.writing()!.title).toBe('Arthur et l\'épée');
   });
@@ -141,10 +139,10 @@ describe('TaleWritingComponent', () => {
   it('signale une sauvegarde impossible', async () => {
     await setup();
     vi.useFakeTimers();
-    vi.spyOn(draftService, 'saveWriting').mockReturnValue(false);
+    vi.spyOn(draftService, 'saveWriting').mockResolvedValue(false);
 
     write('<p>Texte</p>');
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
     fixture.detectChanges();
 
     expect(element.querySelector('.autosave--error')).not.toBeNull();

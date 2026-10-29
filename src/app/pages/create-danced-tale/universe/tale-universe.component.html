@@ -317,17 +317,6 @@
     </section>
   }
 
-  @if (storageFull()) {
-    <p
-      id="storage-error"
-      class="form-error tale-universe__storage-error"
-      role="alert"
-      tabindex="-1"
-    >
-      {{ 'createDancedTale.universe.storageFull' | translate }}
-    </p>
-  }
-
   <div class="tale-universe__actions">
     <app-button
       variant="secondary"

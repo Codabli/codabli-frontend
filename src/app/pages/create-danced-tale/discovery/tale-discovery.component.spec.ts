@@ -14,8 +14,6 @@ describe('TaleDiscoveryComponent', () => {
   let draftService: CreateDancedTaleDraftService;
 
   async function setup(ageRange: AgeRange = '6-8', discovery?: TaleDiscovery): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [TaleDiscoveryComponent],
       providers: [provideRouter([]), provideTranslateService()],

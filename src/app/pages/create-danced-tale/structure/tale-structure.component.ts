@@ -58,7 +58,6 @@ export class TaleStructureComponent {
   protected readonly submitted = signal(false);
   /** Étapes essentielles vides signalées : un second clic sur « Étape suivante » confirme. */
   protected readonly emptyStepsAlert = signal(false);
-  protected readonly storageFull = signal(false);
   /** Message lu par les lecteurs d'écran après un déplacement ou une suppression. */
   protected readonly announcement = signal('');
 
@@ -209,14 +208,9 @@ export class TaleStructureComponent {
   }
 
   private saveAndContinue(): void {
+    // Un échec d'enregistrement est signalé par le parcours, qui propose de réessayer.
     this.autosave.flush();
-    if (!this.draftService.saveStructure(this.form.toTaleStructure())) {
-      this.storageFull.set(true);
-      this.focus('#storage-error');
-      return;
-    }
-
-    this.storageFull.set(false);
+    this.draftService.saveStructure(this.form.toTaleStructure());
     this.router.navigate(['../writing'], { relativeTo: this.route });
   }
 

@@ -1,12 +1,18 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { ProjectContext } from '../../models/interfaces/project-context.interface';
-import { TaleStaging } from '../../models/interfaces/tale-staging.interface';
-import { TaleStructure } from '../../models/interfaces/tale-structure.interface';
-import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
-import { TaleWriting } from '../../models/interfaces/tale-writing.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleClassResources } from '@models/interfaces/tale-class-resources.interface';
+import { TaleDiscovery } from '@models/interfaces/tale-discovery.interface';
+import { TaleResources } from '@models/interfaces/tale-resources.interface';
+import { TaleStaging } from '@models/interfaces/tale-staging.interface';
+import { TaleStructure } from '@models/interfaces/tale-structure.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
+import { TaleWriting } from '@models/interfaces/tale-writing.interface';
 
 export interface CreateDancedTaleDraft {
   context: ProjectContext | null;
+  discovery: TaleDiscovery | null;
+  resources: TaleResources | null;
+  classResources: TaleClassResources | null;
   universe: TaleUniverse | null;
   structure: TaleStructure | null;
   writing: TaleWriting | null;
@@ -17,6 +23,9 @@ export const CREATE_DANCED_TALE_DRAFT_KEY = 'codabli.createDancedTale.draft';
 
 const EMPTY_DRAFT: CreateDancedTaleDraft = {
   context: null,
+  discovery: null,
+  resources: null,
+  classResources: null,
   universe: null,
   structure: null,
   writing: null,
@@ -34,6 +43,9 @@ export class CreateDancedTaleDraftService {
   private readonly draft = signal<CreateDancedTaleDraft>(this.restore());
 
   readonly context = computed(() => this.draft().context);
+  readonly discovery = computed(() => this.draft().discovery);
+  readonly resources = computed(() => this.draft().resources);
+  readonly classResources = computed(() => this.draft().classResources);
   readonly universe = computed(() => this.draft().universe);
   readonly structure = computed(() => this.draft().structure);
   readonly writing = computed(() => this.draft().writing);
@@ -42,6 +54,21 @@ export class CreateDancedTaleDraftService {
   saveContext(context: ProjectContext): void {
     this.draft.update((draft) => ({ ...draft, context }));
     this.persist();
+  }
+
+  saveDiscovery(discovery: TaleDiscovery): boolean {
+    this.draft.update((draft) => ({ ...draft, discovery }));
+    return this.persist();
+  }
+
+  saveResources(resources: TaleResources): boolean {
+    this.draft.update((draft) => ({ ...draft, resources }));
+    return this.persist();
+  }
+
+  saveClassResources(classResources: TaleClassResources): boolean {
+    this.draft.update((draft) => ({ ...draft, classResources }));
+    return this.persist();
   }
 
   /**
@@ -93,10 +120,13 @@ export class CreateDancedTaleDraftService {
       const stored = localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY);
 
       if (stored) {
-        // Les brouillons enregistrés avant les écrans 5 à 8 n'ont pas tous les champs.
+        // Les brouillons enregistrés par une version antérieure du parcours n'ont pas tous les champs.
         const parsed = JSON.parse(stored) as Partial<CreateDancedTaleDraft>;
         return {
           context: parsed.context ?? null,
+          discovery: parsed.discovery ?? null,
+          resources: parsed.resources ?? null,
+          classResources: parsed.classResources ?? null,
           universe: parsed.universe ?? null,
           structure: parsed.structure ?? null,
           writing: parsed.writing ?? null,

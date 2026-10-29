@@ -3,8 +3,8 @@ import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleStagingComponent } from './tale-staging.component';
 import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { TaleStaging } from '../../../models/interfaces/tale-staging.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { TaleStaging } from '@models/interfaces/tale-staging.interface';
 
 // Le premier rendu de l'écran (scènes, danses, plateau) dépasse parfois 5 s quand toute la suite tourne.
 describe('TaleStagingComponent', { timeout: 15000 }, () => {

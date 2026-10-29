@@ -4,7 +4,7 @@ import {
   TaleUniverse,
   UniverseCard,
   UniverseSection,
-} from '../../../models/interfaces/tale-universe.interface';
+} from '@models/interfaces/tale-universe.interface';
 import { requiredText } from '../context/project-context.form';
 import { newId } from '../new-id';
 

@@ -1,7 +1,7 @@
 import { CDK_DRAG_PARENT, CDK_DROP_LIST, CdkDrag, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { StageElementKind, StagePlacement } from '../../../../models/interfaces/tale-staging.interface';
+import { StageElementKind, StagePlacement } from '@models/interfaces/tale-staging.interface';
 
 /** Élément à placer : un personnage présent dans la scène ou un de ses décors. */
 export interface StageElement {

@@ -22,4 +22,14 @@ export class TaleCardComponent {
   readonly consult = output<void>();
   readonly adopt = output<void>();
   readonly login = output<void>();
+
+  protected getLanguageName(code: string): string {
+  const languageNames = new Intl.DisplayNames(['fr'], {
+    type: 'language',
+  });
+
+  const name = languageNames.of(code) ?? code;
+
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
 }

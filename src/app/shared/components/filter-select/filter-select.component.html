@@ -6,7 +6,7 @@
     (click)="toggle()"
   >
     <span class="filter-select__placeholder">
-      {{ placeholder() }}
+      {{ selectedLabel() }}
     </span>
 
     <app-icon
@@ -23,6 +23,8 @@
         <button
           type="button"
           class="filter-select__option"
+          [attr.aria-pressed]="selectedValue() === option.value"
+          (click)="selectOption(option.value)"
         >
           {{ option.label }}
         </button>

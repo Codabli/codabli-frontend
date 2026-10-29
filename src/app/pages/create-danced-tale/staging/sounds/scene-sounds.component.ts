@@ -1,6 +1,6 @@
 import { Component, DestroyRef, ElementRef, effect, inject, input, output, signal } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AudioFileStore } from '../../../../core/services/audio-file-store.service';
+import { AudioFileStore } from '@core/services/audio-file-store.service';
 import {
   DANCE_MOMENTS,
   DanceMoment,
@@ -8,7 +8,7 @@ import {
   SceneDance,
   SceneSound,
   SoundKind,
-} from '../../../../models/interfaces/tale-staging.interface';
+} from '@models/interfaces/tale-staging.interface';
 import { newId } from '../../new-id';
 
 /** Taille maximale d'un fichier audio importé. */

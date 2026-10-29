@@ -3,8 +3,8 @@ import {
   CREATE_DANCED_TALE_DRAFT_KEY,
   CreateDancedTaleDraftService,
 } from './create-danced-tale-draft.service';
-import { ProjectContext } from '../../models/interfaces/project-context.interface';
-import { TaleUniverse } from '../../models/interfaces/tale-universe.interface';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
+import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 
 const CONTEXT: ProjectContext = {
   ageRange: '6-8',
@@ -47,6 +47,9 @@ describe('CreateDancedTaleDraftService', () => {
     expect(service.context()).toEqual(CONTEXT);
     expect(JSON.parse(localStorage.getItem(CREATE_DANCED_TALE_DRAFT_KEY)!)).toEqual({
       context: CONTEXT,
+      discovery: null,
+      resources: null,
+      classResources: null,
       universe: null,
       structure: null,
       writing: null,
@@ -61,6 +64,50 @@ describe('CreateDancedTaleDraftService', () => {
 
     expect(service.context()).toEqual(CONTEXT);
     expect(service.universe()).toBeNull();
+    expect(service.discovery()).toBeNull();
+    expect(service.resources()).toBeNull();
+    expect(service.classResources()).toBeNull();
+  });
+
+  it('enregistre les ressources de la classe', () => {
+    createService().saveContext(CONTEXT);
+    const classResources = {
+      items: [
+        {
+          id: 'r1',
+          kind: 'link' as const,
+          name: 'Vidéo',
+          addedAt: '2026-10-12T10:00:00.000Z',
+          visibility: 'private' as const,
+          url: 'https://example.org',
+        },
+      ],
+    };
+
+    expect(createService().saveClassResources(classResources)).toBe(true);
+
+    expect(createService().classResources()).toEqual(classResources);
+  });
+
+  it('enregistre les ressources culturelles ajoutées au projet', () => {
+    createService().saveContext(CONTEXT);
+
+    expect(createService().saveResources({ added: ['chambord'] })).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.resources()).toEqual({ added: ['chambord'] });
+  });
+
+  it('enregistre la découverte artistique sans perdre le contexte', () => {
+    createService().saveContext(CONTEXT);
+    const discovery = { added: ['mirror'], done: ['mirror'], favorites: [] };
+
+    expect(createService().saveDiscovery(discovery)).toBe(true);
+
+    const restored = createService();
+    expect(restored.context()).toEqual(CONTEXT);
+    expect(restored.discovery()).toEqual(discovery);
   });
 
   it('enregistre l\'univers sans perdre le contexte', () => {

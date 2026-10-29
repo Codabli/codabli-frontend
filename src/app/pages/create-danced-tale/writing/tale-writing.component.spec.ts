@@ -4,9 +4,9 @@ import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleWritingComponent } from './tale-writing.component';
 import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
-import { RichTextEditor } from '../../../shared/components/rich-text-editor/rich-text-editor.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { TaleWriting } from '../../../models/interfaces/tale-writing.interface';
+import { RichTextEditor } from '@shared/components/rich-text-editor/rich-text-editor.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { TaleWriting } from '@models/interfaces/tale-writing.interface';
 
 describe('TaleWritingComponent', () => {
   let fixture: ComponentFixture<TaleWritingComponent>;

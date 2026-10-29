@@ -5,15 +5,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { filter, take } from 'rxjs';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { Autosave } from '../autosave/autosave';
 import { AutosaveStatus } from '../autosave/autosave-status.component';
 import {
   DEFAULT_STORY_STEPS,
   StoryStepKind,
   YOUNG_CHILDREN_STORY_STEPS,
-} from '../../../models/interfaces/tale-structure.interface';
+} from '@models/interfaces/tale-structure.interface';
 import {
   STEP_SUMMARY_MAX_LENGTH,
   STEP_TITLE_MAX_LENGTH,

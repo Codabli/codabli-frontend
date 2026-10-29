@@ -1,4 +1,4 @@
-import { DEFAULT_STORY_STEPS, TaleStructure } from '../../../models/interfaces/tale-structure.interface';
+import { DEFAULT_STORY_STEPS, TaleStructure } from '@models/interfaces/tale-structure.interface';
 import { StoryStepForm, TaleStructureForm } from './tale-structure.form';
 
 const TITLES: Record<string, string> = {

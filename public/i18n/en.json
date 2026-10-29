@@ -49,6 +49,10 @@
       "submit": "Send my request"
     }
   },
+  "modal": {
+    "close": "Close"
+  },
+
   "richTextEditor": {
     "title": "Heading",
     "subtitle": "Subheading",
@@ -81,10 +85,326 @@
       "staging": "Adaptation and staging"
     },
 
-    "comingSoon": {
-      "message": "Your answers are saved. This step will be available soon.",
-      "back": "Back to the “{{step}}” step",
-      "next": "Continue to the “{{step}}” step"
+    "discovery": {
+      "title": "Discovering dance and theatre",
+      "description": "Before writing, bring the theme to life with the body: videos, music, worksheets and pictures to explore movement, improvisation and stage design.",
+      "ageNote": "Resources suited to {{range}} year-olds, the age range chosen in step 1.",
+      "disciplines": {
+        "title": "Categories",
+        "all": "All",
+        "dance": "Dance",
+        "theatre": "Theatre",
+        "music": "Music",
+        "scenography": "Stage design"
+      },
+      "benefits": {
+        "title": "Why include it?",
+        "emotions": "Encourages expressing emotions and empathy.",
+        "group": "Strengthens group cohesion and listening.",
+        "imagination": "Sparks imagination through the body."
+      },
+      "catalogTitle": "Recommended resources",
+      "filters": {
+        "search": "Search for a resource",
+        "searchPlaceholder": "E.g. improvisation",
+        "format": "Format",
+        "allFormats": "All formats",
+        "duration": "Activity length",
+        "allDurations": "Any length",
+        "reset": "Clear filters"
+      },
+      "formats": {
+        "video": "Video",
+        "audio": "Audio",
+        "pdf": "PDF worksheet",
+        "image": "Image"
+      },
+      "durations": {
+        "short": "10 min or less",
+        "medium": "11 to 20 min",
+        "long": "Over 20 min"
+      },
+      "minutes": "{{count}} min",
+      "ages": "{{ranges}} years old",
+      "count": "{{count}} resource(s)",
+      "empty": "No resource matches these filters.",
+      "addedCount": "{{count}} discovery resource(s) added to the project",
+      "actions": {
+        "view": "View",
+        "viewLabel": "View \"{{title}}\"",
+        "add": "Add to project",
+        "addedState": "Added to project",
+        "addLabel": "Add \"{{title}}\" to the project",
+        "done": "Done",
+        "doneState": "Done",
+        "favorite": "Favourite",
+        "favoriteLabel": "Add \"{{title}}\" to favourites"
+      },
+      "announce": {
+        "added": {
+          "on": "\"{{title}}\" was added to the project.",
+          "off": "\"{{title}}\" was removed from the project."
+        },
+        "done": {
+          "on": "\"{{title}}\" is marked as done.",
+          "off": "\"{{title}}\" is no longer marked as done."
+        },
+        "favorites": {
+          "on": "\"{{title}}\" was added to favourites.",
+          "off": "\"{{title}}\" was removed from favourites."
+        }
+      },
+      "detail": {
+        "activity": "Suggested activity",
+        "instrumental": "Instrumental music, no lyrics.",
+        "openPdf": "Open the PDF worksheet",
+        "newTab": "(opens in a new tab)"
+      },
+      "catalog": {
+        "serpentineAnnabelle": {
+          "title": "Annabelle's serpentine dance",
+          "description": "One of the very first dance films (1894): the dancer swirls her dress like wings.",
+          "activity": "Watch the film, then each child takes a scarf and invents their own serpentine dance: spin, ripple, take flight."
+        },
+        "serpentineLumiere": {
+          "title": "The dance of the veils",
+          "description": "A dancer filmed by the Lumière brothers creates shapes with large veils.",
+          "activity": "In pairs, one moves a piece of fabric and the other mirrors it with their whole body. Then swap roles."
+        },
+        "animalWakeUp": {
+          "title": "Animal body warm-up",
+          "description": "A step-by-step worksheet to warm up the class by moving like different animals.",
+          "activity": "Follow the six steps of the worksheet, from the stretching cat to the resting tortoise."
+        },
+        "blueDancers": {
+          "title": "Dancers' poses",
+          "description": "Edgar Degas' Blue Dancers: observe the dancers' gestures and postures.",
+          "activity": "Each child picks a dancer from the painting and copies her pose. The others guess which one."
+        },
+        "pierrotMime": {
+          "title": "Pierrot's mime",
+          "description": "Pierrot, a theatre character painted by Watteau: telling a story without a word.",
+          "activity": "In silence, mime one of Pierrot's emotions (joy, surprise, sadness): the class has to recognise it."
+        },
+        "livingStatues": {
+          "title": "Statues coming to life",
+          "description": "Slow music (Erik Satie's Gymnopédie No. 1) for a drama improvisation exercise.",
+          "activity": "The children are statues. While the music plays, they slowly come to life; when it stops, they freeze."
+        },
+        "swanImprovisation": {
+          "title": "Dancing like a swan",
+          "description": "The Swan by Camille Saint-Saëns, from The Carnival of the Animals.",
+          "activity": "Listen to the music with your eyes closed, then dance the swan gliding on the water, with wide, gentle movements."
+        },
+        "operaOrchestra": {
+          "title": "The orchestra musicians",
+          "description": "Edgar Degas' The Orchestra at the Opera: the musicians who accompany the dance.",
+          "activity": "Spot the instruments in the painting, then invent a body percussion rhythm to accompany a dance."
+        },
+        "setDesign": {
+          "title": "Drawing a stage set",
+          "description": "A set design by Philippe Chaperon for the opera: columns, light and depth.",
+          "activity": "Draw the set for a scene of your tale, thinking about what is at the front, middle and back of the stage."
+        },
+        "lightAndVeils": {
+          "title": "Light and costumes",
+          "description": "How a simple piece of fabric and light turn the dancer's body into a landscape.",
+          "activity": "With a torch and some fabric, look for shadows and shapes to use in your staging."
+        }
+      }
+    },
+    "credit": "{{author}}, {{date}} · {{licence}}",
+    "creditSource": "View source",
+
+    "resources": {
+      "title": "Your recommended cultural resources",
+      "theme": "Suggestions for your tale on the theme",
+      "description": "Artworks, heritage sites and characters to feed the class's imagination. Each resource shows where it comes from and why it is suggested.",
+      "tabsLabel": "Resource categories",
+      "tabs": {
+        "places": "Places",
+        "characters": "Characters",
+        "events": "Events",
+        "artworks": "Artworks",
+        "tales": "Tales",
+        "nearby": "To discover near your school"
+      },
+      "categories": {
+        "places": "Place",
+        "characters": "Character",
+        "events": "Event",
+        "artworks": "Artwork",
+        "tales": "Tale"
+      },
+      "provenances": {
+        "codabli": "Codabli® source",
+        "localHeritage": "Local heritage",
+        "ai": "AI suggestion"
+      },
+      "nearbyBadge": "Near you",
+      "nearbyHint": "Resources located near your school ({{place}}).",
+      "empty": "No resources in this category yet.",
+      "emptyNearby": "No resources listed near your school yet. The other tabs are still available.",
+      "addedCount": "{{count}} cultural resource(s) added to the project",
+      "actions": {
+        "details": "View details",
+        "detailsLabel": "View details of \"{{title}}\"",
+        "add": "Add to project",
+        "addedState": "Added to project",
+        "addLabel": "Add \"{{title}}\" to the project"
+      },
+      "announce": {
+        "added": "\"{{title}}\" was added to the project.",
+        "removed": "\"{{title}}\" was removed from the project."
+      },
+      "detail": {
+        "why": "Why this recommendation?",
+        "themeMatch": "It echoes your theme \"{{theme}}\".",
+        "nearbyMatch": "It is near your school ({{place}}): a class trip may be possible.",
+        "aiWarning": "Automatically suggested: check that it suits your project before using it."
+      },
+      "catalog": {
+        "chambord": {
+          "title": "Château de Chambord",
+          "description": "A majestic Renaissance castle, ideal as the setting for a king's palace.",
+          "reason": "Its famous double-helix staircase and village-like rooftops inspire movements and encounters on stage."
+        },
+        "montSaintMichel": {
+          "title": "Mont-Saint-Michel",
+          "description": "An abbey perched on a rock, surrounded by the sea at high tide.",
+          "reason": "A place between land and sea, perfect for imagining a crossing or a quest, and for dancing the movement of the tides."
+        },
+        "broceliande": {
+          "title": "Brocéliande Forest",
+          "description": "The Paimpont forest, linked in legend to Merlin, the fairy Viviane and the Knights of the Round Table.",
+          "reason": "A legendary forest for mysterious encounters: trees and ferns become characters to dance."
+        },
+        "kingArthur": {
+          "title": "King Arthur",
+          "description": "The legendary king who pulled the sword from the stone and gathered the Knights of the Round Table.",
+          "reason": "A central hero of medieval legends, who can be a fair king, a mentor or a hero on a quest."
+        },
+        "joanOfArc": {
+          "title": "Joan of Arc",
+          "description": "A young girl from Lorraine who became a war leader and freed Orléans in 1429.",
+          "reason": "A brave historical figure, to talk about determination and dance the momentum of a group."
+        },
+        "morganLeFay": {
+          "title": "Morgan le Fay",
+          "description": "A powerful sorceress of the Arthurian legends, sometimes an ally, sometimes an enemy.",
+          "reason": "A magical, ambiguous character who opens a discussion about allies and antagonists."
+        },
+        "moulinGalette": {
+          "title": "Dance at the Moulin de la Galette",
+          "description": "A popular dance in Montmartre painted by Renoir: people dance in the sun with friends.",
+          "reason": "A neighbourhood party full of movement, to imagine the ball or the final celebration of the tale."
+        },
+        "federationFestival": {
+          "title": "The Festival of the Federation",
+          "description": "On 14 July 1790, a huge celebration brought crowds together on the Champ-de-Mars in Paris.",
+          "reason": "A great historical gathering to work on crowd movements and group scenes."
+        },
+        "degasDanceClass": {
+          "title": "The Dance Class",
+          "description": "Edgar Degas paints the young dancers of the Opéra during a lesson.",
+          "reason": "To observe classical dance postures and compare them with the class's own movements."
+        },
+        "bayeuxTapestry": {
+          "title": "The Bayeux Tapestry",
+          "description": "An embroidery nearly 70 metres long that tells a story in pictures, scene after scene.",
+          "reason": "It splits a story into successive scenes, just like the danced tale: a model for your plot."
+        },
+        "pierrotWatteau": {
+          "title": "Pierrot, by Watteau",
+          "description": "Pierrot, a character from Italian comedy, standing before the audience in his white costume.",
+          "reason": "A silent, expressive theatre character, to work on mime and wordless emotions."
+        },
+        "redRidingHood": {
+          "title": "Little Red Riding Hood",
+          "description": "Charles Perrault's tale, illustrated by Gustave Doré.",
+          "reason": "A tale everyone knows, to spot the structure of a story and reinvent the meeting with the wolf."
+        },
+        "pussInBoots": {
+          "title": "Puss in Boots",
+          "description": "A cunning cat helps his master become a marquis, in Perrault's tale illustrated by Doré.",
+          "reason": "A clever, energetic character, with a castle and an ogre: plenty to invent lively scenes."
+        },
+        "cinderella": {
+          "title": "Cinderella",
+          "description": "Perrault's tale, from the palace ball to the glass slipper, illustrated by Doré.",
+          "reason": "A tale where dance is at the heart of the story: the ball scene can become a highlight of the show."
+        }
+      }
+    },
+
+    "classResources": {
+      "title": "Your class's resources",
+      "description": "Add the class's own creations and documents to the project: scanned drawings, texts, photos, recordings, or links to external resources.",
+      "privateNote": "Your uploads are private: only you can see them.",
+      "storageFull": "This browser's storage is full: your latest changes are not saved. Delete some documents to free up space.",
+      "upload": {
+        "title": "Upload files",
+        "rights": "I confirm I hold the rights to use the uploaded files for teaching (pupils' work with their families' consent, royalty-free documents or documents I created).",
+        "required": "(required)",
+        "rightsError": "Tick the usage rights statement before uploading files.",
+        "drop": "Drag your files here, or",
+        "choose": "Choose files",
+        "format": "{{extensions}} up to {{size}} MB",
+        "errors": {
+          "format": "\"{{fileName}}\" is not in an accepted format (PDF, PNG, JPEG, MP3 or MP4).",
+          "tooLarge": "\"{{fileName}}\" is larger than the maximum size allowed for this format.",
+          "storage": "\"{{fileName}}\" could not be saved: this browser's storage is unavailable or full."
+        }
+      },
+      "link": {
+        "title": "Add a link",
+        "url": "Link",
+        "urlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "error": "Enter a full web address, starting with https://",
+        "name": "Name (optional)",
+        "namePlaceholder": "E.g. Video about castles",
+        "add": "Add link"
+      },
+      "kinds": {
+        "pdf": "PDF",
+        "image": "Image",
+        "audio": "Audio",
+        "video": "Video",
+        "link": "Link"
+      },
+      "size": {
+        "kb": "{{value}} KB",
+        "mb": "{{value}} MB"
+      },
+      "list": {
+        "title": "Uploaded documents",
+        "count": "{{files}} file(s), {{links}} link(s)",
+        "empty": "No documents yet. Class resources are optional: you can go on to the next step.",
+        "private": "Private",
+        "preview": "Preview",
+        "previewLabel": "Preview \"{{name}}\"",
+        "rename": "Rename",
+        "renameLabel": "Rename \"{{name}}\"",
+        "newName": "New name (Enter to confirm, Escape to cancel)",
+        "deleteLabel": "Delete \"{{name}}\"",
+        "missing": "File not on this device: it was uploaded from another browser or the site data was cleared."
+      },
+      "preview": {
+        "openFile": "Open in a new tab",
+        "openLink": "Open link"
+      },
+      "delete": {
+        "title": "Delete this document?",
+        "message": "\"{{name}}\" will be removed from the project. This cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete"
+      },
+      "announce": {
+        "filesAdded": "{{count}} file(s) added.",
+        "linkAdded": "The link \"{{name}}\" was added.",
+        "renamed": "Document renamed to \"{{name}}\".",
+        "deleted": "\"{{name}}\" was deleted."
+      }
     },
 
     "autosave": {
@@ -159,7 +479,8 @@
         "search": "Search",
         "searchPlaceholder": "E.g. circle",
         "listLabel": "Available dances",
-        "noResult": "No dance matches your search."
+        "noResult": "No dance matches your search.",
+        "fromDiscovery": "Your discovery (step 2)"
       },
       "format": {
         "label": "Format",
@@ -770,6 +1091,19 @@
         "third": "An open book with an illustrated bookmark",
         "fourth": "An illustrated bookmark resting on a book"
       }
+    }
+  },
+  "artGallery": {
+    "explore": "Explore fresco",
+    "next": "Go to next room",
+    "country": {
+      "LEBANON": "Lebanon",
+      "AUSTRALIA": "Australia",
+      "ITALY": "Italy",
+      "FRANCE": "France",
+      "TOGO": "Togo",
+      "BRAZIL": "Brazil",
+      "VIETNAM": "Vietnam"
     }
   },
   "footer": {

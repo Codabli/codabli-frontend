@@ -1,0 +1,202 @@
+
+.resource-screen__age {
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  align-self: flex-start;
+  padding: var(--spacing-sm) var(--spacing-md);
+
+  font-weight: var(--font-weight-semibold);
+
+  background-color: var(--color-bg-secondary-disabled);
+  border-radius: 12px;
+}
+
+// Comme la maquette : catégories à gauche, ressources à droite.
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-lg);
+  align-items: start;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(240px, 1fr) minmax(0, 3fr);
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.panel {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-surface);
+  border: 2px solid var(--color-border-light);
+  border-radius: 16px;
+
+  &__title {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin: 0 0 var(--spacing-sm);
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h6);
+    color: var(--font-color-primary);
+  }
+}
+
+.disciplines {
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 12px;
+
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: var(--color-text-primary-default);
+    text-align: left;
+
+    cursor: pointer;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 12px;
+
+    i {
+      width: 24px;
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: var(--color-bg-navigation);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-border-primary-focus);
+    }
+
+    &[aria-pressed='true'] {
+      font-weight: var(--font-weight-bold);
+      background-color: var(--color-bg-secondary-disabled);
+      border-color: var(--color-bg-secondary-default);
+    }
+  }
+
+  &__name {
+    flex: 1;
+  }
+
+  &__count {
+    min-width: 32px;
+    padding: 0 8px;
+
+    font-size: var(--font-size-body);
+    text-align: center;
+
+    background-color: var(--color-bg-navigation);
+    border-radius: var(--radius-button);
+  }
+}
+
+.benefits {
+  background-color: var(--color-bg-secondary-disabled);
+  border-color: var(--color-bg-secondary-default);
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: 0;
+    padding-left: var(--spacing-lg);
+  }
+}
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-width: 0;
+
+  &__title {
+    margin: 0;
+
+    font-family: 'Baloo 2', sans-serif;
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-h5);
+    color: var(--font-color-primary);
+  }
+
+  &__count {
+    margin: 0;
+    font-size: var(--font-size-body);
+    color: var(--color-text-muted);
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-xl);
+
+    text-align: center;
+
+    background-color: var(--color-bg-navigation);
+    border-radius: 16px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.card__done {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  font-weight: var(--font-weight-bold);
+  color: #065f46;
+}
+
+.detail__pdf {
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  align-self: flex-start;
+  min-height: 48px;
+  padding: 8px 20px;
+
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary-default);
+  text-decoration: none;
+
+  background-color: var(--color-bg-primary-default);
+  border-radius: var(--radius-button);
+
+  &:hover {
+    background-color: var(--color-bg-primary-hover);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-border-primary-focus);
+    outline-offset: 2px;
+  }
+}

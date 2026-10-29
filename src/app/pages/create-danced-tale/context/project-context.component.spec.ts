@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { ProjectContextComponent } from './project-context.component';
-import { CreateDancedTaleDraftService } from '../../../core/services/create-danced-tale-draft.service';
-import { ProjectContext } from '../../../models/interfaces/project-context.interface';
+import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ProjectContext } from '@models/interfaces/project-context.interface';
 
 describe('ProjectContextComponent', () => {
   let fixture: ComponentFixture<ProjectContextComponent>;
@@ -46,10 +46,11 @@ describe('ProjectContextComponent', () => {
     fixture.detectChanges();
   }
 
-  it('affiche les 5 tranches d\'âge et les 4 espaces de représentation', async () => {
+  it('affiche les 4 tranches d\'âge (sans 15-18 ans) et les 4 espaces de représentation', async () => {
     await setup();
 
-    expect(element.querySelectorAll('input[name="ageRange"]')).toHaveLength(5);
+    expect(element.querySelectorAll('input[name="ageRange"]')).toHaveLength(4);
+    expect(input('ageRange-15-18')).toBeNull();
     expect(element.querySelectorAll('input[name="performanceSpace"]')).toHaveLength(4);
   });
 
@@ -106,6 +107,40 @@ describe('ProjectContextComponent', () => {
       performanceSpace: 'exterieur',
     });
     expect(router.navigate).toHaveBeenCalledWith(['../discovery'], expect.anything());
+  });
+
+  it('enregistre un contexte valide quand on quitte l\'écran par la frise', async () => {
+    await setup({
+      ageRange: '12-14',
+      country: 'Belgique',
+      region: 'Wallonie',
+      city: '',
+      theme: 'Les émotions',
+      secretIngredients: [],
+      performanceSpace: null,
+    });
+    type('theme', 'Les saisons');
+
+    fixture.destroy();
+
+    expect(draftService.context()?.theme).toBe('Les saisons');
+  });
+
+  it('garde l\'ancien contexte si la saisie est invalide en quittant l\'écran', async () => {
+    await setup({
+      ageRange: '12-14',
+      country: 'Belgique',
+      region: 'Wallonie',
+      city: '',
+      theme: 'Les émotions',
+      secretIngredients: [],
+      performanceSpace: null,
+    });
+    type('region', '');
+
+    fixture.destroy();
+
+    expect(draftService.context()?.region).toBe('Wallonie');
   });
 
   it('pré-remplit le formulaire avec le brouillon enregistré', async () => {

@@ -1,5 +1,4 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '@core/services/language.service';
 import type { SubscriptionOffer } from '@models/interfaces/subscription-offer.interface';
@@ -11,7 +10,7 @@ interface Benefit {
 }
 
 @Component({
-  imports: [RouterLink, TranslatePipe, ButtonComponent],
+  imports: [TranslatePipe, ButtonComponent],
   selector: 'app-subscription-offer-card',
   styleUrl: './subscription-offer-card.component.scss',
   templateUrl: './subscription-offer-card.component.html',

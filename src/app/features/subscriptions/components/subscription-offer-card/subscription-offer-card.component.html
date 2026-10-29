@@ -28,9 +28,14 @@
   }
 
   <div class="plan-card__actions">
-    <a class="plan-card__details" [routerLink]="['/subscriptions', offer().id]">
-      {{ 'subscriptions.card.details' | translate }}
-    </a>
+    <!--
+      TODO : lien vers le détail d'une offre, désactivé tant qu'aucune page détail n'est prévue.
+      Pour le réactiver : décommenter, remettre RouterLink dans les imports du composant
+      et ajouter la route 'subscriptions/:id' dans app.routes.ts.
+      <a class="plan-card__details" [routerLink]="['/subscriptions', offer().id]">
+        {{ 'subscriptions.card.details' | translate }}
+      </a>
+    -->
 
     <app-button variant="tertiary">
       {{ 'subscriptions.card.subscribe' | translate }}

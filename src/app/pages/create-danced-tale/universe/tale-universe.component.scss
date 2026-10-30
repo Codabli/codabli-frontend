@@ -243,6 +243,13 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   flex-direction: column;
   gap: var(--spacing-sm);
 
+  &__missing {
+    margin: 0;
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-outline-default);
+  }
+
   &__preview {
     display: block;
     width: 100%;

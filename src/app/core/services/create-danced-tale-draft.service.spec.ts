@@ -23,9 +23,9 @@ const CONTEXT: ProjectContext = {
 };
 
 const UNIVERSE: TaleUniverse = {
-  places: [{ id: 'p1', name: 'La forêt', description: '', image: null }],
+  places: [{ id: 'p1', name: 'La forêt', description: '', imageId: null }],
   characters: [
-    { id: 'c1', name: 'Arthur', description: 'Un roi', image: null, role: 'Héros', goal: 'Trouver l\'épée' },
+    { id: 'c1', name: 'Arthur', description: 'Un roi', imageId: null, role: 'Héros', goal: 'Trouver l\'épée' },
   ],
   periods: [],
   objects: [],

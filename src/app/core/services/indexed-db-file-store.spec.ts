@@ -56,7 +56,7 @@ describe('stockage des fichiers dans IndexedDB', () => {
     vi.unstubAllGlobals();
   });
 
-  it('garde les fichiers audio d\'une base de la version 1 et ajoute le store des ressources de la classe', async () => {
+  it('garde les fichiers audio d\'une base de la version 1 et ajoute les stores manquants', async () => {
     const audio = new Map<string, unknown>([['son-1', 'musique']]);
     const fake = fakeIndexedDb({ version: 1, stores: { 'audio-files': audio } });
     vi.stubGlobal('indexedDB', { open: fake.open });
@@ -64,8 +64,8 @@ describe('stockage des fichiers dans IndexedDB', () => {
     const classResources = TestBed.inject(ClassResourceFileStore);
     await classResources.put('doc-1', new Blob(['dessin']));
 
-    expect(fake.open).toHaveBeenCalledWith('codabli', 2);
-    expect(Object.keys(fake.database.stores)).toEqual(['audio-files', 'class-resources']);
+    expect(fake.open).toHaveBeenCalledWith('codabli', 3);
+    expect(Object.keys(fake.database.stores)).toEqual(['audio-files', 'class-resources', 'universe-images']);
     expect(await TestBed.inject(AudioFileStore).get('son-1')).toBe('musique');
     expect(await classResources.get('doc-1')).toBeInstanceOf(Blob);
     expect(await classResources.get('son-1')).toBeUndefined();

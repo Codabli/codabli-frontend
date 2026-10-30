@@ -233,17 +233,27 @@
                 </div>
               }
 
-              <!-- Image (facultative, conservée dans le brouillon) -->
+              <!-- Image (facultative, gardée sur cet appareil en attendant le stockage des fichiers) -->
               <div class="card-image">
-                @if (card.controls.image.value; as image) {
-                  <img
-                    class="card-image__preview"
-                    [src]="image"
-                    [alt]="
-                      'createDancedTale.universe.card.image.alt'
-                        | translate: { name: card.controls.name.value || ('createDancedTale.universe.sections.' + section + '.card' | translate: { number: i + 1 }) }
-                    "
-                  />
+                @if (card.controls.imageId.value; as imageId) {
+                  @if (imageUrls()[imageId]; as url) {
+                    <img
+                      class="card-image__preview"
+                      [src]="url"
+                      [alt]="
+                        'createDancedTale.universe.card.image.alt'
+                          | translate: { name: card.controls.name.value || ('createDancedTale.universe.sections.' + section + '.card' | translate: { number: i + 1 }) }
+                      "
+                    />
+                  } @else if (missingImages().has(imageId)) {
+                    <p class="card-image__missing">
+                      <i
+                        class="fa-solid fa-triangle-exclamation"
+                        aria-hidden="true"
+                      ></i>
+                      {{ 'createDancedTale.universe.card.image.missing' | translate }}
+                    </p>
+                  }
                 }
 
                 <div class="card-image__actions">
@@ -260,14 +270,14 @@
                       class="fa-solid fa-image"
                       aria-hidden="true"
                     ></i>
-                    @if (card.controls.image.value) {
+                    @if (card.controls.imageId.value) {
                       {{ 'createDancedTale.universe.card.image.change' | translate }}
                     } @else {
                       {{ 'createDancedTale.universe.card.image.add' | translate }}
                     }
                   </label>
 
-                  @if (card.controls.image.value) {
+                  @if (card.controls.imageId.value) {
                     <button
                       type="button"
                       class="card-image__remove"

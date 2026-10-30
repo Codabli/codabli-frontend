@@ -33,7 +33,7 @@ describe('TaleWritingComponent', () => {
     draftService.saveUniverse({
       places: [],
       characters: [
-        { id: 'arthur', name: 'Arthur', role: 'Héros', description: 'Un écuyer', goal: 'Régner', image: null },
+        { id: 'arthur', name: 'Arthur', role: 'Héros', description: 'Un écuyer', goal: 'Régner', imageId: null },
       ],
       periods: [],
       objects: [],

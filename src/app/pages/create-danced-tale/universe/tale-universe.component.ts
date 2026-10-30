@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { UniverseImageStore } from '@core/services/universe-image-store.service';
 import {
   ImageResizeError,
   ImageResizeErrorKind,
@@ -20,6 +21,7 @@ import {
   TaleUniverseForm,
   UniverseCardForm,
 } from './tale-universe.form';
+import { newId } from '../new-id';
 
 type CardField = 'name' | 'description' | 'role' | 'goal';
 
@@ -45,6 +47,7 @@ export class TaleUniverseComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly imageResize = inject(ImageResizeService);
+  private readonly imageStore = inject(UniverseImageStore);
 
   protected readonly sections = UNIVERSE_SECTIONS;
   protected readonly sectionIcons = SECTION_ICONS;
@@ -58,7 +61,13 @@ export class TaleUniverseComponent {
   protected readonly submitted = signal(false);
 
   /** Erreur d'image par identifiant de carte. */
-  protected readonly imageErrors = signal<Record<string, ImageResizeErrorKind>>({});
+  protected readonly imageErrors = signal<Record<string, ImageResizeErrorKind | 'storage'>>({});
+  /** Adresse d'affichage de chaque image chargée, par identifiant d'image. */
+  protected readonly imageUrls = signal<Record<string, string>>({});
+  /** Images introuvables sur cet appareil (ajoutées depuis un autre navigateur, données effacées...). */
+  protected readonly missingImages = signal<ReadonlySet<string>>(new Set());
+
+  private readonly objectUrls = new Set<string>();
 
   constructor() {
     const savedUniverse = this.draftService.universe();
@@ -69,8 +78,21 @@ export class TaleUniverseComponent {
 
     this.form.addDefaultCards();
 
+    for (const section of this.sections) {
+      for (const card of this.cards(section)) {
+        const imageId = card.controls.imageId.value;
+
+        if (imageId) {
+          void this.loadImage(imageId);
+        }
+      }
+    }
+
     // Quitter l'écran par la frise garde la saisie, même incomplète, comme « Étape précédente ».
-    inject(DestroyRef).onDestroy(() => this.saveIncomplete());
+    inject(DestroyRef).onDestroy(() => {
+      this.saveIncomplete();
+      this.objectUrls.forEach((url) => URL.revokeObjectURL(url));
+    });
   }
 
   protected cards(section: UniverseSection): UniverseCardForm[] {
@@ -96,7 +118,9 @@ export class TaleUniverseComponent {
   }
 
   protected removeCard(section: UniverseSection, index: number): void {
-    const cardId = this.cards(section)[index].controls.id.value;
+    const card = this.cards(section)[index];
+    const cardId = card.controls.id.value;
+    this.releaseImage(card.controls.imageId.value);
     this.form.removeCard(section, index);
     this.imageErrors.update(({ [cardId]: _, ...others }) => others);
 
@@ -116,17 +140,34 @@ export class TaleUniverseComponent {
 
     const cardId = card.controls.id.value;
 
+    let image: Blob;
+
     try {
-      card.controls.image.setValue(await this.imageResize.resize(file));
-      this.imageErrors.update(({ [cardId]: _, ...others }) => others);
+      image = await this.imageResize.resize(file);
     } catch (error) {
       const kind = error instanceof ImageResizeError ? error.kind : 'unreadable';
       this.imageErrors.update((errors) => ({ ...errors, [cardId]: kind }));
+      return;
     }
+
+    const imageId = newId();
+
+    try {
+      await this.imageStore.put(imageId, image);
+    } catch {
+      this.imageErrors.update((errors) => ({ ...errors, [cardId]: 'storage' }));
+      return;
+    }
+
+    this.releaseImage(card.controls.imageId.value);
+    this.setImageUrl(imageId, image);
+    card.controls.imageId.setValue(imageId);
+    this.imageErrors.update(({ [cardId]: _, ...others }) => others);
   }
 
   protected removeImage(card: UniverseCardForm): void {
-    card.controls.image.setValue(null);
+    this.releaseImage(card.controls.imageId.value);
+    card.controls.imageId.setValue(null);
     this.focus(`#${this.fieldId(card, 'image')}`);
   }
 
@@ -162,6 +203,35 @@ export class TaleUniverseComponent {
 
     if (hasCards || this.draftService.universe()) {
       this.draftService.saveUniverse(universe);
+    }
+  }
+
+  private async loadImage(imageId: string): Promise<void> {
+    let image: Blob | undefined;
+
+    try {
+      image = await this.imageStore.get(imageId);
+    } catch {
+      // Stockage indisponible : l'image est signalée comme absente de cet appareil.
+    }
+
+    if (image) {
+      this.setImageUrl(imageId, image);
+    } else {
+      this.missingImages.update((missing) => new Set(missing).add(imageId));
+    }
+  }
+
+  private setImageUrl(imageId: string, image: Blob): void {
+    const url = URL.createObjectURL(image);
+    this.objectUrls.add(url);
+    this.imageUrls.update((urls) => ({ ...urls, [imageId]: url }));
+  }
+
+  /** Efface une image qui n'est plus utilisée par aucune carte. */
+  private releaseImage(imageId: string | null): void {
+    if (imageId) {
+      void this.imageStore.delete(imageId).catch(() => undefined);
     }
   }
 

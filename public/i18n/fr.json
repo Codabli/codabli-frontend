@@ -820,10 +820,12 @@
           "change": "Changer l'image",
           "remove": "Retirer l'image",
           "alt": "Image : {{name}}",
+          "missing": "Cette image n'est disponible que sur l'appareil où elle a été ajoutée.",
           "errors": {
             "not-an-image": "Ce fichier n'est pas une image.",
             "too-large": "Cette image est trop lourde (10 Mo maximum).",
-            "unreadable": "Cette image n'a pas pu être lue. Essayez un autre fichier."
+            "unreadable": "Cette image n'a pas pu être lue. Essayez un autre fichier.",
+            "storage": "Cette image n'a pas pu être enregistrée sur cet appareil."
           }
         }
       }

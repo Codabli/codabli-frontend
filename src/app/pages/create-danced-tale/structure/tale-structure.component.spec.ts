@@ -21,8 +21,8 @@ const CONTEXT: ProjectContext = {
 const UNIVERSE: TaleUniverse = {
   places: [],
   characters: [
-    { id: 'arthur', name: 'Arthur', role: 'Héros', description: 'Un écuyer', goal: 'Devenir roi', image: null },
-    { id: 'merlin', name: 'Merlin', role: 'Guide', description: 'Un enchanteur', goal: 'Aider', image: null },
+    { id: 'arthur', name: 'Arthur', role: 'Héros', description: 'Un écuyer', goal: 'Devenir roi', imageId: null },
+    { id: 'merlin', name: 'Merlin', role: 'Guide', description: 'Un enchanteur', goal: 'Aider', imageId: null },
   ],
   periods: [],
   objects: [],

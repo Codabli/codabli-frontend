@@ -32,8 +32,8 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     draftService.saveUniverse({
       places: [],
       characters: [
-        { id: 'arthur', name: 'Arthur', role: 'Héros', description: '', goal: '', image: null },
-        { id: 'merlin', name: 'Merlin', role: 'Guide', description: '', goal: '', image: null },
+        { id: 'arthur', name: 'Arthur', role: 'Héros', description: '', goal: '', imageId: null },
+        { id: 'merlin', name: 'Merlin', role: 'Guide', description: '', goal: '', imageId: null },
       ],
       periods: [],
       objects: [],

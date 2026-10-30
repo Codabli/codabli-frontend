@@ -4,6 +4,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { TaleUniverseComponent } from './tale-universe.component';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { ImageResizeError, ImageResizeService } from '@core/services/image-resize.service';
+import { UniverseImageStore } from '@core/services/universe-image-store.service';
 import { ProjectContext } from '@models/interfaces/project-context.interface';
 import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 
@@ -18,7 +19,7 @@ const CONTEXT: ProjectContext = {
 };
 
 const UNIVERSE: TaleUniverse = {
-  places: [{ id: 'p1', name: 'La forêt', description: '', image: 'data:image/jpeg;base64,AAA' }],
+  places: [{ id: 'p1', name: 'La forêt', description: '', imageId: 'img1' }],
   characters: [],
   periods: [],
   objects: [],
@@ -32,9 +33,18 @@ describe('TaleUniverseComponent', () => {
   let router: Router;
   let draftService: CreateDancedTaleDraftService;
   let resize: ReturnType<typeof vi.fn>;
+  let store: { put: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
+  const resized = new Blob(['jpeg'], { type: 'image/jpeg' });
 
   async function setup(savedUniverse?: TaleUniverse): Promise<void> {
-    resize = vi.fn().mockResolvedValue('data:image/jpeg;base64,RESIZED');
+    resize = vi.fn().mockResolvedValue(resized);
+    store = {
+      put: vi.fn().mockResolvedValue(undefined),
+      get: vi.fn().mockResolvedValue(new Blob(['saved'])),
+      delete: vi.fn().mockResolvedValue(undefined),
+    };
+    URL.createObjectURL = vi.fn(() => 'blob:fake');
+    URL.revokeObjectURL = vi.fn();
 
     await TestBed.configureTestingModule({
       imports: [TaleUniverseComponent],
@@ -42,6 +52,7 @@ describe('TaleUniverseComponent', () => {
         provideRouter([]),
         provideTranslateService(),
         { provide: ImageResizeService, useValue: { resize } },
+        { provide: UniverseImageStore, useValue: store },
       ],
     }).compileComponents();
 
@@ -57,6 +68,7 @@ describe('TaleUniverseComponent', () => {
     fixture = TestBed.createComponent(TaleUniverseComponent);
     element = fixture.nativeElement;
     await fixture.whenStable();
+    fixture.detectChanges();
   }
 
   function click(selector: string): void {
@@ -158,7 +170,7 @@ describe('TaleUniverseComponent', () => {
         role: 'Héros',
         description: 'Un jeune roi',
         goal: 'Retrouver Excalibur',
-        image: null,
+        imageId: null,
       },
     ]);
     expect(router.navigate).toHaveBeenCalledWith(['../structure'], expect.anything());
@@ -205,7 +217,31 @@ describe('TaleUniverseComponent', () => {
 
     const card = cardsOf('places')[0];
     expect(card.querySelector<HTMLInputElement>('input[type="text"]')!.value).toBe('La forêt');
-    expect(card.querySelector<HTMLImageElement>('img')!.src).toBe(UNIVERSE.places[0].image);
+    expect(store.get).toHaveBeenCalledWith('img1');
+    expect(card.querySelector('img')!.getAttribute('src')).toBe('blob:fake');
+  });
+
+  it('signale une image qui n\'est pas sur cet appareil', async () => {
+    await setup(UNIVERSE);
+    store.get.mockResolvedValue(undefined);
+    fixture.destroy();
+    fixture = TestBed.createComponent(TaleUniverseComponent);
+    element = fixture.nativeElement;
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const card = cardsOf('places')[0];
+    expect(card.querySelector('img')).toBeNull();
+    expect(card.querySelector('.card-image__missing')!.textContent).toContain('createDancedTale.universe.card.image.missing');
+  });
+
+  it('retire l\'image de la carte et l\'efface de l\'appareil', async () => {
+    await setup(UNIVERSE);
+
+    click('.card-image__remove');
+
+    expect(store.delete).toHaveBeenCalledWith('img1');
+    expect(cardsOf('places')[0].querySelector('img')).toBeNull();
   });
 
   it('supprime une carte et rend le focus au bouton d\'ajout', async () => {
@@ -230,7 +266,8 @@ describe('TaleUniverseComponent', () => {
     fixture.detectChanges();
 
     expect(resize).toHaveBeenCalledWith(file);
-    expect(cardsOf('places')[0].querySelector('img')!.getAttribute('src')).toBe('data:image/jpeg;base64,RESIZED');
+    expect(store.put).toHaveBeenCalledWith(expect.any(String), resized);
+    expect(cardsOf('places')[0].querySelector('img')!.getAttribute('src')).toBe('blob:fake');
   });
 
   it('affiche une erreur reliée au champ si le fichier n\'est pas une image', async () => {

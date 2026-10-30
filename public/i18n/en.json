@@ -820,10 +820,12 @@
           "change": "Change image",
           "remove": "Remove image",
           "alt": "Image: {{name}}",
+          "missing": "This image is only available on the device it was added from.",
           "errors": {
             "not-an-image": "This file is not an image.",
             "too-large": "This image is too large (10 MB maximum).",
-            "unreadable": "This image could not be read. Try another file."
+            "unreadable": "This image could not be read. Try another file.",
+            "storage": "This image could not be saved on this device."
           }
         }
       }

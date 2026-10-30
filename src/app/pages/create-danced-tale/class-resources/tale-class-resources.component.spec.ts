@@ -61,7 +61,6 @@ describe('TaleClassResourcesComponent', () => {
   const revokeObjectURL = URL.revokeObjectURL;
 
   async function setup(items?: ClassResource[], storedFiles: string[] = []): Promise<void> {
-    localStorage.clear();
     store = new MemoryStore();
     storedFiles.forEach((id) => store.files.set(id, new Blob(['x'])));
     URL.createObjectURL = vi.fn(() => 'blob:fake');

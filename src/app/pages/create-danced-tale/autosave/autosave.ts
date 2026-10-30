@@ -8,7 +8,7 @@ export type AutosaveStatus = 'idle' | 'saved' | 'error';
 /**
  * Sauvegarde automatique d'un écran du parcours : `schedule()` à chaque modification,
  * l'enregistrement part après `AUTOSAVE_DELAY_MS` sans nouvelle modification.
- * `save` retourne false si le brouillon n'a pas pu être écrit (stockage plein).
+ * `save` résout false si l'enregistrement a échoué (backend injoignable, erreur...).
  */
 export class Autosave {
   readonly status = signal<AutosaveStatus>('idle');
@@ -17,7 +17,7 @@ export class Autosave {
   private timer: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
-    private readonly save: () => boolean,
+    private readonly save: () => boolean | Promise<boolean>,
     private readonly delay = AUTOSAVE_DELAY_MS,
   ) {}
 
@@ -37,10 +37,10 @@ export class Autosave {
     }
   }
 
-  private run(): void {
+  private async run(): Promise<void> {
     this.timer = null;
 
-    const saved = this.save();
+    const saved = await this.save();
     this.status.set(saved ? 'saved' : 'error');
 
     if (saved) {

@@ -15,6 +15,7 @@ import { buildParams } from '../http/build-params';
 import type {
   ConteDanse,
   ConteDanseFiltres,
+  ConteDanseRequest,
 } from '../../models/interfaces/conte-danse.interface';
 import type { Page } from '../../models/interfaces/page.interface';
 import type { ConteDanseTraduction } from '@models/interfaces/conte-danse-traduction.model';
@@ -34,6 +35,16 @@ export class ConteDanseService {
 
   getById(id: string): Observable<ConteDanse> {
     return this.http.get<ConteDanse>(`${this.url}/${id}`);
+  }
+
+  /** Crée un conte au nom de l'utilisateur connecté (brouillon, titre facultatif). */
+  creer(request: ConteDanseRequest): Observable<ConteDanse> {
+    return this.http.post<ConteDanse>(this.url, request);
+  }
+
+  /** Remplace tous les champs du conte. */
+  modifier(id: string, request: ConteDanseRequest): Observable<ConteDanse> {
+    return this.http.put<ConteDanse>(`${this.url}/${id}`, request);
   }
 
   listerTraductionsPubliees(

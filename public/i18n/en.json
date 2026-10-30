@@ -71,6 +71,9 @@
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
     "next": "Next step",
     "previous": "Previous step",
+    "saveError": "Your latest changes could not be saved ({{message}}). They stay on screen as long as you do not leave the page.",
+    "loadError": "This tale could not be opened ({{message}}). You can start a new one.",
+    "retry": "Try again",
 
     "steps": {
       "label": "Dance tale creation steps",
@@ -341,7 +344,6 @@
       "title": "Your class's resources",
       "description": "Add the class's own creations and documents to the project: scanned drawings, texts, photos, recordings, or links to external resources.",
       "privateNote": "Your uploads are private: only you can see them.",
-      "storageFull": "This browser's storage is full: your latest changes are not saved. Delete some documents to free up space.",
       "upload": {
         "title": "Upload files",
         "rights": "I confirm I hold the rights to use the uploaded files for teaching (pupils' work with their families' consent, royalty-free documents or documents I created).",
@@ -409,7 +411,7 @@
 
     "autosave": {
       "saved": "Saved at {{hours}}:{{minutes}}",
-      "error": "Saving is not possible on this device: the browser's storage is full."
+      "error": "Saving failed: your latest changes are not saved."
     },
 
     "sounds": {
@@ -743,7 +745,6 @@
       "theme": "Theme:",
       "description": "Briefly describe the places, characters, time period and important objects of your story.",
       "requiredHint": "Fields marked with an asterisk (*) are required. Cards left empty are ignored.",
-      "storageFull": "The draft could not be saved on this device: the images take up too much space. Remove one or more images and try again.",
       "sections": {
         "places": {
           "title": "Places",
@@ -819,16 +820,19 @@
           "change": "Change image",
           "remove": "Remove image",
           "alt": "Image: {{name}}",
+          "missing": "This image is only available on the device it was added from.",
           "errors": {
             "not-an-image": "This file is not an image.",
             "too-large": "This image is too large (10 MB maximum).",
-            "unreadable": "This image could not be read. Try another file."
+            "unreadable": "This image could not be read. Try another file.",
+            "storage": "This image could not be saved on this device."
           }
         }
       }
     },
 
     "context": {
+      "createError": "The tale could not be created ({{message}}). Please try again in a few moments.",
       "requiredHint": "Fields marked with * are required.",
 
       "ageRange": {

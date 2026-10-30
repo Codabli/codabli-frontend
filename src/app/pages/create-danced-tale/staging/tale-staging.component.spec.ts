@@ -14,8 +14,6 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
   let draftService: CreateDancedTaleDraftService;
 
   async function setup(staging?: TaleStaging): Promise<void> {
-    localStorage.clear();
-
     await TestBed.configureTestingModule({
       imports: [TaleStagingComponent],
       providers: [provideRouter([]), provideTranslateService()],
@@ -34,8 +32,8 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     draftService.saveUniverse({
       places: [],
       characters: [
-        { id: 'arthur', name: 'Arthur', role: 'Héros', description: '', goal: '', image: null },
-        { id: 'merlin', name: 'Merlin', role: 'Guide', description: '', goal: '', image: null },
+        { id: 'arthur', name: 'Arthur', role: 'Héros', description: '', goal: '', imageId: null },
+        { id: 'merlin', name: 'Merlin', role: 'Guide', description: '', goal: '', imageId: null },
       ],
       periods: [],
       objects: [],
@@ -72,8 +70,8 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     return Array.from(scene.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
   }
 
-  function saveNow(): void {
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+  async function saveNow(): Promise<void> {
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
     fixture.detectChanges();
   }
 
@@ -105,7 +103,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     const exitSelect = scenes()[0].querySelectorAll<HTMLSelectElement>('fieldset.movement select')[3];
     exitSelect.value = 'exits';
     exitSelect.dispatchEvent(new Event('change'));
-    saveNow();
+    await saveNow();
 
     expect(draftService.staging()!.scenes['s1'].characters).toEqual([
       { characterId: 'arthur', entrance: 'onStage', exit: 'stays' },
@@ -127,7 +125,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     fixture.detectChanges();
     momentInput()!.value = 'Quand Merlin arrive';
     momentInput()!.dispatchEvent(new Event('input'));
-    saveNow();
+    await saveNow();
 
     expect(draftService.staging()!.scenes['s1'].characters[0]).toMatchObject({
       entrance: 'enters',
@@ -138,7 +136,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
 
     entrance.value = 'onStage';
     entrance.dispatchEvent(new Event('change'));
-    saveNow();
+    await saveNow();
 
     expect(momentInput()).toBeNull();
     expect(draftService.staging()!.scenes['s1'].characters[0].entranceMoment).toBeUndefined();
@@ -151,7 +149,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
 
     textarea.value = 'Le soulagement';
     textarea.dispatchEvent(new Event('input'));
-    saveNow();
+    await saveNow();
 
     expect(draftService.staging()!.scenes['s2'].intention).toBe('Le soulagement');
   });
@@ -209,7 +207,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     select.dispatchEvent(new Event('change'));
     fixture.detectChanges();
     scenes()[1].querySelector<HTMLElement>('.scene-dances__add app-button')!.click();
-    saveNow();
+    await saveNow();
 
     expect(draftService.staging()!.scenes['s2'].dances).toEqual([
       expect.objectContaining({ danceId: 'farandole', moment: null, style: 'traditional' }),
@@ -261,7 +259,7 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
     vi.useFakeTimers();
     // Une modification déclenche l'enregistrement du brouillon migré.
     checkboxes(scenes()[0])[1].click();
-    saveNow();
+    await saveNow();
 
     const scene = draftService.staging()!.scenes['s1'];
     expect(scene.dances![0].sounds!.map((s) => s.title)).toEqual(['luth']);

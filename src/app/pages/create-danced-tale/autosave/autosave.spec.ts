@@ -9,14 +9,14 @@ describe('Autosave', () => {
     vi.useRealTimers();
   });
 
-  it('enregistre une seule fois après une série de modifications', () => {
+  it('enregistre une seule fois après une série de modifications', async () => {
     const save = vi.fn().mockReturnValue(true);
     const autosave = new Autosave(save);
 
     autosave.schedule();
     vi.advanceTimersByTime(AUTOSAVE_DELAY_MS - 1);
     autosave.schedule();
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
 
     expect(save).toHaveBeenCalledTimes(1);
     expect(autosave.status()).toBe('saved');
@@ -41,11 +41,11 @@ describe('Autosave', () => {
     expect(save).not.toHaveBeenCalled();
   });
 
-  it('signale un enregistrement impossible', () => {
-    const autosave = new Autosave(() => false);
+  it('signale un enregistrement impossible', async () => {
+    const autosave = new Autosave(() => Promise.resolve(false));
 
     autosave.schedule();
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS);
+    await vi.advanceTimersByTimeAsync(AUTOSAVE_DELAY_MS);
 
     expect(autosave.status()).toBe('error');
     expect(autosave.savedAt()).toBeNull();

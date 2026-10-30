@@ -71,7 +71,6 @@ export class TaleClassResourcesComponent {
   protected readonly rightsError = signal(false);
   protected readonly rejected = signal<RejectedFile[]>([]);
   protected readonly dragging = signal(false);
-  protected readonly storageFull = signal(false);
 
   protected readonly linkForm = new FormGroup({
     url: new FormControl('', { nonNullable: true }),
@@ -287,7 +286,7 @@ export class TaleClassResourcesComponent {
 
   private save(items: ClassResource[]): void {
     this.items.set(items);
-    this.storageFull.set(!this.draftService.saveClassResources({ items }));
+    this.draftService.saveClassResources({ items });
   }
 
   private announce(key: string, params: Record<string, unknown>): void {

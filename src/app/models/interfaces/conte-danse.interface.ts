@@ -34,6 +34,28 @@ export interface ConteDanse {
   createurId: string;
   createurNom: string;
   createurPrenom: string;
+  ecoleId?: string | null;
+  classeId?: string | null;
+}
+
+/** Miroir de `ConteDanseRequest` : un PUT remplace tous les champs, il faut donc tous les renvoyer. */
+export interface ConteDanseRequest {
+  titre: string | null;
+  description: string | null;
+  thematique: string | null;
+  langueOriginale: string | null;
+  couvertureUrl: string | null;
+  pays: string | null;
+  culture: string | null;
+  ageMin: number | null;
+  ageMax: number | null;
+  dureeMinutes: number | null;
+  credits: string | null;
+  fichierTexteUrl: string | null;
+  fichierAudioUrl: string | null;
+  fichierVideoUrl: string | null;
+  ecoleId: string | null;
+  classeId: string | null;
 }
 
 export interface ConteDanseFiltres extends PaginationParams {

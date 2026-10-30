@@ -22,7 +22,7 @@ export class UniverseCardForm extends FormGroup<{
   description: FormControl<string>;
   role: FormControl<string>;
   goal: FormControl<string>;
-  image: FormControl<string | null>;
+  imageId: FormControl<string | null>;
 }> {
   constructor(
     readonly section: UniverseSection,
@@ -40,7 +40,7 @@ export class UniverseCardForm extends FormGroup<{
       }),
       role: new FormControl(card?.role ?? '', { nonNullable: true, validators: characterOnly }),
       goal: new FormControl(card?.goal ?? '', { nonNullable: true, validators: characterOnly }),
-      image: new FormControl<string | null>(card?.image ?? null),
+      imageId: new FormControl<string | null>(card?.imageId ?? null),
     });
   }
 
@@ -50,8 +50,8 @@ export class UniverseCardForm extends FormGroup<{
 
   /** Carte jamais remplie (ex. la carte proposée par défaut) : elle est ignorée. */
   get isBlank(): boolean {
-    const { name, description, role, goal, image } = this.getRawValue();
-    return !image && ![name, description, role, goal].some((text) => text.trim());
+    const { name, description, role, goal, imageId } = this.getRawValue();
+    return !imageId && ![name, description, role, goal].some((text) => text.trim());
   }
 
   toCard(): UniverseCard {
@@ -61,7 +61,7 @@ export class UniverseCardForm extends FormGroup<{
       id: value.id,
       name: value.name.trim(),
       description: value.description.trim(),
-      image: value.image,
+      imageId: value.imageId,
     };
   }
 
@@ -115,7 +115,7 @@ export class TaleUniverseForm extends FormGroup<Record<UniverseSection, FormArra
     for (const section of Object.keys(this.controls) as UniverseSection[]) {
       const cards = this.controls[section];
       cards.clear();
-      // Le brouillon vient du localStorage sans vérification : une section absente
+      // Le contenu relu du backend (JSON libre) n'est pas vérifié : une section absente
       // (ex. ajoutée dans une version plus récente du formulaire) démarre vide.
       (universe[section] ?? []).forEach((card) => cards.push(new UniverseCardForm(section, card)));
     }

@@ -2,6 +2,33 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 
+/** `/create-danced-tale` sans identifiant : nouveau conte, créé au passage de l'écran 1. */
+export const startNewTale: CanActivateFn = () => {
+  inject(CreateDancedTaleDraftService).reset();
+  return true;
+};
+
+/**
+ * `/create-danced-tale/:taleId/...` : relit le conte depuis le backend, sauf s'il est déjà ouvert.
+ * S'il ne peut pas être ouvert, on repart d'un nouveau conte et l'erreur est affichée par le parcours.
+ */
+export const loadTale: CanActivateFn = async (route) => {
+  const draft = inject(CreateDancedTaleDraftService);
+  const router = inject(Router);
+  const taleId = route.paramMap.get('taleId')!;
+
+  if (draft.taleId() === taleId) {
+    return true;
+  }
+
+  try {
+    await draft.load(taleId);
+    return true;
+  } catch {
+    return router.createUrlTree(['/create-danced-tale']);
+  }
+};
+
 /** Chemin d'un écran frère de `route` dans le parcours (ex. `/create-danced-tale/context`). */
 function siblingPath(route: ActivatedRouteSnapshot, path: string): string[] {
   const parentSegments = route.parent?.pathFromRoot.flatMap((r) => r.url.map((s) => s.path)) ?? [];

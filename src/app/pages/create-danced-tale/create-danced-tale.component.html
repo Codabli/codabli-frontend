@@ -23,7 +23,7 @@
           @if (i !== currentIndex() && isReachable(step)) {
             <a
               class="stepper__step"
-              [routerLink]="step.path"
+              [routerLink]="stepLink(step)"
             >
               <ng-container *ngTemplateOutlet="stepContent; context: { $implicit: step, index: i }" />
             </a>
@@ -63,6 +63,39 @@
       {{ step.labelKey | translate }}
     </span>
   </ng-template>
+
+  @if (draft.loadError(); as error) {
+    <div
+      class="create-danced-tale__alert"
+      role="alert"
+    >
+      <i
+        class="fa-solid fa-triangle-exclamation"
+        aria-hidden="true"
+      ></i>
+      <p>{{ 'createDancedTale.loadError' | translate: { message: error.message } }}</p>
+    </div>
+  }
+
+  @if (draft.saveError(); as error) {
+    <div
+      class="create-danced-tale__alert"
+      role="alert"
+    >
+      <i
+        class="fa-solid fa-triangle-exclamation"
+        aria-hidden="true"
+      ></i>
+      <p>{{ 'createDancedTale.saveError' | translate: { message: error.message } }}</p>
+      <app-button
+        variant="outline"
+        [disabled]="retrying()"
+        (click)="retry()"
+      >
+        {{ 'createDancedTale.retry' | translate }}
+      </app-button>
+    </div>
+  }
 
   <div class="create-danced-tale__content">
     <router-outlet />

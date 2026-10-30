@@ -105,4 +105,10 @@ h6 {
     repeat(var(--grid-columns), minmax(0, 1fr));
 
   column-gap: var(--grid-gutter);
+  padding-inline: var(--grid-margin);
+}
+
+// Grille qui va jusqu'aux bords de l'écran (header, navbar) : son contenu gère sa propre marge.
+.grid--bleed {
+  padding-inline: 0;
 }

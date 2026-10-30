@@ -71,6 +71,9 @@
     "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
     "next": "Étape suivante",
     "previous": "Étape précédente",
+    "saveError": "Vos dernières modifications n'ont pas pu être enregistrées ({{message}}). Elles restent affichées tant que vous ne quittez pas la page.",
+    "loadError": "Ce conte n'a pas pu être ouvert ({{message}}). Vous pouvez en commencer un nouveau.",
+    "retry": "Réessayer",
 
     "steps": {
       "label": "Étapes de création du conte dansé",
@@ -341,7 +344,6 @@
       "title": "Les ressources de votre classe",
       "description": "Ajoutez à la base de travail du projet les créations et documents de la classe : dessins scannés, textes, photos, enregistrements, ou des liens vers des ressources externes.",
       "privateNote": "Vos dépôts sont privés : ils ne sont visibles que par vous.",
-      "storageFull": "Le stockage de ce navigateur est plein : vos dernières modifications ne sont pas enregistrées. Supprimez des documents pour libérer de la place.",
       "upload": {
         "title": "Déposer des fichiers",
         "rights": "J'atteste disposer des droits d'utilisation pédagogique des fichiers déposés (créations des élèves avec l'accord des familles, documents libres de droits ou dont je suis l'auteur).",
@@ -409,7 +411,7 @@
 
     "autosave": {
       "saved": "Sauvegardé à {{hours}}h{{minutes}}",
-      "error": "Sauvegarde impossible sur cet appareil : l'espace de stockage du navigateur est plein."
+      "error": "Sauvegarde impossible : vos dernières modifications ne sont pas enregistrées."
     },
 
     "sounds": {
@@ -743,7 +745,6 @@
       "theme": "Le thème :",
       "description": "Décrivez sans trop détailler les lieux, les personnages, l'époque et les objets importants de votre histoire.",
       "requiredHint": "Les champs marqués d'un astérisque (*) sont obligatoires. Une carte laissée vide est ignorée.",
-      "storageFull": "Le brouillon n'a pas pu être enregistré sur cet appareil : les images prennent trop de place. Retirez une ou plusieurs images puis réessayez.",
       "sections": {
         "places": {
           "title": "Les lieux",
@@ -819,16 +820,19 @@
           "change": "Changer l'image",
           "remove": "Retirer l'image",
           "alt": "Image : {{name}}",
+          "missing": "Cette image n'est disponible que sur l'appareil où elle a été ajoutée.",
           "errors": {
             "not-an-image": "Ce fichier n'est pas une image.",
             "too-large": "Cette image est trop lourde (10 Mo maximum).",
-            "unreadable": "Cette image n'a pas pu être lue. Essayez un autre fichier."
+            "unreadable": "Cette image n'a pas pu être lue. Essayez un autre fichier.",
+            "storage": "Cette image n'a pas pu être enregistrée sur cet appareil."
           }
         }
       }
     },
 
     "context": {
+      "createError": "Le conte n'a pas pu être créé ({{message}}). Réessayez dans quelques instants.",
       "requiredHint": "Les champs marqués d'un * sont obligatoires.",
 
       "ageRange": {

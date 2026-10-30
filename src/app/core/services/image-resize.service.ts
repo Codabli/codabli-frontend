@@ -15,14 +15,11 @@ export class ImageResizeError extends Error {
 }
 
 /**
- * Réduit une image et la renvoie en data URL JPEG.
- *
- * Sans back (SCRUM-96 en pause), les images des cartes sont stockées dans le brouillon
- * du localStorage, limité à quelques Mo : une photo de 480 px pèse environ 40 Ko.
+ * Réduit une image et la renvoie en JPEG : une photo de 480 px pèse environ 40 Ko.
  */
 @Injectable({ providedIn: 'root' })
 export class ImageResizeService {
-  async resize(file: File, maxDimension = IMAGE_MAX_DIMENSION, quality = IMAGE_QUALITY): Promise<string> {
+  async resize(file: File, maxDimension = IMAGE_MAX_DIMENSION, quality = IMAGE_QUALITY): Promise<Blob> {
     if (!file.type.startsWith('image/')) {
       throw new ImageResizeError('not-an-image');
     }
@@ -57,6 +54,12 @@ export class ImageResizeService {
     context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
     bitmap.close();
 
-    return canvas.toDataURL('image/jpeg', quality);
+    return new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => (blob ? resolve(blob) : reject(new ImageResizeError('unreadable'))),
+        'image/jpeg',
+        quality,
+      );
+    });
   }
 }

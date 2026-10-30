@@ -11,5 +11,11 @@ export interface SubscriptionOffer {
   publicCible: SubscriptionAudience;
   tarif: number;
   duree: SubscriptionDuration;
+  limiteProfils: number | null;
+  limiteClasses: number | null;
+  stockageMo: number | null;
+  accesWebinaires: boolean;
+  accesCoaching: boolean;
+  accesExports: boolean;
   actif: boolean;
 }

@@ -1131,6 +1131,48 @@
     "login": "Log in",
     "register": "Create an account"
   },
+  "subscriptions": {
+    "title": "Our subscriptions",
+    "intro": "Compare our plans and choose the one that best fits your needs.",
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "home": "Home"
+    },
+    "states": {
+      "loading": "Loading offers…",
+      "error": "Offers cannot be displayed at the moment. Please try again in a few moments.",
+      "empty": "No subscription offer is available at the moment."
+    },
+        "audience": {
+      "famille": "For families",
+      "enseignant": "For teachers",
+      "etablissement": "For schools",
+      "structure": "For organisations"
+    },
+    "duration": {
+      "mensuel": "/ month",
+      "annuel": "/ year"
+    },
+    "benefits": {
+      "profiles": {
+        "one": "{{count}} child profile",
+        "other": "{{count}} child profiles"
+      },
+      "classes": {
+        "one": "{{count}} class",
+        "other": "{{count}} classes"
+      },
+      "storage": "{{size}} of storage",
+      "webinars": "Access to webinars",
+      "coaching": "Coaching support",
+      "exports": "Export your creations"
+    },
+    "card": {
+      "details": "See details",
+      "subscribe": "Subscribe"
+    }
+  },
+
   "teacherAccount": {
     "breadcrumb": {
       "label": "Breadcrumb",

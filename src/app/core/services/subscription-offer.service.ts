@@ -10,9 +10,13 @@ import {
 export class SubscriptionOfferService {
   private readonly http = inject(HttpClient);
 
-  getOffers(audience: SubscriptionAudience): Observable<SubscriptionOffer[]> {
+  getOffers(audience?: SubscriptionAudience): Observable<SubscriptionOffer[]> {
     return this.http.get<SubscriptionOffer[]>('/api/abonnements/offres', {
-      params: { publicCible: audience },
+      params: audience ? { publicCible: audience } : {},
     });
+  }
+
+  getOfferById(id: string): Observable<SubscriptionOffer> {
+    return this.http.get<SubscriptionOffer>(`/api/abonnements/offres/${id}`);
   }
 }

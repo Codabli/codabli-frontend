@@ -1,7 +1,5 @@
 .create-danced-tale {
   padding-block: var(--spacing-2xl) 80px;
-  // La classe globale .grid n'applique plus la marge latérale : chaque page la porte elle-même.
-  padding-inline: var(--grid-margin);
   row-gap: var(--spacing-xl);
 
   // Écran d'écriture (onglets, éditeur, assistant) : plus de place que pour les formulaires.

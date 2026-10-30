@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { SubscriptionOfferService } from '@core/services/subscription-offer.service';
@@ -24,14 +24,14 @@ function sortOffers(offers: SubscriptionOffer[]): SubscriptionOffer[] {
   styleUrl: './subscriptions.component.scss',
   templateUrl: './subscriptions.component.html',
 })
-export class SubscriptionsComponent {
+export class SubscriptionsComponent implements OnInit {
   private readonly subscriptionOfferService = inject(SubscriptionOfferService);
 
   readonly state = signal<'loading' | 'error' | 'ready'>('loading');
 
   readonly offers = signal<SubscriptionOffer[]>([]);
 
-  constructor() {
+  ngOnInit(): void {
     this.subscriptionOfferService.getOffers().subscribe({
       next: (offers) => {
         this.offers.set(sortOffers(offers.filter((offer) => offer.actif)));

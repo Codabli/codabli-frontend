@@ -670,7 +670,19 @@
           "askQuestion": "Ask a question",
           "dialogueIdeas": "Dialogue ideas"
         },
-        "soon": "The assistant will be available soon.",
+        "conversation": "Conversation with the assistant",
+        "authors": {
+          "user": "You:",
+          "assistant": "Assistant:",
+          "system": "System:"
+        },
+        "thinking": "The assistant is thinking…",
+        "promptLabel": "Your question for the assistant",
+        "promptPlaceholder": "E.g. what words describe a forest at night?",
+        "promptHint": "Press Enter to send, Shift + Enter for a new line.",
+        "send": "Send",
+        "error": "The assistant could not answer. Your question is still in the input box: try again in a moment.",
+        "historyError": "Previous exchanges with the assistant could not be loaded.",
         "soonShort": "(coming soon)"
       }
     },

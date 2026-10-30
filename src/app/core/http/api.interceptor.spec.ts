@@ -1,8 +1,9 @@
-import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, HttpContext, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AUTH_STORAGE_KEY, AuthService } from '../services/auth.service';
+import { API_REQUEST_TIMEOUT_MS } from './api.config';
 import { apiInterceptor } from './api.interceptor';
 
 describe('apiInterceptor', () => {
@@ -57,5 +58,23 @@ describe('apiInterceptor', () => {
 
     expect(kind).toBe('unauthorized');
     expect(TestBed.inject(AuthService).isLoggedIn()).toBe(false);
+  });
+
+  it('applique le délai propre à une requête à la place du délai par défaut', () => {
+    setUp();
+    vi.useFakeTimers();
+    let kind: string | undefined;
+
+    client
+      .get('/api/ia/lent', { context: new HttpContext().set(API_REQUEST_TIMEOUT_MS, 60_000) })
+      .subscribe({ error: (error) => (kind = error.kind) });
+    const request = http.expectOne('/api/ia/lent');
+
+    vi.advanceTimersByTime(30_000);
+    expect(kind).toBeUndefined();
+    vi.advanceTimersByTime(30_000);
+    expect(kind).toBe('timeout');
+    expect(request.cancelled).toBe(true);
+    vi.useRealTimers();
   });
 });

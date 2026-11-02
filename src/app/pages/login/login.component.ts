@@ -23,7 +23,6 @@ export class LoginComponent {
   errorKey = signal<string | null>(null);
 
   onSubmit(): void {
-    console.log('onSubmit déclenché');
     console.log('Formulaire valide :', this.loginForm.valid);
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();

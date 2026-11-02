@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import type { ApiError } from '../../models/interfaces/api-error.interface';
@@ -16,6 +16,7 @@ import { LoginForm } from './login.form';
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   loginForm = new LoginForm();
   isSubmitting = signal(false);
@@ -32,7 +33,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.toLoginRequest()).subscribe({
       next: () => {
         this.isSubmitting.set(false);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl(this.returnUrl());
       },
 
       error: (error: ApiError) => {
@@ -42,5 +43,11 @@ export class LoginComponent {
         );
       },
     });
+  }
+
+  /** Page demandée avant la connexion (posée par `requireAuthentication`), limitée aux chemins internes. */
+  private returnUrl(): string {
+    const url = this.route.snapshot.queryParamMap.get('returnUrl');
+    return url?.startsWith('/') && !url.startsWith('//') ? url : '/';
   }
 }

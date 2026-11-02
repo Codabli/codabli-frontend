@@ -32,7 +32,6 @@ describe('SceneDances', () => {
   let store: { put: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
 
   async function setup(dances: SceneDance[] = [], discoveryAdded: string[] = []): Promise<void> {
-    localStorage.clear();
     // jsdom n'a pas IndexedDB : faux stockage des fichiers audio.
     store = { put: vi.fn(async () => undefined), get: vi.fn(async () => undefined), delete: vi.fn(async () => undefined) };
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import type { ApiError } from '@models/interfaces/api-error.interface';
 import { AGE_RANGES } from '@models/types/age-range.type';
 import { PERFORMANCE_SPACES, PerformanceSpace } from '@models/types/performance-space.type';
 import { ProjectContextForm, SECRET_INGREDIENT_MAX_LENGTH } from './project-context.form';
@@ -51,6 +52,9 @@ export class ProjectContextComponent {
   protected readonly form = new ProjectContextForm();
   protected readonly ingredientInput = new FormControl('', { nonNullable: true });
   protected readonly submitted = signal(false);
+  /** Création du conte en cours (premier passage à l'écran suivant). */
+  protected readonly creating = signal(false);
+  protected readonly createError = signal<ApiError | null>(null);
 
   constructor() {
     const savedContext = this.draftService.context();
@@ -101,15 +105,36 @@ export class ProjectContextComponent {
       return;
     }
 
-    // Sauvegarde automatique au passage à l'étape suivante.
-    this.draftService.saveContext(this.form.toProjectContext());
-    this.router.navigate(['../discovery'], { relativeTo: this.route });
+    const context = this.form.toProjectContext();
+
+    // Conte déjà créé : sauvegarde automatique au passage à l'étape suivante.
+    if (this.draftService.taleId()) {
+      this.draftService.saveContext(context);
+      this.router.navigate(['../discovery'], { relativeTo: this.route });
+      return;
+    }
+
+    // Nouveau conte : il est créé maintenant, et le parcours continue sous son identifiant.
+    this.creating.set(true);
+    this.createError.set(null);
+    this.draftService.createTale(context).then(
+      (taleId) => this.router.navigate(['/create-danced-tale', taleId, 'discovery']),
+      (error: ApiError) => {
+        this.creating.set(false);
+        this.createError.set(error);
+        this.focusAfterRender('#create-error');
+      },
+    );
   }
 
   private focusFirstInvalidField(): void {
+    this.focusAfterRender('input.ng-invalid');
+  }
+
+  private focusAfterRender(selector: string): void {
     // Après le rendu des messages d'erreur.
     setTimeout(() => {
-      this.host.nativeElement.querySelector<HTMLElement>('input.ng-invalid')?.focus();
+      this.host.nativeElement.querySelector<HTMLElement>(selector)?.focus();
     });
   }
 }

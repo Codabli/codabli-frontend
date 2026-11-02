@@ -255,7 +255,7 @@ export class TaleStagingComponent {
 
         return [
           step.id,
-          // Brouillon non vérifié (localStorage) : champs absents traités comme vides.
+          // Contenu relu du backend sans vérification (JSON libre) : champs absents traités comme vides.
           migrateScene({
             ...scene,
             characters: (scene.characters ?? []).filter((character) => knownIds.has(character.characterId)),

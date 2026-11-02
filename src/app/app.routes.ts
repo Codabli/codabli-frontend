@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { requireAuthentication } from './core/guards/auth.guard';
 import { HOME_ROUTES } from './features/home/home.routes';
 import { MainLayoutComponent } from './layout/public/main-layout/main-layout.component';
 
@@ -38,6 +39,7 @@ export const routes: Routes = [
       },
       {
         path: 'create-danced-tale',
+        canActivate: [requireAuthentication],
         loadChildren: () =>
           import('./pages/create-danced-tale/create-danced-tale.routes').then(
             (m) => m.CREATE_DANCED_TALE_ROUTES,

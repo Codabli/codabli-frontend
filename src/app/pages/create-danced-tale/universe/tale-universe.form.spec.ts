@@ -2,12 +2,12 @@ import { TaleUniverse } from '@models/interfaces/tale-universe.interface';
 import { TaleUniverseForm, UniverseCardForm } from './tale-universe.form';
 
 const UNIVERSE: TaleUniverse = {
-  places: [{ id: 'p1', name: 'La forêt', description: 'Des arbres qui chuchotent', image: 'data:image/jpeg;base64,AAA' }],
+  places: [{ id: 'p1', name: 'La forêt', description: 'Des arbres qui chuchotent', imageId: 'img1' }],
   characters: [
-    { id: 'c1', name: 'Arthur', description: 'Un roi', image: null, role: 'Héros', goal: 'Trouver l\'épée' },
+    { id: 'c1', name: 'Arthur', description: 'Un roi', imageId: null, role: 'Héros', goal: 'Trouver l\'épée' },
   ],
-  periods: [{ id: 't1', name: 'Le Moyen Âge', description: '', image: null }],
-  objects: [{ id: 'o1', name: 'Excalibur', description: '', image: null }],
+  periods: [{ id: 't1', name: 'Le Moyen Âge', description: '', imageId: null }],
+  objects: [{ id: 'o1', name: 'Excalibur', description: '', imageId: null }],
 };
 
 describe('UniverseCardForm', () => {
@@ -81,7 +81,7 @@ describe('TaleUniverseForm', () => {
     const form = new TaleUniverseForm();
     form.addCard('places');
     form.addCard('places').controls.description.setValue('Une grotte');
-    form.addCard('objects').controls.image.setValue('data:image/jpeg;base64,AAA');
+    form.addCard('objects').controls.imageId.setValue('img1');
 
     form.removeBlankCards();
 
@@ -114,7 +114,7 @@ describe('TaleUniverseForm', () => {
 
     const universe = form.toTaleUniverse();
 
-    expect(universe.places[0]).toEqual({ id: expect.any(String), name: 'La grotte', description: 'Sombre', image: null });
+    expect(universe.places[0]).toEqual({ id: expect.any(String), name: 'La grotte', description: 'Sombre', imageId: null });
     expect(universe.characters[0]).toMatchObject({ name: 'Merlin', role: 'Guide', goal: 'Aider' });
   });
 });

@@ -264,11 +264,23 @@
     </div>
   </fieldset>
 
+  @if (createError(); as error) {
+    <p
+      id="create-error"
+      class="form-error project-context__create-error"
+      role="alert"
+      tabindex="-1"
+    >
+      {{ 'createDancedTale.context.createError' | translate: { message: error.message } }}
+    </p>
+  }
+
   <div class="project-context__actions">
     <app-button
       variant="primary"
       navigationIcon="chevron-right"
       iconPosition="right"
+      [disabled]="creating()"
       (click)="onNext()"
     >
       {{ 'createDancedTale.next' | translate }}

@@ -1,9 +1,9 @@
 const DB_NAME = 'codabli';
-/** Version 2 : ajout du store des ressources de la classe (écran 4). */
-const DB_VERSION = 2;
+/** Version 2 : ressources de la classe (écran 4). Version 3 : images de l'univers (écran 5). */
+const DB_VERSION = 3;
 
 /** Un store par usage, tous dans la même base. */
-export const FILE_STORES = ['audio-files', 'class-resources'] as const;
+export const FILE_STORES = ['audio-files', 'class-resources', 'universe-images'] as const;
 export type FileStoreName = (typeof FILE_STORES)[number];
 
 /**

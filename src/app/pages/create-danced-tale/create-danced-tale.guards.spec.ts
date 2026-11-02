@@ -22,8 +22,6 @@ function saveContext(): void {
 
 describe('gardes du parcours', () => {
   beforeEach(() => {
-    localStorage.clear();
-
     TestBed.configureTestingModule({
       providers: [
         provideRouter([

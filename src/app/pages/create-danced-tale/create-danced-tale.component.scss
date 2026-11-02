@@ -1,7 +1,5 @@
 .create-danced-tale {
   padding-block: var(--spacing-2xl) 80px;
-  // La classe globale .grid n'applique plus la marge latérale : chaque page la porte elle-même.
-  padding-inline: var(--grid-margin);
   row-gap: var(--spacing-xl);
 
   // Écran d'écriture (onglets, éditeur, assistant) : plus de place que pour les formulaires.
@@ -38,6 +36,26 @@
 
     @media (min-width: 1024px) {
       grid-column: 2 / span 10;
+    }
+  }
+
+  // Enregistrement ou ouverture du conte en échec : visible sur tous les écrans du parcours.
+  &__alert {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-md);
+    font-size: 18px;
+    background-color: var(--color-bg-navigation);
+    border: 2px solid var(--color-text-outline-default);
+    border-radius: 12px;
+
+    p {
+      flex: 1;
+      min-width: 200px;
+      margin: 0;
     }
   }
 }

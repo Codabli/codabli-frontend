@@ -281,17 +281,6 @@
     </div>
   }
 
-  @if (storageFull()) {
-    <p
-      id="storage-error"
-      class="step-warning"
-      role="alert"
-      tabindex="-1"
-    >
-      {{ 'createDancedTale.universe.storageFull' | translate }}
-    </p>
-  }
-
   <app-autosave-status
     idleKey="createDancedTale.structure.autosaveIdle"
     [autosave]="autosave"

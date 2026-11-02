@@ -32,7 +32,7 @@ export class TaleDetailMediaComponent {
     () => this.currentLanguage() === this.conte().langueOriginale,
   );
 
-  // Traduction correspondant à la langue sélectionnée
+  // Traduction publiée correspondant à la langue sélectionnée
   readonly selectedTranslation = computed<ConteDanseTraduction | null>(() => {
     if (this.isOriginalLanguage()) {
       return null;
@@ -40,16 +40,18 @@ export class TaleDetailMediaComponent {
 
     return (
       this.traductions().find(
-        (translation) => translation.langue === this.currentLanguage(),
+        (translation) =>
+          translation.langue === this.currentLanguage() &&
+          translation.statut === 'publie',
       ) ?? null
     );
   });
 
-  // URL de la vidéo dans la langue sélectionnée
+  // URL de la vidéo dans la langue sélectionnée (vidéo originale par défaut, ex. avec sous-titres)
   readonly videoUrl = computed(() =>
     this.isOriginalLanguage()
       ? this.conte().fichierVideoUrl
-      : (this.selectedTranslation()?.videoUrl ?? null),
+      : (this.selectedTranslation()?.videoUrl ?? this.conte().fichierVideoUrl),
   );
 
   // URL de l'audio dans la langue sélectionnée

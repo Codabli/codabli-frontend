@@ -14,7 +14,7 @@ export const routes: Routes = [
         path: 'library/tales',
         loadComponent: () =>
           import('./features/library/library.component').then(
-            (m) => m.LibraryComponent
+            (m) => m.LibraryComponent,
           ),
       },
       {
@@ -22,7 +22,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () =>
           import('./features/library/tale-detail/tale-detail.component').then(
-            (m) => m.TaleDetailComponent
+            (m) => m.TaleDetailComponent,
           ),
       },
       {
@@ -51,7 +51,7 @@ export const routes: Routes = [
         path: 'art-gallery',
         loadComponent: () =>
           import('./features/art-gallery/art-gallery-component/art-gallery-component').then(
-            (m) => m.ArtGalleryComponent
+            (m) => m.ArtGalleryComponent,
           ),
       },
       {

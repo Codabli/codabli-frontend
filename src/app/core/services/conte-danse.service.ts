@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import {
-  Observable,
-  expand,
-  map,
-  reduce,
-  EMPTY
-} from 'rxjs';
+import { Observable, expand, map, reduce, EMPTY } from 'rxjs';
 import { API_BASE_URL } from '../http/api.config';
 import { buildParams } from '../http/build-params';
 import type {

@@ -12,7 +12,7 @@
   padding: 12px 20px;
 
   font-family: var(--font-family-body), sans-serif;
-  font-size: 16px;
+  font-size: var(--button-font-size, 16px);
   font-weight: 700;
   line-height: var(--button-line-height, 170%);
   letter-spacing: 0;
@@ -154,7 +154,8 @@
 .button--outline {
   background: var(--color-bg-outline-default);
   // Pas de bordure par défaut ; une page peut en afficher une avec --button-outline-border-width.
-  border: var(--button-outline-border-width, 0) solid var(--color-border-outline-default);
+  border: var(--button-outline-border-width, 0) solid
+    var(--color-border-outline-default);
   color: var(--color-text-outline-default);
 
   &:hover {

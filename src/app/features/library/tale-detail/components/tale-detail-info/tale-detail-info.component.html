@@ -1,0 +1,37 @@
+<section class="tale-detail-info">
+  <div class="tale-detail-info__visual">
+    <img
+      src="assets/images/filter-shape-pink.svg"
+      alt=""
+      class="tale-detail-info__shape"
+    />
+  </div>
+  <div class="tale-detail-info__content">
+    <div class="tale-detail-info__description">
+      <p>{{ conte().description }}</p>
+    </div>
+
+    <div class="tale-detail-info__actions">
+      <div class="tale-detail-info__language">
+        <label class="tale-detail-info__label">
+          {{ 'library.taleDetail.selectLanguage' | translate }}
+        </label>
+
+        <app-filter-select
+          placeholder="Choisir une langue"
+          [value]="selectedLanguage()"
+          [options]="languageOptions()"
+          (selectionChange)="languageChange.emit($event)"
+        />
+      </div>
+    </div>
+    <div class="tale-detail-info__buttons">
+      <app-button variant="secondary">
+        {{ 'library.taleDetail.adoptTale' | translate }}
+      </app-button>
+      <app-button variant="primary">
+        {{ 'library.taleDetail.createTale' | translate }}
+      </app-button>
+    </div>
+  </div>
+</section>

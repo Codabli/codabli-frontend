@@ -23,6 +23,7 @@ export class LoginComponent {
   errorKey = signal<string | null>(null);
 
   onSubmit(): void {
+    console.log('Formulaire valide :', this.loginForm.valid);
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -39,7 +40,9 @@ export class LoginComponent {
       error: (error: ApiError) => {
         this.isSubmitting.set(false);
         this.errorKey.set(
-          error.kind === 'bad-request' ? 'login.errors.invalidCredentials' : 'login.errors.unavailable',
+          error.kind === 'bad-request'
+            ? 'login.errors.invalidCredentials'
+            : 'login.errors.unavailable',
         );
       },
     });

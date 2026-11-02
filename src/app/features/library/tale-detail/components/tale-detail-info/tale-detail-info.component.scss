@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.tale-detail-info {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-xl);
+
+  padding: var(--spacing-xl);
+  background-color: var(--color-bg-filters);
+  border-radius: var(--radius-card);
+
+  &__description {
+    width: 100%;
+
+    p {
+      margin: 0;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-h5);
+      font-weight: 900;
+      line-height: 150%;
+      letter-spacing: 0;
+      color: var(--font-color-primary);
+    }
+  }
+
+  &__visual {
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  &__label {
+    display: block;
+    font-size: var(--font-size-h6);
+    color: var(--font-color-primary);
+  }
+
+  &__language {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+  }
+
+  &__language app-filter-select {
+    display: block;
+    width: 100%;
+    max-width: 424px;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 831px) {
+  .tale-detail-info {
+    flex-direction: column;
+    padding: var(--spacing-lg);
+  }
+}

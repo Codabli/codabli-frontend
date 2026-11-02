@@ -3,6 +3,14 @@ import type { Tale } from '@models/interfaces/tale.interface';
 import type { LanguageCode } from '@models/types/language-code.type';
 
 export function mapConteDanseToTale(conte: ConteDanse): Tale {
+  const languages = [
+    ...new Set<LanguageCode>([
+      conte.langueOriginale as LanguageCode,
+      ...conte.traductions.map(
+        (traduction) => traduction.langue as LanguageCode,
+      ),
+    ]),
+  ];
   return {
     id: conte.id,
     title: conte.titre,
@@ -10,8 +18,10 @@ export function mapConteDanseToTale(conte: ConteDanse): Tale {
     coverUrl: conte.couvertureUrl ?? 'assets/images/tales-test.png',
     likes: 0,
     isFavorite: false,
-    languages: [conte.langueOriginale as LanguageCode],
+    languages: languages,
     originalLanguage: conte.langueOriginale as LanguageCode,
     themes: [conte.thematique],
+    ageMin: conte.ageMin,
+    ageMax: conte.ageMax,
   };
 }

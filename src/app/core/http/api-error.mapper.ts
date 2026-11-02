@@ -39,10 +39,23 @@ export function toApiError(error: unknown): ApiError {
   }
 
   const kind: ApiErrorKind = KIND_BY_STATUS[error.status] ?? (error.status >= 500 ? 'server' : 'unknown');
-  const body = error.error as { message?: unknown; errors?: unknown } | null;
+  const body = parseBody(error.error);
   const message = typeof body?.message === 'string' && body.message ? body.message : DEFAULT_MESSAGE[kind];
   const fieldErrors =
     body?.errors && typeof body.errors === 'object' ? (body.errors as Record<string, string>) : undefined;
 
   return { kind, status: error.status, message, ...(fieldErrors && { fieldErrors }) };
+}
+
+/** Corps d'erreur du back : déjà lu en JSON, ou laissé en texte pour une requête `responseType: 'text'`. */
+function parseBody(body: unknown): { message?: unknown; errors?: unknown } | null {
+  if (typeof body !== 'string') {
+    return body as { message?: unknown; errors?: unknown } | null;
+  }
+
+  try {
+    return JSON.parse(body) as { message?: unknown; errors?: unknown };
+  } catch {
+    return null;
+  }
 }

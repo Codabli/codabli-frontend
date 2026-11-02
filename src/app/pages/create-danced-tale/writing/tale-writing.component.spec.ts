@@ -7,17 +7,27 @@ import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 import { RichTextEditor } from '@shared/components/rich-text-editor/rich-text-editor.component';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { TaleWriting } from '@models/interfaces/tale-writing.interface';
+import { AssistantIaService } from '@core/services/assistant-ia.service';
+import { MessageIa } from '@models/interfaces/assistant-ia.interface';
+import { Observable, Subject, of, throwError } from 'rxjs';
 
 describe('TaleWritingComponent', () => {
   let fixture: ComponentFixture<TaleWritingComponent>;
   let element: HTMLElement;
   let router: Router;
   let draftService: CreateDancedTaleDraftService;
+  let assistant: { historique: ReturnType<typeof vi.fn>; envoyer: ReturnType<typeof vi.fn> };
 
-  async function setup(writing?: TaleWriting): Promise<void> {
+  async function setup(
+    writing?: TaleWriting,
+    history: Observable<MessageIa[]> = of([]),
+    taleId: string | null = null,
+  ): Promise<void> {
+    assistant = { historique: vi.fn(() => history), envoyer: vi.fn() };
+
     await TestBed.configureTestingModule({
       imports: [TaleWritingComponent],
-      providers: [provideRouter([]), provideTranslateService()],
+      providers: [provideRouter([]), provideTranslateService(), { provide: AssistantIaService, useValue: assistant }],
     }).compileComponents();
 
     draftService = TestBed.inject(CreateDancedTaleDraftService);
@@ -47,6 +57,8 @@ describe('TaleWritingComponent', () => {
     if (writing) {
       draftService.saveWriting(writing);
     }
+
+    vi.spyOn(draftService, 'taleId').mockReturnValue(taleId);
 
     router = TestBed.inject(Router);
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
@@ -148,14 +160,91 @@ describe('TaleWritingComponent', () => {
     expect(element.querySelector('.autosave--error')).not.toBeNull();
   });
 
-  it('affiche l\'avertissement éthique et les actions de l\'assistant, désactivées pour l\'instant', async () => {
+  function ask(question: string): void {
+    const prompt = element.querySelector<HTMLTextAreaElement>('#assistant-prompt')!;
+    prompt.value = question;
+    prompt.dispatchEvent(new Event('input'));
+    prompt.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+  }
+
+  function messages(): string[] {
+    return Array.from(element.querySelectorAll('.assistant__message')).map((item) =>
+      item.textContent!.replace(/\s+/g, ' ').trim(),
+    );
+  }
+
+  it('affiche l\'avertissement éthique et une zone de question, sans les actions guidées pour l\'instant', async () => {
     await setup();
 
     expect(element.querySelector('.assistant__warning')!.textContent).toContain(
       'createDancedTale.writing.assistant.warning',
     );
-    const actions = element.querySelectorAll<HTMLButtonElement>('.assistant button');
-    expect(actions).toHaveLength(4);
-    actions.forEach((button) => expect(button.disabled).toBe(true));
+    expect(element.querySelector('#assistant-prompt')).not.toBeNull();
+    expect(element.querySelector('.ai-button:not(.ai-button--wide)')).toBeNull();
+  });
+
+  it('reprend la conversation enregistrée du conte', async () => {
+    await setup(
+      undefined,
+      of([
+        { id: 'm1', conteDanseId: 't1', role: 'user', contenu: 'Une question', dateCreation: '' },
+        { id: 'm2', conteDanseId: 't1', role: 'assistant', contenu: 'Une piste', dateCreation: '' },
+      ]),
+      't1',
+    );
+    fixture.detectChanges();
+
+    expect(assistant.historique).toHaveBeenCalledWith('t1');
+    expect(messages()).toEqual([
+      'createDancedTale.writing.assistant.authors.user Une question',
+      'createDancedTale.writing.assistant.authors.assistant Une piste',
+    ]);
+  });
+
+  it('pose une question et affiche la réponse au fil de l\'eau', async () => {
+    await setup(undefined, of([]), 't1');
+    const stream = new Subject<string>();
+    assistant.envoyer.mockReturnValue(stream);
+
+    ask('  Des mots pour la nuit ?  ');
+
+    expect(assistant.envoyer).toHaveBeenCalledWith('t1', 'Des mots pour la nuit ?');
+    expect(element.querySelector<HTMLTextAreaElement>('#assistant-prompt')!.value).toBe('');
+    expect(element.querySelector('[role="log"]')!.getAttribute('aria-busy')).toBe('true');
+
+    stream.next('Sombre');
+    fixture.detectChanges();
+    expect(messages().at(-1)).toBe('Sombre');
+
+    stream.next('Sombre, calme');
+    stream.complete();
+    fixture.detectChanges();
+
+    expect(messages()).toEqual([
+      'createDancedTale.writing.assistant.authors.user Des mots pour la nuit ?',
+      'createDancedTale.writing.assistant.authors.assistant Sombre, calme',
+    ]);
+    expect(element.querySelector('[role="log"]')!.getAttribute('aria-busy')).toBe('false');
+  });
+
+  it('signale une réponse impossible et remet la question dans la zone de saisie', async () => {
+    await setup(undefined, of([]), 't1');
+    assistant.envoyer.mockReturnValue(throwError(() => ({ kind: 'network', status: 0, message: '' })));
+
+    ask('Une question');
+
+    expect(element.querySelector('#assistant-error')!.textContent).toContain('createDancedTale.writing.assistant.error');
+    expect(element.querySelector<HTMLTextAreaElement>('#assistant-prompt')!.value).toBe('Une question');
+    expect(messages()).toEqual([]);
+  });
+
+  it('signale un historique qui n\'a pas pu être chargé', async () => {
+    await setup(undefined, throwError(() => ({ kind: 'server' })), 't1');
+    fixture.detectChanges();
+
+    expect(element.querySelector('.assistant__error')!.textContent).toContain(
+      'createDancedTale.writing.assistant.historyError',
+    );
   });
 });

@@ -670,7 +670,19 @@
           "askQuestion": "Poser une question",
           "dialogueIdeas": "Idées de dialogues"
         },
-        "soon": "L'assistant sera bientôt disponible.",
+        "conversation": "Conversation avec l'assistant",
+        "authors": {
+          "user": "Vous :",
+          "assistant": "Assistant :",
+          "system": "Système :"
+        },
+        "thinking": "L'assistant réfléchit…",
+        "promptLabel": "Votre question à l'assistant",
+        "promptPlaceholder": "Ex. : quels mots pour décrire une forêt la nuit ?",
+        "promptHint": "Entrée pour envoyer, Maj + Entrée pour aller à la ligne.",
+        "send": "Envoyer",
+        "error": "L'assistant n'a pas pu répondre. Votre question est restée dans la zone de saisie : réessayez dans un instant.",
+        "historyError": "Les échanges précédents avec l'assistant n'ont pas pu être chargés.",
         "soonShort": "(bientôt disponible)"
       }
     },

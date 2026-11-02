@@ -630,7 +630,8 @@
       "autosaveIdle": "La mise en scène est enregistrée automatiquement.",
       "conductor": {
         "label": "Générer le conducteur du spectacle (PDF)",
-        "soon": "(bientôt disponible)"
+        "loading": "Génération du conducteur…",
+        "error": "Le conducteur n'a pas pu être généré. Réessayez dans un instant."
       },
       "setup": "Mise en scène de la scène",
       "addStep": "Ajouter une étape dans la trame"

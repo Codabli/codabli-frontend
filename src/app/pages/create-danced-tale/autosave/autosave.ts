@@ -30,11 +30,13 @@ export class Autosave {
   }
 
   /** Enregistre tout de suite une modification en attente (changement d'écran, destruction). */
-  flush(): void {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.run();
+  flush(): Promise<void> {
+    if (!this.timer) {
+      return Promise.resolve();
     }
+
+    clearTimeout(this.timer);
+    return this.run();
   }
 
   private async run(): Promise<void> {

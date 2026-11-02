@@ -2,8 +2,10 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { firstValueFrom } from 'rxjs';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ParcoursConteService } from '@core/services/parcours-conte.service';
 import {
   CHARACTER_ENTRANCES,
   CHARACTER_EXITS,
@@ -57,6 +59,11 @@ function withOptionalMoment<T extends { moment: DanceMoment | null }>(item: T): 
   return DANCE_MOMENTS.includes(item.moment as DanceMoment) ? item : { ...item, moment: null };
 }
 
+/** Nom de fichier proposé par le backend (`Content-Disposition`). */
+export function conductorFileName(contentDisposition: string | null): string {
+  return contentDisposition?.match(/filename="([^"]+)"/)?.[1] ?? 'conducteur.pdf';
+}
+
 /** Un texte est rédigé s'il contient autre chose que des balises vides. */
 function hasText(html: string | undefined): boolean {
   return !!html && html.replace(/<[^>]*>/g, '').trim().length > 0;
@@ -85,6 +92,7 @@ export class TaleStagingComponent {
   private readonly draftService = inject(CreateDancedTaleDraftService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly parcoursService = inject(ParcoursConteService);
 
   protected readonly entrances = CHARACTER_ENTRANCES;
   protected readonly exits = CHARACTER_EXITS;
@@ -100,6 +108,7 @@ export class TaleStagingComponent {
 
   protected readonly scenes = signal<Record<string, SceneStaging>>(this.initialScenes());
   protected readonly libraryCollapsed = signal(false);
+  protected readonly conductor = signal<'idle' | 'loading' | 'error'>('idle');
 
   /** Éléments à placer sur le plateau de chaque scène (écran 8.3) : personnages présents, puis décors. */
   protected readonly stageElements = computed(() =>
@@ -211,6 +220,32 @@ export class TaleStagingComponent {
     this.updateScene(step, (scene) => ({ ...scene, props: scene.props.filter((_, i) => i !== index) }));
     // Le bouton supprimé disparaît : le focus revient sur le champ d'ajout.
     input.focus();
+  }
+
+  /** Écran 8.5 (SCRUM-104) : télécharge le conducteur du spectacle généré par le backend. */
+  protected async downloadConductor(): Promise<void> {
+    const taleId = this.draftService.taleId();
+
+    if (!taleId || this.conductor() === 'loading') {
+      return;
+    }
+
+    this.conductor.set('loading');
+
+    try {
+      // Le PDF reprend ce qui est enregistré : la dernière modification part d'abord.
+      await this.autosave.flush();
+      const response = await firstValueFrom(this.parcoursService.telechargerConducteur(taleId));
+      const url = URL.createObjectURL(response.body!);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = conductorFileName(response.headers.get('Content-Disposition'));
+      link.click();
+      URL.revokeObjectURL(url);
+      this.conductor.set('idle');
+    } catch {
+      this.conductor.set('error');
+    }
   }
 
   protected onPrevious(): void {

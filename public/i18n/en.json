@@ -630,7 +630,8 @@
       "autosaveIdle": "The staging is saved automatically.",
       "conductor": {
         "label": "Generate the show run sheet (PDF)",
-        "soon": "(coming soon)"
+        "loading": "Generating the run sheet…",
+        "error": "The run sheet could not be generated. Please try again in a moment."
       },
       "setup": "Staging of the scene",
       "addStep": "Add a step in the outline"

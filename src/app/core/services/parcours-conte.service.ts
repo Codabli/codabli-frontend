@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../http/api.config';
@@ -25,6 +25,11 @@ export class ParcoursConteService {
   /** Remplace le contenu d'une étape. */
   enregistrerEtape(conteId: string, etape: EtapeParcours, contenu: unknown): Observable<ParcoursConte> {
     return this.http.put<ParcoursConte>(`${this.parcoursUrl(conteId)}/${etape}`, contenu);
+  }
+
+  /** Conducteur du spectacle (PDF généré par le backend), avec le nom de fichier proposé. */
+  telechargerConducteur(conteId: string): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.parcoursUrl(conteId)}/conducteur.pdf`, { observe: 'response', responseType: 'blob' });
   }
 
   private parcoursUrl(conteId: string): string {

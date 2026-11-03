@@ -12,13 +12,20 @@ export class ArtGalleryService {
     public currentCountryObservable: Observable<ArtGalleryCountryEnum>;
 
     constructor() {
-        this.currentCountry = ArtGalleryCountryEnum.LEBANON;
+        this.currentCountry = ArtGalleryCountryEnum.WORLD;
         this.currentCountrySubject = new BehaviorSubject<ArtGalleryCountryEnum>(this.currentCountry);
         this.currentCountryObservable = this.currentCountrySubject.asObservable();
     }
     
     public GetCurrentCountry(): ArtGalleryCountryEnum {
         return this.currentCountry;
+    }
+
+    public GoTo(destination: ArtGalleryCountryEnum): void {
+        if (destination >= ArtGalleryCountryEnum.WORLD && destination <= ArtGalleryCountryEnum.VIETNAM) {
+            this.currentCountry = destination;
+            this.currentCountrySubject.next(this.currentCountry);
+        }
     }
 
     public GoNextCountry(): void {

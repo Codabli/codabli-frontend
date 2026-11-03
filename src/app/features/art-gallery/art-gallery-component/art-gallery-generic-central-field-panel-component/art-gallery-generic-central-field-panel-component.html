@@ -1,0 +1,6 @@
+@if((currentCountryObservable | async) === ArtGalleryCountryEnum.WORLD) {
+    <app-art-gallery-world-map-component />
+}
+@else {
+    <app-art-gallery-central-field-panel-component />
+}

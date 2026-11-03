@@ -1123,6 +1123,7 @@
     "explore": "Explorer la fresque",
     "next": "Salle suivante",
     "country": {
+      "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",
       "AUSTRALIA": "Australie",
       "ITALY": "Italie",

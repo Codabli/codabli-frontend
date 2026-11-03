@@ -14,30 +14,17 @@ describe('ArtGalleryService', () => {
     expect(service).toBeTruthy();
   });
 
+  it.todo('navigates directly to a selected country and publishes the change');
+
   it('checks country navigation', () => {
     //Au demarage du service, le pays initial est le Liban
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.LEBANON);
 
-    //On parcourt ensuite tous les pays
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.AUSTRALIA);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.ITALY);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.FRANCE);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.TOGO);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.BRAZIL);
-
+    //Les pays visitables sont le Liban puis le Vietnam
     service.GoNextCountry();
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
 
-    //Une fois que l'on a parcouru tous les pays, on s'assure que passer au pays suivant ne change rien
+    //Une fois la dernière salle atteinte, passer à la suivante ne change rien
     service.GoNextCountry();
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
   })

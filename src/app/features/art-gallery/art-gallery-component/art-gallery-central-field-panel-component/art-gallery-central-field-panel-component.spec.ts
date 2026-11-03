@@ -18,4 +18,6 @@ describe('ArtGalleryCentralFieldPanelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it.todo('displays the room selected through the horizontal navigation');
 });

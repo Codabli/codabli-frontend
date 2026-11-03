@@ -1,1 +1,18 @@
-<p>art-gallery-horizontal-walkthrough-panel-component works!</p>
+@let currentCountry = currentCountryObservable | async;
+
+<nav class="roomNavigation" [attr.aria-label]="'artGallery.navigation' | translate">
+  @for (country of countries; track country) {
+    <button
+      class="roomButton"
+      [class.active]="currentCountry === country"
+      [attr.aria-pressed]="currentCountry === country"
+      [attr.aria-disabled]="!isCountryVisitable(country)"
+      (click)="selectCountry(country)"
+    >
+      {{ country | countryEnumToText | translate }}
+      @if (!isCountryVisitable(country)) {
+        <span class="roomStatus">{{ 'artGallery.inPreparation' | translate }}</span>
+      }
+    </button>
+  }
+</nav>

@@ -20,4 +20,6 @@ describe('ArtGalleryHorizontalWalkthroughPanelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it.todo('updates the shared room and active state when a room is selected');
 });

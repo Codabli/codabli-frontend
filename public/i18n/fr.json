@@ -1122,6 +1122,8 @@
   "artGallery": {
     "explore": "Explorer la fresque",
     "next": "Salle suivante",
+    "navigation": "Navigation des salles",
+    "inPreparation": "En préparation",
     "country": {
       "LEBANON": "Liban",
       "AUSTRALIA": "Australie",

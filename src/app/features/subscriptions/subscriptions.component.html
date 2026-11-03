@@ -1,0 +1,37 @@
+<section class="subscriptions-page grid">
+  <nav class="subscriptions-page__breadcrumb" [attr.aria-label]="'subscriptions.breadcrumb.label' | translate">
+    <ol>
+      <li>
+        <a routerLink="/">{{ 'subscriptions.breadcrumb.home' | translate }}</a>
+      </li>
+      <li aria-current="page">{{ 'subscriptions.title' | translate }}</li>
+    </ol>
+  </nav>
+
+  <header class="subscriptions-page__header">
+    <h1>{{ 'subscriptions.title' | translate }}</h1>
+    <p>{{ 'subscriptions.intro' | translate }}</p>
+  </header>
+
+  <div class="subscriptions-page__content">
+    @switch (state()) {
+      @case ('loading') {
+        <p class="subscriptions-page__message">{{ 'subscriptions.states.loading' | translate }}</p>
+      }
+      @case ('error') {
+        <p class="subscriptions-page__message" role="alert">{{ 'subscriptions.states.error' | translate }}</p>
+      }
+      @default {
+        @if (offers().length === 0) {
+          <p class="subscriptions-page__message">{{ 'subscriptions.states.empty' | translate }}</p>
+        } @else {
+          <div class="subscriptions-page__grid">
+            @for (offer of offers(); track offer.id) {
+              <app-subscription-offer-card [offer]="offer" />
+            }
+          </div>
+        }
+      }
+    }
+  </div>
+</section>

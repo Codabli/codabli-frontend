@@ -15,6 +15,12 @@ const OFFER: SubscriptionOffer = {
   publicCible: 'enseignant',
   tarif: 49.9,
   duree: 'annuel',
+  limiteProfils: null,
+  limiteClasses: null,
+  stockageMo: null,
+  accesWebinaires: false,
+  accesCoaching: false,
+  accesExports: false,
   actif: true,
 };
 

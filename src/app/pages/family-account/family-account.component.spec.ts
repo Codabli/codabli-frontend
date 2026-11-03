@@ -15,6 +15,12 @@ const OFFER: SubscriptionOffer = {
   publicCible: 'famille',
   tarif: 59.9,
   duree: 'annuel',
+  limiteProfils: null,
+  limiteClasses: null,
+  stockageMo: null,
+  accesWebinaires: false,
+  accesCoaching: false,
+  accesExports: false,
   actif: true,
 };
 

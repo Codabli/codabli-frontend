@@ -18,9 +18,10 @@ describe('ArtGalleryService', () => {
 
   it('checks country navigation', () => {
     //Au demarage du service, le pays initial est le Liban
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.LEBANON);
+    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.WORLD);
 
     //Les pays visitables sont le Liban puis le Vietnam
+
     service.GoNextCountry();
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
 

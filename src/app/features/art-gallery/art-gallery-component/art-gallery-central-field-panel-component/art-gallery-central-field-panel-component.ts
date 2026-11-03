@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import {ArtGalleryFrescoComponent} from '../art-gallery-fresco-component/art-gallery-fresco-component'
 import {ArtGalleryService} from '../../art-gallery-service'
+import {ArtGalleryCountryEnum} from '../../art-gallery-country-enum'
 
 @Component({
   imports: [ArtGalleryFrescoComponent, TranslatePipe],
@@ -18,5 +19,9 @@ export class ArtGalleryCentralFieldPanelComponent {
 
   changeCountry(): void {
     this.service.GoNextCountry();
+  }
+
+  goToWorldMap(): void {
+    this.service.GoTo(ArtGalleryCountryEnum.WORLD);
   }
 }

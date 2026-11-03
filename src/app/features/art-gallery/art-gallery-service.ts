@@ -14,7 +14,7 @@ export class ArtGalleryService {
     public currentCountryObservable: Observable<ArtGalleryCountryEnum>;
 
     constructor() {
-        this.currentCountry = ArtGalleryCountryEnum.LEBANON;
+        this.currentCountry = ArtGalleryCountryEnum.WORLD;
         this.currentCountrySubject = new BehaviorSubject<ArtGalleryCountryEnum>(this.currentCountry);
         this.currentCountryObservable = this.currentCountrySubject.asObservable();
     }
@@ -23,16 +23,11 @@ export class ArtGalleryService {
         return this.currentCountry;
     }
 
-    public GoToCountry(country: ArtGalleryCountryEnum): void {
-        if (
-            !ART_GALLERY_VISITABLE_COUNTRIES.includes(country) ||
-            country === this.currentCountry
-        ) {
-            return;
+    public GoTo(destination: ArtGalleryCountryEnum): void {
+        if (ART_GALLERY_VISITABLE_COUNTRIES.includes(country) && country !== this.currentCountry) {
+            this.currentCountry = destination;
+            this.currentCountrySubject.next(this.currentCountry);
         }
-
-        this.currentCountry = country;
-        this.currentCountrySubject.next(this.currentCountry);
     }
 
     public GoNextCountry(): void {

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { ArtGalleryService } from './art-gallery-service';
-import {ArtGalleryCountryEnum} from './art-gallery-country-enum';
+import { ArtGalleryCountryEnum } from './art-gallery-country-enum';
 
 describe('ArtGalleryService', () => {
   let service: ArtGalleryService;
@@ -14,34 +14,40 @@ describe('ArtGalleryService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('checks country navigation', () => {
-    //Au demarage du service, le pays initial est le Liban
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.WORLD);
+  it('navigates directly to a visitable country and publishes the change', () => {
+    const countries: ArtGalleryCountryEnum[] = [];
+    service.currentCountryObservable.subscribe((country) => countries.push(country));
 
-    //On parcourt ensuite tous les pays
+    service.GoTo(ArtGalleryCountryEnum.VIETNAM);
+
+    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
+    expect(countries).toEqual([
+      ArtGalleryCountryEnum.WORLD,
+      ArtGalleryCountryEnum.VIETNAM,
+    ]);
+  });
+
+  it('does not navigate to a country that is not visitable', () => {
+    service.GoTo(ArtGalleryCountryEnum.AUSTRALIA);
+
+    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.WORLD);
+  });
+
+  it('allows returning to the world map', () => {
+    service.GoTo(ArtGalleryCountryEnum.VIETNAM);
+    service.GoTo(ArtGalleryCountryEnum.WORLD);
+
+    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.WORLD);
+  });
+
+  it('navigates through visitable countries and stops at the last one', () => {
     service.GoNextCountry();
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.LEBANON);
 
     service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.AUSTRALIA);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.ITALY);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.FRANCE);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.TOGO);
-
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.BRAZIL);
+    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
 
     service.GoNextCountry();
     expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
-
-    //Une fois que l'on a parcouru tous les pays, on s'assure que passer au pays suivant ne change rien
-    service.GoNextCountry();
-    expect(service.GetCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
-  })
+  });
 });

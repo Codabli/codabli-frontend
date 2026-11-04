@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {ArtGalleryCountryEnum} from './art-gallery-country-enum'
-import {EnumHelper} from '../../shared/utils/enum-helper'
+import { ArtGalleryConstants } from './art-gallery-constants';
+import { ArtGalleryCountryEnum } from './art-gallery-country-enum';
 
 @Injectable({
     providedIn: 'root',
@@ -16,22 +16,28 @@ export class ArtGalleryService {
         this.currentCountrySubject = new BehaviorSubject<ArtGalleryCountryEnum>(this.currentCountry);
         this.currentCountryObservable = this.currentCountrySubject.asObservable();
     }
-    
+
     public GetCurrentCountry(): ArtGalleryCountryEnum {
         return this.currentCountry;
     }
 
     public GoTo(destination: ArtGalleryCountryEnum): void {
-        if (destination >= ArtGalleryCountryEnum.WORLD && destination <= ArtGalleryCountryEnum.VIETNAM) {
+        if (
+            (destination === ArtGalleryCountryEnum.WORLD ||
+                ArtGalleryConstants.VISITABLE_COUNTRIES.includes(destination)) &&
+            destination !== this.currentCountry
+        ) {
             this.currentCountry = destination;
             this.currentCountrySubject.next(this.currentCountry);
         }
     }
 
     public GoNextCountry(): void {
-        if (this.currentCountry !== EnumHelper.GetLastDeclaredValue(ArtGalleryCountryEnum)) {
-            this.currentCountry++;
-            this.currentCountrySubject.next(this.currentCountry);
+        const currentIndex = ArtGalleryConstants.VISITABLE_COUNTRIES.indexOf(this.currentCountry);
+        const nextCountry = ArtGalleryConstants.VISITABLE_COUNTRIES[currentIndex + 1];
+
+        if (nextCountry !== undefined) {
+            this.GoTo(nextCountry);
         }
     }
 }

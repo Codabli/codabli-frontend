@@ -1,8 +1,9 @@
 import { CountryEnumToTextPipe } from './country-enum-to-text-pipe';
-import {ArtGalleryCountryEnum} from './art-gallery-country-enum';
+import { ArtGalleryCountryEnum } from './art-gallery-country-enum';
 
 describe('CountryEnumToTextPipe', () => {
-  const pipe: CountryEnumToTextPipe;
+  let pipe: CountryEnumToTextPipe;
+
   beforeEach(() => {
     pipe = new CountryEnumToTextPipe();
   });
@@ -11,19 +12,16 @@ describe('CountryEnumToTextPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('transforms every values', () => {
+  it('transforms country values to translation keys', () => {
     expect(pipe.transform(null)).toBe('');
     expect(pipe.transform(ArtGalleryCountryEnum.UNDEFINED)).toBe('');
-    expect(pipe.transform(ArtGalleryCountryEnum.LEBANON)).toBe('LEBANON');
-    expect(pipe.transform(ArtGalleryCountryEnum.AUSTRALIA)).toBe('AUSTRALIA');
-    expect(pipe.transform(ArtGalleryCountryEnum.ITALY)).toBe('ITALY');
-    expect(pipe.transform(ArtGalleryCountryEnum.FRANCE)).toBe('FRANCE');
-    expect(pipe.transform(ArtGalleryCountryEnum.TOGO)).toBe('TOGO');
-    expect(pipe.transform(ArtGalleryCountryEnum.BRAZIL)).toBe('BRAZIL');
-    expect(pipe.transform(ArtGalleryCountryEnum.VIETNAM)).toBe('VIETNAM');
-  });
-
-  afterEach(() => {
-    pipe = null;
+    expect(pipe.transform(ArtGalleryCountryEnum.WORLD)).toBe('artGallery.country.WORLD');
+    expect(pipe.transform(ArtGalleryCountryEnum.LEBANON)).toBe('artGallery.country.LEBANON');
+    expect(pipe.transform(ArtGalleryCountryEnum.AUSTRALIA)).toBe('artGallery.country.AUSTRALIA');
+    expect(pipe.transform(ArtGalleryCountryEnum.ITALY)).toBe('artGallery.country.ITALY');
+    expect(pipe.transform(ArtGalleryCountryEnum.FRANCE)).toBe('artGallery.country.FRANCE');
+    expect(pipe.transform(ArtGalleryCountryEnum.TOGO)).toBe('artGallery.country.TOGO');
+    expect(pipe.transform(ArtGalleryCountryEnum.BRAZIL)).toBe('artGallery.country.BRAZIL');
+    expect(pipe.transform(ArtGalleryCountryEnum.VIETNAM)).toBe('artGallery.country.VIETNAM');
   });
 });

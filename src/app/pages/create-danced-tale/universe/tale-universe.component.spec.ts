@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 import { TaleUniverseComponent } from './tale-universe.component';
+import { Subject, throwError } from 'rxjs';
+import { AssistantIaService } from '@core/services/assistant-ia.service';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { ImageResizeError, ImageResizeService } from '@core/services/image-resize.service';
 import { UniverseImageStore } from '@core/services/universe-image-store.service';
@@ -33,10 +35,12 @@ describe('TaleUniverseComponent', () => {
   let router: Router;
   let draftService: CreateDancedTaleDraftService;
   let resize: ReturnType<typeof vi.fn>;
+  let assistant: { aiderUnivers: ReturnType<typeof vi.fn> };
   let store: { put: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
   const resized = new Blob(['jpeg'], { type: 'image/jpeg' });
 
-  async function setup(savedUniverse?: TaleUniverse): Promise<void> {
+  async function setup(savedUniverse?: TaleUniverse, taleId: string | null = 't1'): Promise<void> {
+    assistant = { aiderUnivers: vi.fn() };
     resize = vi.fn().mockResolvedValue(resized);
     store = {
       put: vi.fn().mockResolvedValue(undefined),
@@ -53,11 +57,13 @@ describe('TaleUniverseComponent', () => {
         provideTranslateService(),
         { provide: ImageResizeService, useValue: { resize } },
         { provide: UniverseImageStore, useValue: store },
+        { provide: AssistantIaService, useValue: assistant },
       ],
     }).compileComponents();
 
     draftService = TestBed.inject(CreateDancedTaleDraftService);
     draftService.saveContext(CONTEXT);
+    vi.spyOn(draftService, 'taleId').mockReturnValue(taleId);
     if (savedUniverse) {
       draftService.saveUniverse(savedUniverse);
     }
@@ -83,6 +89,19 @@ describe('TaleUniverseComponent', () => {
   function type(field: HTMLInputElement | HTMLTextAreaElement, value: string): void {
     field.value = value;
     field.dispatchEvent(new Event('input'));
+  }
+
+  function helpButton(section: string): HTMLButtonElement {
+    return cardsOf(section)[0].querySelector<HTMLButtonElement>('.ideas-button')!;
+  }
+
+  function answer(section: string): HTMLElement | null {
+    return cardsOf(section)[0].querySelector<HTMLElement>('.ideas-answer');
+  }
+
+  function describeCard(section: string, value: string): void {
+    type(cardsOf(section)[0].querySelector('textarea')!, value);
+    fixture.detectChanges();
   }
 
   function clickNext(): void {
@@ -285,5 +304,90 @@ describe('TaleUniverseComponent', () => {
     expect(errorId).toBeTruthy();
     expect(element.querySelector(`#${errorId}`)).not.toBeNull();
     expect(cardsOf('places')[0].querySelector('img')).toBeNull();
+  });
+
+  it('n\'active l\'assistant qu\'une fois la description commencée', async () => {
+    await setup();
+    expect(helpButton('places').disabled).toBe(true);
+
+    describeCard('places', '   ');
+    expect(helpButton('places').disabled).toBe(true);
+
+    describeCard('places', 'Une forêt sombre');
+    expect(helpButton('places').disabled).toBe(false);
+  });
+
+  it('n\'active pas l\'assistant tant que le conte n\'est pas enregistré', async () => {
+    await setup(undefined, null);
+
+    describeCard('places', 'Une forêt sombre');
+
+    expect(helpButton('places').disabled).toBe(true);
+  });
+
+  it('envoie le type et la description, et affiche la réponse au fil du flux', async () => {
+    await setup();
+    const stream = new Subject<string>();
+    assistant.aiderUnivers.mockReturnValue(stream);
+    describeCard('periods', '  Il y a très longtemps ');
+
+    helpButton('periods').click();
+    fixture.detectChanges();
+
+    expect(assistant.aiderUnivers).toHaveBeenCalledWith('t1', 'Epoque', 'Il y a très longtemps');
+    expect(answer('periods')!.getAttribute('aria-busy')).toBe('true');
+    expect(helpButton('periods').disabled).toBe(true);
+
+    stream.next('Comment vivaient');
+    stream.next('Comment vivaient les gens ?');
+    stream.complete();
+    fixture.detectChanges();
+
+    expect(answer('periods')!.querySelector('.ideas-answer__text')!.textContent).toBe('Comment vivaient les gens ?');
+    expect(answer('periods')!.getAttribute('aria-busy')).toBe('false');
+    expect(helpButton('periods').disabled).toBe(false);
+  });
+
+  it('remplace la réponse précédente à une nouvelle demande', async () => {
+    await setup();
+    const second = new Subject<string>();
+    assistant.aiderUnivers.mockReturnValueOnce(new Subject<string>()).mockReturnValueOnce(second);
+    describeCard('objects', 'Une clé dorée');
+    helpButton('objects').click();
+    (assistant.aiderUnivers.mock.results[0].value as Subject<string>).next('Première réponse');
+    (assistant.aiderUnivers.mock.results[0].value as Subject<string>).complete();
+    fixture.detectChanges();
+
+    helpButton('objects').click();
+    second.next('Seconde réponse');
+    second.complete();
+    fixture.detectChanges();
+
+    expect(answer('objects')!.querySelector('.ideas-answer__text')!.textContent).toBe('Seconde réponse');
+    expect(assistant.aiderUnivers).toHaveBeenCalledTimes(2);
+  });
+
+  it('signale une réponse impossible ou vide', async () => {
+    await setup();
+    assistant.aiderUnivers.mockReturnValue(throwError(() => ({ kind: 'network', status: 0, message: '' })));
+    describeCard('places', 'Une forêt');
+
+    helpButton('places').click();
+    fixture.detectChanges();
+
+    expect(answer('places')!.querySelector('.form-error')).not.toBeNull();
+    expect(helpButton('places').disabled).toBe(false);
+  });
+
+  it('abandonne la demande en cours quand la carte est supprimée', async () => {
+    await setup(UNIVERSE);
+    const stream = new Subject<string>();
+    assistant.aiderUnivers.mockReturnValue(stream);
+    describeCard('places', 'Une forêt');
+    helpButton('places').click();
+
+    click('.universe-card__remove');
+
+    expect(stream.observed).toBe(false);
   });
 });

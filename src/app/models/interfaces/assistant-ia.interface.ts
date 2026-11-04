@@ -9,3 +9,6 @@ export interface MessageIa {
   contenu: string;
   dateCreation: string;
 }
+
+/** Élément de l'univers décrit avec l'assistant (`AssistantCreationUniversRequest.Type` du back). */
+export type TypeElementUnivers = 'Lieu' | 'Personnage' | 'Epoque' | 'Objet';

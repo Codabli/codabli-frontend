@@ -55,6 +55,19 @@ describe('AssistantIaService', () => {
     expect(done).toBe(true);
   });
 
+  it('demande de l\'aide sur un élément de l\'univers et émet la réponse au fil du flux', () => {
+    const received: string[] = [];
+
+    service.aiderUnivers('t1', 'Lieu', 'Une forêt sombre').subscribe((text) => received.push(text));
+    const request = http.expectOne({ method: 'POST', url: `${URL}/assistant-creation-univers` });
+    expect(request.request.body).toEqual({ type: 'Lieu', description: 'Une forêt sombre' });
+
+    request.event({ type: HttpEventType.DownloadProgress, loaded: 1, partialText: 'event:token\ndata:Que\n\n' });
+    request.flush('event:token\ndata:Que\n\nevent:token\ndata: entend-on ?');
+
+    expect(received).toEqual(['Que', 'Que entend-on ?']);
+  });
+
   it('remonte l\'erreur du back lisible malgré la réponse attendue en texte', () => {
     let message: string | undefined;
 

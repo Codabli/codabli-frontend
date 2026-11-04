@@ -2,7 +2,9 @@ import { Component, DestroyRef, ElementRef, inject, signal } from '@angular/core
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { AssistantIaService } from '@core/services/assistant-ia.service';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
 import { UniverseImageStore } from '@core/services/universe-image-store.service';
 import {
@@ -10,6 +12,7 @@ import {
   ImageResizeErrorKind,
   ImageResizeService,
 } from '@core/services/image-resize.service';
+import { TypeElementUnivers } from '@models/interfaces/assistant-ia.interface';
 import {
   UNIVERSE_SECTIONS,
   UniverseSection,
@@ -32,6 +35,20 @@ const SECTION_ICONS: Record<UniverseSection, string> = {
   objects: 'fa-key',
 };
 
+const SECTION_TYPES: Record<UniverseSection, TypeElementUnivers> = {
+  places: 'Lieu',
+  characters: 'Personnage',
+  periods: 'Epoque',
+  objects: 'Objet',
+};
+
+/** Réponse de l'assistant pour une carte : remplacée à chaque demande, jamais enregistrée. */
+interface CardHelp {
+  text: string;
+  pending: boolean;
+  error: boolean;
+}
+
 // Suggestions de rôles, la saisie reste libre.
 const ROLE_SUGGESTION_KEYS = ['hero', 'ally', 'opponent', 'mentor', 'secondary'] as const;
 
@@ -48,6 +65,7 @@ export class TaleUniverseComponent {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly imageResize = inject(ImageResizeService);
   private readonly imageStore = inject(UniverseImageStore);
+  private readonly assistant = inject(AssistantIaService);
 
   protected readonly sections = UNIVERSE_SECTIONS;
   protected readonly sectionIcons = SECTION_ICONS;
@@ -66,6 +84,10 @@ export class TaleUniverseComponent {
   protected readonly imageUrls = signal<Record<string, string>>({});
   /** Images introuvables sur cet appareil (ajoutées depuis un autre navigateur, données effacées...). */
   protected readonly missingImages = signal<ReadonlySet<string>>(new Set());
+
+  /** Aide de l'assistant (SCRUM-90), par identifiant de carte. */
+  protected readonly helps = signal<Record<string, CardHelp>>({});
+  private readonly helpRequests = new Map<string, Subscription>();
 
   private readonly objectUrls = new Set<string>();
 
@@ -92,6 +114,7 @@ export class TaleUniverseComponent {
     inject(DestroyRef).onDestroy(() => {
       this.saveIncomplete();
       this.objectUrls.forEach((url) => URL.revokeObjectURL(url));
+      this.helpRequests.forEach((request) => request.unsubscribe());
     });
   }
 
@@ -123,9 +146,48 @@ export class TaleUniverseComponent {
     this.releaseImage(card.controls.imageId.value);
     this.form.removeCard(section, index);
     this.imageErrors.update(({ [cardId]: _, ...others }) => others);
+    this.helpRequests.get(cardId)?.unsubscribe();
+    this.helpRequests.delete(cardId);
+    this.helps.update(({ [cardId]: _, ...others }) => others);
 
     // Le bouton supprimé disparaît : le focus revient sur l'ajout de la sous-section.
     this.focus(`#add-${section} button`);
+  }
+
+  protected canAskHelp(card: UniverseCardForm): boolean {
+    return (
+      !!this.draftService.taleId() &&
+      !!card.controls.description.value.trim() &&
+      !this.helps()[card.controls.id.value]?.pending
+    );
+  }
+
+  /** L'assistant questionne sur la description ; une nouvelle demande remplace la réponse précédente. */
+  protected askHelp(card: UniverseCardForm): void {
+    const taleId = this.draftService.taleId();
+
+    if (!taleId || !this.canAskHelp(card)) {
+      return;
+    }
+
+    const cardId = card.controls.id.value;
+    const setHelp = (help: CardHelp) => this.helps.update((helps) => ({ ...helps, [cardId]: help }));
+    let received = '';
+
+    setHelp({ text: '', pending: true, error: false });
+    this.helpRequests.set(
+      cardId,
+      this.assistant
+        .aiderUnivers(taleId, SECTION_TYPES[card.section], card.controls.description.value.trim())
+        .subscribe({
+          next: (text) => {
+            received = text;
+            setHelp({ text, pending: true, error: false });
+          },
+          complete: () => setHelp({ text: received, pending: false, error: !received.trim() }),
+          error: () => setHelp({ text: '', pending: false, error: true }),
+        }),
+    );
   }
 
   protected async onImageSelected(card: UniverseCardForm, event: Event): Promise<void> {

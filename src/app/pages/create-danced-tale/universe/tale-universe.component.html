@@ -298,24 +298,45 @@
                 }
               </div>
 
-              <!--
-                TODO(IA) : assistance « Générer des idées » (SCRUM-90) — 3 propositions modifiables
-                ou sélectionnables. Désactivé tant que le service IA n'existe pas.
-              -->
+              <!-- Assistant (SCRUM-90) : questionne sur la description, c'est la classe qui la reprend. -->
               <button
                 type="button"
                 class="ideas-button"
-                disabled
+                [disabled]="!canAskHelp(card)"
+                (click)="askHelp(card)"
               >
                 <i
                   class="fa-solid fa-wand-magic-sparkles"
                   aria-hidden="true"
                 ></i>
                 {{ 'createDancedTale.universe.card.ideas.label' | translate }}
-                <span class="ideas-button__soon">
-                  {{ 'createDancedTale.universe.card.ideas.soon' | translate }}
-                </span>
               </button>
+
+              @if (helps()[card.controls.id.value]; as help) {
+                <div
+                  class="ideas-answer"
+                  role="status"
+                  [attr.aria-busy]="help.pending"
+                >
+                  <p class="ideas-answer__title">
+                    {{ 'createDancedTale.universe.card.ideas.answerLabel' | translate }}
+                  </p>
+                  @if (help.error) {
+                    <p class="form-error">
+                      {{ 'createDancedTale.universe.card.ideas.error' | translate }}
+                    </p>
+                  } @else if (help.text) {
+                    <p class="ideas-answer__text">{{ help.text }}</p>
+                    <p class="ideas-answer__warning">
+                      {{ 'createDancedTale.universe.card.ideas.warning' | translate }}
+                    </p>
+                  } @else {
+                    <p class="ideas-answer__pending">
+                      {{ 'createDancedTale.universe.card.ideas.thinking' | translate }}
+                    </p>
+                  }
+                </div>
+              }
             </fieldset>
           }
         </div>

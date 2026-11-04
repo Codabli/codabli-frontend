@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-    ART_GALLERY_VISITABLE_COUNTRIES,
-    ArtGalleryCountryEnum,
-} from './art-gallery-country-enum';
+import { ART_GALLERY_VISITABLE_COUNTRIES } from './art-gallery-constants';
+import { ArtGalleryCountryEnum } from './art-gallery-country-enum';
 
 @Injectable({
     providedIn: 'root',
@@ -24,7 +22,11 @@ export class ArtGalleryService {
     }
 
     public GoTo(destination: ArtGalleryCountryEnum): void {
-        if (ART_GALLERY_VISITABLE_COUNTRIES.includes(country) && country !== this.currentCountry) {
+        if (
+            (destination === ArtGalleryCountryEnum.WORLD ||
+                ART_GALLERY_VISITABLE_COUNTRIES.includes(destination)) &&
+            destination !== this.currentCountry
+        ) {
             this.currentCountry = destination;
             this.currentCountrySubject.next(this.currentCountry);
         }
@@ -35,7 +37,7 @@ export class ArtGalleryService {
         const nextCountry = ART_GALLERY_VISITABLE_COUNTRIES[currentIndex + 1];
 
         if (nextCountry !== undefined) {
-            this.GoToCountry(nextCountry);
+            this.GoTo(nextCountry);
         }
     }
 }

@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import {
   ART_GALLERY_COUNTRIES,
   ART_GALLERY_VISITABLE_COUNTRIES,
-  ArtGalleryCountryEnum,
-} from '../../art-gallery-country-enum';
+} from '../../art-gallery-constants';
+import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
 import { CountryEnumToTextPipe } from '../../country-enum-to-text-pipe';
 import { ArtGalleryService } from '../../art-gallery-service';
 
@@ -27,7 +27,7 @@ export class ArtGalleryHorizontalWalkthroughPanelComponent {
   }
 
   selectCountry(country: ArtGalleryCountryEnum): void {
-    this.service.GoToCountry(country);
+    this.service.GoTo(country);
   }
 
   isCountryVisitable(country: ArtGalleryCountryEnum): boolean {

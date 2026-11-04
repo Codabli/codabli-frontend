@@ -1,0 +1,103 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.pdf-reader {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background-color: var(--color-bg-warm-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-card);
+}
+
+.pdf-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-light);
+
+  app-button {
+    --button-outline-border-width: 2px;
+  }
+}
+
+.pdf-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.pdf-toolbar__counter {
+  color: var(--font-color-primary);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-small);
+  white-space: nowrap;
+}
+
+// Zone de lecture au format A5 paysage (210 × 148 mm)
+.pdf-reader__viewer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 148 / 210;
+  overflow: hidden;
+}
+
+ngx-extended-pdf-viewer {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pdf-reader__loading {
+  position: absolute;
+  top: var(--spacing-md);
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+
+  color: var(--font-color-primary);
+  font-size: var(--font-size-small);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-button);
+  box-shadow: var(--shadow-card);
+}
+
+.pdf-reader__error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  margin: 0;
+  padding: var(--spacing-xl);
+
+  color: var(--color-text-alert);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .pdf-toolbar {
+    justify-content: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .pdf-toolbar__group {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

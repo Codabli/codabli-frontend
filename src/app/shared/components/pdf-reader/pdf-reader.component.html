@@ -1,0 +1,93 @@
+<div class="pdf-reader">
+  <header class="pdf-toolbar">
+    <div class="pdf-toolbar__group">
+      <app-button
+        variant="secondary"
+        navigationIcon="chevron-left"
+        [disabled]="!canGoPrevious()"
+        [ariaLabel]="'pdfReader.previousPage' | translate"
+        (click)="previousPage()"
+      >
+        {{ 'pdfReader.previous' | translate }}
+      </app-button>
+
+      <span
+        class="pdf-toolbar__counter"
+        aria-live="polite"
+      >
+        {{
+          'pdfReader.pageCounter'
+            | translate: { current: currentPage(), total: totalPages() }
+        }}
+      </span>
+
+      <app-button
+        variant="secondary"
+        navigationIcon="chevron-right"
+        [disabled]="!canGoNext()"
+        [ariaLabel]="'pdfReader.nextPage' | translate"
+        (click)="nextPage()"
+      >
+        {{ 'pdfReader.next' | translate }}
+      </app-button>
+    </div>
+
+    <div class="pdf-toolbar__group">
+      <app-button
+        variant="outline"
+        [disabled]="!canZoomOut()"
+        [ariaLabel]="'pdfReader.zoomOut' | translate"
+        (click)="zoomOut()"
+      >
+        −
+      </app-button>
+
+      <app-button
+        variant="outline"
+        (click)="resetZoom()"
+      >
+        {{ 'pdfReader.fitPage' | translate }}
+      </app-button>
+
+      <app-button
+        variant="outline"
+        [disabled]="!canZoomIn()"
+        [ariaLabel]="'pdfReader.zoomIn' | translate"
+        (click)="zoomIn()"
+      >
+        +
+      </app-button>
+    </div>
+  </header>
+
+  <div class="pdf-reader__viewer">
+    @if (hasError()) {
+      <p
+        class="pdf-reader__error"
+        role="alert"
+      >
+        {{ 'pdfReader.loadError' | translate }}
+      </p>
+    } @else {
+      @if (loading()) {
+        <p class="pdf-reader__loading">
+          {{ 'pdfReader.loading' | translate }}
+        </p>
+      }
+
+      @if (src(); as document) {
+        <ngx-extended-pdf-viewer
+          pageViewMode="single"
+          [src]="document"
+          [zoom]="zoom()"
+          [page]="currentPage()"
+          [showToolbar]="false"
+          [showBorders]="false"
+          (pageChange)="onPageChange($event)"
+          (pdfLoaded)="onPdfLoaded($event)"
+          (pdfLoadingFailed)="onPdfError()"
+        />
+      }
+    }
+  </div>
+</div>

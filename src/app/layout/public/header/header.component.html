@@ -76,27 +76,71 @@
             </div>
           }
         </div>
-        <button
-          class="header__action"
-          type="button"
-          aria-label="Ouvrir le panier"
-        >
-          <app-icon
-            name="shop"
-            [size]="24"
-          />
-        </button>
 
-        <button
-          class="header__action"
-          type="button"
-          aria-label="Ouvrir mon profil"
-        >
-          <app-icon
-            name="profile"
-            [size]="24"
-          />
-        </button>
+        @if (isAuthenticated()) {
+          <button
+            class="header__action"
+            type="button"
+            aria-label="Ouvrir le panier"
+          >
+            <app-icon
+              name="shop"
+              [size]="24"
+            />
+          </button>
+          <div
+            #profileSelector
+            class="header__profile"
+          >
+            <button
+              class="header__action"
+              type="button"
+              aria-label="Ouvrir mon profil"
+              aria-haspopup="menu"
+              [attr.aria-expanded]="isProfileMenuOpen()"
+              (click)="toggleProfileMenu()"
+            >
+              <app-icon
+                name="profile"
+                [size]="24"
+              />
+            </button>
+            @if (isProfileMenuOpen()) {
+              <div
+                class="header__profile-menu"
+                role="menu"
+              >
+                <a
+                  class="header__profile-option"
+                  routerLink="/profile"
+                  role="menuitem"
+                  (click)="closeProfileMenu()"
+                >
+                  {{ 'header.profile' | translate }}
+                </a>
+
+                <button
+                  class="header__profile-option header__profile-option--danger"
+                  type="button"
+                  role="menuitem"
+                  (click)="logout()"
+                >
+                  {{ 'header.logout' | translate }}
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <app-button
+            class="header__login"
+            variant="outline"
+            icon="login"
+            aria-label="Se connecter"
+            [routerLink]="'/login'"
+          >
+            {{ 'header.login' | translate }}
+          </app-button>
+        }
       </div>
     </div>
   </div>

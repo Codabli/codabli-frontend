@@ -1,5 +1,5 @@
 export type StatutTraduction =
-  'brouillon' | 'en_revision' | 'publie' | 'refuse';
+  'brouillon' | 'en_revision' | 'publiee' | 'refuse';
 
 export interface ConteDanseTraduction {
   id: string;

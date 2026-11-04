@@ -128,13 +128,16 @@
               @if (translatedText(); as text) {
                 <div class="tale-text">{{ text }}</div>
               }
-              @if (textUrl(); as url) {
-                <app-button
-                  variant="primary"
-                  (click)="downloadText(url)"
-                >
-                  {{ 'library.taleDetail.consultText' | translate }}
-                </app-button>
+              @if (textUrl()) {
+                @if (textPdf.hasValue()) {
+                  <app-pdf-reader [src]="textPdf.value()" />
+                } @else if (textPdf.error()) {
+                  <app-pdf-reader [failed]="true" />
+                } @else {
+                  <p class="media-unavailable">
+                    {{ 'pdfReader.loading' | translate }}
+                  </p>
+                }
               }
             </div>
           } @else {

@@ -66,6 +66,19 @@
     "redoShortcut": "Rétablir (Ctrl+Y)"
   },
 
+  "pdfReader": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "previousPage": "Page précédente",
+    "nextPage": "Page suivante",
+    "pageCounter": "Page {{current}} / {{total}}",
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "fitPage": "Ajuster",
+    "loading": "Chargement du PDF…",
+    "loadError": "Impossible de charger le PDF."
+  },
+
   "createDancedTale": {
     "title": "Créez votre conte dansé sur-mesure",
     "subtitle": "Renseignez quelques informations sur votre projet : elles serviront à personnaliser les étapes suivantes.",
@@ -958,7 +971,11 @@
       "unavailable": "Le service de connexion est momentanément indisponible. Réessayez dans quelques instants."
     }
   },
-
+  "header": {
+    "login": "Se connecter",
+    "profile": "Mon profil",
+    "logout": "Se déconnecter"
+  },
   "navbar": {
     "dancedTales": "Bibliothèque - Contes dansés",
     "interactiveGame": "Jeu Lecture Créative",

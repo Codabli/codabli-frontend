@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTranslateService } from '@ngx-translate/core';
 import { ConteDanse } from '@models/interfaces/conte-danse.interface';
 import { TaleDetailMediaComponent } from './tale-detail-media.component';
@@ -37,7 +39,11 @@ describe('TaleDetailMediaComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TaleDetailMediaComponent],
-      providers: [provideTranslateService()],
+      providers: [
+        provideTranslateService(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TaleDetailMediaComponent);

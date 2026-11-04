@@ -2,10 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  ART_GALLERY_COUNTRIES,
-  ART_GALLERY_VISITABLE_COUNTRIES,
-} from '../../art-gallery-constants';
+import { ArtGalleryConstants } from '../../art-gallery-constants';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
 import { CountryEnumToTextPipe } from '../../country-enum-to-text-pipe';
 import { ArtGalleryService } from '../../art-gallery-service';
@@ -17,7 +14,7 @@ import { ArtGalleryService } from '../../art-gallery-service';
   templateUrl: './art-gallery-horizontal-walkthrough-panel-component.html',
 })
 export class ArtGalleryHorizontalWalkthroughPanelComponent {
-  readonly countries = ART_GALLERY_COUNTRIES;
+  readonly countries = ArtGalleryConstants.COUNTRIES;
   readonly currentCountryObservable: Observable<ArtGalleryCountryEnum>;
 
   private readonly service = inject(ArtGalleryService);
@@ -31,6 +28,6 @@ export class ArtGalleryHorizontalWalkthroughPanelComponent {
   }
 
   isCountryVisitable(country: ArtGalleryCountryEnum): boolean {
-    return ART_GALLERY_VISITABLE_COUNTRIES.includes(country);
+    return ArtGalleryConstants.VISITABLE_COUNTRIES.includes(country);
   }
 }

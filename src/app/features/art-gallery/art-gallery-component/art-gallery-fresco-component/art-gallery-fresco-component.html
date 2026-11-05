@@ -1,1 +1,14 @@
 <p>Displaying {{currentCountryObservable | async | countryEnumToText | translate }}</p>
+
+@if ((currentCountryObservable | async) === ArtGalleryCountryEnum.VIETNAM) {
+    <figure class="fresco-canvas">
+        <img src="/assets/images/art-gallery/Vietnam/RSM_Fresque_Vietnam.jpg" alt="Fresque du Vietnam" />
+        <app-art-gallery-hotspot-component
+            hotspotId="1"
+            imageUrl="/assets/images/art-gallery/Vietnam/Hotspots/art-gallery_Vietnam_1_Bouddha.png"
+            text="Informations sur ce point d’intérêt à compléter."
+            [x]="28"
+            [y]="70"
+        />
+    </figure>
+}

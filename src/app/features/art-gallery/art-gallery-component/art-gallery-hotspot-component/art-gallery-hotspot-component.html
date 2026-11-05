@@ -1,0 +1,18 @@
+<button
+  type="button"
+  [style.position]="'absolute'"
+  [style.left.%]="x()"
+  [style.top.%]="y()"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="isOpen() ? detailsId() : null"
+  (click)="toggle()"
+>
+  Point d’intérêt {{ hotspotId() }}
+</button>
+
+@if (isOpen()) {
+  <figure [id]="detailsId()">
+    <img [src]="imageUrl()" alt="" />
+    <figcaption>{{ text() }}</figcaption>
+  </figure>
+}

@@ -1,5 +1,7 @@
 .fresco-canvas {
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
   margin: 0;
 }
 

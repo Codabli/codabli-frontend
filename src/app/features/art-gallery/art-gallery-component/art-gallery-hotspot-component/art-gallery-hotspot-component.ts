@@ -12,12 +12,14 @@ import { ArtGalleryService } from '../../art-gallery-service';
 })
 export class ArtGalleryHotspotComponent {
   readonly hotspotId = input.required<string>();
+  // Données provisoires, fournies directement par le composant parent.
   readonly imageUrl = input.required<string>();
   readonly text = input.required<string>();
   readonly x = input.required<number>();
   readonly y = input.required<number>();
 
   private readonly artGalleryService = inject(ArtGalleryService);
+  // Le service utilisera le pays courant et hotspotId pour retrouver ces données.
   readonly currentCountry = toSignal(this.artGalleryService.currentCountryObservable, {
     initialValue: ArtGalleryCountryEnum.WORLD,
   });

@@ -18,10 +18,14 @@ export class ArtGalleryCentralFieldPanelComponent {
   }
 
   changeCountry(): void {
-    this.service.GoNextCountry();
+    this.service.goNextCountry();
   }
 
   goToWorldMap(): void {
-    this.service.GoTo(ArtGalleryCountryEnum.WORLD);
+    this.service.goTo(ArtGalleryCountryEnum.WORLD);
+  }
+
+  exploreFresco(): void {
+    this.service.extendFresco();
   }
 }

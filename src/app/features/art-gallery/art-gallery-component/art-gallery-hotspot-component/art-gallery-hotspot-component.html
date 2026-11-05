@@ -7,12 +7,29 @@
   [attr.aria-controls]="isOpen() ? detailsId() : null"
   (click)="toggle()"
 >
-  Point d’intérêt {{ hotspotId() }}
+  {{ 'artGallery.hotspot.label' | translate: { id: hotspotId() } }}
 </button>
 
 @if (isOpen()) {
-  <figure [id]="detailsId()">
-    <img [src]="imageUrl()" alt="" />
-    <figcaption>{{ text() }}</figcaption>
-  </figure>
+  <div class="hotspot-popup-backdrop" (click)="close()">
+    <section
+      class="hotspot-popup"
+      [id]="detailsId()"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="'artGallery.hotspot.label' | translate: { id: hotspotId() }"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        class="hotspot-popup__close"
+        type="button"
+        [attr.aria-label]="'modal.close' | translate"
+        (click)="close()"
+      >
+        &times;
+      </button>
+      <img class="hotspot-popup__image" [src]="imageUrl()" alt="" />
+      <p class="hotspot-popup__text">{{ text() }}</p>
+    </section>
+  </div>
 }

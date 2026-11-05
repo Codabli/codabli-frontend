@@ -1,0 +1,39 @@
+.hotspot-popup-backdrop {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 55%);
+}
+
+.hotspot-popup {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  width: min(32rem, 100%);
+  max-height: 100%;
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 30%);
+}
+
+.hotspot-popup__close {
+  justify-self: end;
+}
+
+.hotspot-popup__image {
+  display: block;
+  max-width: 100%;
+  max-height: 50vh;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.hotspot-popup__text {
+  margin: 0;
+}

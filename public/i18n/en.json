@@ -1139,6 +1139,9 @@
     "next": "Go to next room",
     "navigation": "Room navigation",
     "inPreparation": "In preparation",
+    "hotspot": {
+      "label": "Point of interest {{id}}"
+    },
     "country": {
       "WORLD": "Return to world map",
       "LEBANON": "Lebanon",

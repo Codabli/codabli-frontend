@@ -1140,6 +1140,9 @@
     "next": "Salle suivante",
     "navigation": "Navigation des salles",
     "inPreparation": "En préparation",
+    "hotspot": {
+      "label": "Point d’intérêt {{id}}"
+    },
     "country": {
       "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",

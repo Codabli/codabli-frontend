@@ -1,10 +1,11 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
 import { ArtGalleryService } from '../../art-gallery-service';
 
 @Component({
-  imports: [],
+  imports: [TranslatePipe],
   selector: 'app-art-gallery-hotspot-component',
   styleUrl: './art-gallery-hotspot-component.scss',
   templateUrl: './art-gallery-hotspot-component.html',
@@ -27,5 +28,9 @@ export class ArtGalleryHotspotComponent {
 
   toggle(): void {
     this.isOpen.update((isOpen) => !isOpen);
+  }
+
+  close(): void {
+    this.isOpen.set(false);
   }
 }

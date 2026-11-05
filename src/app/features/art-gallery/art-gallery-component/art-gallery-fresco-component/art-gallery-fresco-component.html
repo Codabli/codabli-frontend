@@ -1,1 +1,6 @@
-<p>Displaying {{currentCountryObservable | async | countryEnumToText | translate }}</p>
+<div>
+    @if((isExtendedObservable | async)) {
+        <button (click)="returnToGallery()">{{"artGallery.back" | translate}}</button>
+    }
+    <p>{{currentCountryObservable | async | countryEnumToText | translate }}</p>
+</div>

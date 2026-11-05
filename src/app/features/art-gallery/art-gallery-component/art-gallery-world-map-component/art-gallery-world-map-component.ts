@@ -16,6 +16,6 @@ export class ArtGalleryWorldMapComponent {
   }
 
   goToVietnam(): void {
-    this.service.GoTo(ArtGalleryCountryEnum.VIETNAM);
+    this.service.goTo(ArtGalleryCountryEnum.VIETNAM);
   }
 }

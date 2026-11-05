@@ -803,8 +803,11 @@
       "card": {
         "remove": "Delete: {{card}}",
         "ideas": {
-          "label": "Generate ideas",
-          "soon": "(coming soon)"
+          "label": "Ask the assistant for help",
+          "answerLabel": "The assistant's questions",
+          "thinking": "The assistant is thinking…",
+          "warning": "The AI assistant can make mistakes. Discuss and check together.",
+          "error": "The assistant could not answer. Please try again in a moment."
         },
         "nameError": "Enter a name.",
         "description": {

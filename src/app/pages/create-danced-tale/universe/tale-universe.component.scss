@@ -330,17 +330,57 @@ $focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-border-primary-focus) 35%,
   font-family: 'Lato', sans-serif;
   font-size: 18px;
   font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary-disabled);
+  color: var(--color-text-secondary-default);
 
-  background-color: var(--color-bg-secondary-disabled);
-  border: 0;
+  background-color: var(--color-bg-secondary-default);
+  border: 2px solid transparent;
   border-radius: var(--radius-button);
-  cursor: not-allowed;
+  cursor: pointer;
 
-  &__soon {
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-regular, 400);
+  &:hover:not(:disabled) {
+    background-color: var(--color-bg-secondary-hover);
+  }
+
+  &:focus-visible {
+    background-color: var(--color-bg-secondary-focus);
+    border-color: var(--color-border-secondary-focus);
+    outline: none;
+  }
+
+  &:disabled {
+    color: var(--color-text-secondary-disabled);
+    background-color: var(--color-bg-secondary-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.ideas-answer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: 12px 16px;
+
+  font-size: var(--font-size-body);
+  background-color: var(--color-bg-navigation);
+  border-radius: 12px;
+
+  p {
+    margin: 0;
+  }
+
+  &__title {
+    font-weight: var(--font-weight-bold);
+  }
+
+  &__text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &__pending,
+  &__warning {
     font-style: italic;
+    color: var(--color-text-muted);
   }
 }
 

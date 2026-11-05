@@ -2,13 +2,13 @@ import { HttpClient, HttpContext, HttpEventType } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, distinctUntilChanged, filter, map } from 'rxjs';
 import { API_BASE_URL, API_REQUEST_TIMEOUT_MS } from '../http/api.config';
-import type { MessageIa } from '../../models/interfaces/assistant-ia.interface';
+import type { MessageIa, TypeElementUnivers } from '../../models/interfaces/assistant-ia.interface';
 
 /** Le modèle peut mettre du temps à commencer sa réponse, ou entre deux morceaux. */
 export const ASSISTANT_TIMEOUT_MS = 60_000;
 
 /**
- * Assistant pédagogique d'un conte (écran 7, SCRUM-131). La conversation est gardée par le back :
+ * Assistant pédagogique d'un conte. Écran 7 (SCRUM-131) : la conversation est gardée par le back,
  * on n'envoie que le nouveau message, le back y ajoute l'historique du conte.
  */
 @Injectable({ providedIn: 'root' })
@@ -22,17 +22,25 @@ export class AssistantIaService {
 
   /** Envoie un message ; émet la réponse au fur et à mesure qu'elle arrive (texte reçu jusque-là). */
   envoyer(conteId: string, contenu: string): Observable<string> {
+    return this.streamer(`${this.url}/${conteId}/assistant-stream`, { contenu });
+  }
+
+  /**
+   * Aide à décrire un élément de l'univers (écran 5, SCRUM-90). Sans historique : chaque appel est
+   * indépendant. Une demande refusée par la modération revient comme une réponse ordinaire.
+   */
+  aiderUnivers(conteId: string, type: TypeElementUnivers, description: string): Observable<string> {
+    return this.streamer(`${this.url}/${conteId}/assistant-creation-univers`, { type, description });
+  }
+
+  private streamer(url: string, body: unknown): Observable<string> {
     return this.http
-      .post(
-        `${this.url}/${conteId}/assistant-stream`,
-        { contenu },
-        {
-          observe: 'events',
-          reportProgress: true,
-          responseType: 'text',
-          context: new HttpContext().set(API_REQUEST_TIMEOUT_MS, ASSISTANT_TIMEOUT_MS),
-        },
-      )
+      .post(url, body, {
+        observe: 'events',
+        reportProgress: true,
+        responseType: 'text',
+        context: new HttpContext().set(API_REQUEST_TIMEOUT_MS, ASSISTANT_TIMEOUT_MS),
+      })
       .pipe(
         filter((event) => event.type === HttpEventType.DownloadProgress || event.type === HttpEventType.Response),
         map((event) =>

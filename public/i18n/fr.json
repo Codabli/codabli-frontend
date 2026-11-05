@@ -803,8 +803,11 @@
       "card": {
         "remove": "Supprimer : {{card}}",
         "ideas": {
-          "label": "Générer des idées",
-          "soon": "(bientôt disponible)"
+          "label": "Demander de l'aide à l'assistant",
+          "answerLabel": "Les questions de l'assistant",
+          "thinking": "L'assistant réfléchit…",
+          "warning": "L'assistant IA peut faire des erreurs. Discutez et vérifiez ensemble.",
+          "error": "L'assistant n'a pas pu répondre. Réessayez dans un instant."
         },
         "nameError": "Indiquez un nom.",
         "description": {

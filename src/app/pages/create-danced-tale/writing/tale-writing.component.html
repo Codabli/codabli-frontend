@@ -166,25 +166,92 @@
         {{ 'createDancedTale.writing.assistant.intro' | translate }}
       </p>
 
-      <p class="assistant__soon">
-        {{ 'createDancedTale.writing.assistant.soon' | translate }}
-      </p>
-
       <!--
-        TODO(IA) : actions guidées de l'assistant (SCRUM-94). Les réponses s'afficheront en cartes
-        pédagogiques (indices, explications, pistes) ; l'IA ne rédige jamais le texte (RG-CMC-11).
+        TODO(IA) : actions guidées (vocabulaire, vérifier une phrase, question, dialogues), cachées
+        pour l'instant (SCRUM-131). L'IA ne rédige jamais le texte à la place de la classe (RG-CMC-11).
       -->
-      <div class="assistant__actions">
-        @for (key of assistantActionKeys; track key) {
-          <button
-            type="button"
-            class="ai-button"
-            disabled
+
+      @if (historyError()) {
+        <p class="assistant__error">
+          {{ 'createDancedTale.writing.assistant.historyError' | translate }}
+        </p>
+      }
+
+      <!-- La réponse en cours n'est annoncée qu'une fois complète (aria-busy). -->
+      <ol
+        class="assistant__conversation"
+        role="log"
+        [attr.aria-label]="'createDancedTale.writing.assistant.conversation' | translate"
+        [attr.aria-busy]="answer() !== null"
+      >
+        @for (message of messages(); track $index) {
+          <li
+            class="assistant__message"
+            [class.assistant__message--user]="message.role === 'user'"
           >
-            {{ 'createDancedTale.writing.assistant.actions.' + key | translate }}
-          </button>
+            <span class="sr-only">
+              {{ 'createDancedTale.writing.assistant.authors.' + message.role | translate }}
+            </span>
+            <span class="assistant__text">{{ message.contenu }}</span>
+          </li>
         }
-      </div>
+        @if (answer(); as text) {
+          <li
+            class="assistant__message"
+            aria-hidden="true"
+          >
+            <span class="assistant__text">{{ text }}</span>
+          </li>
+        } @else if (answer() !== null) {
+          <li class="assistant__message assistant__message--pending">
+            {{ 'createDancedTale.writing.assistant.thinking' | translate }}
+          </li>
+        }
+      </ol>
+
+      @if (assistantError()) {
+        <p
+          id="assistant-error"
+          class="assistant__error"
+          role="alert"
+        >
+          {{ 'createDancedTale.writing.assistant.error' | translate }}
+        </p>
+      }
+
+      <form
+        class="assistant__form"
+        (submit)="$event.preventDefault(); askAssistant()"
+      >
+        <label
+          for="assistant-prompt"
+          class="assistant__label"
+        >
+          {{ 'createDancedTale.writing.assistant.promptLabel' | translate }}
+        </label>
+        <textarea
+          id="assistant-prompt"
+          class="assistant__prompt"
+          rows="3"
+          [formControl]="prompt"
+          [attr.maxlength]="promptMaxLength"
+          [placeholder]="'createDancedTale.writing.assistant.promptPlaceholder' | translate"
+          [attr.aria-describedby]="assistantError() ? 'assistant-error assistant-hint' : 'assistant-hint'"
+          (keydown)="onPromptKeydown($event)"
+        ></textarea>
+        <p
+          id="assistant-hint"
+          class="assistant__hint"
+        >
+          {{ 'createDancedTale.writing.assistant.promptHint' | translate }}
+        </p>
+        <app-button
+          type="submit"
+          [disabled]="answer() !== null || !prompt.value.trim()"
+        >
+          {{ 'createDancedTale.writing.assistant.send' | translate }}
+        </app-button>
+      </form>
     </aside>
   </div>
 

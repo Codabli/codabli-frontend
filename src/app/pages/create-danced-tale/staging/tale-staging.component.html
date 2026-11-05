@@ -340,18 +340,30 @@
       {{ 'createDancedTale.previous' | translate }}
     </app-button>
 
-    <!-- TODO(SCRUM-104) : conducteur du spectacle en PDF (écran 8.5). -->
     <button
       type="button"
       class="conductor-button"
-      disabled
+      [attr.aria-busy]="conductor() === 'loading'"
+      [disabled]="conductor() === 'loading'"
+      (click)="downloadConductor()"
     >
       <i
         class="fa-solid fa-file-pdf"
         aria-hidden="true"
       ></i>
-      {{ 'createDancedTale.staging.conductor.label' | translate }}
-      <em>{{ 'createDancedTale.staging.conductor.soon' | translate }}</em>
+      {{
+        (conductor() === 'loading' ? 'createDancedTale.staging.conductor.loading' : 'createDancedTale.staging.conductor.label')
+          | translate
+      }}
     </button>
   </div>
+
+  @if (conductor() === 'error') {
+    <p
+      class="conductor-error"
+      role="alert"
+    >
+      {{ 'createDancedTale.staging.conductor.error' | translate }}
+    </p>
+  }
 </div>

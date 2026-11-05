@@ -630,7 +630,8 @@
       "autosaveIdle": "La mise en scène est enregistrée automatiquement.",
       "conductor": {
         "label": "Générer le conducteur du spectacle (PDF)",
-        "soon": "(bientôt disponible)"
+        "loading": "Génération du conducteur…",
+        "error": "Le conducteur n'a pas pu être généré. Réessayez dans un instant."
       },
       "setup": "Mise en scène de la scène",
       "addStep": "Ajouter une étape dans la trame"
@@ -670,7 +671,19 @@
           "askQuestion": "Poser une question",
           "dialogueIdeas": "Idées de dialogues"
         },
-        "soon": "L'assistant sera bientôt disponible.",
+        "conversation": "Conversation avec l'assistant",
+        "authors": {
+          "user": "Vous :",
+          "assistant": "Assistant :",
+          "system": "Système :"
+        },
+        "thinking": "L'assistant réfléchit…",
+        "promptLabel": "Votre question à l'assistant",
+        "promptPlaceholder": "Ex. : quels mots pour décrire une forêt la nuit ?",
+        "promptHint": "Entrée pour envoyer, Maj + Entrée pour aller à la ligne.",
+        "send": "Envoyer",
+        "error": "L'assistant n'a pas pu répondre. Votre question est restée dans la zone de saisie : réessayez dans un instant.",
+        "historyError": "Les échanges précédents avec l'assistant n'ont pas pu être chargés.",
         "soonShort": "(bientôt disponible)"
       }
     },

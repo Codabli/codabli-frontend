@@ -1,9 +1,13 @@
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
-import { TaleStagingComponent } from './tale-staging.component';
+import { of, throwError } from 'rxjs';
+import { TaleStagingComponent, conductorFileName } from './tale-staging.component';
 import { AUTOSAVE_DELAY_MS } from '../autosave/autosave';
 import { CreateDancedTaleDraftService } from '@core/services/create-danced-tale-draft.service';
+import { ParcoursConteService } from '@core/services/parcours-conte.service';
 import { TaleStaging } from '@models/interfaces/tale-staging.interface';
 
 // Le premier rendu de l'écran (scènes, danses, plateau) dépasse parfois 5 s quand toute la suite tourne.
@@ -277,5 +281,69 @@ describe('TaleStagingComponent', { timeout: 15000 }, () => {
 
     expect(draftService.staging()!.scenes['s2'].characters).toHaveLength(1);
     expect(router.navigate).toHaveBeenCalledWith(['../writing'], expect.anything());
+  });
+
+  describe('conducteur du spectacle (SCRUM-104)', () => {
+    function conductorButton(): HTMLButtonElement {
+      return element.querySelector<HTMLButtonElement>('.conductor-button')!;
+    }
+
+    async function setupWithTale(): Promise<ParcoursConteService> {
+      await setup();
+      // Conte enregistré côté backend : le parcours a un identifiant.
+      (draftService as unknown as { taleId: unknown }).taleId = signal('conte-1');
+      URL.createObjectURL = vi.fn(() => 'blob:conducteur');
+      URL.revokeObjectURL = vi.fn();
+      return TestBed.inject(ParcoursConteService);
+    }
+
+    it('télécharge le PDF avec le nom proposé par le backend', async () => {
+      const parcoursService = await setupWithTale();
+      const download = vi.spyOn(parcoursService, 'telechargerConducteur').mockReturnValue(of(new HttpResponse({
+        body: new Blob(['%PDF']),
+        headers: new HttpHeaders({ 'Content-Disposition': 'attachment; filename="conducteur-le-banquet.pdf"' }),
+      })));
+      const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+        expect(this.download).toBe('conducteur-le-banquet.pdf');
+      });
+
+      conductorButton().click();
+      await fixture.whenStable();
+
+      expect(download).toHaveBeenCalledWith('conte-1');
+      expect(click).toHaveBeenCalledTimes(1);
+      expect(conductorButton().disabled).toBe(false);
+      expect(element.querySelector('.conductor-error')).toBeNull();
+    });
+
+    it('enregistre la saisie en attente avant de générer le PDF', async () => {
+      const parcoursService = await setupWithTale();
+      const save = vi.spyOn(draftService, 'saveStaging');
+      vi.spyOn(parcoursService, 'telechargerConducteur').mockReturnValue(of(new HttpResponse({ body: new Blob(['%PDF']) })));
+      vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => undefined);
+      checkboxes(scenes()[1])[0].click();
+
+      conductorButton().click();
+      await fixture.whenStable();
+
+      expect(save).toHaveBeenCalled();
+      expect(draftService.staging()!.scenes['s2'].characters).toHaveLength(1);
+    });
+
+    it('signale un échec de génération', async () => {
+      const parcoursService = await setupWithTale();
+      vi.spyOn(parcoursService, 'telechargerConducteur').mockReturnValue(throwError(() => new Error('500')));
+
+      conductorButton().click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(element.querySelector('.conductor-error[role="alert"]')).not.toBeNull();
+    });
+
+    it('nomme le fichier par défaut sans en-tête du backend', () => {
+      expect(conductorFileName(null)).toBe('conducteur.pdf');
+      expect(conductorFileName('attachment; filename="conducteur-arthur.pdf"')).toBe('conducteur-arthur.pdf');
+    });
   });
 });

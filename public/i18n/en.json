@@ -66,6 +66,19 @@
     "redoShortcut": "Redo (Ctrl+Y)"
   },
 
+  "pdfReader": {
+    "previous": "Previous",
+    "next": "Next",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "pageCounter": "Page {{current}} / {{total}}",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "fitPage": "Fit",
+    "loading": "Loading PDF…",
+    "loadError": "Unable to load the PDF."
+  },
+
   "createDancedTale": {
     "title": "Create your own dance tale",
     "subtitle": "Tell us a little about your project: it will be used to personalise the next steps.",
@@ -958,7 +971,11 @@
       "unavailable": "The login service is temporarily unavailable. Please try again in a few moments."
     }
   },
-
+  "header": {
+    "login": "Log in",
+    "profile": "My profile",
+    "logout": "Log out"
+  },
   "navbar": {
     "dancedTales": "Dance Tales Library",
     "interactiveGame": "Creative Reading Game",

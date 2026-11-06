@@ -1,14 +1,16 @@
+import { httpResource } from '@angular/common/http';
 import { Component, computed, input, signal } from '@angular/core';
 import { ConteDanse } from '@models/interfaces/conte-danse.interface';
 import type { ConteDanseTraduction } from '@models/interfaces/conte-danse-traduction.model';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IconComponent } from '@shared/components/icon/icon.component';
+import { PdfReaderComponent } from '@shared/components/pdf-reader/pdf-reader.component';
 
 type MediaMode = 'video' | 'audio' | 'resources' | 'text';
 
 @Component({
-  imports: [ButtonComponent, TranslatePipe, IconComponent],
+  imports: [ButtonComponent, TranslatePipe, IconComponent, PdfReaderComponent],
   selector: 'app-tale-detail-media',
   styleUrl: './tale-detail-media.component.scss',
   templateUrl: './tale-detail-media.component.html',
@@ -42,7 +44,7 @@ export class TaleDetailMediaComponent {
       this.traductions().find(
         (translation) =>
           translation.langue === this.currentLanguage() &&
-          translation.statut === 'publie',
+          translation.statut === 'publiee',
       ) ?? null
     );
   });
@@ -64,6 +66,11 @@ export class TaleDetailMediaComponent {
   // URL du fichier texte original
   readonly textUrl = computed(() =>
     this.isOriginalLanguage() ? this.conte().fichierTexteUrl : null,
+  );
+
+  // PDF du texte original, chargé depuis le backend à l'ouverture de l'onglet texte
+  readonly textPdf = httpResource.blob(() =>
+    this.activeMedia() === 'text' ? (this.textUrl() ?? undefined) : undefined,
   );
 
   // Texte de la traduction
@@ -91,16 +98,4 @@ export class TaleDetailMediaComponent {
   selectMedia(mode: MediaMode): void {
     this.activeMedia.set(mode);
   }
-
-  // à modifier par le backend qui fournira l'url
-  downloadText(url: string): void {
-  const link = document.createElement('a');
-
-  link.href = url;
-  link.download = 'conte.txt';
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 }

@@ -185,7 +185,9 @@ export class LibraryComponent implements OnInit {
   }
 
   protected goToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], {
+      queryParams: { returnUrl: this.router.url },
+    });
   }
 
   protected adoptTale(taleId: string): void {

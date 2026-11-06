@@ -1140,7 +1140,7 @@
     "navigation": "Room navigation",
     "inPreparation": "In preparation",
     "hotspot": {
-      "label": "Point of interest {{id}}"
+      "label": "Hotspot {{id}}"
     },
     "back": "Go back to gallery",
     "country": {

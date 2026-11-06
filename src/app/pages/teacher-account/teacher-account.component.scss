@@ -1,2 +1,19 @@
 // Styles communs aux pages de création de compte (enseignant, famille).
 @use '../../../styles/account-form';
+
+// Phrase « Les champs marqués d'un astérisque (*) sont obligatoires. », juste avant le formulaire.
+.account-page__required-hint {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--spacing-xl);
+
+  color: var(--font-color-text-anthracite);
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+// Astérisque des champs obligatoires. Masqué aux lecteurs d'écran (aria-hidden) :
+// ils annoncent déjà « obligatoire » grâce à l'attribut required du champ.
+.required-mark {
+  margin-left: 2px;
+  color: var(--form-error-color);
+}

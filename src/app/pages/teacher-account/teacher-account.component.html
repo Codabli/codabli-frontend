@@ -15,182 +15,231 @@
 
   <h1 class="account-page__title">{{ 'teacherAccount.title' | translate }}</h1>
 
+  <p class="account-page__required-hint">
+    {{ 'teacherAccount.requiredHint' | translate }}
+  </p>
+
   <form
     class="account-page__form"
     [formGroup]="teacherAccountForm"
     (ngSubmit)="onSubmit()"
     novalidate
   >
-    <!-- Informations sur votre classe -->
-    <section class="form-section" aria-labelledby="class-title">
-      <h2 id="class-title" class="form-section__title">
-        {{ 'teacherAccount.sections.class' | translate }}
+    <!-- Votre établissement : nom, pays et ville obligatoires, le reste facultatif (annexe 16) -->
+    <section class="form-section" aria-labelledby="school-title">
+      <h2 id="school-title" class="form-section__title">
+        {{ 'teacherAccount.sections.school' | translate }}
       </h2>
 
       <div class="form-section__fields">
         <div class="form-field">
-          @let schoolIdError = fieldError(f.schoolId);
+          @let schoolCountryError = fieldError(f.schoolCountry);
 
-          <label for="schoolId">{{ 'teacherAccount.form.school.label' | translate }}</label>
+          <label for="schoolCountry">
+            {{ 'teacherAccount.form.schoolCountry.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
+          <!-- Liste native : taper les premières lettres d'un pays le sélectionne directement -->
           <select
-            id="schoolId"
-            formControlName="schoolId"
-            [attr.aria-invalid]="hasError(f.schoolId)"
-            [attr.aria-describedby]="
-              schoolIdError || schoolsUnavailable() ? 'schoolId-error' : null
-            "
+            id="schoolCountry"
+            formControlName="schoolCountry"
+            [attr.aria-invalid]="hasError(f.schoolCountry)"
+            [attr.aria-describedby]="schoolCountryError ? 'schoolCountry-error' : null"
             required
           >
             <option [ngValue]="null" disabled>
-              {{ 'teacherAccount.form.school.placeholder' | translate }}
+              {{ 'teacherAccount.form.schoolCountry.placeholder' | translate }}
             </option>
 
-            @for (school of schools(); track school.id) {
-              <option [ngValue]="school.id">
-                {{ school.nom }}{{ school.ville ? ' (' + school.ville + ')' : '' }}
-              </option>
+            @for (country of countries(); track country.code) {
+              <option [ngValue]="country.code">{{ country.name }}</option>
             }
-          </select>
 
-          @if (schoolIdError; as error) {
-            <p id="schoolId-error" class="form-field__error">
-              {{ error.key | translate: error.params }}
-            </p>
-          } @else if (schoolsUnavailable()) {
-            <p id="schoolId-error" class="form-field__error">
-              {{ 'teacherAccount.form.school.unavailable' | translate }}
-            </p>
-          }
-        </div>
-
-        <div class="form-field">
-          @let academyError = fieldError(f.academy);
-
-          <label for="academy">{{ 'teacherAccount.form.academy.label' | translate }}</label>
-
-          <select
-            id="academy"
-            formControlName="academy"
-            [attr.aria-invalid]="hasError(f.academy)"
-            [attr.aria-describedby]="academyError ? 'academy-error' : null"
-            required
-          >
-            <option [ngValue]="null" disabled>
-              {{ 'teacherAccount.form.academy.placeholder' | translate }}
+            <option [ngValue]="otherCountry">
+              {{ 'teacherAccount.form.schoolCountry.other' | translate }}
             </option>
-
-            @for (academy of academies; track academy) {
-              <option [ngValue]="academy">{{ academy }}</option>
-            }
           </select>
 
-          @if (academyError; as error) {
-            <p id="academy-error" class="form-field__error">
+          @if (schoolCountryError; as error) {
+            <p id="schoolCountry-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
           }
         </div>
 
-        <div class="form-field">
-          @let ageRangeError = fieldError(f.ageRange);
+        @if (schoolCountry() === otherCountry) {
+          <div class="form-field">
+            @let schoolCountryOtherError = fieldError(f.schoolCountryOther);
 
-          <label for="ageRange">{{ 'teacherAccount.form.ageRange.label' | translate }}</label>
+            <label for="schoolCountryOther">
+              {{ 'teacherAccount.form.schoolCountryOther.label' | translate }}
+              <span class="required-mark" aria-hidden="true">*</span>
+            </label>
 
-          <select
-            id="ageRange"
-            formControlName="ageRange"
-            [attr.aria-invalid]="hasError(f.ageRange)"
-            [attr.aria-describedby]="ageRangeError ? 'ageRange-error' : null"
-            required
-          >
-            <option [ngValue]="null" disabled>
-              {{ 'teacherAccount.form.ageRange.placeholder' | translate }}
-            </option>
+            <input
+              id="schoolCountryOther"
+              type="text"
+              formControlName="schoolCountryOther"
+              [placeholder]="'teacherAccount.form.schoolCountryOther.placeholder' | translate"
+              [attr.aria-invalid]="hasError(f.schoolCountryOther)"
+              [attr.aria-describedby]="schoolCountryOtherError ? 'schoolCountryOther-error' : null"
+              required
+            />
 
-            @for (ageRange of ageRanges; track ageRange) {
-              <option [ngValue]="ageRange">
-                {{ 'teacherAccount.form.ageRange.options.' + ageRange | translate }}
-              </option>
+            @if (schoolCountryOtherError; as error) {
+              <p id="schoolCountryOther-error" class="form-field__error">
+                {{ error.key | translate: error.params }}
+              </p>
             }
-          </select>
-
-          @if (ageRangeError; as error) {
-            <p id="ageRange-error" class="form-field__error">
-              {{ error.key | translate: error.params }}
-            </p>
-          }
-        </div>
+          </div>
+        }
 
         <div class="form-field">
-          @let girlsCountError = fieldError(f.girlsCount);
+          @let schoolNameError = fieldError(f.schoolName);
 
-          <label for="girlsCount">{{ 'teacherAccount.form.girlsCount.label' | translate }}</label>
+          <label for="schoolName">
+            {{ 'teacherAccount.form.schoolName.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
-            id="girlsCount"
-            type="number"
-            inputmode="numeric"
-            min="0"
-            max="99"
-            step="1"
-            formControlName="girlsCount"
-            [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
-            [attr.aria-invalid]="hasError(f.girlsCount)"
-            [attr.aria-describedby]="girlsCountError ? 'girlsCount-error' : null"
+            id="schoolName"
+            type="text"
+            formControlName="schoolName"
+            autocomplete="organization"
+            [placeholder]="'teacherAccount.form.schoolName.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.schoolName)"
+            [attr.aria-describedby]="schoolNameError ? 'schoolName-error' : null"
             required
           />
 
-          @if (girlsCountError; as error) {
-            <p id="girlsCount-error" class="form-field__error">
+          @if (schoolNameError; as error) {
+            <p id="schoolName-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
           }
         </div>
 
         <div class="form-field">
-          @let boysCountError = fieldError(f.boysCount);
+          @let schoolCityError = fieldError(f.schoolCity);
 
-          <label for="boysCount">{{ 'teacherAccount.form.boysCount.label' | translate }}</label>
+          <label for="schoolCity">
+            {{ 'teacherAccount.form.schoolCity.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
-            id="boysCount"
-            type="number"
-            inputmode="numeric"
-            min="0"
-            max="99"
-            step="1"
-            formControlName="boysCount"
-            [placeholder]="'teacherAccount.form.studentCount.placeholder' | translate"
-            [attr.aria-invalid]="hasError(f.boysCount)"
-            [attr.aria-describedby]="boysCountError ? 'boysCount-error' : null"
+            id="schoolCity"
+            type="text"
+            formControlName="schoolCity"
+            [placeholder]="'teacherAccount.form.schoolCity.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.schoolCity)"
+            [attr.aria-describedby]="schoolCityError ? 'schoolCity-error' : null"
             required
           />
 
-          @if (boysCountError; as error) {
-            <p id="boysCount-error" class="form-field__error">
+          @if (schoolCityError; as error) {
+            <p id="schoolCity-error" class="form-field__error">
               {{ error.key | translate: error.params }}
             </p>
           }
         </div>
 
         <div class="form-field">
-          <label for="platformGoal">{{
-            'teacherAccount.form.platformGoal.label' | translate
-          }}</label>
+          <label for="schoolType">{{ 'teacherAccount.form.schoolType.label' | translate }}</label>
 
-          <select id="platformGoal" formControlName="platformGoal">
+          <select id="schoolType" formControlName="schoolType">
             <option [ngValue]="null">
-              {{ 'teacherAccount.form.platformGoal.placeholder' | translate }}
+              {{ 'teacherAccount.form.schoolType.placeholder' | translate }}
             </option>
 
-            @for (platformGoal of platformGoals; track platformGoal) {
-              <option [ngValue]="platformGoal">
-                {{ 'teacherAccount.form.platformGoal.options.' + platformGoal | translate }}
+            @for (schoolType of schoolTypes; track schoolType) {
+              <option [ngValue]="schoolType">
+                {{ 'teacherAccount.form.schoolType.options.' + schoolType | translate }}
               </option>
             }
           </select>
         </div>
+
+        @if (schoolType() === 'other') {
+          <div class="form-field">
+            @let schoolTypeOtherError = fieldError(f.schoolTypeOther);
+
+            <label for="schoolTypeOther">
+              {{ 'teacherAccount.form.schoolTypeOther.label' | translate }}
+            </label>
+
+            <input
+              id="schoolTypeOther"
+              type="text"
+              formControlName="schoolTypeOther"
+              [placeholder]="'teacherAccount.form.schoolTypeOther.placeholder' | translate"
+              [attr.aria-invalid]="hasError(f.schoolTypeOther)"
+              [attr.aria-describedby]="schoolTypeOtherError ? 'schoolTypeOther-error' : null"
+            />
+
+            @if (schoolTypeOtherError; as error) {
+              <p id="schoolTypeOther-error" class="form-field__error">
+                {{ error.key | translate: error.params }}
+              </p>
+            }
+          </div>
+        }
+
+        <div class="form-field">
+          <label for="schoolSector">{{ 'teacherAccount.form.schoolSector.label' | translate }}</label>
+
+          <select id="schoolSector" formControlName="schoolSector">
+            <option [ngValue]="null">
+              {{ 'teacherAccount.form.schoolSector.placeholder' | translate }}
+            </option>
+
+            @for (schoolSector of schoolSectors; track schoolSector) {
+              <option [ngValue]="schoolSector">
+                {{ 'teacherAccount.form.schoolSector.options.' + schoolSector | translate }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          @let schoolRegionError = fieldError(f.schoolRegion);
+
+          <label for="schoolRegion">{{ 'teacherAccount.form.schoolRegion.label' | translate }}</label>
+
+          <input
+            id="schoolRegion"
+            type="text"
+            formControlName="schoolRegion"
+            [placeholder]="'teacherAccount.form.schoolRegion.placeholder' | translate"
+            [attr.aria-invalid]="hasError(f.schoolRegion)"
+            [attr.aria-describedby]="schoolRegionError ? 'schoolRegion-error' : null"
+          />
+
+          @if (schoolRegionError; as error) {
+            <p id="schoolRegion-error" class="form-field__error">
+              {{ error.key | translate: error.params }}
+            </p>
+          }
+        </div>
+
+        <!-- L'académie n'existe que dans le système scolaire français -->
+        @if (schoolCountry() === 'FR') {
+          <div class="form-field">
+            <label for="academy">{{ 'teacherAccount.form.academy.label' | translate }}</label>
+
+            <select id="academy" formControlName="academy">
+              <option [ngValue]="null">
+                {{ 'teacherAccount.form.academy.placeholder' | translate }}
+              </option>
+
+              @for (academy of academies; track academy) {
+                <option [ngValue]="academy">{{ academy }}</option>
+              }
+            </select>
+          </div>
+        }
       </div>
     </section>
 
@@ -204,7 +253,10 @@
         <div class="form-field">
           @let lastNameError = fieldError(f.lastName);
 
-          <label for="lastName">{{ 'teacherAccount.form.lastName.label' | translate }}</label>
+          <label for="lastName">
+            {{ 'teacherAccount.form.lastName.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
             id="lastName"
@@ -228,7 +280,10 @@
         <div class="form-field">
           @let firstNameError = fieldError(f.firstName);
 
-          <label for="firstName">{{ 'teacherAccount.form.firstName.label' | translate }}</label>
+          <label for="firstName">
+            {{ 'teacherAccount.form.firstName.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
             id="firstName"
@@ -252,7 +307,10 @@
         <div class="form-field">
           @let emailError = fieldError(f.email);
 
-          <label for="email">{{ 'teacherAccount.form.email.label' | translate }}</label>
+          <label for="email">
+            {{ 'teacherAccount.form.email.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
             id="email"
@@ -284,7 +342,10 @@
         <div class="form-field">
           @let passwordError = fieldError(f.password);
 
-          <label for="password">{{ 'teacherAccount.form.password.label' | translate }}</label>
+          <label for="password">
+            {{ 'teacherAccount.form.password.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
+          </label>
 
           <input
             id="password"
@@ -309,6 +370,7 @@
 
           <label for="passwordConfirmation">
             {{ 'teacherAccount.form.passwordConfirmation.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
           </label>
 
           <input
@@ -339,7 +401,7 @@
       </div>
     </section>
 
-    <!-- Besoins spécifiques (optionnel) -->
+    <!-- Préférences d'accessibilité (facultatif) -->
     <section class="form-section" aria-labelledby="accessibility-title">
       <h2 id="accessibility-title" class="form-section__title">
         {{ 'teacherAccount.sections.accessibility' | translate }}
@@ -436,6 +498,7 @@
 
           <label for="termsAccepted">
             {{ 'teacherAccount.form.termsAccepted.label' | translate }}
+            <span class="required-mark" aria-hidden="true">*</span>
           </label>
         </div>
 

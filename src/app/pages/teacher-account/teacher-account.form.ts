@@ -1,35 +1,55 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CountryCode, OTHER_COUNTRY } from '../../shared/utils/countries';
 import {
   passwordMatchValidator,
   passwordStrengthValidator,
 } from '../../shared/validators/password.validators';
-import { EMAIL_MAX_LENGTH, NAME_VALIDATORS } from '../../shared/validators/text.validators';
+import {
+  EMAIL_MAX_LENGTH,
+  NAME_VALIDATORS,
+  requiredTrimmedValidator,
+  trimmedLengthValidator,
+} from '../../shared/validators/text.validators';
 import {
   Academy,
   ACCESSIBILITY_NEEDS,
   AccessibilityNeed,
-  AgeRange,
-  PlatformGoal,
+  SchoolSector,
+  SchoolType,
 } from './teacher-account.options';
 
-export const STUDENT_COUNT_MAX = 99;
+export const SCHOOL_NAME_MAX_LENGTH = 150;
+/** Ville, région, pays saisi librement, précision du type d'établissement. */
+export const PLACE_MAX_LENGTH = 100;
 
-const studentCountValidators = [
-  Validators.required,
-  Validators.min(0),
-  Validators.max(STUDENT_COUNT_MAX),
-  Validators.pattern(/^\d+$/),
+const requiredPlaceValidators = [
+  requiredTrimmedValidator(),
+  trimmedLengthValidator(1, PLACE_MAX_LENGTH),
 ];
+
+const optionalPlaceValidators = [trimmedLengthValidator(1, PLACE_MAX_LENGTH)];
+
+/** Pays de la liste, ou « Autre pays ou territoire » (nom saisi dans schoolCountryOther). */
+export type SchoolCountry = CountryCode | typeof OTHER_COUNTRY;
 
 type AccessibilityControls = Record<AccessibilityNeed, FormControl<boolean>>;
 
+export interface TeacherSchool {
+  /** null quand le pays n'est pas dans la liste : voir countryOther. */
+  country: CountryCode | null;
+  countryOther: string | null;
+  name: string;
+  city: string;
+  type: SchoolType | null;
+  typeOther: string | null;
+  sector: SchoolSector | null;
+  region: string | null;
+  /** Seulement pour un établissement en France. */
+  academy: Academy | null;
+}
+
 export interface TeacherAccount {
-  schoolId: string;
-  academy: Academy;
-  ageRange: AgeRange;
-  girlsCount: number;
-  boysCount: number;
-  platformGoal: PlatformGoal | null;
+  school: TeacherSchool;
   lastName: string;
   firstName: string;
   email: string;
@@ -40,12 +60,15 @@ export interface TeacherAccount {
 }
 
 export class TeacherAccountForm extends FormGroup<{
-  schoolId: FormControl<string | null>;
+  schoolCountry: FormControl<SchoolCountry | null>;
+  schoolCountryOther: FormControl<string>;
+  schoolName: FormControl<string>;
+  schoolCity: FormControl<string>;
+  schoolType: FormControl<SchoolType | null>;
+  schoolTypeOther: FormControl<string>;
+  schoolSector: FormControl<SchoolSector | null>;
+  schoolRegion: FormControl<string>;
   academy: FormControl<Academy | null>;
-  ageRange: FormControl<AgeRange | null>;
-  girlsCount: FormControl<number | null>;
-  boysCount: FormControl<number | null>;
-  platformGoal: FormControl<PlatformGoal | null>;
   lastName: FormControl<string>;
   firstName: FormControl<string>;
   email: FormControl<string>;
@@ -58,17 +81,34 @@ export class TeacherAccountForm extends FormGroup<{
   constructor() {
     super(
       {
-        schoolId: new FormControl<string | null>(null, Validators.required),
+        // Nom, pays et ville suffisent à identifier l'établissement à l'inscription (annexe 16).
+        schoolCountry: new FormControl<SchoolCountry | null>(null, Validators.required),
 
-        academy: new FormControl<Academy | null>(null, Validators.required),
+        // Obligatoire uniquement si « Autre pays ou territoire » est choisi (voir plus bas).
+        schoolCountryOther: new FormControl('', { nonNullable: true }),
 
-        ageRange: new FormControl<AgeRange | null>(null, Validators.required),
+        schoolName: new FormControl('', {
+          nonNullable: true,
+          validators: [requiredTrimmedValidator(), trimmedLengthValidator(1, SCHOOL_NAME_MAX_LENGTH)],
+        }),
 
-        girlsCount: new FormControl<number | null>(null, studentCountValidators),
+        schoolCity: new FormControl('', { nonNullable: true, validators: requiredPlaceValidators }),
 
-        boysCount: new FormControl<number | null>(null, studentCountValidators),
+        schoolType: new FormControl<SchoolType | null>(null),
 
-        platformGoal: new FormControl<PlatformGoal | null>(null),
+        schoolTypeOther: new FormControl('', {
+          nonNullable: true,
+          validators: optionalPlaceValidators,
+        }),
+
+        schoolSector: new FormControl<SchoolSector | null>(null),
+
+        schoolRegion: new FormControl('', {
+          nonNullable: true,
+          validators: optionalPlaceValidators,
+        }),
+
+        academy: new FormControl<Academy | null>(null),
 
         lastName: new FormControl('', { nonNullable: true, validators: NAME_VALIDATORS }),
 
@@ -112,19 +152,49 @@ export class TeacherAccountForm extends FormGroup<{
       },
       { validators: passwordMatchValidator('password', 'passwordConfirmation') },
     );
+
+    // Le nom du pays devient obligatoire avec « Autre » ; l'académie ne concerne que la France.
+    this.controls.schoolCountry.valueChanges.subscribe((country) => {
+      const countryOther = this.controls.schoolCountryOther;
+
+      if (country === OTHER_COUNTRY) {
+        countryOther.setValidators(requiredPlaceValidators);
+      } else {
+        countryOther.clearValidators();
+        countryOther.setValue('');
+      }
+      countryOther.updateValueAndValidity();
+
+      if (country !== 'FR') {
+        this.controls.academy.setValue(null);
+      }
+    });
+
+    // La précision n'a de sens que pour le type « Autre ».
+    this.controls.schoolType.valueChanges.subscribe((type) => {
+      if (type !== 'other') {
+        this.controls.schoolTypeOther.setValue('');
+      }
+    });
   }
 
   /** Valeur prête à être envoyée : champs nettoyés, sans la confirmation de mot de passe. */
   toTeacherAccount(): TeacherAccount {
     const value = this.getRawValue();
+    const country = value.schoolCountry;
 
     return {
-      schoolId: value.schoolId!,
-      academy: value.academy!,
-      ageRange: value.ageRange!,
-      girlsCount: Number(value.girlsCount),
-      boysCount: Number(value.boysCount),
-      platformGoal: value.platformGoal,
+      school: {
+        country: country === OTHER_COUNTRY ? null : country,
+        countryOther: country === OTHER_COUNTRY ? value.schoolCountryOther.trim() : null,
+        name: value.schoolName.trim(),
+        city: value.schoolCity.trim(),
+        type: value.schoolType,
+        typeOther: value.schoolType === 'other' ? optionalText(value.schoolTypeOther) : null,
+        sector: value.schoolSector,
+        region: optionalText(value.schoolRegion),
+        academy: country === 'FR' ? value.academy : null,
+      },
       lastName: value.lastName.trim(),
       firstName: value.firstName.trim(),
       email: value.email.trim().toLowerCase(),
@@ -134,4 +204,9 @@ export class TeacherAccountForm extends FormGroup<{
       termsAccepted: value.termsAccepted,
     };
   }
+}
+
+/** Texte facultatif : null s'il est vide une fois nettoyé. */
+function optionalText(text: string): string | null {
+  return text.trim() || null;
 }

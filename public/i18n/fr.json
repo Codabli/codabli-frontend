@@ -1225,22 +1225,65 @@
       "home": "Accueil"
     },
     "title": "Créer un compte enseignant",
+    "requiredHint": "Les champs marqués d'un astérisque (*) sont obligatoires.",
     "sections": {
+      "school": "Votre établissement",
       "class": "Informations sur votre classe",
       "personal": "Informations personnelles",
       "password": "Mot de passe",
-      "accessibility": "Besoins spécifiques",
+      "accessibility": "Préférences d'accessibilité",
       "subscription": "Abonnement"
     },
     "form": {
-      "school": {
-        "label": "Établissement scolaire",
-        "placeholder": "Sélectionnez un établissement scolaire",
-        "unavailable": "La liste des établissements n'a pas pu être chargée."
+      "schoolCountry": {
+        "label": "Pays ou territoire de l'établissement",
+        "placeholder": "Sélectionnez un pays ou territoire",
+        "other": "Autre pays ou territoire – précisez"
+      },
+      "schoolCountryOther": {
+        "label": "Précisez le pays ou territoire",
+        "placeholder": "Nom du pays ou territoire"
+      },
+      "schoolName": {
+        "label": "Nom de l'établissement",
+        "placeholder": "Dans sa langue d'origine"
+      },
+      "schoolCity": {
+        "label": "Ville ou localité",
+        "placeholder": "Renseignez la ville ou la localité"
+      },
+      "schoolType": {
+        "label": "Type d'établissement",
+        "placeholder": "Non précisé",
+        "options": {
+          "preschool": "Préscolaire / maternelle",
+          "primary": "École primaire / élémentaire",
+          "secondary": "Enseignement secondaire",
+          "multiLevel": "Établissement regroupant plusieurs niveaux",
+          "specialized": "Établissement d'enseignement spécialisé",
+          "other": "Autre"
+        }
+      },
+      "schoolTypeOther": {
+        "label": "Précisez le type d'établissement",
+        "placeholder": "Type d'établissement"
+      },
+      "schoolSector": {
+        "label": "Statut de l'établissement",
+        "placeholder": "Non précisé",
+        "options": {
+          "public": "Public",
+          "private": "Privé",
+          "other": "Autre"
+        }
+      },
+      "schoolRegion": {
+        "label": "Région, province ou territoire",
+        "placeholder": "Renseignez la région"
       },
       "academy": {
         "label": "Académie",
-        "placeholder": "Sélectionnez une académie"
+        "placeholder": "Non précisée"
       },
       "ageRange": {
         "label": "Tranche d'âge de vos élèves",
@@ -1298,8 +1341,10 @@
         "options": {
           "highContrast": "Contraste élevé",
           "reducedMotion": "Réduction des animations",
-          "signLanguageAudioDescription": "Support LSF/Audiodescription",
-          "dysPmrSupport": "Prise en charge des besoins DYS/PMR"
+          "textSpacing": "Espacement du texte augmenté",
+          "keyboardNavigation": "Navigation au clavier",
+          "signLanguage": "Langue des signes française (LSF)",
+          "audioDescription": "Audiodescription"
         }
       },
       "subscription": {

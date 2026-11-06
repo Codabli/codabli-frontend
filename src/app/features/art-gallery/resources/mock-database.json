@@ -1,0 +1,25 @@
+{
+    "countries": [
+        {
+            "country": "VIETNAM",
+            "hotspots": [
+                {
+                    "uri": "resources/vietnam-hotspot-uri-1",
+                    "text": "This text represents the description of Vietnam's 1st hotspot"
+                },
+                {
+                    "uri": "resources/vietnam-hotspot-uri-2",
+                    "text": "This text represents the description of Vietnam's 2nd hotspot"
+                },
+                {
+                    "uri": "resources/vietnam-hotspot-uri-3",
+                    "text": "This text represents the description of Vietnam's 3rd hotspot"
+                },
+                {
+                    "uri": "resources/vietnam-hotspot-uri-4",
+                    "text": "This text represents the description of Vietnam's 4th hotspot"
+                }
+            ]
+        }
+    ]
+}

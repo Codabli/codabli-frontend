@@ -3,8 +3,8 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
-import { School } from '../../models/interfaces/school.interface';
 import { SubscriptionOffer } from '../../models/interfaces/subscription-offer.interface';
+import { COUNTRY_CODES, OTHER_COUNTRY } from '../../shared/utils/countries';
 import { TeacherAccountComponent } from './teacher-account.component';
 
 const OFFER: SubscriptionOffer = {
@@ -30,19 +30,15 @@ describe('TeacherAccountComponent', () => {
   let element: HTMLElement;
   let http: HttpTestingController;
 
-  async function respond(
-    schools: School[] | 'error' = [],
-    offers: SubscriptionOffer[] | 'error' = [],
-  ): Promise<void> {
-    const error = { status: 0, statusText: 'Unknown Error' };
-    const schoolsRequest = http.expectOne('/api/ecoles');
+  async function respond(offers: SubscriptionOffer[] | 'error' = []): Promise<void> {
     const offersRequest = http.expectOne(
       (req) =>
         req.url === '/api/abonnements/offres' && req.params.get('publicCible') === 'enseignant',
     );
 
-    schools === 'error' ? schoolsRequest.flush(null, error) : schoolsRequest.flush(schools);
-    offers === 'error' ? offersRequest.flush(null, error) : offersRequest.flush(offers);
+    offers === 'error'
+      ? offersRequest.flush(null, { status: 0, statusText: 'Unknown Error' })
+      : offersRequest.flush(offers);
 
     await fixture.whenStable();
   }
@@ -64,20 +60,21 @@ describe('TeacherAccountComponent', () => {
     http = TestBed.inject(HttpTestingController);
   });
 
+  // Vérifie aussi qu'aucun autre appel n'est fait (plus de chargement des écoles).
   afterEach(() => http.verify());
 
-  it('should render the fields of the mockup in order', async () => {
+  it('should render the sign-up fields in order', async () => {
     await respond();
 
     const ids = Array.from(element.querySelectorAll('form input, form select')).map((el) => el.id);
 
     expect(ids).toEqual([
-      'schoolId',
-      'academy',
-      'ageRange',
-      'girlsCount',
-      'boysCount',
-      'platformGoal',
+      'schoolCountry',
+      'schoolName',
+      'schoolCity',
+      'schoolType',
+      'schoolSector',
+      'schoolRegion',
       'lastName',
       'firstName',
       'email',
@@ -85,42 +82,85 @@ describe('TeacherAccountComponent', () => {
       'passwordConfirmation',
       'accessibility-highContrast',
       'accessibility-reducedMotion',
-      'accessibility-signLanguageAudioDescription',
-      'accessibility-dysPmrSupport',
+      'accessibility-textSpacing',
+      'accessibility-keyboardNavigation',
+      'accessibility-signLanguage',
+      'accessibility-audioDescription',
       'subscription-later',
       'termsAccepted',
     ]);
   });
 
-  it('should list the schools returned by the API', async () => {
-    await respond([
-      { id: 'a', nom: 'École Jules Ferry', pays: 'France', ville: 'Lyon' },
-      { id: 'b', nom: 'Collège Victor Hugo', pays: 'France', ville: null },
-    ]);
+  it('should list every country plus an "other country or territory" choice', async () => {
+    await respond();
 
-    const options = Array.from(element.querySelectorAll('#schoolId option')).map((o) =>
-      o.textContent!.trim(),
-    );
+    const values = Array.from(
+      element.querySelectorAll<HTMLOptionElement>('#schoolCountry option'),
+    ).map((option) => option.textContent!.trim());
 
-    expect(options.slice(1)).toEqual(['École Jules Ferry (Lyon)', 'Collège Victor Hugo']);
+    // Choix vide + pays de l'annexe + « Autre pays ou territoire ».
+    expect(values.length).toBe(COUNTRY_CODES.length + 2);
+    expect(values).toContain('France');
+    expect(values).toContain('Palestine');
   });
 
-  it('should warn when the schools cannot be loaded', async () => {
-    await respond('error');
+  it('should ask for the country name only when "other country" is chosen', async () => {
+    await respond();
+    expect(element.querySelector('#schoolCountryOther')).toBeNull();
 
-    expect(component.schoolsUnavailable()).toBe(true);
-    expect(element.querySelector('#schoolId-error')).not.toBeNull();
+    component.teacherAccountForm.controls.schoolCountry.setValue(OTHER_COUNTRY);
+    await fixture.whenStable();
+
+    expect(element.querySelector('#schoolCountryOther')).not.toBeNull();
+  });
+
+  it('should show the academy only for a school in France', async () => {
+    await respond();
+    const country = component.teacherAccountForm.controls.schoolCountry;
+
+    country.setValue('FR');
+    await fixture.whenStable();
+    expect(element.querySelector('#academy')).not.toBeNull();
+
+    country.setValue('BE');
+    await fixture.whenStable();
+    expect(element.querySelector('#academy')).toBeNull();
+  });
+
+  it('should ask for details only when the school type is "other"', async () => {
+    await respond();
+    expect(element.querySelector('#schoolTypeOther')).toBeNull();
+
+    component.teacherAccountForm.controls.schoolType.setValue('other');
+    await fixture.whenStable();
+
+    expect(element.querySelector('#schoolTypeOther')).not.toBeNull();
+  });
+
+  it('should mark every required field with a hidden-from-screen-readers asterisk', async () => {
+    await respond();
+
+    const requiredIds = Array.from(element.querySelectorAll('form [required]')).map((el) => el.id);
+    const markedIds = Array.from(element.querySelectorAll('label'))
+      .filter((label) => label.querySelector('.required-mark'))
+      .map((label) => label.getAttribute('for'));
+
+    expect(markedIds).toEqual(requiredIds);
+    element.querySelectorAll('.required-mark').forEach((mark) => {
+      expect(mark.getAttribute('aria-hidden')).toBe('true');
+    });
+    expect(element.querySelector('.account-page__required-hint')).not.toBeNull();
   });
 
   it('should list only the active teacher subscription offers', async () => {
-    await respond([], [OFFER, { ...OFFER, id: 'offer-2', actif: false }]);
+    await respond([OFFER, { ...OFFER, id: 'offer-2', actif: false }]);
 
     expect(element.querySelector('#subscription-offer-1')).not.toBeNull();
     expect(element.querySelector('#subscription-offer-2')).toBeNull();
   });
 
   it('should default to "choose later" and store the selected offer', async () => {
-    await respond([], [OFFER]);
+    await respond([OFFER]);
 
     const later = element.querySelector<HTMLInputElement>('#subscription-later')!;
     expect(later.checked).toBe(true);
@@ -131,7 +171,7 @@ describe('TeacherAccountComponent', () => {
   });
 
   it('should still offer "choose later" when the offers cannot be loaded', async () => {
-    await respond([], 'error');
+    await respond('error');
 
     expect(element.querySelectorAll('.subscription-offer').length).toBe(1);
   });

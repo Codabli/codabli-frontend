@@ -1,19 +1,19 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { catchError, map, of } from 'rxjs';
-import { SchoolService } from '../../core/services/school.service';
 import { SubscriptionOfferService } from '../../core/services/subscription-offer.service';
 import { AccountFormPage, accountErrorMessages } from '../../shared/forms/account-form-page';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { countryOptions, OTHER_COUNTRY } from '../../shared/utils/countries';
 import { TeacherAccountForm } from './teacher-account.form';
 import {
   ACADEMIES,
   ACCESSIBILITY_NEEDS,
-  AGE_RANGES,
-  PLATFORM_GOALS,
+  SCHOOL_SECTORS,
+  SCHOOL_TYPES,
 } from './teacher-account.options';
 
 @Component({
@@ -23,31 +23,18 @@ import {
   templateUrl: './teacher-account.component.html',
 })
 export class TeacherAccountComponent extends AccountFormPage {
-  private readonly schoolService = inject(SchoolService);
   private readonly subscriptionOfferService = inject(SubscriptionOfferService);
 
-  protected readonly errorMessages = accountErrorMessages('teacherAccount', {
-    pattern: () => ({ key: 'teacherAccount.errors.integer' }),
-    min: (error) => ({ key: 'teacherAccount.errors.min', params: { min: error.min } }),
-    max: (error) => ({ key: 'teacherAccount.errors.max', params: { max: error.max } }),
-  });
+  protected readonly errorMessages = accountErrorMessages('teacherAccount');
 
   readonly academies = ACADEMIES;
-  readonly ageRanges = AGE_RANGES;
-  readonly platformGoals = PLATFORM_GOALS;
+  readonly schoolTypes = SCHOOL_TYPES;
+  readonly schoolSectors = SCHOOL_SECTORS;
   readonly accessibilityNeeds = ACCESSIBILITY_NEEDS;
+  readonly otherCountry = OTHER_COUNTRY;
 
-  schoolsUnavailable = signal(false);
-
-  schools = toSignal(
-    this.schoolService.getSchools().pipe(
-      catchError(() => {
-        this.schoolsUnavailable.set(true);
-        return of([]);
-      }),
-    ),
-    { initialValue: [] },
-  );
+  // Noms des pays dans la langue de l'interface, triés ; recalculés si la langue change.
+  readonly countries = computed(() => countryOptions(this.languageService.currentLanguage()));
 
   // En cas d'erreur, la zone propose seulement « Je choisirai plus tard ».
   subscriptionOffers = toSignal(
@@ -59,6 +46,15 @@ export class TeacherAccountComponent extends AccountFormPage {
   );
 
   teacherAccountForm = new TeacherAccountForm();
+
+  // Choix courants, pour afficher les champs conditionnels (autre pays, académie, autre type).
+  readonly schoolCountry = toSignal(this.teacherAccountForm.controls.schoolCountry.valueChanges, {
+    initialValue: null,
+  });
+
+  readonly schoolType = toSignal(this.teacherAccountForm.controls.schoolType.valueChanges, {
+    initialValue: null,
+  });
 
   hasPasswordMismatch(): boolean {
     return this.hasGroupError(
@@ -77,7 +73,7 @@ export class TeacherAccountComponent extends AccountFormPage {
     }
 
     // TODO: envoyer this.teacherAccountForm.toTeacherAccount() à POST /api/auth/register quand
-    // le DTO backend acceptera académie, tranche d'âge, effectifs et objectif.
+    // le DTO backend acceptera les informations de l'établissement.
     // Ne pas journaliser le payload : il contient le mot de passe.
   }
 }

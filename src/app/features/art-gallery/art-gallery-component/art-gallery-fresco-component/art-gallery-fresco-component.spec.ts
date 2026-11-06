@@ -27,13 +27,17 @@ describe('ArtGalleryFrescoComponent', () => {
     service.goTo(ArtGalleryCountryEnum.VIETNAM);
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-art-gallery-hotspot-component')).toBeNull();
+    const canvas = fixture.nativeElement.querySelector('.fresco-canvas');
+    expect(canvas.classList.contains('fresco-canvas--extended')).toBe(false);
 
     service.extendFresco();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-art-gallery-hotspot-component')).not.toBeNull();
+    expect(canvas.classList.contains('fresco-canvas--extended')).toBe(true);
 
     service.shrinkFresco();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('app-art-gallery-hotspot-component')).toBeNull();
+    expect(canvas.classList.contains('fresco-canvas--extended')).toBe(false);
   });
 });

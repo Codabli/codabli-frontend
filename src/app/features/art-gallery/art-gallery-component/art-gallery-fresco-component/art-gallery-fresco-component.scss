@@ -2,7 +2,13 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  margin: 0;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.fresco-canvas--extended {
+  max-width: none;
 }
 
 .fresco-canvas img {

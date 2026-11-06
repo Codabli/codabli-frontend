@@ -1143,6 +1143,7 @@
     "hotspot": {
       "label": "Point d’intérêt {{id}}"
     },
+    "back": "Retourner sur la galerie",
     "country": {
       "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",

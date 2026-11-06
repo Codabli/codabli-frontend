@@ -17,9 +17,15 @@ export class ArtGalleryFrescoComponent {
   readonly ArtGalleryCountryEnum = ArtGalleryCountryEnum;
   private service: ArtGalleryService;
   readonly currentCountryObservable: Observable<ArtGalleryCountryEnum>;
+  readonly isExtendedObservable: Observable<boolean>;
 
   constructor() {
     this.service = inject(ArtGalleryService);
     this.currentCountryObservable = this.service.currentCountryObservable;
+    this.isExtendedObservable = this.service.isFrescoExtendedObservable;
+  }
+
+  public returnToGallery(): void {
+    this.service.shrinkFresco();
   }
 }

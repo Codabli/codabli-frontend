@@ -24,7 +24,7 @@ export class ArtGalleryHorizontalWalkthroughPanelComponent {
   }
 
   selectCountry(country: ArtGalleryCountryEnum): void {
-    this.service.GoTo(country);
+    this.service.goTo(country);
   }
 
   isCountryVisitable(country: ArtGalleryCountryEnum): boolean {

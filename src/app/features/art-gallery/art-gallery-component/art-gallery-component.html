@@ -1,4 +1,9 @@
-<div class="rowGrid">
-    <app-art-gallery-generic-central-field-panel-component/>
-    <app-art-gallery-horizontal-walkthrough-panel-component/>
-</div>
+@if((isFrescoExtendedObservable | async)) {
+    <app-art-gallery-fresco-component />
+}
+@else {
+    <div class="rowGrid">
+        <app-art-gallery-generic-central-field-panel-component/>
+        <app-art-gallery-horizontal-walkthrough-panel-component/>
+    </div>
+}

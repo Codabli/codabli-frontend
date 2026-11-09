@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ArtGalleryCountryEnum} from './art-gallery-country-enum'
-import {ArtGalleryHotspotModel} from './art-gallery-hotspot-model';
+import {ArtGalleryHotspotModel} from './models/art-gallery-country-hotspots-model';
 
 @Injectable({
     providedIn: 'root',
@@ -8,12 +8,14 @@ import {ArtGalleryHotspotModel} from './art-gallery-hotspot-model';
 export class ArtGalleryHotspotHttpService {
     private DATABASE_URL: string = "http://localhost:3000/countries";
 
-    async getHotspots(country: ArtGalleryCountryEnum): Promise<ArtGalleryHotspotModel[]> {
-        const serviceResult: Response = await fetch(`${this.DATABASE_URL}/${ArtGalleryCountryEnum[country]}`);
+    async getHotspots(country: ArtGalleryCountryEnum): Promise<ArtGalleryCountryHotspotsModel> {
+        const serviceResult: Response = await fetch(`${this.DATABASE_URL}`);
 
         if (!serviceResult.ok)
             throw new Error("Une erreur est survenue lors de la récupération des hotspots");
 
-        return (await serviceResult.json()) ?? [];
+        let httpResult: ArtGalleryCountryHotspotsModel[] = await serviceResult.json() ?? [];
+
+        return httpResult.find((countryHotspots: ArtGalleryCountryHotspotsModel) => countryHotspots.country === country);
     }
 }

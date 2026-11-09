@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ArtGalleryCountryEnum} from './art-gallery-country-enum'
-import {ArtGalleryHotspotModel} from './models/art-gallery-country-hotspots-model';
+import {ArtGalleryCountryHotspotsModel} from './models/art-gallery-country-hotspots-model';
 
 @Injectable({
     providedIn: 'root',

@@ -3,14 +3,14 @@
   [style.position]="'absolute'"
   [style.left.%]="x()"
   [style.top.%]="y()"
-  [attr.aria-expanded]="isOpen()"
-  [attr.aria-controls]="isOpen() ? detailsId() : null"
+  [attr.aria-expanded]="isOpened()"
+  [attr.aria-controls]="isOpened() ? detailsId() : null"
   (click)="toggle()"
 >
   {{ 'artGallery.hotspot.label' | translate: { id: hotspotId() } }}
 </button>
 
-@if (isOpen()) {
+@if (isOpened()) {
   <div class="hotspot-popup-backdrop" (click)="close()">
     <section
       class="hotspot-popup"

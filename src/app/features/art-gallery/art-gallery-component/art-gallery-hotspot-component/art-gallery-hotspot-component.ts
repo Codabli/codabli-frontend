@@ -1,4 +1,4 @@
-import { Component, computed, input, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, input, Signal, signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
@@ -20,24 +20,24 @@ export class ArtGalleryHotspotComponent {
 
   readonly currentCountry: Signal<ArtGalleryCountryEnum>;
   readonly detailsId: Signal<string>;
-  readonly isOpen: WritableSignal<boolean>;
+  readonly isOpened: WritableSignal<boolean>;
 
-  // Le service utilisera le pays courant et hotspotId pour retrouver ces données.
-  constructor(private readonly artGalleryService: ArtGalleryService) {
-    this.currentCountry = toSignal(this.artGalleryService.currentCountryObservable, {
+  constructor() {
+    const artGalleryService = inject(ArtGalleryService);
+    this.currentCountry = toSignal(artGalleryService.currentCountryObservable, {
       initialValue: ArtGalleryCountryEnum.WORLD,
     });
     this.detailsId = computed(
       () => `hotspot-details-${this.currentCountry()}-${this.hotspotId()}`,
     );
-    this.isOpen = signal(false);
+    this.isOpened = signal(false);
   }
 
   toggle(): void {
-    this.isOpen.update((isOpen) => !isOpen);
+    this.isOpened.update((isOpened) => !isOpened);
   }
 
   close(): void {
-    this.isOpen.set(false);
+    this.isOpened.set(false);
   }
 }

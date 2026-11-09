@@ -14,7 +14,7 @@ export class ArtGalleryHotspotHttpService {
         if (!serviceResult.ok)
             throw new Error("Une erreur est survenue lors de la récupération des hotspots");
 
-        let httpResult: ArtGalleryCountryHotspotsModel[] = await serviceResult.json() ?? [];
+        let httpResult: ArtGalleryCountryHotspotsModel[] = (await serviceResult.json()) ?? [];
 
         return httpResult.find((countryHotspots: ArtGalleryCountryHotspotsModel) => countryHotspots.country === country);
     }

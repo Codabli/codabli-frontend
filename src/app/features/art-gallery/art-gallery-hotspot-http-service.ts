@@ -8,7 +8,7 @@ import {ArtGalleryCountryHotspotsModel} from './models/art-gallery-country-hotsp
 export class ArtGalleryHotspotHttpService {
     private DATABASE_URL: string = "http://localhost:3000/countries";
 
-    async getHotspots(country: ArtGalleryCountryEnum): Promise<ArtGalleryCountryHotspotsModel | undefined> {
+    public async getHotspots(country: ArtGalleryCountryEnum): Promise<ArtGalleryCountryHotspotsModel | undefined> {
         const serviceResult: Response = await fetch(`${this.DATABASE_URL}`);
 
         if (!serviceResult.ok)
@@ -16,6 +16,6 @@ export class ArtGalleryHotspotHttpService {
 
         let httpResult: ArtGalleryCountryHotspotsModel[] = (await serviceResult.json()) ?? [];
 
-        return httpResult.find((countryHotspots: ArtGalleryCountryHotspotsModel) => countryHotspots.country === country);
+        return httpResult.find((countryHotspots: ArtGalleryCountryHotspotsModel) => countryHotspots.country === ArtGalleryCountryEnum[country]);
     }
 }

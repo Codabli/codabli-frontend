@@ -1209,7 +1209,7 @@
       "error": "Les offres ne peuvent pas être affichées pour le moment. Réessayez dans quelques instants.",
       "empty": "Aucune offre d'abonnement n'est disponible pour le moment."
     },
-      "audience": {
+    "audience": {
       "famille": "Pour les familles",
       "enseignant": "Pour les enseignants",
       "etablissement": "Pour les établissements",
@@ -1463,6 +1463,57 @@
       "passwordMismatch": "Les mots de passe ne correspondent pas.",
       "termsRequired": "Vous devez accepter les CGU et la Politique de Confidentialité pour créer votre compte.",
       "salesTermsRequired": "Vous devez accepter les CGV pour créer votre compte."
+    }
+  },
+  "teacherProfile": {
+    "breadcrumb": {
+      "home": "Accueil",
+      "profile": "Mon profil",
+      "current": "Mon profil"
+    },
+    "navigation": {
+      "personalInformation": "Informations personnelles",
+      "subscription": "Abonnement",
+      "teachingKit": "Ma mallette pédagogique",
+      "classroom": "Ma classe",
+      "evaluation": "Mon évaluation",
+      "webinars": "Mes webinaires"
+    },
+    "header": {
+      "changePhoto": "Modifier l'image de profil"
+    },
+    "personalInformation": {
+      "title": "Vos informations personnelles",
+      "fields": {
+        "lastName": "Nom",
+        "firstName": "Prénom",
+        "school": "Établissement scolaire",
+        "academy": "Académie",
+        "email": "Adresse mail"
+      },
+      "actions": {
+        "edit": "Modifier mes informations",
+        "save": "Enregistrer les modifications",
+        "cancel": "Annuler"
+      }
+    },
+    "security": {
+      "title": "Sécurité du compte",
+      "description": "Votre mot de passe protège l'accès à votre compte Codabli. Vous pouvez le modifier indépendamment de vos informations personnelles.",
+      "changePassword": "Modifier mon mot de passe"
+    },
+    "accountManagement": {
+      "title": "Gestion du compte",
+      "description": "Vous souhaitez supprimer définitivement votre compte Codabli ? Cette action est irréversible.",
+      "deleteAccount": "Supprimer mon compte"
+    },
+    "common": {
+      "notProvided": "Non renseigné",
+      "loading": "Chargement de votre profil..."
+    },
+    "errors": {
+      "loading": "Impossible de charger vos informations personnelles.",
+      "saving": "Impossible d'enregistrer vos modifications."
     }
   }
 }

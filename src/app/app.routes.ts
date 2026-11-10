@@ -61,7 +61,46 @@ export const routes: Routes = [
       {
         path: 'subscriptions',
         loadComponent: () =>
-          import('./features/subscriptions/subscriptions.component').then((m) => m.SubscriptionsComponent),
+          import('./features/subscriptions/subscriptions.component').then(
+            (m) => m.SubscriptionsComponent,
+          ),
+      },
+      {
+        path: 'profile/teacher',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/teacher-account-profile/teacher-account-profile.component').then(
+            (m) => m.TeacherAccountProfileComponent,
+          ),
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'informations',
+          },
+          {
+            path: 'informations',
+            loadComponent: () =>
+              import('./pages/teacher-account-profile/components/teacher-personal-information/teacher-personal-information.component').then(
+                (m) => m.TeacherPersonalInformationComponent,
+              ),
+          },
+          {
+            path: 'abonnement',
+            loadComponent: () =>
+              import('./pages/teacher-account-profile/components/teacher-subscription/teacher-subscription.component').then(
+                (m) => m.TeacherSubscriptionComponent,
+              ),
+          },
+        ],
+      },
+      {
+        path: 'profile/family',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/family-account-profile/family-account-profile.component').then(
+            (m) => m.FamilyAccountProfileComponent,
+          ),
       },
     ],
   },

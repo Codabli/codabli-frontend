@@ -3,6 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { API_BASE_URL } from '../http/api.config';
 import type { LoginRequest, LoginResponse } from '../../models/interfaces/auth.interface';
+import { UtilisateurResponse } from '@models/interfaces/user.interface';
 
 /** Clé de la session en `sessionStorage` : survit au rechargement, pas à la fermeture de l'onglet. */
 export const AUTH_STORAGE_KEY = 'codabli.auth';
@@ -39,6 +40,10 @@ export class AuthService {
       return null;
     }
     return session?.accessToken ?? null;
+  }
+
+  getCurrentUser(): Observable<UtilisateurResponse> {
+    return this.http.get<UtilisateurResponse>(`${this.url}/me`);
   }
 
   logout(): void {

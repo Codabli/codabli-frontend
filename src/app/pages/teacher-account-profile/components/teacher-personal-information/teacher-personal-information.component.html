@@ -1,0 +1,269 @@
+@if (isLoading()) {
+  <p>Chargement de votre profil...</p>
+} @else if (error()) {
+  <p role="alert">{{ error() }}</p>
+} @else if (user(); as teacher) {
+  <header class="teacher-profile__header">
+    <div
+      class="teacher-profile__avatar"
+      aria-hidden="true"
+    >
+      {{ teacher.prenom.charAt(0) }}{{ teacher.nom.charAt(0) }}
+    </div>
+
+    <div class="teacher-profile__identity">
+      <h1 class="teacher-profile__name">
+        {{ teacher.prenom }} {{ teacher.nom }}
+      </h1>
+
+      <button
+        type="button"
+        class="teacher-profile__photo-action"
+        disabled
+      >
+        {{ 'teacherProfile.header.changePhoto' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Informations personnelles -->
+  <section
+    class="teacher-profile__section teacher-profile__section--personal"
+    aria-labelledby="personal-information-title"
+  >
+    <h2
+      id="personal-information-title"
+      class="teacher-profile__section-title"
+    >
+      {{ 'teacherProfile.personalInformation.title' | translate }}
+    </h2>
+
+    @if (!isEditing()) {
+      <!-- Mode consultation -->
+      <div class="teacher-profile__fields">
+        <div class="teacher-profile__field teacher-profile__field--readonly">
+          <span class="teacher-profile__label">
+            {{
+              'teacherProfile.personalInformation.fields.lastName' | translate
+            }}
+          </span>
+          <p class="teacher-profile__value">{{ teacher.nom }}</p>
+        </div>
+
+        <div class="teacher-profile__field teacher-profile__field--readonly">
+          <span class="teacher-profile__label">
+            {{
+              'teacherProfile.personalInformation.fields.firstName' | translate
+            }}
+          </span>
+          <p class="teacher-profile__value">{{ teacher.prenom }}</p>
+        </div>
+
+        <div class="teacher-profile__field teacher-profile__field--readonly">
+          <span class="teacher-profile__label">
+            {{ 'teacherProfile.personalInformation.fields.school' | translate }}
+          </span>
+          <p class="teacher-profile__value">
+            {{ teacher.ecoleNom ?? 'Non renseigné' }}
+          </p>
+        </div>
+
+        <div class="teacher-profile__field teacher-profile__field--readonly">
+          <span class="teacher-profile__label">
+            {{
+              'teacherProfile.personalInformation.fields.academy' | translate
+            }}
+          </span>
+          <p class="teacher-profile__value">Académie de Paris</p>
+        </div>
+
+        <div class="teacher-profile__field teacher-profile__field--readonly">
+          <span class="teacher-profile__label">
+            {{ 'teacherProfile.personalInformation.fields.email' | translate }}
+          </span>
+          <p class="teacher-profile__value">{{ teacher.email }}</p>
+        </div>
+      </div>
+
+      <div class="teacher-profile__actions">
+        <app-button
+          variant="primary"
+          type="button"
+          (click)="startEditing()"
+        >
+          {{ 'teacherProfile.personalInformation.actions.edit' | translate }}
+        </app-button>
+      </div>
+    } @else {
+      <!-- Mode modification -->
+      <form
+        class="teacher-profile__form"
+        (submit)="$event.preventDefault()"
+      >
+        <div class="teacher-profile__fields">
+          <!-- Nom -->
+          <div class="teacher-profile__field">
+            <label for="teacher-lastname">
+              {{
+                'teacherProfile.personalInformation.fields.lastName' | translate
+              }}
+            </label>
+
+            <input
+              id="teacher-lastname"
+              type="text"
+              placeholder="Renseignez votre nom"
+              autocomplete="family-name"
+            />
+          </div>
+
+          <!-- Prénom -->
+          <div class="teacher-profile__field">
+            <label for="teacher-firstname">
+              {{
+                'teacherProfile.personalInformation.fields.firstName'
+                  | translate
+              }}
+            </label>
+
+            <input
+              id="teacher-firstname"
+              type="text"
+              placeholder="Renseignez votre prénom"
+              autocomplete="given-name"
+            />
+          </div>
+
+          <!-- Établissement scolaire -->
+          <div class="teacher-profile__field">
+            <span class="teacher-profile__label">
+              {{
+                'teacherProfile.personalInformation.fields.school' | translate
+              }}
+            </span>
+
+            <app-filter-select
+              placeholder="Sélectionnez un établissement"
+              [value]="selectedSchool()"
+              [options]="schoolOptions"
+              (selectionChange)="selectedSchool.set($event)"
+            />
+          </div>
+
+          <!-- Académie -->
+          <div class="teacher-profile__field">
+            <span class="teacher-profile__label">
+              {{
+                'teacherProfile.personalInformation.fields.academy' | translate
+              }}
+            </span>
+
+            <app-filter-select
+              placeholder="Sélectionnez une académie"
+              [value]="selectedAcademy()"
+              [options]="academyOptions"
+              (selectionChange)="selectedAcademy.set($event)"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="teacher-profile__field">
+            <label for="teacher-email">
+              {{
+                'teacherProfile.personalInformation.fields.email' | translate
+              }}
+            </label>
+
+            <input
+              id="teacher-email"
+              type="email"
+              placeholder="{{
+                'teacherProfile.personalInformation.fields.emailPlaceholder'
+                  | translate
+              }}"
+              autocomplete="email"
+            />
+          </div>
+        </div>
+
+        <!-- Actions du formulaire -->
+        <div class="teacher-profile__actions">
+          <app-button
+            variant="primary"
+            type="submit"
+            [disabled]="true"
+          >
+            {{
+              'teacherProfile.personalInformation.actions.save'
+                | translate
+            }}
+          </app-button>
+
+          <app-button
+            variant="outline"
+            type="button"
+            (click)="cancelEditing()"
+          >
+            {{
+              'teacherProfile.personalInformation.actions.cancel' | translate
+            }}
+          </app-button>
+        </div>
+      </form>
+    }
+  </section>
+
+  <!-- Sécurité du compte -->
+  <section
+    class="teacher-profile__section teacher-profile__section--security"
+    aria-labelledby="security-title"
+  >
+    <h2
+      id="security-title"
+      class="teacher-profile__section-title"
+    >
+      {{ 'teacherProfile.security.title' | translate }}
+    </h2>
+
+    <p class="teacher-profile__description">
+      {{ 'teacherProfile.security.description' | translate }}
+    </p>
+
+    <div class="teacher-profile__actions">
+      <app-button
+        variant="tertiary"
+        type="button"
+        [disabled]="true"
+      >
+        {{ 'teacherProfile.security.changePassword' | translate }}
+      </app-button>
+    </div>
+  </section>
+
+  <!-- Suppression du compte -->
+  <section
+    class="teacher-profile__section teacher-profile__section--account"
+    aria-labelledby="account-title"
+  >
+    <h2
+      id="account-title"
+      class="teacher-profile__section-title"
+    >
+      {{ 'teacherProfile.accountManagement.title' | translate }}
+    </h2>
+
+    <p class="teacher-profile__description">
+      {{ 'teacherProfile.accountManagement.description' | translate }}
+    </p>
+
+    <div class="teacher-profile__actions">
+      <app-button
+        variant="outline"
+        type="button"
+        [disabled]="true"
+      >
+        {{ 'teacherProfile.accountManagement.deleteAccount' | translate }}
+      </app-button>
+    </div>
+  </section>
+}

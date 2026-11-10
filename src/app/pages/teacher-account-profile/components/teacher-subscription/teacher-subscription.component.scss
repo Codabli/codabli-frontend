@@ -1,0 +1,233 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.teacher-subscription {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+
+  font-family: var(--font-family-body), sans-serif;
+  color: var(--font-color-primary);
+}
+
+.teacher-subscription__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.teacher-subscription__title {
+  margin: 0;
+
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-heavy);
+  line-height: var(--line-height-h5);
+}
+
+/* ==========================================
+   ABONNEMENT ACTUEL
+   ========================================== */
+
+.teacher-subscription__plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+
+  max-width: 480px;
+  padding: var(--spacing-xl);
+
+  background-color: var(--color-bg-theme-default);
+  border-radius: var(--radius-card);
+}
+
+.teacher-subscription__plan-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.teacher-subscription__plan-name {
+  margin: 0 0 var(--spacing-xs);
+
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+}
+
+.teacher-subscription__plan-period {
+  margin: 0;
+
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.teacher-subscription__plan-price {
+  margin: 0;
+  white-space: nowrap;
+
+  font-family: var(--font-family-secondary), sans-serif;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-heavy);
+
+  span {
+    font-family: var(--font-family-body), sans-serif;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+/* ==========================================
+   MÉTHODES DE PAIEMENT
+   ========================================== */
+
+.teacher-subscription__payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+
+  max-width: 600px;
+}
+
+.teacher-subscription__payment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+
+  min-width: 0;
+  min-height: 180px;
+  padding: var(--spacing-lg);
+
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: 24px;
+
+  h3 {
+    margin: 0;
+
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-bold);
+  }
+
+  p {
+    margin: 0;
+
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  app-button,
+  .teacher-subscription__selected-label {
+    margin-top: auto;
+  }
+
+  &--selected {
+    background-color: var(--color-bg-filters);
+    border-color: var(--color-border-primary-focus);
+  }
+}
+
+.teacher-subscription__selected-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: var(--spacing-sm) var(--spacing-md);
+
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+
+  color: var(--color-white);
+  background-color: var(--color-bg-tertiary-default);
+  border-radius: var(--radius-button);
+}
+
+/* ==========================================
+   ACTIONS
+   ========================================== */
+
+.teacher-subscription__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+/* ==========================================
+   HISTORIQUE DES FACTURES
+   ========================================== */
+
+.teacher-subscription__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: 24px;
+}
+
+.teacher-subscription__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  text-align: left;
+  font-size: var(--font-size-small);
+
+  th,
+  td {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+
+  th {
+    font-weight: var(--font-weight-bold);
+    background-color: var(--color-bg-theme-default);
+  }
+
+  td {
+    border-top: 1px solid var(--color-border-light);
+  }
+}
+
+.teacher-subscription__amount {
+  font-weight: var(--font-weight-bold);
+}
+
+.teacher-subscription__invoice-unavailable {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  opacity: 0.65;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 599px) {
+  .teacher-subscription {
+    gap: var(--spacing-xl);
+  }
+
+  .teacher-subscription__plan {
+    padding: var(--spacing-lg);
+  }
+
+  .teacher-subscription__payment-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-subscription__actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    app-button {
+      width: 100%;
+    }
+  }
+
+  .teacher-subscription__table {
+    min-width: 460px;
+  }
+}

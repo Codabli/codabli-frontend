@@ -1,0 +1,56 @@
+
+<aside class="teacher-profile__sidebar">
+  <nav aria-label="Navigation du profil enseignant">
+
+    <a
+      routerLink="/profile/teacher/informations"
+      routerLinkActive="teacher-profile__nav-item--active"
+      ariaCurrentWhenActive="page"
+      class="teacher-profile__nav-item"
+    >
+      {{ 'teacherProfile.navigation.personalInformation' | translate }}
+    </a>
+
+    <a
+      routerLink="/profile/teacher/abonnement"
+      routerLinkActive="teacher-profile__nav-item--active"
+      ariaCurrentWhenActive="page"
+      class="teacher-profile__nav-item"
+    >
+      {{ 'teacherProfile.navigation.subscription' | translate }}
+    </a>
+
+    <button
+      type="button"
+      class="teacher-profile__nav-item"
+      disabled
+    >
+      {{ 'teacherProfile.navigation.teachingKit' | translate }}
+    </button>
+
+    <button
+      type="button"
+      class="teacher-profile__nav-item"
+      disabled
+    >
+      {{ 'teacherProfile.navigation.classroom' | translate }}
+    </button>
+
+    <button
+      type="button"
+      class="teacher-profile__nav-item"
+      disabled
+    >
+      {{ 'teacherProfile.navigation.evaluation' | translate }}
+    </button>
+
+    <button
+      type="button"
+      class="teacher-profile__nav-item"
+      disabled
+    >
+      {{ 'teacherProfile.navigation.webinars' | translate }}
+    </button>
+
+  </nav>
+</aside>

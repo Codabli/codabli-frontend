@@ -7,7 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SearchInputComponent } from '@shared/ui/search-input/search-input.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
@@ -16,6 +16,8 @@ import { LanguageService } from '@core/services/language.service';
 import { AuthService } from '@core/services/auth.service';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RoleUtilisateur } from '@models/interfaces/user.interface';
+
 
 @Component({
   imports: [
@@ -34,6 +36,7 @@ export class HeaderComponent {
   readonly languageService = inject(LanguageService);
   private readonly viewportScroller = inject(ViewportScroller);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
   readonly isLanguageMenuOpen = signal(false);
   readonly isProfileMenuOpen = signal(false);
@@ -69,12 +72,33 @@ export class HeaderComponent {
     }
   }
 
-  closeProfileMenu(): void {
+  goToProfile(): void {
     this.isProfileMenuOpen.set(false);
+
+    this.authService.getCurrentUser().subscribe({
+      next: (user) => {
+        switch (user.role) {
+          case RoleUtilisateur.ENSEIGNANT:
+            this.router.navigate(['/profile/teacher']);
+            break;
+
+          case RoleUtilisateur.PARENT:
+            this.router.navigate(['/profile/family']);
+            break;
+
+          default:
+            this.router.navigate(['/']);
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de la récupération du profil', error);
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   logout(): void {
-    this.closeProfileMenu();
+    this.isProfileMenuOpen.set(false);
     this.authService.logout();
   }
 

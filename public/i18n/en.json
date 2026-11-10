@@ -1208,7 +1208,7 @@
       "error": "Offers cannot be displayed at the moment. Please try again in a few moments.",
       "empty": "No subscription offer is available at the moment."
     },
-        "audience": {
+    "audience": {
       "famille": "For families",
       "enseignant": "For teachers",
       "etablissement": "For schools",
@@ -1462,6 +1462,57 @@
       "passwordMismatch": "Passwords do not match.",
       "termsRequired": "You must accept the Terms of Use and the Privacy Policy to create your account.",
       "salesTermsRequired": "You must accept the Terms and Conditions of Sale to create your account."
+    }
+  },
+  "teacherProfile": {
+    "breadcrumb": {
+      "home": "Home",
+      "profile": "My profile",
+      "current": "My profile"
+    },
+    "navigation": {
+      "personalInformation": "Personal information",
+      "subscription": "Subscription",
+      "teachingKit": "My teaching kit",
+      "classroom": "My classroom",
+      "evaluation": "My evaluation",
+      "webinars": "My webinars"
+    },
+    "header": {
+      "changePhoto": "Change profile picture"
+    },
+    "personalInformation": {
+      "title": "Your personal information",
+      "fields": {
+        "lastName": "Last name",
+        "firstName": "First name",
+        "school": "School",
+        "academy": "Academy",
+        "email": "Email address"
+      },
+      "actions": {
+        "edit": "Edit my information",
+        "save": "Save changes",
+        "cancel": "Cancel"
+      }
+    },
+    "security": {
+      "title": "Account security",
+      "description": "Your password protects access to your Codabli account. You can change it independently of your personal information.",
+      "changePassword": "Change my password"
+    },
+    "accountManagement": {
+      "title": "Account management",
+      "description": "Do you want to permanently delete your Codabli account? This action is irreversible.",
+      "deleteAccount": "Delete my account"
+    },
+    "common": {
+      "notProvided": "Not provided",
+      "loading": "Loading your profile..."
+    },
+    "errors": {
+      "loading": "Unable to load your personal information.",
+      "saving": "Unable to save your changes."
     }
   }
 }

@@ -1,0 +1,23 @@
+<div class="teacher-profile">
+  <!-- Fil d'Ariane -->
+  <nav
+    class="teacher-profile__breadcrumb"
+    aria-label="Fil d'Ariane"
+  >
+    <a routerLink="/">{{ 'teacherProfile.breadcrumb.home' | translate }}</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">
+      {{ 'teacherProfile.breadcrumb.profile' | translate }}
+    </span>
+  </nav>
+
+  <div class="teacher-profile__layout">
+    <!-- Navigation latérale -->
+    <app-teacher-profile-sidebar />
+
+    <!-- Contenu principal -->
+    <main class="teacher-profile__content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

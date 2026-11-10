@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ==========================================
+   SIDEBAR
+   ========================================== */
+
+.teacher-profile__sidebar {
+  padding: var(--spacing-lg);
+
+  background-color: var(--color-bg-filters);
+  border-radius: var(--radius-card);
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
+/* ==========================================
+   NAVIGATION ITEMS
+   ========================================== */
+
+.teacher-profile__nav-item {
+  display: block;
+  box-sizing: border-box;
+  text-decoration: none;
+  width: 100%;
+  padding: var(--spacing-md);
+
+  font-family: var(--font-family-body), sans-serif;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-small);
+  text-align: left;
+  color: var(--font-color-primary);
+
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-button);
+
+  cursor: pointer;
+  transition: background-color 150ms ease;
+
+  &--active {
+    background-color: var(--color-bg-tertiary-default-ico);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &:not(:disabled):not(.teacher-profile__nav-item--active):hover {
+    background-color: var(--color-white);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-primary-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1023px) {
+  .teacher-profile__sidebar nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .teacher-profile__nav-item {
+    width: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .teacher-profile__sidebar {
+    padding: var(--spacing-md);
+    border-radius: 24px;
+  }
+}

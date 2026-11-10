@@ -1,0 +1,133 @@
+<div class="teacher-subscription">
+
+  <section
+    class="teacher-subscription__section"
+    aria-labelledby="subscription-title"
+  >
+    <h1
+      id="subscription-title"
+      class="teacher-subscription__title"
+    >
+      Abonnement
+    </h1>
+
+    <div class="teacher-subscription__plan">
+      <div class="teacher-subscription__plan-header">
+        <div>
+          <h2 class="teacher-subscription__plan-name">
+            Formule professionnelle
+          </h2>
+          <p class="teacher-subscription__plan-period">
+            Abonnement mensuel
+          </p>
+        </div>
+
+        <p class="teacher-subscription__plan-price">
+          3€<span>/mois</span>
+        </p>
+      </div>
+
+      <div class="teacher-subscription__actions">
+        <app-button
+          variant="tertiary"
+          type="button"
+          [disabled]="true"
+        >
+          Annuler l'abonnement
+        </app-button>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="teacher-subscription__section"
+    aria-labelledby="payment-title"
+  >
+    <h2
+      id="payment-title"
+      class="teacher-subscription__title"
+    >
+      Méthode de paiement
+    </h2>
+
+    <div class="teacher-subscription__payment-methods">
+
+      <article
+        class="teacher-subscription__payment-card
+               teacher-subscription__payment-card--selected"
+      >
+        <h3>Carte bancaire 1</h3>
+        <p>**** **** **** 0000</p>
+
+        <span class="teacher-subscription__selected-label">
+          Méthode choisie
+        </span>
+      </article>
+
+      <article class="teacher-subscription__payment-card">
+        <h3>Carte bancaire 2</h3>
+        <p>**** **** **** 0000</p>
+
+        <app-button
+          variant="tertiary-ico"
+          type="button"
+          [disabled]="true"
+        >
+          Sélectionner
+        </app-button>
+      </article>
+
+    </div>
+
+    <div class="teacher-subscription__actions">
+      <app-button
+        variant="primary"
+        type="button"
+        [disabled]="true"
+      >
+        Ajouter une autre méthode
+      </app-button>
+    </div>
+  </section>
+
+  <section
+    class="teacher-subscription__section"
+    aria-labelledby="invoices-title"
+  >
+    <h2
+      id="invoices-title"
+      class="teacher-subscription__title"
+    >
+      Historique des facturations
+    </h2>
+
+    <div class="teacher-subscription__table-wrapper">
+      <table class="teacher-subscription__table">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Montant facturé</th>
+            <th scope="col">Facture</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (invoice of invoices; track invoice.id) {
+            <tr>
+              <td>{{ invoice.date }}</td>
+              <td class="teacher-subscription__amount">
+                {{ invoice.amount }}
+              </td>
+              <td>
+                <span class="teacher-subscription__invoice-unavailable">
+                  Télécharger
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>

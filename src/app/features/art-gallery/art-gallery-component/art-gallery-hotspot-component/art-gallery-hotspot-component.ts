@@ -1,8 +1,10 @@
-import { Component, computed, inject, input, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, input, Signal, signal, WritableSignal, InputSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
+import { ArtGalleryHotspotModel } from '../../models/art-gallery-hotspot-model';
 import { ArtGalleryService } from '../../art-gallery-service';
+import {ArtGalleryHotspotService} from '../../art-gallery-hotspot-service';
 
 @Component({
   imports: [TranslatePipe],
@@ -11,30 +13,36 @@ import { ArtGalleryService } from '../../art-gallery-service';
   templateUrl: './art-gallery-hotspot-component.html',
 })
 export class ArtGalleryHotspotComponent {
-  readonly hotspotId = input.required<string>();
-  // Données provisoires, fournies directement par le composant parent.
-  readonly imageUrl = input.required<string>();
-  readonly text = input.required<string>();
-  readonly x = input.required<number>();
-  readonly y = input.required<number>();
+  private readonly artGalleryService: ArtGalleryService;
+  private readonly artGalleryHotspotService: ArtGalleryHotspotService;
 
-  readonly currentCountry: Signal<ArtGalleryCountryEnum>;
+  readonly id: InputSignal<number> = input.required<number>();
+  imageUrl: WritableSignal<string | undefined>;
+  text: WritableSignal<string | undefined>;
+
   readonly detailsId: Signal<string>;
   readonly isOpened: WritableSignal<boolean>;
 
   constructor() {
-    const artGalleryService = inject(ArtGalleryService);
-    this.currentCountry = toSignal(artGalleryService.currentCountryObservable, {
-      initialValue: ArtGalleryCountryEnum.WORLD,
-    });
+    this.artGalleryService = inject(ArtGalleryService);
+    this.artGalleryHotspotService = inject(ArtGalleryHotspotService);
+
+    this.imageUrl = signal(undefined);
+    this.text = signal(undefined);
+    
     this.detailsId = computed(
-      () => `hotspot-details-${this.currentCountry()}-${this.hotspotId()}`,
+      () => `hotspot-details-${this.artGalleryService.getCurrentCountry()}-${this.id()}`,
     );
+    
     this.isOpened = signal(false);
   }
-
-  toggle(): void {
+  
+  async display(): Promise<void> {
     this.isOpened.update((isOpened) => !isOpened);
+    let serviceResult: ArtGalleryHotspotModel | undefined = await this.artGalleryHotspotService.getHotspot(this.artGalleryService.getCurrentCountry(), this.id());
+    
+    this.imageUrl.set(serviceResult?.uri);
+    this.text.set(serviceResult?.text);
   }
 
   close(): void {

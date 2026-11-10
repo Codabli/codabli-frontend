@@ -11,7 +11,6 @@ export class ArtGalleryConstants {
     );
 
     static readonly VISITABLE_COUNTRIES: readonly ArtGalleryCountryEnum[] = [
-        ArtGalleryCountryEnum.LEBANON,
         ArtGalleryCountryEnum.VIETNAM,
     ];
 }

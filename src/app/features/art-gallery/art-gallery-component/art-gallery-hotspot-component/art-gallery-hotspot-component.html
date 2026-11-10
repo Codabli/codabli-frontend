@@ -1,13 +1,13 @@
 <button
   type="button"
   [style.position]="'absolute'"
-  [style.left.%]="x()"
-  [style.top.%]="y()"
+  [style.left.%]="28"
+  [style.top.%]="70"
   [attr.aria-expanded]="isOpened()"
   [attr.aria-controls]="isOpened() ? detailsId() : null"
-  (click)="toggle()"
+  (click)="display()"
 >
-  {{ 'artGallery.hotspot.label' | translate: { id: hotspotId() } }}
+  {{ 'artGallery.hotspot.label' | translate: { id: id() } }}
 </button>
 
 @if (isOpened()) {
@@ -17,7 +17,7 @@
       [id]="detailsId()"
       role="dialog"
       aria-modal="true"
-      [attr.aria-label]="'artGallery.hotspot.label' | translate: { id: hotspotId() }"
+      [attr.aria-label]="'artGallery.hotspot.label' | translate: { id: id() }"
       (click)="$event.stopPropagation()"
     >
       <button

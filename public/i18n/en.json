@@ -1244,22 +1244,65 @@
       "home": "Home"
     },
     "title": "Create a teacher account",
+    "requiredHint": "Fields marked with an asterisk (*) are required.",
     "sections": {
+      "school": "Your school",
       "class": "About your class",
       "personal": "Personal information",
       "password": "Password",
-      "accessibility": "Specific needs",
+      "accessibility": "Accessibility preferences",
       "subscription": "Subscription"
     },
     "form": {
-      "school": {
-        "label": "School",
-        "placeholder": "Select a school",
-        "unavailable": "The list of schools could not be loaded."
+      "schoolCountry": {
+        "label": "Country or territory of the school",
+        "placeholder": "Select a country or territory",
+        "other": "Other country or territory – please specify"
+      },
+      "schoolCountryOther": {
+        "label": "Please specify the country or territory",
+        "placeholder": "Name of the country or territory"
+      },
+      "schoolName": {
+        "label": "Name of the school",
+        "placeholder": "In its original language"
+      },
+      "schoolCity": {
+        "label": "City or town",
+        "placeholder": "Enter the city or town"
+      },
+      "schoolType": {
+        "label": "Type of school",
+        "placeholder": "Not specified",
+        "options": {
+          "preschool": "Preschool / nursery",
+          "primary": "Primary / elementary school",
+          "secondary": "Secondary education",
+          "multiLevel": "School covering several levels",
+          "specialized": "Special education school",
+          "other": "Other"
+        }
+      },
+      "schoolTypeOther": {
+        "label": "Please specify the type of school",
+        "placeholder": "Type of school"
+      },
+      "schoolSector": {
+        "label": "School status",
+        "placeholder": "Not specified",
+        "options": {
+          "public": "Public",
+          "private": "Private",
+          "other": "Other"
+        }
+      },
+      "schoolRegion": {
+        "label": "Region, province or territory",
+        "placeholder": "Enter the region"
       },
       "academy": {
         "label": "Education authority (académie)",
-        "placeholder": "Select an education authority"
+        "placeholder": "Not specified"
       },
       "ageRange": {
         "label": "Age range of your pupils",
@@ -1317,8 +1360,10 @@
         "options": {
           "highContrast": "High contrast",
           "reducedMotion": "Reduced motion",
-          "signLanguageAudioDescription": "Sign language / Audio description",
-          "dysPmrSupport": "Support for dyslexia-related and reduced-mobility needs"
+          "textSpacing": "Increased text spacing",
+          "keyboardNavigation": "Keyboard navigation",
+          "signLanguage": "French Sign Language (LSF)",
+          "audioDescription": "Audio description"
         }
       },
       "subscription": {

@@ -5,21 +5,25 @@
             "hotspots": [
                 {
                     "id": 1,
-                    "uri": "/assets/images/art-gallery/Vietnam/Hotspots/art-gallery_Vietnam_1_Bouddha.png",
+                    "name": "Arbre en fleurs",
+                    "uri": "resources/vietnam-hotspot-uri-1",
                     "text": "This text represents the description of Vietnam's 1st hotspot"
                 },
                 {
                     "id": 2,
+                    "name": "Rizières",
                     "uri": "resources/vietnam-hotspot-uri-2",
                     "text": "This text represents the description of Vietnam's 2nd hotspot"
                 },
                 {
                     "id": 3,
-                    "uri": "resources/vietnam-hotspot-uri-3",
+                    "name": "Bouddha",
+                    "uri": "/assets/images/art-gallery/Vietnam/Hotspots/art-gallery_Vietnam_1_Bouddha.png",
                     "text": "This text represents the description of Vietnam's 3rd hotspot"
                 },
                 {
                     "id": 4,
+                    "name": "Pagode",
                     "uri": "resources/vietnam-hotspot-uri-4",
                     "text": "This text represents the description of Vietnam's 4th hotspot"
                 }

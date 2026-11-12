@@ -11,6 +11,9 @@
 >
     <img src="/assets/images/art-gallery/Vietnam/RSM_Fresque_Vietnam.jpg" alt="Fresque du Vietnam" />
     @if (isExtendedObservable | async) {
-        <app-art-gallery-hotspot-component [id]="1" />
+        <app-art-gallery-hotspot-component [id]="1" [positionLeft]="1" [positionTop]="35" />
+        <app-art-gallery-hotspot-component [id]="2" [positionLeft]="10" [positionTop]="60" />
+        <app-art-gallery-hotspot-component [id]="3" [positionLeft]="28" [positionTop]="70" />
+        <app-art-gallery-hotspot-component [id]="4" [positionLeft]="66" [positionTop]="50" />
     }
 </figure>

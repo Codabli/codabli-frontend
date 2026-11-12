@@ -1156,9 +1156,6 @@
     "next": "Go to next room",
     "navigation": "Room navigation",
     "inPreparation": "In preparation",
-    "hotspot": {
-      "label": "Hotspot {{id}}"
-    },
     "back": "Go back to gallery",
     "country": {
       "WORLD": "Return to world map",

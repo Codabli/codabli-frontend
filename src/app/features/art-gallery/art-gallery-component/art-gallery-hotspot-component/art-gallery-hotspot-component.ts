@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, Signal, signal, WritableSignal, InputSignal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal, Signal, WritableSignal, InputSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
@@ -17,6 +17,10 @@ export class ArtGalleryHotspotComponent {
   private readonly artGalleryHotspotService: ArtGalleryHotspotService;
 
   readonly id: InputSignal<number> = input.required<number>();
+  readonly positionLeft: InputSignal<number> = input.required<number>();
+  readonly positionTop: InputSignal<number> = input.required<number>();
+  
+  name: WritableSignal<string | undefined>;
   imageUrl: WritableSignal<string | undefined>;
   text: WritableSignal<string | undefined>;
 
@@ -27,22 +31,26 @@ export class ArtGalleryHotspotComponent {
     this.artGalleryService = inject(ArtGalleryService);
     this.artGalleryHotspotService = inject(ArtGalleryHotspotService);
 
+    this.name = signal(undefined);
     this.imageUrl = signal(undefined);
     this.text = signal(undefined);
     
     this.detailsId = computed(
       () => `hotspot-details-${this.artGalleryService.getCurrentCountry()}-${this.id()}`,
     );
+
+    effect(() =>
+      this.artGalleryHotspotService.getHotspot(this.artGalleryService.getCurrentCountry(), this.id()).then((serviceResult: ArtGalleryHotspotModel | undefined) => {
+        this.name.set(serviceResult?.name);
+        this.imageUrl.set(serviceResult?.uri);
+        this.text.set(serviceResult?.text);
+      }));
     
     this.isOpened = signal(false);
   }
   
-  async display(): Promise<void> {
+  display(): void {
     this.isOpened.update((isOpened) => !isOpened);
-    let serviceResult: ArtGalleryHotspotModel | undefined = await this.artGalleryHotspotService.getHotspot(this.artGalleryService.getCurrentCountry(), this.id());
-    
-    this.imageUrl.set(serviceResult?.uri);
-    this.text.set(serviceResult?.text);
   }
 
   close(): void {

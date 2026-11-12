@@ -44,7 +44,8 @@ export class ArtGalleryHotspotComponent {
         this.name.set(serviceResult?.name);
         this.imageUrl.set(serviceResult?.uri);
         this.text.set(serviceResult?.text);
-      }));
+      })
+    );
     
     this.isOpened = signal(false);
   }

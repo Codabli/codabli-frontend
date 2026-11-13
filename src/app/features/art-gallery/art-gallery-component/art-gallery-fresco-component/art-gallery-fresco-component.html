@@ -3,6 +3,7 @@
         <button (click)="returnToGallery()">{{"artGallery.back" | translate}}</button>
     }
     <p>{{currentCountryObservable | async | countryEnumToText | translate }}</p>
+    <p>{{currentCountryObservable | async | countryEnumToPoeticName | translate }}</p>
 </div>
 
 <figure

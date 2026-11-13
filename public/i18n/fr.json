@@ -1167,6 +1167,9 @@
       "TOGO": "Togo",
       "BRAZIL": "Brésil",
       "VIETNAM": "Vietnam"
+    },
+    "poeticName": {
+      "VIETNAM": "Salle des rizières et de l'harmonie"
     }
   },
   "footer": {

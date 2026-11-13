@@ -2,9 +2,15 @@
 @use "./styles/resource-screen";
 @use "flag-icons/sass/flag-icons" with (
   $flag-icons-included-countries: (
+    "au",
+    "br",
     "fr",
     "es",
     "gb",
+    "it",
+    "lb",
+    "tg",
+    "vn",
   )
 );
 @import "@fortawesome/fontawesome-free/css/all.min.css";

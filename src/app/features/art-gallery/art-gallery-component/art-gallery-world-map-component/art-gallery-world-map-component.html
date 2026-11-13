@@ -8,15 +8,98 @@
     </p>
   }
 
-  <object
-    #mapObject
+  <div
+    #mapContainer
     class="worldMap__svg"
-    [data]="mapAssetUrl"
-    type="image/svg+xml"
+    role="group"
     [attr.aria-label]="'artGallery.mapLabel' | translate"
-    (load)="onMapLoad(mapObject.contentDocument)"
-    (error)="onMapError()"
-  >
-    {{ 'artGallery.mapLoadError' | translate }}
-  </object>
+  ></div>
+
+  @if (!isExploring) {
+    <section
+      class="mapIntro"
+      aria-labelledby="mapIntroTitle"
+    >
+      <h2 id="mapIntroTitle">{{ 'artGallery.mapIntro' | translate }}</h2>
+      <button
+        class="mapIntro__button"
+        type="button"
+        (click)="startExploring()"
+      >
+        {{ 'artGallery.startExploring' | translate }}
+      </button>
+    </section>
+  }
+
+  @if (isExploring && hoveredCountry !== null && previewCountry === null) {
+    <div
+      class="countryTooltip"
+      role="status"
+      [style.left.%]="hoverTooltipPosition?.left ?? null"
+      [style.top.%]="hoverTooltipPosition?.top ?? null"
+    >
+      <span
+        [class]="flagClass(hoveredCountry)"
+        aria-hidden="true"
+      ></span>
+      <span>{{ hoveredCountry | countryEnumToText | translate }}</span>
+    </div>
+  }
+
+  @if (previewCountry !== null) {
+    <div
+      class="countryPreview__backdrop"
+      (click)="closeCountryPreview()"
+      (keydown.escape)="closeCountryPreview()"
+    >
+      <section
+        class="countryPreview"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="previewCountry | countryEnumToText | translate"
+        (click)="$event.stopPropagation()"
+      >
+        <button
+          #previewClose
+          class="countryPreview__close"
+          type="button"
+          [attr.aria-label]="'artGallery.closePreview' | translate"
+          (click)="closeCountryPreview()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="countryPreview__heading">
+          <span
+            [class]="flagClass(previewCountry)"
+            aria-hidden="true"
+          ></span>
+          <h2>{{ previewCountry | countryEnumToText | translate }}</h2>
+        </div>
+
+        @if (previewMapError) {
+          <p
+            class="countryPreview__error"
+            role="alert"
+          >
+            {{ 'artGallery.countryPreviewMapError' | translate }}
+          </p>
+        } @else {
+          <div
+            #previewMap
+            class="countryPreview__map"
+          ></div>
+        }
+
+        <button
+          class="countryPreview__explore"
+          type="button"
+          (click)="confirmCountry()"
+        >
+          {{ 'artGallery.enterCountry' | translate }}
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </section>
+    </div>
+  }
 </div>

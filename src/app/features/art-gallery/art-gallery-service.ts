@@ -14,6 +14,7 @@ export class ArtGalleryService {
     private isFrescoExtended: boolean;
     private isFrescoExtendedSubject: BehaviorSubject<boolean>;
     public isFrescoExtendedObservable: Observable<boolean>;
+    private hasStartedWorldMapExploration = false;
 
     constructor() {
         this.currentCountry = ArtGalleryCountryEnum.WORLD;
@@ -27,6 +28,14 @@ export class ArtGalleryService {
 
     public getCurrentCountry(): ArtGalleryCountryEnum {
         return this.currentCountry;
+    }
+
+    public hasStartedExploring(): boolean {
+        return this.hasStartedWorldMapExploration;
+    }
+
+    public startExploring(): void {
+        this.hasStartedWorldMapExploration = true;
     }
 
     public goTo(destination: ArtGalleryCountryEnum): void {

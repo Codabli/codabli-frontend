@@ -1159,7 +1159,12 @@
     "inPreparation": "En préparation",
     "back": "Retourner sur la galerie",
     "mapLabel": "Carte interactive du monde",
+    "mapIntro": "Bienvenue dans la galerie d’art",
+    "startExploring": "Partons explorer !",
     "mapLoadError": "La carte interactive n'a pas pu être chargée.",
+    "enterCountry": "C’est parti !",
+    "closePreview": "Fermer l’aperçu",
+    "countryPreviewMapError": "Le pays ne peut pas être affiché pour le moment.",
     "country": {
       "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",

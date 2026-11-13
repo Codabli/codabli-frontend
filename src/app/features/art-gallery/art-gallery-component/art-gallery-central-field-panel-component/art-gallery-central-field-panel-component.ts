@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import {ArtGalleryFrescoComponent} from '../art-gallery-fresco-component/art-gallery-fresco-component'
+import {ArtGalleryCountryPresentationPanelComponent} from '../art-gallery-country-presentation-panel-component/art-gallery-country-presentation-panel-component'
 import {ArtGalleryService} from '../../art-gallery-service'
 import {ArtGalleryCountryEnum} from '../../art-gallery-country-enum'
 
 @Component({
-  imports: [ArtGalleryFrescoComponent, TranslatePipe],
+  imports: [ArtGalleryFrescoComponent, ArtGalleryCountryPresentationPanelComponent, TranslatePipe],
   selector: 'app-art-gallery-central-field-panel-component',
   styleUrl: './art-gallery-central-field-panel-component.scss',
   templateUrl: './art-gallery-central-field-panel-component.html',

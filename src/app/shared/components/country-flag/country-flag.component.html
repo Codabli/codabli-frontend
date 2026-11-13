@@ -1,0 +1,9 @@
+@if (src(); as src) {
+  <img
+    class="country-flag"
+    [src]="src"
+    [alt]="label() ?? ''"
+    [attr.aria-hidden]="label() ? null : 'true'"
+    decoding="async"
+  />
+}

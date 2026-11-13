@@ -42,12 +42,15 @@ describe('ArtGalleryService', () => {
 
   it('navigates through visitable countries and stops at the last one', () => {
     service.goNextCountry();
-    expect(service.getCurrentCountry()).toBe(ArtGalleryCountryEnum.LEBANON);
-
-    service.goNextCountry();
     expect(service.getCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
 
     service.goNextCountry();
     expect(service.getCurrentCountry()).toBe(ArtGalleryCountryEnum.VIETNAM);
+  });
+
+  it('does not navigate to Lebanon while it is not visitable', () => {
+    service.goTo(ArtGalleryCountryEnum.LEBANON);
+
+    expect(service.getCurrentCountry()).toBe(ArtGalleryCountryEnum.WORLD);
   });
 });

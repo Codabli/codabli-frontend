@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
+import { ArtGalleryHotspotService } from '../../art-gallery-hotspot-service';
 import { ArtGalleryFrescoComponent } from './art-gallery-fresco-component';
 import { ArtGalleryService } from '../../art-gallery-service';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
@@ -11,6 +13,14 @@ describe('ArtGalleryFrescoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ArtGalleryFrescoComponent],
+      providers: [
+        provideTranslateService(),
+        // Hotspot data comes from json-server; tests must not depend on it.
+        {
+          provide: ArtGalleryHotspotService,
+          useValue: { getHotspot: () => Promise.resolve(undefined) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ArtGalleryFrescoComponent);

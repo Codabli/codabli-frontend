@@ -130,6 +130,39 @@
   
   --shadow-card: 0 0 30px 0 rgb(0 0 0 / 15%);
 
+  // ======================================================
+  // COLORS - Art gallery map
+  // ======================================================
+
+  --color-map-paper: #fff8ec;
+  --color-map-ocean: #d6ecfa;
+  --color-map-waves: #8fc3e6;
+  --color-map-land: #cbbbff;
+  --color-map-land-border: #b3a0f0;
+  --color-map-land-shadow: #a48fe0;
+  --color-map-open: #ffc66b;
+  --color-map-open-border: #e88601;
+  --color-map-medallion: #d9a54b;
+  --color-map-medallion-ring: #f1d39a;
+  --color-map-ink: #3e2e60;
+  --color-map-callout-bg: #fde8c8;
+  --color-map-callout-border: #ffc889;
+  --color-map-zoom-in-bg: #b6eea7;
+  --color-map-zoom-in-border: #719f65;
+  --color-map-zoom-out-bg: #f4b8d6;
+  --color-map-zoom-out-border: #be89a4;
+  --color-map-world-bg: #b7e7f3;
+  --color-map-world-border: #93bbc5;
+  --color-map-explore-bg: #ffcf9f;
+  --color-map-explore-border: #e8a66b;
+  --color-map-close-border: #b69eff;
+  --shadow-map-control: 0 4px 0 rgb(62 46 96 / 24%);
+  --shadow-map-control-pressed: 0 1px 0 rgb(62 46 96 / 24%);
+  --shadow-map-page:
+    0 1px 0 rgb(62 46 96 / 6%),
+    0 12px 20px -10px rgb(62 46 96 / 22%),
+    0 32px 60px -18px rgb(62 46 96 / 30%);
+
   --radius-button: 100px;
   --radius-card: 32px;
 

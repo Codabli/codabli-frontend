@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
+import { ArtGalleryHotspotService } from '../../art-gallery-hotspot-service';
 import { ArtGalleryHorizontalWalkthroughPanelComponent } from './art-gallery-horizontal-walkthrough-panel-component';
 
 describe('ArtGalleryHorizontalWalkthroughPanelComponent', () => {
@@ -8,6 +10,14 @@ describe('ArtGalleryHorizontalWalkthroughPanelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ArtGalleryHorizontalWalkthroughPanelComponent],
+      providers: [
+        provideTranslateService(),
+        // Hotspot data comes from json-server; tests must not depend on it.
+        {
+          provide: ArtGalleryHotspotService,
+          useValue: { getHotspot: () => Promise.resolve(undefined) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(

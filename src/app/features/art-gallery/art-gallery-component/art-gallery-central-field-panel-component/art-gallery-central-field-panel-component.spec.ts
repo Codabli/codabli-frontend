@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
+import { ArtGalleryHotspotService } from '../../art-gallery-hotspot-service';
 import { ArtGalleryCentralFieldPanelComponent } from './art-gallery-central-field-panel-component';
 
 describe('ArtGalleryCentralFieldPanelComponent', () => {
@@ -8,6 +10,14 @@ describe('ArtGalleryCentralFieldPanelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ArtGalleryCentralFieldPanelComponent],
+      providers: [
+        provideTranslateService(),
+        // Hotspot data comes from json-server; tests must not depend on it.
+        {
+          provide: ArtGalleryHotspotService,
+          useValue: { getHotspot: () => Promise.resolve(undefined) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ArtGalleryCentralFieldPanelComponent);

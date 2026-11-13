@@ -1,0 +1,24 @@
+:host {
+  --flag-width: 1.5em;
+  --flag-radius: 0.15em;
+
+  display: inline-flex;
+  flex: none;
+  width: var(--flag-width);
+  aspect-ratio: 4 / 3;
+  vertical-align: middle;
+}
+
+:host(.country-flag--square) {
+  aspect-ratio: 1;
+}
+
+.country-flag {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--flag-radius);
+  // Light flags (white bands) stay visible on light backgrounds.
+  box-shadow: 0 0 0 1px rgb(62 46 96 / 15%);
+  object-fit: cover;
+}

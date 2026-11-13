@@ -1158,6 +1158,21 @@
     "navigation": "Navigation des salles",
     "inPreparation": "En préparation",
     "back": "Retourner sur la galerie",
+    "mapLabel": "Carte interactive du monde",
+    "mapIntro": "Bienvenue dans la galerie d’art",
+    "startExploring": "Partons explorer !",
+    "mapLoadError": "La carte interactive n'a pas pu être chargée.",
+    "enterCountry": "Explorer",
+    "closePreview": "Fermer l’aperçu",
+    "countryPreviewMapError": "Le pays ne peut pas être affiché pour le moment.",
+    "mapControls": "Contrôles de la carte",
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "seeWorld": "Voir le monde",
+    "guide": {
+      "findCountry": "Clique sur un pays qui brille pour entrer dans sa salle !",
+      "unavailable": "Oups ! Ce pays n’est pas encore ouvert. Reviens bientôt !"
+    },
     "country": {
       "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",

@@ -1,0 +1,583 @@
+// ------------------------------------------------------
+// Tuning: pulse of the visitable countries (on hover)
+// ------------------------------------------------------
+$country-pulse-color: #ffb547;
+$country-pulse-width: 3px; // stroke thickness at the peak of the pulse
+$country-pulse-opacity: 0.4; // 0 = invisible, 1 = solid
+$country-pulse-duration: 1.6s; // duration of one "breath"
+
+// Hover callout line ("stitched" dashes)
+$callout-dash-length: 6px;
+$callout-dash-gap: 5px;
+$callout-line-thickness: 3px;
+
+// The map page: a cream sheet floating above the gallery (soft projected shadow).
+.worldMap {
+  width: 100%;
+  padding: 14px;
+  border-radius: 28px;
+  background: var(--color-map-paper);
+  box-shadow: var(--shadow-map-page);
+}
+
+// The map itself; every overlay (controls, callout, preview…) is placed in it.
+.worldMap__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-map-ocean);
+  box-shadow: inset 0 0 0 1px rgb(62 46 96 / 8%);
+}
+
+.worldMap__svg {
+  display: block;
+  width: 100%;
+  height: clamp(420px, 72vh, 760px);
+  border: 0;
+}
+
+.worldMap__svg--explorable {
+  cursor: grab;
+  // The map handles the drag itself; avoid text selection and browser panning.
+  touch-action: none;
+  user-select: none;
+}
+
+// The SVG is inlined at runtime, hence ::ng-deep to reach its countries.
+// The stroke does not scale with the zoom, so the pulse is the same at every zoom level.
+.worldMap__svg ::ng-deep {
+  // Strokes keep their width on screen at every zoom level.
+  path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .map-waves {
+    opacity: 0.5;
+  }
+
+  .map-wave {
+    fill: none;
+    stroke: var(--color-map-waves);
+    stroke-linecap: round;
+    stroke-width: 1px;
+  }
+
+  // Solid shadow under the lands; its offset is set in pixels by the component.
+  .map-shadow path {
+    fill: var(--color-map-land-shadow);
+    stroke: var(--color-map-land-shadow);
+    stroke-opacity: 1;
+    stroke-width: 1px;
+  }
+
+  .map-shadow .map-shadow__tiny {
+    display: none;
+  }
+
+  .map-lands path {
+    fill: var(--color-map-land);
+    stroke: var(--color-map-land-border);
+    stroke-opacity: 1;
+    stroke-width: 0.6px;
+  }
+
+  // The browser's focus ring is a black box around the SVG group (shown on a
+  // long click, too): replace it with an outline that follows the country,
+  // for keyboard users only.
+  .country-visitable {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .map-lands .country-visitable path {
+    fill: var(--color-map-open);
+    stroke: var(--color-map-open-border);
+    stroke-width: 1.4px;
+  }
+
+  .map-lands .country-visitable:focus-visible path {
+    stroke: var(--color-map-ink);
+    stroke-width: 3px;
+  }
+
+  .country-hovered path,
+  .country-visitable:focus-visible path {
+    animation: country-pulse $country-pulse-duration ease-in-out infinite;
+  }
+
+  @keyframes country-pulse {
+    50% {
+      stroke: $country-pulse-color;
+      stroke-width: $country-pulse-width;
+      stroke-opacity: $country-pulse-opacity;
+    }
+  }
+}
+
+.worldMap__svg--dragging,
+.worldMap__svg--dragging ::ng-deep .country-visitable {
+  cursor: grabbing;
+}
+
+// The SVG is inserted at runtime, so it has no Angular encapsulation attribute.
+.worldMap__svg ::ng-deep > svg,
+.countryPreview__map ::ng-deep > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.worldMap__error {
+  margin: 0 0 1rem;
+}
+
+.mapIntro {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(255 255 255 / 25%);
+  text-align: center;
+}
+
+.mapIntro h2 {
+  margin: 0 0 1.25rem;
+}
+
+.mapIntro__button {
+  border: 2px solid #ffc889;
+  border-radius: 1rem;
+  background: #ffdda9;
+  box-shadow: 0 4px 0 rgb(68 51 98 / 20%);
+  color: #443362;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.9rem 1.5rem;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+}
+
+.mapIntro__button:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+}
+
+.mapIntro__button:focus-visible {
+  outline: 3px solid #6751a1;
+  outline-offset: 3px;
+}
+
+// Hover legend: a line drawn from the country, then the bubble beside it.
+// The component anchors it on the country edge (left/top in px).
+.countryCallout {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.countryCallout--left {
+  flex-direction: row-reverse;
+  transform: translate(-100%, -50%);
+}
+
+.countryCallout__line {
+  flex: none;
+  height: $callout-line-thickness;
+  // Rounded dashes, like a seam ("couture" style).
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-map-callout-border) 0 $callout-dash-length,
+    transparent $callout-dash-length ($callout-dash-length + $callout-dash-gap)
+  );
+  border-radius: $callout-line-thickness;
+  // Revealed from the country towards the bubble, without stretching the dashes.
+  animation: callout-line-draw 260ms ease-out both;
+}
+
+.countryCallout--left .countryCallout__line {
+  background-position: right center;
+  animation-name: callout-line-draw-left;
+}
+
+.countryCallout__bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.5rem;
+  border: 2px solid var(--color-map-callout-border);
+  border-radius: 1.25rem;
+  background: var(--color-map-callout-bg);
+  box-shadow: var(--shadow-map-control);
+  color: var(--color-map-ink);
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-size: var(--font-size-h5, 24px);
+  font-weight: var(--font-weight-bold, 700);
+  white-space: nowrap;
+  animation: callout-bubble-pop 200ms ease-out 180ms both;
+}
+
+@keyframes callout-line-draw {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@keyframes callout-line-draw-left {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+@keyframes callout-bubble-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+// Gold medallion with the flag, above each visitable country. It gives way to
+// the callout while the country is hovered (but stays hoverable, so the
+// callout does not flicker).
+.countryPin {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  padding: 0;
+  border: 3px solid var(--color-map-medallion);
+  border-radius: 50%;
+  background: var(--color-map-paper);
+  box-shadow:
+    inset 0 0 0 2px var(--color-map-medallion-ring),
+    var(--shadow-map-control);
+  cursor: pointer;
+  // The tip of the medallion points at the country.
+  transform: translate(-50%, calc(-100% - 8px));
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+  animation: pin-float 2.4s ease-in-out infinite;
+
+  app-country-flag {
+    --flag-width: 1.4rem;
+  }
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border: 8px solid transparent;
+    border-top-color: var(--color-map-medallion);
+    border-bottom-width: 0;
+    content: '';
+    transform: translate(-50%, 1px);
+  }
+}
+
+.countryPin--away {
+  opacity: 0;
+  animation: none;
+  transform: translate(-50%, calc(-100% - 2px)) scale(0.85);
+}
+
+@keyframes pin-float {
+  50% {
+    transform: translate(-50%, calc(-100% - 13px));
+  }
+}
+
+// Speech bubble of the guide. The future mascot will stand at its bottom-left,
+// where the tail points.
+.mapGuide {
+  position: absolute;
+  z-index: 1;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  max-width: min(22rem, 45%);
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--color-map-callout-border);
+  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+  background: var(--color-map-callout-bg);
+  box-shadow: var(--shadow-map-control);
+  color: var(--color-map-ink);
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-size: var(--font-size-h6, 20px);
+  font-weight: var(--font-weight-semibold, 600);
+  line-height: var(--line-height-small, 150%);
+}
+
+.mapControls {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transform: translateY(-50%);
+}
+
+.mapControl,
+.mapWorldButton {
+  border: 1.5px solid;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-map-control);
+  cursor: pointer;
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-weight: var(--font-weight-bold, 700);
+  transition:
+    filter 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.mapControl {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  color: var(--color-map-ink);
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.mapControl--zoomIn {
+  border-color: var(--color-map-zoom-in-border);
+  background: var(--color-map-zoom-in-bg);
+}
+
+.mapControl--zoomOut {
+  border-color: var(--color-map-zoom-out-border);
+  background: var(--color-map-zoom-out-bg);
+}
+
+.mapWorldButton {
+  position: absolute;
+  z-index: 1;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.75rem;
+  border-color: var(--color-map-world-border);
+  background: var(--color-map-world-bg);
+  color: var(--color-map-ink);
+  font-size: var(--font-size-h6, 20px);
+}
+
+.mapWorldButton__icon {
+  font-size: 1.5em;
+  line-height: 1;
+}
+
+.mapControl:hover:not(:disabled),
+.mapWorldButton:hover {
+  filter: brightness(1.04);
+  transform: translateY(-2px);
+}
+
+.mapControl:active:not(:disabled),
+.mapWorldButton:active {
+  box-shadow: var(--shadow-map-control-pressed);
+  transform: translateY(3px);
+}
+
+.mapControl:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.mapControl:focus-visible,
+.mapWorldButton:focus-visible {
+  outline: 3px solid var(--color-border-primary-focus, #1356a0);
+  outline-offset: 3px;
+}
+
+.countryCallout app-country-flag {
+  --flag-width: 1.75rem;
+}
+
+// Country preview: covers the map only, which stays visible behind a white,
+// blurred veil. Title on top, the country drawn large, actions at the bottom.
+.countryPreview {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  justify-items: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem 2.5rem;
+  background: rgb(255 255 255 / 70%);
+  backdrop-filter: blur(6px);
+  color: var(--color-map-ink);
+  animation: preview-fade-in 200ms ease-out both;
+}
+
+.countryPreview__title {
+  margin: 0;
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-size: var(--font-size-h3, 36px);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--line-height-h3, 120%);
+}
+
+.countryPreview__map {
+  width: min(100%, 40rem);
+  height: 100%;
+  min-height: 0;
+  animation: preview-country-pop 280ms ease-out 60ms both;
+}
+
+// The previewed country is shown as a sticker: white edge and a short shadow.
+.countryPreview__map ::ng-deep {
+  > svg {
+    filter: drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff)
+      drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff)
+      drop-shadow(0 6px 0 rgb(62 46 96 / 20%));
+  }
+
+  path {
+    fill: var(--color-map-open);
+    stroke: var(--color-map-open-border);
+    stroke-width: 2.5px;
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+.countryPreview__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid var(--color-map-callout-border);
+  border-radius: 1.25rem;
+  background: var(--color-map-callout-bg);
+  box-shadow: var(--shadow-map-control);
+}
+
+.countryPreview__name {
+  min-width: 6rem;
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-size: var(--font-size-h5, 24px);
+}
+
+.countryPreview__explore,
+.countryPreview__close {
+  border: 1.5px solid;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-map-control);
+  color: var(--color-map-ink);
+  cursor: pointer;
+  font-family: var(--font-family-primary, 'Baloo'), sans-serif;
+  font-weight: var(--font-weight-bold, 700);
+  transition:
+    filter 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.countryPreview__explore {
+  display: flex;
+  min-width: 15rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border-color: var(--color-map-explore-border);
+  background: var(--color-map-explore-bg);
+  font-size: var(--font-size-navigation, 18px);
+}
+
+.countryPreview__close {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+  border-color: var(--color-map-close-border);
+  background: var(--color-white, #fff);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.countryPreview__explore:hover,
+.countryPreview__close:hover {
+  filter: brightness(1.04);
+  transform: translateY(-2px);
+}
+
+.countryPreview__explore:active,
+.countryPreview__close:active {
+  box-shadow: var(--shadow-map-control-pressed);
+  transform: translateY(3px);
+}
+
+.countryPreview__explore:focus-visible,
+.countryPreview__close:focus-visible {
+  outline: 3px solid var(--color-border-primary-focus, #1356a0);
+  outline-offset: 3px;
+}
+
+.countryPreview__error {
+  align-self: center;
+  margin: 0;
+}
+
+@keyframes preview-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes preview-country-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 480px) {
+  .countryCallout__bubble {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .worldMap__svg ::ng-deep .country-hovered path,
+  .worldMap__svg ::ng-deep .country-visitable:focus-visible path {
+    animation: none;
+  }
+
+  .mapIntro__button,
+  .countryPreview__explore,
+  .countryPreview__close,
+  .mapControl,
+  .mapWorldButton {
+    transition: none;
+  }
+
+  .countryCallout__line,
+  .countryCallout__bubble,
+  .countryPreview,
+  .countryPreview__map,
+  .countryPin {
+    animation: none;
+  }
+
+  .countryPin {
+    transition: none;
+  }
+}

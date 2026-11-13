@@ -1157,6 +1157,21 @@
     "navigation": "Room navigation",
     "inPreparation": "In preparation",
     "back": "Go back to gallery",
+    "mapLabel": "Interactive world map",
+    "mapIntro": "Welcome to the art gallery",
+    "startExploring": "Let’s explore!",
+    "mapLoadError": "The interactive map could not be loaded.",
+    "enterCountry": "Explore",
+    "closePreview": "Close preview",
+    "countryPreviewMapError": "This country cannot be displayed right now.",
+    "mapControls": "Map controls",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "seeWorld": "See the world",
+    "guide": {
+      "findCountry": "Click a glowing country to enter its room!",
+      "unavailable": "Oops! This country isn't open yet. Come back soon!"
+    },
     "country": {
       "WORLD": "Return to world map",
       "LEBANON": "Lebanon",

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideTranslateService } from '@ngx-translate/core';
+import { ArtGalleryHotspotService } from '../../art-gallery-hotspot-service';
 import { ArtGalleryHotspotComponent } from './art-gallery-hotspot-component';
 
 describe('ArtGalleryHotspotComponent', () => {
@@ -8,15 +10,21 @@ describe('ArtGalleryHotspotComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ArtGalleryHotspotComponent],
+      providers: [
+        provideTranslateService(),
+        // Hotspot data comes from json-server; tests must not depend on it.
+        {
+          provide: ArtGalleryHotspotService,
+          useValue: { getHotspot: () => Promise.resolve(undefined) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ArtGalleryHotspotComponent);
     component = fixture.componentInstance;
-    fixture.componentRef.setInput('hotspotId', '1');
-    fixture.componentRef.setInput('imageUrl', '/assets/test-hotspot.png');
-    fixture.componentRef.setInput('text', 'A historic neighborhood.');
-    fixture.componentRef.setInput('x', 25);
-    fixture.componentRef.setInput('y', 60);
+    fixture.componentRef.setInput('id', 1);
+    fixture.componentRef.setInput('positionLeft', 25);
+    fixture.componentRef.setInput('positionTop', 60);
     await fixture.whenStable();
   });
 

@@ -1,10 +1,13 @@
 @use "./styles/tokens";
 @use "./styles/resource-screen";
 @use "flag-icons/sass/flag-icons" with (
+  // Only for app-language-flag (CSS classes). Elsewhere, prefer app-country-flag,
+  // which serves any flag as an SVG file without growing this stylesheet.
   $flag-icons-included-countries: (
     "fr",
     "es",
     "gb",
+    "it",
   )
 );
 @import "@fortawesome/fontawesome-free/css/all.min.css";

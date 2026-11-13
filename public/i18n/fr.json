@@ -1158,6 +1158,8 @@
     "navigation": "Navigation des salles",
     "inPreparation": "En préparation",
     "back": "Retourner sur la galerie",
+    "mapLabel": "Carte interactive du monde",
+    "mapLoadError": "La carte interactive n'a pas pu être chargée.",
     "country": {
       "WORLD": "Retourner sur la carte du monde",
       "LEBANON": "Liban",

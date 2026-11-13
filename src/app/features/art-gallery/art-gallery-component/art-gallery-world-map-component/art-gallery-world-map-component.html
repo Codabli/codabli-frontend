@@ -1,1 +1,22 @@
-<button (click)="goToVietnam()">Go to Vietnam</button>
+<div class="worldMap">
+  @if (mapLoadError) {
+    <p
+      class="worldMap__error"
+      role="alert"
+    >
+      {{ 'artGallery.mapLoadError' | translate }}
+    </p>
+  }
+
+  <object
+    #mapObject
+    class="worldMap__svg"
+    [data]="mapAssetUrl"
+    type="image/svg+xml"
+    [attr.aria-label]="'artGallery.mapLabel' | translate"
+    (load)="onMapLoad(mapObject.contentDocument)"
+    (error)="onMapError()"
+  >
+    {{ 'artGallery.mapLoadError' | translate }}
+  </object>
+</div>

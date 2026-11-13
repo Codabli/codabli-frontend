@@ -1157,6 +1157,8 @@
     "navigation": "Room navigation",
     "inPreparation": "In preparation",
     "back": "Go back to gallery",
+    "mapLabel": "Interactive world map",
+    "mapLoadError": "The interactive map could not be loaded.",
     "country": {
       "WORLD": "Return to world map",
       "LEBANON": "Lebanon",

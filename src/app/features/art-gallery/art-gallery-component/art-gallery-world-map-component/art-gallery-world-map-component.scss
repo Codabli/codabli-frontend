@@ -1,0 +1,15 @@
+.worldMap {
+  width: 100%;
+}
+
+.worldMap__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1441 / 548;
+  border: 0;
+}
+
+.worldMap__error {
+  margin: 0 0 1rem;
+}

@@ -10,10 +10,12 @@
 
   <!-- The map itself, on the cream page that floats above the gallery. -->
   <div class="worldMap__frame">
+    <!-- While the preview is open (aria-modal), everything behind it is inert. -->
     <div
       #mapContainer
       class="worldMap__svg"
       role="group"
+      [attr.inert]="previewCountry !== null ? '' : null"
       [class.worldMap__svg--explorable]="isExploring"
       [class.worldMap__svg--dragging]="isDragging"
       [attr.aria-label]="'artGallery.mapLabel' | translate"
@@ -26,6 +28,7 @@
         <button
           class="countryPin"
           type="button"
+          [attr.inert]="previewCountry !== null ? '' : null"
           tabindex="-1"
           aria-hidden="true"
           [class.countryPin--away]="hoveredCountry === pin.country"
@@ -44,6 +47,7 @@
       <div
         class="mapControls"
         role="group"
+        [attr.inert]="previewCountry !== null ? '' : null"
         [attr.aria-label]="'artGallery.mapControls' | translate"
       >
         <button
@@ -72,6 +76,7 @@
         <button
           class="mapWorldButton"
           type="button"
+          [attr.inert]="previewCountry !== null ? '' : null"
           (click)="showWorld()"
         >
           <span
@@ -129,6 +134,7 @@
       <!-- Speech bubble of the guide; the mascot will stand at its bottom-left. -->
       <p
         class="mapGuide"
+        [attr.inert]="previewCountry !== null ? '' : null"
         role="status"
         aria-live="polite"
       >

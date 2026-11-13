@@ -7,7 +7,7 @@ import {
 import { ArtGalleryWorldMapComponent } from './art-gallery-world-map-component';
 import { ArtGalleryService } from '../../art-gallery-service';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
-import { provideTranslateService } from '@ngx-translate/core';
+import { TranslateService, provideTranslateService } from '@ngx-translate/core';
 
 const MAP_URL = '/assets/images/art-gallery/World_map_svgo.svg';
 const MAP_SVG =
@@ -211,6 +211,78 @@ describe('ArtGalleryWorldMapComponent', () => {
 
     component.zoomIn();
     expect(offset()).toBeCloseTo(before / 1.5);
+  });
+
+  describe('accessibility', () => {
+    it('names the countries in the current language', () => {
+      const translate = TestBed.inject(TranslateService);
+      translate.setTranslation('fr', {
+        artGallery: { country: { VIETNAM: 'Viêt Nam' } },
+      });
+      translate.use('fr');
+
+      component.onMapLoad(parseSvg(MAP_SVG));
+
+      expect(country('VN').getAttribute('aria-label')).toBe('Viêt Nam');
+    });
+
+    it('never makes the hit area of a small country a tab stop', () => {
+      Object.defineProperty(SVGElement.prototype, 'getBBox', {
+        configurable: true,
+        value: () => ({ x: 10, y: 20, width: 4, height: 4 }),
+      });
+      try {
+        component.onMapLoad(parseSvg(MAP_SVG));
+        component.startExploring();
+        component.closeCountryPreview();
+
+        const hitArea = (fixture.nativeElement as HTMLElement).querySelector(
+          '.map-hit-area',
+        );
+        expect(hitArea).not.toBeNull();
+        expect(hitArea?.hasAttribute('tabindex')).toBe(false);
+        expect(country('VN').getAttribute('tabindex')).toBe('0');
+      } finally {
+        delete (SVGElement.prototype as { getBBox?: unknown }).getBBox;
+      }
+    });
+
+    it('gives the focus back to the country when the preview closes', () => {
+      component.onMapLoad(parseSvg(MAP_SVG));
+      component.startExploring();
+      const vietnam = country('VN');
+      mockBBox(vietnam, { x: 100, y: 200, width: 40, height: 80 });
+      vietnam.focus();
+      vietnam.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }),
+      );
+      fixture.detectChanges();
+
+      component.closeCountryPreview();
+      fixture.detectChanges();
+
+      expect(document.activeElement).toBe(vietnam);
+    });
+
+    it('makes everything behind the preview inert', () => {
+      component.onMapLoad(parseSvg(MAP_SVG));
+      component.startExploring();
+      mockBBox(country('VN'), { x: 100, y: 200, width: 40, height: 80 });
+      component.zoomIn();
+      fixture.detectChanges();
+      const map = fixture.nativeElement as HTMLElement;
+      const behindPreview = (): Element[] =>
+        ['.worldMap__svg', '.mapControls', '.mapWorldButton', '.countryPin', '.mapGuide']
+          .map((selector) => map.querySelector(selector))
+          .filter((element): element is Element => element !== null);
+      expect(behindPreview()).toHaveLength(5);
+      expect(behindPreview().some((element) => element.hasAttribute('inert'))).toBe(false);
+
+      country('VN').dispatchEvent(new MouseEvent('click'));
+      fixture.detectChanges();
+
+      expect(behindPreview().every((element) => element.hasAttribute('inert'))).toBe(true);
+    });
   });
 
   it('tells the child when a country is not open yet', () => {

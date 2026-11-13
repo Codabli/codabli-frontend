@@ -1,4 +1,3 @@
-import { HttpBackend, HttpClient } from '@angular/common/http';
 import {
   ChangeDetectorRef,
   Component,
@@ -10,10 +9,12 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { ArtGalleryConstants } from '../../art-gallery-constants';
 import { ArtGalleryCountryEnum } from '../../art-gallery-country-enum';
 import { ArtGalleryService } from '../../art-gallery-service';
+import { ArtGalleryWorldMapService } from '../../art-gallery-world-map-service';
 import { CountryEnumToTextPipe } from '../../country-enum-to-text-pipe';
 import { CountryFlag } from '@shared/components/country-flag/country-flag.component';
 
@@ -53,8 +54,20 @@ function getBounds(element: SVGGraphicsElement): DOMRect | null {
   return bounds.width > 0 && bounds.height > 0 ? bounds : null;
 }
 
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+}
+
+/** Runs `callback` on the next frame, or right away where frames are not available. */
+function onNextFrame(callback: () => void): number | null {
+  if (typeof requestAnimationFrame !== 'function') {
+    callback();
+    return null;
+  }
+  return requestAnimationFrame(callback);
+}
+
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
-const MAP_ASSET_URL = '/assets/images/art-gallery/World_map_svgo.svg';
 const DEFAULT_MAP_BOUNDS: MapRect = { x: 0, y: 0, width: 1441, height: 548 };
 /** Initial framing on Asia, where the visitable rooms are for now (Figma frame). */
 const ASIA_FOCUS: MapRect = { x: 800, y: 0, width: 620, height: 548 };
@@ -74,6 +87,8 @@ const CALLOUT_LINE_PX = 56;
 const CALLOUT_BUBBLE_PX = 260;
 /** Space kept free on the right for the zoom controls. */
 const CONTROLS_RESERVED_PX = 112;
+/** Distance (px) kept between the callout and the top or bottom edge of the map. */
+const CALLOUT_EDGE_MARGIN_PX = 48;
 /** Group holding every country in the map SVG (Figma export). */
 const LANDS_GROUP_ID = 'carte-monde-pays';
 /** Offset (px) of the solid shadow under the lands, the same at every zoom level. */
@@ -91,6 +106,15 @@ const PIN_GAP_PX = 6;
 const GUIDE_MESSAGE_DEFAULT = 'artGallery.guide.findCountry';
 const GUIDE_MESSAGE_UNAVAILABLE = 'artGallery.guide.unavailable';
 const GUIDE_MESSAGE_DURATION_MS = 4000;
+/** Attributes that make a country interactive on the map, removed from its preview copy. */
+const INTERACTIVE_ATTRIBUTES = [
+  'id',
+  'class',
+  'role',
+  'tabindex',
+  'aria-label',
+  'aria-keyshortcuts',
+];
 
 /** Hover callout: anchor point (px, relative to the map frame) and side of the bubble. */
 interface CountryCallout {
@@ -120,8 +144,12 @@ interface MapView {
   scale: number;
 }
 
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+/** The map viewport in the map frame (px). */
+interface Viewport {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 }
 
 @Component({
@@ -132,10 +160,12 @@ function easeInOutCubic(t: number): number {
 })
 export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
   private readonly service = inject(ArtGalleryService);
+  private readonly worldMapService = inject(ArtGalleryWorldMapService);
+  private readonly translate = inject(TranslateService);
   private readonly changeDetector = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
-  // HttpBackend bypasses the API interceptors: the map is a static asset.
-  private readonly http = new HttpClient(inject(HttpBackend));
+  private readonly countryToText = new CountryEnumToTextPipe();
+
   isExploring = this.service.hasStartedExploring();
   hoveredCountry: MapCountry | null = null;
   previewCountry: MapCountry | null = null;
@@ -144,23 +174,31 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
   isDragging = false;
   callout: CountryCallout | null = null;
   pins: CountryPin[] = [];
-  private landShadow: SVGGElement | null = null;
   readonly calloutLineLength = CALLOUT_LINE_PX;
   /** Message of the map guide (the future mascot's speech bubble). */
   guideMessage = GUIDE_MESSAGE_DEFAULT;
+
   private guideTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly countryElements = new Map<MapCountry, SVGGraphicsElement>();
+  /** Country shapes in SVG units: they never change with the zoom, so they are measured once. */
+  private readonly countryBounds = new Map<MapCountry, DOMRect>();
   private readonly hitAreas: Array<{ circle: SVGCircleElement; radius: number }> =
     [];
+  private labelSubscriptions = new Subscription();
   private rootClickListener: EventListener | null = null;
   private mapBounds = DEFAULT_MAP_BOUNDS;
   private mapSvg: SVGSVGElement | null = null;
+  private landShadow: SVGGElement | null = null;
   private previewViewBox: string | null = null;
+  /** Country that opened the preview: focus goes back to it when the preview closes. */
+  private previewOrigin: SVGGraphicsElement | null = null;
 
   private view: MapView | null = null;
   /** Where the current animation is heading; drives the control states. */
   private targetView: MapView | null = null;
   private animationFrame: number | null = null;
+  /** Measured once per size change, so change detection never reads the layout. */
+  private viewport: Viewport | null = null;
   private resizeObserver: ResizeObserver | null = null;
   private drag: {
     pointerId: number;
@@ -170,6 +208,9 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     lastY: number;
     moved: boolean;
   } | null = null;
+  /** Pointer travel not drawn yet: drags are drawn at most once per frame. */
+  private pendingPan = { dx: 0, dy: 0 };
+  private panFrame: number | null = null;
   private suppressNextClick = false;
 
   @ViewChild('mapContainer', { static: true })
@@ -197,14 +238,11 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.http
-      .get(MAP_ASSET_URL, { responseType: 'text' })
+    this.worldMapService
+      .getWorldMap()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (svgText) =>
-          this.onMapLoad(
-            new DOMParser().parseFromString(svgText, 'image/svg+xml'),
-          ),
+        next: (svgDocument) => this.onMapLoad(svgDocument),
         error: () => this.onMapError(),
       });
   }
@@ -213,6 +251,7 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     this.removeCountryListeners();
     this.mapLoadError = false;
     this.mapSvg = null;
+    this.viewport = null;
 
     const sourceRoot = svgDocument?.documentElement;
     if (
@@ -226,7 +265,8 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     }
 
     // The SVG is inlined in the page (instead of an <object>) so its countries
-    // share the page's events, focus and geometry without contentDocument timing.
+    // share the page's events, focus and geometry. importNode copies it: the
+    // source document is shared through ArtGalleryWorldMapService.
     const svgRoot = document.importNode(sourceRoot, true) as Element as SVGSVGElement;
     svgRoot.removeAttribute('width');
     svgRoot.removeAttribute('height');
@@ -288,18 +328,19 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     hitLayer.setAttribute('class', 'map-hit-areas');
 
     for (const { country, element } of countryTargets) {
-      const countryName = ArtGalleryCountryEnum[country];
-      const countryLabel =
-        countryName.charAt(0) + countryName.slice(1).toLowerCase();
-
       this.countryElements.set(country, element);
       element.classList.add('country-visitable');
       element.setAttribute('role', 'button');
       element.setAttribute('tabindex', this.isExploring ? '0' : '-1');
-      element.setAttribute('aria-label', countryLabel);
       element.setAttribute('aria-keyshortcuts', 'Enter Space');
+      // Translated name, kept up to date when the language changes.
+      this.labelSubscriptions.add(
+        this.translate
+          .stream(this.countryToText.transform(country))
+          .subscribe((label: string) => element.setAttribute('aria-label', label)),
+      );
 
-      const hitArea = this.createHitArea(element);
+      const hitArea = this.createHitArea(country);
       if (hitArea) {
         hitLayer.appendChild(hitArea);
       }
@@ -317,43 +358,27 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
           return;
         }
         if (this.isExploring) {
-          this.updateView(() => this.openCountryPreview(country, element));
+          this.updateView(() => this.openCountryPreview(country));
         }
       };
       const onKeydown: EventListener = (event) => {
         const key = (event as KeyboardEvent).key;
         if (this.isExploring && (key === 'Enter' || key === ' ')) {
           event.preventDefault();
-          this.updateView(() => this.openCountryPreview(country, element));
+          this.updateView(() => this.openCountryPreview(country));
         }
       };
       const onMouseenter: EventListener = () => {
-        if (
-          this.isExploring &&
-          this.previewCountry === null &&
-          !this.isDragging &&
-          this.hoveredCountry !== country
-        ) {
-          // A class rather than :hover, so hovering the hit area of a small
-          // country also makes the country itself pulse.
-          element.classList.add('country-hovered');
-          this.updateView(() => {
-            this.hoveredCountry = country;
-            this.updateCallout();
-          });
+        if (this.hoveredCountry !== country) {
+          this.updateView(() => this.hoverCountry(country));
         }
       };
       const onMouseleave: EventListener = (event) => {
-        // Moving between a small country and its hit area is not leaving it.
         if (
           this.hoveredCountry === country &&
           !belongsToCountry((event as MouseEvent).relatedTarget)
         ) {
-          element.classList.remove('country-hovered');
-          this.updateView(() => {
-            this.hoveredCountry = null;
-            this.callout = null;
-          });
+          this.updateView(() => this.clearHover());
         }
       };
 
@@ -406,11 +431,11 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     this.setCountryTabStops(true);
   }
 
+  /** Closes the preview and gives the focus back to the country that opened it. */
   closeCountryPreview(): void {
-    this.previewCountry = null;
-    this.previewMapError = false;
-    this.previewViewBox = null;
-    this.setCountryTabStops(this.isExploring);
+    const origin = this.previewOrigin;
+    this.resetPreview();
+    origin?.focus({ preventScroll: true });
   }
 
   /** Clicking the veil itself (not the country or the buttons) closes the preview. */
@@ -426,7 +451,7 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.closeCountryPreview();
+    this.resetPreview();
     this.service.goTo(country);
   }
 
@@ -459,6 +484,28 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
 
   showWorld(): void {
     this.animateTo(this.fitRect(this.mapBounds));
+  }
+
+  /** The medallion of a country is hovered: same as hovering the country. */
+  onPinEnter(country: MapCountry): void {
+    this.hoverCountry(country);
+  }
+
+  onPinLeave(event: MouseEvent, country: MapCountry): void {
+    const element = this.countryElements.get(country);
+    const target = event.relatedTarget;
+    if (target instanceof Node && element?.contains(target)) {
+      return;
+    }
+    if (this.hoveredCountry === country) {
+      this.clearHover();
+    }
+  }
+
+  openPreviewFromPin(country: MapCountry): void {
+    if (this.isExploring) {
+      this.openCountryPreview(country);
+    }
   }
 
   onPointerDown(event: PointerEvent): void {
@@ -517,25 +564,42 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       });
     }
 
-    const { scale } = this.view;
-    this.applyView({
-      cx: this.view.cx - (event.clientX - drag.lastX) / scale,
-      cy: this.view.cy - (event.clientY - drag.lastY) / scale,
-      scale,
-    });
+    this.pendingPan.dx += event.clientX - drag.lastX;
+    this.pendingPan.dy += event.clientY - drag.lastY;
     drag.lastX = event.clientX;
     drag.lastY = event.clientY;
+    this.panFrame ??= onNextFrame(() => {
+      this.panFrame = null;
+      this.flushPan();
+    });
   };
 
   private readonly onPointerUp = (event: PointerEvent): void => {
     if (this.drag && event.pointerId === this.drag.pointerId) {
+      this.flushPan();
       this.suppressNextClick = this.drag.moved;
       this.stopDragging();
     }
   };
 
+  /** Draws the pointer travel gathered since the last frame. */
+  private flushPan(): void {
+    const { dx, dy } = this.pendingPan;
+    this.pendingPan = { dx: 0, dy: 0 };
+    if (this.view === null || (dx === 0 && dy === 0)) {
+      return;
+    }
+    const { cx, cy, scale } = this.view;
+    this.applyView({ cx: cx - dx / scale, cy: cy - dy / scale, scale });
+  }
+
   private stopDragging(): void {
     this.drag = null;
+    if (this.panFrame !== null) {
+      cancelAnimationFrame(this.panFrame);
+      this.panFrame = null;
+    }
+    this.pendingPan = { dx: 0, dy: 0 };
     document.removeEventListener('pointermove', this.onPointerMove);
     document.removeEventListener('pointerup', this.onPointerUp);
     document.removeEventListener('pointercancel', this.onPointerUp);
@@ -551,12 +615,30 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** Size of the map viewport in pixels (falls back to the SVG size before layout). */
-  private viewportSize(): { width: number; height: number } {
-    const { clientWidth, clientHeight } = this.mapContainer.nativeElement;
-    return clientWidth > 0 && clientHeight > 0
-      ? { width: clientWidth, height: clientHeight }
-      : { width: this.mapBounds.width, height: this.mapBounds.height };
+  /**
+   * The map viewport (px). Measured once per size change; before layout, it
+   * falls back to the SVG size so the camera maths stay valid.
+   */
+  private viewportSize(): Viewport {
+    if (this.viewport) {
+      return this.viewport;
+    }
+    const container = this.mapContainer.nativeElement;
+    if (container.clientWidth > 0 && container.clientHeight > 0) {
+      this.viewport = {
+        left: container.offsetLeft,
+        top: container.offsetTop,
+        width: container.clientWidth,
+        height: container.clientHeight,
+      };
+      return this.viewport;
+    }
+    return {
+      left: 0,
+      top: 0,
+      width: this.mapBounds.width,
+      height: this.mapBounds.height,
+    };
   }
 
   /** The scale showing the whole map is also the most zoomed-out one. */
@@ -633,8 +715,8 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  /** The medallion of a country is hovered: same as hovering the country. */
-  onPinEnter(country: MapCountry): void {
+  /** Hovering a country (or its medallion): it pulses and its callout shows. */
+  private hoverCountry(country: MapCountry): void {
     const element = this.countryElements.get(country);
     if (
       !element ||
@@ -645,27 +727,11 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       return;
     }
     this.clearHover();
+    // A class rather than :hover, so hovering the hit area or the medallion of
+    // a country also makes the country itself pulse.
     element.classList.add('country-hovered');
     this.hoveredCountry = country;
     this.updateCallout();
-  }
-
-  onPinLeave(event: MouseEvent, country: MapCountry): void {
-    const element = this.countryElements.get(country);
-    const target = event.relatedTarget;
-    if (target instanceof Node && element?.contains(target)) {
-      return;
-    }
-    if (this.hoveredCountry === country) {
-      this.clearHover();
-    }
-  }
-
-  openPreviewFromPin(country: MapCountry): void {
-    const element = this.countryElements.get(country);
-    if (this.isExploring && element) {
-      this.openCountryPreview(country, element);
-    }
   }
 
   /**
@@ -724,14 +790,27 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     this.landShadow = shadow;
   }
 
+  /** Shape of a visitable country in SVG units, measured once. */
+  private boundsOf(country: MapCountry): DOMRect | null {
+    const cached = this.countryBounds.get(country);
+    if (cached) {
+      return cached;
+    }
+    const element = this.countryElements.get(country);
+    const bounds = element ? getBounds(element) : null;
+    if (bounds) {
+      this.countryBounds.set(country, bounds);
+    }
+    return bounds;
+  }
+
   /** Converts a point of the map (SVG units) to the map frame (px). */
   private toScreen(x: number, y: number): { x: number; y: number } {
-    const { width, height } = this.viewportSize();
+    const { left, top, width, height } = this.viewportSize();
     const { cx, cy, scale } = this.view ?? { cx: 0, cy: 0, scale: 1 };
-    const container = this.mapContainer.nativeElement;
     return {
-      x: container.offsetLeft + (x - cx) * scale + width / 2,
-      y: container.offsetTop + (y - cy) * scale + height / 2,
+      x: left + (x - cx) * scale + width / 2,
+      y: top + (y - cy) * scale + height / 2,
     };
   }
 
@@ -739,8 +818,8 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
   private updatePins(): void {
     const pins: CountryPin[] = [];
     if (this.view !== null) {
-      for (const [country, element] of this.countryElements) {
-        const bounds = getBounds(element);
+      for (const country of this.countryElements.keys()) {
+        const bounds = this.boundsOf(country);
         if (bounds) {
           const tip = this.toScreen(bounds.x + bounds.width / 2, bounds.y);
           pins.push({ country, x: tip.x, y: tip.y - PIN_GAP_PX });
@@ -751,8 +830,8 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
   }
 
   /** An invisible, bigger click target over a small visitable country. */
-  private createHitArea(element: SVGGraphicsElement): SVGCircleElement | null {
-    const bounds = getBounds(element);
+  private createHitArea(country: MapCountry): SVGCircleElement | null {
+    const bounds = this.boundsOf(country);
     if (!bounds) {
       return null;
     }
@@ -767,6 +846,7 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
     circle.setAttribute('fill', '#000');
     circle.setAttribute('fill-opacity', '0');
     circle.setAttribute('pointer-events', 'all');
+    // A mouse shortcut only: the keyboard reaches the country itself.
     circle.setAttribute('aria-hidden', 'true');
     circle.style.cursor = 'pointer';
     this.hitAreas.push({ circle, radius });
@@ -792,32 +872,28 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
    * there is room before the zoom controls, otherwise on its left.
    */
   private updateCallout(): void {
-    const country = this.hoveredCountry;
-    const element =
-      country !== null ? this.countryElements.get(country) : undefined;
-    const bounds = element ? getBounds(element) : null;
+    const bounds =
+      this.hoveredCountry !== null ? this.boundsOf(this.hoveredCountry) : null;
     if (!bounds || this.view === null) {
       this.callout = null;
       return;
     }
 
-    const { width, height } = this.viewportSize();
-    const { cx, cy, scale } = this.view;
-    const toScreenX = (x: number): number => (x - cx) * scale + width / 2;
-    const toScreenY = (y: number): number => (y - cy) * scale + height / 2;
-    const container = this.mapContainer.nativeElement;
-
-    const right = toScreenX(bounds.x + bounds.width);
-    const left = toScreenX(bounds.x);
+    const { left, top, width, height } = this.viewportSize();
+    const middleY = bounds.y + bounds.height / 2;
+    const rightEdge = this.toScreen(bounds.x + bounds.width, middleY);
+    const leftEdge = this.toScreen(bounds.x, middleY);
     const fitsRight =
-      right + CALLOUT_LINE_PX + CALLOUT_BUBBLE_PX <=
+      rightEdge.x - left + CALLOUT_LINE_PX + CALLOUT_BUBBLE_PX <=
       width - CONTROLS_RESERVED_PX;
-    const middleY = toScreenY(bounds.y + bounds.height / 2);
 
     this.callout = {
       side: fitsRight ? 'right' : 'left',
-      x: container.offsetLeft + (fitsRight ? right : left),
-      y: container.offsetTop + Math.min(height - 48, Math.max(48, middleY)),
+      x: fitsRight ? rightEdge.x : leftEdge.x,
+      y: Math.min(
+        top + height - CALLOUT_EDGE_MARGIN_PX,
+        Math.max(top + CALLOUT_EDGE_MARGIN_PX, rightEdge.y),
+      ),
     };
   }
 
@@ -893,23 +969,27 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       return;
     }
     this.resizeObserver = new ResizeObserver(() => {
-      if (this.view) {
-        this.applyView(this.targetView ?? this.view);
+      this.viewport = null;
+      // A running animation redraws on its next frame: applying the view here
+      // would make it jump to its target, then back.
+      if (this.view && this.animationFrame === null) {
+        this.applyView(this.view);
         this.changeDetector.markForCheck();
       }
     });
     this.resizeObserver.observe(this.mapContainer.nativeElement);
   }
 
-  private openCountryPreview(
-    country: MapCountry,
-    element: SVGGraphicsElement,
-  ): void {
+  private openCountryPreview(country: MapCountry): void {
+    const element = this.countryElements.get(country);
+    if (!element) {
+      return;
+    }
     this.clearHover();
     this.previewMapError = false;
     this.previewViewBox = null;
 
-    const bounds = getBounds(element);
+    const bounds = this.boundsOf(country);
     if (bounds) {
       const padding = Math.max(bounds.width, bounds.height) * 0.12;
       this.previewViewBox = `${bounds.x - padding} ${bounds.y - padding} ${bounds.width + padding * 2} ${bounds.height + padding * 2}`;
@@ -919,49 +999,44 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       );
     }
 
+    this.previewOrigin = element;
     this.previewCountry = country;
     this.setCountryTabStops(false);
   }
 
-  /** Draws a zoomed copy of the selected country only, reusing the loaded map. */
+  private resetPreview(): void {
+    this.previewCountry = null;
+    this.previewMapError = false;
+    this.previewViewBox = null;
+    this.previewOrigin = null;
+    this.setCountryTabStops(this.isExploring);
+  }
+
+  /** Draws a zoomed copy of the selected country alone. */
   private renderPreviewMap(container: HTMLElement): void {
     const country = this.previewCountry;
-    if (country === null || !this.mapSvg || !this.previewViewBox) {
+    const element = country !== null ? this.countryElements.get(country) : null;
+    if (!element || !this.previewViewBox) {
       return;
     }
 
-    const selectedId = `country-${COUNTRY_SVG_CODE_BY_ENUM[country]}`;
-    const preview = this.mapSvg.cloneNode(true) as SVGSVGElement;
-    for (const decoration of preview.querySelectorAll(
-      '.map-hit-areas, .map-shadow, .map-waves, defs',
-    )) {
-      decoration.remove();
-    }
-    for (const element of preview.querySelectorAll('[id^="country-"]')) {
-      if (element.id !== selectedId) {
-        element.remove();
+    const shape = element.cloneNode(true) as SVGGraphicsElement;
+    for (const node of [shape, ...shape.querySelectorAll('*')]) {
+      for (const attribute of INTERACTIVE_ATTRIBUTES) {
+        node.removeAttribute(attribute);
       }
     }
-    for (const element of preview.querySelectorAll('style')) {
-      element.remove();
-    }
-    for (const element of preview.querySelectorAll(
-      '[id^="country-"], [id^="part-"]',
-    )) {
-      element.removeAttribute('id');
-      element.removeAttribute('role');
-      element.removeAttribute('tabindex');
-      element.removeAttribute('aria-label');
-      element.removeAttribute('aria-keyshortcuts');
-      element.classList.remove('country-visitable');
-    }
+    const preview = document.createElementNS(SVG_NAMESPACE, 'svg');
     preview.setAttribute('viewBox', this.previewViewBox);
     preview.setAttribute('aria-hidden', 'true');
+    preview.setAttribute('focusable', 'false');
+    preview.appendChild(shape);
     container.replaceChildren(preview);
   }
 
+  /** Only the countries themselves are tab stops (never their hit areas). */
   private setCountryTabStops(isFocusable: boolean): void {
-    for (const { element } of this.countryListeners) {
+    for (const element of this.countryElements.values()) {
       element.setAttribute('tabindex', isFocusable ? '0' : '-1');
     }
   }
@@ -993,7 +1068,10 @@ export class ArtGalleryWorldMapComponent implements OnInit, OnDestroy {
       element.removeEventListener('mouseleave', mouseleave);
     }
     this.countryListeners.length = 0;
+    this.labelSubscriptions.unsubscribe();
+    this.labelSubscriptions = new Subscription();
     this.countryElements.clear();
+    this.countryBounds.clear();
     this.hitAreas.length = 0;
     this.pins = [];
     if (this.mapSvg && this.rootClickListener) {

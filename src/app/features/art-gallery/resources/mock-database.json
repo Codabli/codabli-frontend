@@ -2,6 +2,10 @@
     "countries": [
         {
             "country": "VIETNAM",
+            "presentation": {
+                "title": "This is the title for Vietnam's room",
+                "introduction": "This is the introductory text for Vietnam's room"
+            },
             "hotspots": [
                 {
                     "id": 1,
